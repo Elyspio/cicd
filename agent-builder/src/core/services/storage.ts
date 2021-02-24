@@ -5,7 +5,7 @@ import * as os from "os";
 const {writeFile, readFile} = promises
 
 export const files = {
-    account: process.env.ACCOUNT_PATH ?? "/app/accounts.json"
+    conf: process.env.ACCOUNT_PATH ?? "/app/accounts.json"
 }
 
 export class Storage {

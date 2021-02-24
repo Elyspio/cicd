@@ -1,0 +1,33 @@
+{
+	"name": "back",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"start": "nodemon src/app.ts",
+		"build": "tsc",
+		"docker": "docker buildx build --platform linux/arm64,linux/amd64  -f ../Dockerfile  -t elyspio/express-react-ts-template --push .."
+	},
+	"dependencies": {
+		"@tsed/common": "^6.24.0",
+		"@tsed/core": "^6.24.0",
+		"@tsed/di": "^6.24.0",
+		"@tsed/schema": "^6.24.0",
+		"@tsed/platform-express": "^6.24.0",
+		"@tsed/swagger": "^6.24.0",
+		"body-parser": "^1.19.0",
+		"compression": "^1.7.4",
+		"cookie-parser": "^1.4.5",
+		"cors": "^2.8.5",
+		"method-override": "^3.0.0",
+		"axios": "^0.21.1",
+		"tslib": "^2.1.0"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.9",
+		"@types/express": "^4.17.11",
+		"@types/node": "^14.14.22",
+		"nodemon": "latest",
+		"ts-node": "latest",
+		"typescript": "latest"
+	}
+}
