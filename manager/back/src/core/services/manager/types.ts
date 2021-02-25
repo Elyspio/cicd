@@ -13,3 +13,19 @@ export interface BuildAgent {
     availability: "down" | "running" | "free",
     ability: "docker"
 }
+
+
+export interface BuildConfig {
+    github: {
+        remote: string,
+        branch: string,
+        commit?: string
+    },
+    docker: {
+        image: string,
+        dockerfiles: {
+            path: string,
+            wd: string
+        }[]
+    }
+}

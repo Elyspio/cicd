@@ -11,7 +11,7 @@ $log.info({frontPath, rootDir});
 export const webConfig: Partial<TsED.Configuration> = {
     rootDir,
     acceptMimes: ['application/json'],
-    httpPort: process.env.HTTP_PORT || 4000,
+    httpPort: process.env.HTTP_PORT || 4001,
     httpsPort: false, // CHANGE
     mount: {
         '/core': [

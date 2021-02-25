@@ -1,9 +1,7 @@
-
-import {Storage} from "./storage";
-import {DockerService} from "./docker";
+import {BuilderAgentService} from "./builderAgent";
+import {AuthenticationService} from "./authentication";
 
 export const Services = {
-
-    storage: new Storage(),
-    docker: new DockerService()
+    agent: new BuilderAgentService(),
+    authentication: new AuthenticationService()
 }
