@@ -2,7 +2,7 @@
 	"name": "front",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "/",
+	"homepage": "/automatize-github-docker/",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",

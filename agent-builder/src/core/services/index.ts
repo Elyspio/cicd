@@ -1,7 +1,9 @@
-import {AuthenticationService} from "./authentication";
+
 import {Storage} from "./storage";
+import {DockerService} from "./docker";
 
 export const Services = {
-    authentication: new AuthenticationService(),
-    storage: new Storage()
+
+    storage: new Storage(),
+    docker: new DockerService()
 }

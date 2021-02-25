@@ -18,6 +18,7 @@
 		"emitDecoratorMetadata": true,
 		"sourceMap": false,
 		"declaration": false,
+		"importHelpers": true,
 		"allowSyntheticDefaultImports": true
 	},
 	"include": [
