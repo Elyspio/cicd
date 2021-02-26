@@ -1,7 +1,8 @@
 import {AuthenticationService} from "./authentication";
 import {StorageService} from "./storage";
-import {ManagerService} from "./manager/manager";
 import {DockerService} from "./docker";
+import {Base} from "./manager/base";
+import {ManagerService} from "./manager/service";
 
 export const Services = {
     authentication: new AuthenticationService(),

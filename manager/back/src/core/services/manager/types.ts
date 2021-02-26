@@ -1,5 +1,4 @@
-export interface ProductionAgent {
-    uri: string,
+export interface ProductionAgent extends Agent {
     docker: {
         compose: {
             path: string
@@ -8,12 +7,15 @@ export interface ProductionAgent {
 }
 
 
-export interface BuildAgent {
-    uri: string,
-    availability: "down" | "running" | "free",
+export interface BuildAgent extends Agent {
     ability: "docker"
 }
 
+export interface Agent {
+    uri: string,
+    availability: "down" | "running" | "free",
+    lastUptime: Date
+}
 
 export interface BuildConfig {
     github: {

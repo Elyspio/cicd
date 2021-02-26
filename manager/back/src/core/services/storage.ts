@@ -17,7 +17,6 @@ export class StorageService {
             name = path.join(os.homedir(), name.slice(1))
         }
         if (sync) return writeFileSync(name, data)
-        console.log("writing " + data + " in " + name)
         return writeFile(path.resolve(name), data);
     }
 

@@ -1,34 +1,57 @@
 import {BodyParams, Controller, Get, Post, } from "@tsed/common";
-import {Name, Returns} from "@tsed/schema";
+import {Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
 import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel} from "./models";
 @Controller("/automate")
 @Name("Automation")
 export class AutomationController {
 
+    // region get
+
     @Get("/agent/build")
     @Returns(200, Array).Of(BuildAgentModelReturn)
     async getBuilderAgent() {
-        return Services.manager.current.agents.builder
+        return Services.manager.builder.list()
+    }
+
+    @Get("/agent/production")
+    @Returns(200, Array).Of(ProductionAgentModel)
+    async getProductionAgent() {
+        return Services.manager.production.list()
+    }
+
+    // endregion
+
+    // region add
+
+    @Post("/agent/production")
+    @Returns(204)
+    async addProductionAgent(@BodyParams(ProductionAgentModel) agent: ProductionAgentModel) {
+        Services.manager.production.add(agent)
     }
 
     @Post("/agent/build")
     @Returns(204)
     async addBuildAgent(@BodyParams(BuildAgentModelAdd) agent: BuildAgentModelAdd) {
-        Services.manager.agents.builder.add(agent)
+        Services.manager.builder.add(agent)
     }
 
+    // endregion
 
-    @Get("/agent/production")
-    @Returns(200, Array).Of(ProductionAgentModel)
-    async getProductionAgent() {
-        return Services.manager.current.agents.production
-    }
+    // region keep-alive
 
-    @Post("/agent/production")
+    @Post("/agent/build/keep-alive")
     @Returns(204)
-    async addProductionAgent(@BodyParams(ProductionAgentModel) agent: ProductionAgentModel) {
-        Services.manager.agents.production.add(agent)
+    async builderAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
+        Services.manager.builder.keepAlive(url)
     }
+
+    @Post("/agent/production/keep-alive")
+    @Returns(204)
+    async productionAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
+        Services.manager.production.keepAlive(url)
+    }
+
+    // endregion
 
 }
