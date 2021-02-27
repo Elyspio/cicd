@@ -3,13 +3,14 @@ import {BuildAgentModelAddAbilityEnum} from "../apis/manager";
 
 export class BuilderAgentService {
     async init() {
-        await Apis.manager.automation.automationAddBuildAgent({
+        const agent = {
             uri: "http://localhost:4001",
             ability: BuildAgentModelAddAbilityEnum.Docker
-        })
+        };
+        await Apis.manager.automation.automationAddBuildAgent(agent)
 
         setInterval(() => {
-            Apis.manager.automation.automationBuilderAgentKeepAlive({url: "http://localhost:4001"})
+            Apis.manager.automation.automationBuilderAgentKeepAlive({url: agent.uri})
         }, 2500)
 
     }

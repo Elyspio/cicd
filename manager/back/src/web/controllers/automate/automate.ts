@@ -26,13 +26,13 @@ export class AutomationController {
 
     @Post("/agent/production")
     @Returns(204)
-    async addProductionAgent(@BodyParams(ProductionAgentModel) agent: ProductionAgentModel) {
+    async addProductionAgent(@Required() @BodyParams(ProductionAgentModel) agent: ProductionAgentModel) {
         Services.manager.production.add(agent)
     }
 
     @Post("/agent/build")
     @Returns(204)
-    async addBuildAgent(@BodyParams(BuildAgentModelAdd) agent: BuildAgentModelAdd) {
+    async addBuildAgent(@Required() @BodyParams(BuildAgentModelAdd) agent: BuildAgentModelAdd) {
         Services.manager.builder.add(agent)
     }
 

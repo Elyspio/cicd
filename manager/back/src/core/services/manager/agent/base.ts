@@ -1,9 +1,12 @@
-import {files, StorageService} from "../storage";
+import {files, StorageService} from "../../storage";
 import {Production} from "./production";
 import {Builder} from "./builder";
-import {Services} from "../index";
-import {Agent} from "./types";
-import {ManagerConfig} from "./service";
+import {Services} from "../../index";
+import {Agent} from "../types";
+import {ManagerConfig} from "../service";
+
+export type AgentIdentifier<T extends  Agent> =  T["uri"] | T
+
 
 export class Base {
 
@@ -43,7 +46,7 @@ export class Base {
 
     protected baseList<T extends Agent>(kind: keyof ManagerConfig["agents"]) {
         // @ts-ignore
-        return Services.manager.config.agents[kind].filter((a: Agent) => a.availability !== "down") as T[]
+        return Services.manager.config.agents[kind] as T[]
     }
 
     private getAgent<T extends Agent>(agent: T | T["uri"], kind: keyof ManagerConfig["agents"]) {

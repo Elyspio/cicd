@@ -1,12 +1,15 @@
 import {Agent, BuildAgent, ProductionAgent} from "../../../core/services/manager/types"
-import {Enum, Property} from "@tsed/schema";
+import {Enum, Property, Required} from "@tsed/schema";
 
 
 export class AgentModel implements Agent {
-    @Enum("down", "running", "free")
-    availability: "down" | "running" | "free";
+    @Required()
     @Property()
     uri: string;
+
+    @Enum("down", "running", "free")
+    availability: "down" | "running" | "free";
+
     @Property(Date)
     lastUptime: Date;
 }
@@ -17,24 +20,30 @@ export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
 }
 
 
-export class BuildAgentModelAdd implements Omit<BuildAgent, "availability" | "lastUptime"> {
+export class BuildAgentModelAdd   extends AgentModel implements Omit<BuildAgent, "availability" | "lastUptime"> {
+    @Required()
     @Enum("docker")
     ability: "docker";
+
+    @Required()
     @Property()
     uri: string;
 }
 
 class DockerComposeModel {
     @Property()
+    @Required()
     path: string
 }
 
 class DockerModel {
     @Property(DockerComposeModel)
+    @Required()
     compose: DockerComposeModel[]
 }
 
 export class ProductionAgentModel extends AgentModel implements Omit<ProductionAgent, "lastUptime"> {
     @Property(DockerModel)
-    docker: { compose: { path: string }[] };
+    @Required()
+    docker: DockerModel;
 }

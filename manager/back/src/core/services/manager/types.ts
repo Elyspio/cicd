@@ -31,3 +31,11 @@ export interface BuildConfig {
         }[]
     }
 }
+
+export interface DeployConfig extends Pick<ProductionAgent, "uri">{
+    docker?: {
+        compose?: {
+            path: string
+        }
+    }
+}

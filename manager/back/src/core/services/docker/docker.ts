@@ -1,4 +1,4 @@
-import {Preset} from "../../web/controllers/docker/models";
+import {Preset} from "../../../web/controllers/docker/models";
 import * as  path from "path";
 import {readFile} from "fs-extra"
 export class DockerService {
@@ -17,7 +17,7 @@ export class DockerService {
             file = "front-only.Dockerfile";
         }
 
-        let p = path.resolve(__dirname, "..", "files", "dockerfiles", file);
+        let p = path.resolve(__dirname, "dockerfiles", file);
 
         return await readFile(p).then(p => p.toString("utf-8"))
     }
