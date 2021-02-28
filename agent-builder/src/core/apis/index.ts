@@ -1,5 +1,5 @@
 import {AutomationApi} from "./manager";
-import {AuthenticationApi} from "../../../../manager/back/src/core/apis/authentication";
+import {AuthenticationApi} from "./authentication";
 
 
 export const Apis = {

@@ -1,5 +1,8 @@
 import {Apis} from "../apis";
 import {BuildAgentModelAddAbilityEnum} from "../apis/manager";
+import {BuildConfig} from "../../../../manager/back/src/core/services/manager/types";
+import {Services} from "./index";
+import {files} from "./storage";
 
 export class BuilderAgentService {
     async init() {
@@ -7,6 +10,7 @@ export class BuilderAgentService {
             uri: "http://localhost:4001",
             ability: BuildAgentModelAddAbilityEnum.Docker
         };
+        await Services.storage.store(files.conf, agent);
         await Apis.manager.automation.automationAddBuildAgent(agent)
 
         setInterval(() => {
@@ -14,4 +18,8 @@ export class BuilderAgentService {
         }, 2500)
 
     }
+
+    async build(conf: BuildConfig) {
+    }
+
 }

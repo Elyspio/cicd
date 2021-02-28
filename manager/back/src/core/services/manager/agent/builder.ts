@@ -2,6 +2,7 @@ import {ManagerMethods} from "../service";
 import {Agent, BuildAgent, BuildConfig, ProductionAgent} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
+import {BuildAgentApi} from "../../../apis/agent-build";
 
 
 export class Builder extends Base implements ManagerMethods<BuildAgent> {
@@ -30,7 +31,8 @@ export class Builder extends Base implements ManagerMethods<BuildAgent> {
         Services.manager.config.queues.builds.enqueue(config)
     }
 
-    public build(agent: AgentIdentifier<BuildAgent>, config: BuildConfig) {
+    public build(agent: BuildAgent, config: BuildConfig) {
+        return new BuildAgentApi(undefined, agent.uri).buildAgentGetBuilderAgent(config);
     }
 
 

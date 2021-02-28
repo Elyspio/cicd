@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "nodemon -e ts -w ./src src/app.ts",
 		"build": "tsc",
-		"docker": "docker buildx build --platform linux/arm64,linux/amd64  -f ../Dockerfile  -t elyspio/express-react-ts-template --push .."
+		"docker": "cd .. && docker buildx build --platform linux/arm64,linux/amd64  -f agent-prod/Dockerfile  -t elyspio/automatize-github-docker:agent-production --push ."
 	},
 	"dependencies": {
 		"@tsed/common": "^6.24.0",

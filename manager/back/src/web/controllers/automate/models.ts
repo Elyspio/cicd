@@ -1,4 +1,4 @@
-import {Agent, BuildAgent, ProductionAgent} from "../../../core/services/manager/types"
+import {Abilities, Agent, BuildAgent, ProductionAgent} from "../../../core/services/manager/types"
 import {Enum, Property, Required} from "@tsed/schema";
 
 
@@ -16,14 +16,14 @@ export class AgentModel implements Agent {
 
 export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
     @Enum("docker")
-    ability: "docker";
+    ability: Abilities[];
 }
 
 
 export class BuildAgentModelAdd   extends AgentModel implements Omit<BuildAgent, "availability" | "lastUptime"> {
     @Required()
     @Enum("docker")
-    ability: "docker";
+    ability: Abilities[];
 
     @Required()
     @Property()

@@ -3,9 +3,9 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "nodemon src/app.ts",
+		"start": "nodemon -e ts -w ./src src/app.ts",
 		"build": "tsc",
-		"docker": "docker buildx build --platform linux/arm64,linux/amd64  -f ../Dockerfile  -t elyspio/automatize-github-docker --push .."
+		"docker": "cd .. && docker buildx build --platform linux/arm64,linux/amd64  -f agent-builder/Dockerfile  -t elyspio/automatize-github-docker:agent-builder --push ."
 	},
 	"dependencies": {
 		"@tsed/common": "^6.24.0",
@@ -21,7 +21,8 @@
 		"cors": "^2.8.5",
 		"fs-extra": "^9.1.0",
 		"method-override": "^3.0.0",
-		"tslib": "^2.1.0"
+		"tslib": "^2.1.0",
+		"simple-git": "^2.35.2"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.9",

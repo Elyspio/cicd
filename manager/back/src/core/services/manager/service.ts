@@ -63,7 +63,7 @@ export class ManagerService {
 
     public watch() {
         const that = this;
-        setInterval(() => {
+        setInterval(async () => {
             this.config.agents.builder.filter(a => a.availability !== "down").forEach((agent) => {
                 if (dayjs(agent.lastUptime).add(1, "minute").isBefore(dayjs())) {
                     console.log(agent, "is not available")
@@ -78,17 +78,25 @@ export class ManagerService {
             })
 
 
-            if(!this.config.queues.builds.isEmpty()) {
+            if (!this.config.queues.builds.isEmpty()) {
                 for (const agent of this.config.agents.builder.filter(a => a.availability === "free")) {
-                    if(this.config.queues.builds.isEmpty()) break;
-                    this.builder.build(agent, this.config.queues.builds.dequeue())
+                    if (this.config.queues.builds.isEmpty()) break;
+                    setImmediate(async () => {
+                        this.builder.update(agent, {availability: "running"})
+                        await this.builder.build(agent, this.config.queues.builds.dequeue())
+                        this.builder.update(agent, {availability: "free"})
+                    })
                 }
             }
 
-            if(!this.config.queues.deployments.isEmpty()) {
+            if (!this.config.queues.deployments.isEmpty()) {
                 for (const agent of this.config.agents.production.filter(a => a.availability === "free")) {
-                    if(this.config.queues.deployments.isEmpty()) break;
-                    this.production.deploy(agent, this.config.queues.deployments.dequeue())
+                    if (this.config.queues.deployments.isEmpty()) break;
+                    setImmediate(async () => {
+                        this.production.update(agent, {availability: "running"})
+                        await this.production.deploy(agent, this.config.queues.deployments.dequeue())
+                        this.production.update(agent, {availability: "free"})
+                    })
                 }
             }
 

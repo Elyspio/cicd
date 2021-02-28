@@ -25,6 +25,7 @@
 		"./src/**/*.ts"
 	],
 	"exclude": [
+		"../manager/**/*.ts",
 		"node_modules",
 		"./public",
 		"dist",

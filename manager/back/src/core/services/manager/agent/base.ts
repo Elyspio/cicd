@@ -12,6 +12,9 @@ export class Base {
 
 
     save() {
+        Services.manager.config.agents.production = Services.manager.config.agents.production.filter(a => a.uri);
+        Services.manager.config.agents.builder = Services.manager.config.agents.builder.filter(a => a.uri);
+
         return Services.storage.store(files.conf, Services.manager.config);
         // TODO AJouter un appel vers le websocket
     }

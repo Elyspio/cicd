@@ -7,8 +7,10 @@ export interface ProductionAgent extends Agent {
 }
 
 
+export type Abilities = "docker";
+
 export interface BuildAgent extends Agent {
-    ability: "docker"
+    ability: Abilities[]
 }
 
 export interface Agent {
@@ -24,10 +26,11 @@ export interface BuildConfig {
         commit?: string
     },
     docker: {
-        image: string,
         dockerfiles: {
             path: string,
             wd: string
+            image: string
+            tag?: string
         }[]
     }
 }
