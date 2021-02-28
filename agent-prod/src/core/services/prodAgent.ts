@@ -1,5 +1,4 @@
 import {Apis} from "../apis";
-import {BuildAgentModelAddAbilityEnum} from "../apis/manager";
 import * as  path from "path";
 
 export class BuilderAgentService {

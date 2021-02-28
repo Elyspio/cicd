@@ -1,22 +1,24 @@
-import {BodyParams, Controller, Get, Post, } from "@tsed/common";
-import {Example, Name, Required, Returns} from "@tsed/schema";
+import {BodyParams, Controller, Post,} from "@tsed/common";
+import {Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
-import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel} from "../automate/models";
+import {BuildAgentModelAdd} from "../automate/models";
 import {BuildConfigModel} from "./model";
 
-const examples: {build: BuildConfigModel} = {
+const examples: { build: BuildConfigModel } = {
     build: {
         docker: {
             dockerfiles: [{
-                path: "/Dockerfile",
-                wd: "/",
+                path: "Dockerfile",
+                wd: ".",
                 image: "automatize-github-docker",
                 tag: "test"
-            }]
-       },
+            }],
+            platforms: ["linux/amd64", "linux/arm64"],
+            username: "elyspio"
+        },
         github: {
             remote: "https://github.com/Elyspio/test.git",
-            branch: "main"
+            branch: "master"
         }
     }
 }

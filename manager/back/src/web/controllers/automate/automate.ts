@@ -1,7 +1,8 @@
-import {BodyParams, Controller, Get, Post, } from "@tsed/common";
-import {Example, Name, Required, Returns} from "@tsed/schema";
+import {BodyParams, Controller, Get, Post,} from "@tsed/common";
+import {Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
 import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel} from "./models";
+
 @Controller("/automate")
 @Name("Automation")
 export class AutomationController {

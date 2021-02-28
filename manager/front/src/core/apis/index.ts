@@ -1,9 +1,7 @@
 import store from "../../view/store";
 
 type Apis = {
-    core: {
-
-    }
+    core: {}
 }
 
 const getEnv = (name: string, fallback: string): string => {
@@ -16,9 +14,7 @@ export function createApis(): Apis {
 
     const backend = getEnv("BACKEND_HOST", "http://localhost:4000");
     Apis = {
-        core: {
-
-        }
+        core: {}
     }
     return Apis;
 }

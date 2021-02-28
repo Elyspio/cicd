@@ -1,6 +1,7 @@
 import {Preset} from "../../../web/controllers/docker/models";
 import * as  path from "path";
 import {readFile} from "fs-extra"
+
 export class DockerService {
     public async getDockerFile(features: Preset[]) {
         let file = "";

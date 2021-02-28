@@ -1,5 +1,5 @@
 import {ManagerMethods} from "../service";
-import {Agent, BuildAgent, BuildConfig, ProductionAgent} from "../types";
+import {BuildAgent, BuildConfig} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
 import {BuildAgentApi} from "../../../apis/agent-build";

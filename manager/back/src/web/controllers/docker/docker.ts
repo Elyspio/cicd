@@ -1,6 +1,6 @@
 import {Controller, Get, QueryParams} from "@tsed/common";
 import {Returns} from "@tsed/schema";
-import {GetDockerFileModel, Preset} from "./models";
+import {GetDockerFileModel} from "./models";
 import {Services} from "../../../core/services";
 
 @Controller("/docker")

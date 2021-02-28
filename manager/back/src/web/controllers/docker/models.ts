@@ -1,5 +1,4 @@
-import {Any, Description, Enum, Property} from "@tsed/schema";
-import {BuildConfig} from "../../../core/services/manager/types";
+import {Enum} from "@tsed/schema";
 
 export enum Preset {
     webFront = "web-front",

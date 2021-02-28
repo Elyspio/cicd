@@ -19,6 +19,7 @@ export interface Agent {
     lastUptime: Date
 }
 
+
 export interface BuildConfig {
     github: {
         remote: string,
@@ -31,11 +32,13 @@ export interface BuildConfig {
             wd: string
             image: string
             tag?: string
-        }[]
+        }[],
+        username: string,
+        platforms: string[]
     }
 }
 
-export interface DeployConfig extends Pick<ProductionAgent, "uri">{
+export interface DeployConfig extends Pick<ProductionAgent, "uri"> {
     docker?: {
         compose?: {
             path: string

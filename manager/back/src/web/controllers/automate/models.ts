@@ -20,7 +20,7 @@ export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
 }
 
 
-export class BuildAgentModelAdd   extends AgentModel implements Omit<BuildAgent, "availability" | "lastUptime"> {
+export class BuildAgentModelAdd extends AgentModel implements Omit<BuildAgent, "availability" | "lastUptime"> {
     @Required()
     @Enum("docker")
     ability: Abilities[];
@@ -40,6 +40,8 @@ class DockerModel {
     @Property(DockerComposeModel)
     @Required()
     compose: DockerComposeModel[]
+
+
 }
 
 export class ProductionAgentModel extends AgentModel implements Omit<ProductionAgent, "lastUptime"> {

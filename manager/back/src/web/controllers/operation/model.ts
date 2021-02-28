@@ -1,4 +1,4 @@
-import {Any, Description, Property, Required} from "@tsed/schema";
+import {Description, Example, Property, Required} from "@tsed/schema";
 import {BuildConfig} from "../../../core/services/manager/types";
 
 class DockerFileConfigModel {
@@ -27,6 +27,17 @@ class DockerConfigModel {
     @Property(DockerFileConfigModel)
     @Required()
     dockerfiles: DockerFileConfigModel[]
+
+    @Description("Platforms available for the future image")
+    @Example("linux/arm64", "linux/amd64")
+    @Required()
+    @Property()
+    platforms: string[];
+
+    @Required()
+    @Property()
+    username: string
+
 }
 
 class GithubConfigModel {
@@ -45,7 +56,7 @@ class GithubConfigModel {
     commit?: string
 }
 
-export class BuildConfigModel implements  BuildConfig {
+export class BuildConfigModel implements BuildConfig {
     @Description("Github configuration")
     @Property(GithubConfigModel)
     @Required()

@@ -1,11 +1,9 @@
-import {files, StorageService} from "../../storage";
-import {Production} from "./production";
-import {Builder} from "./builder";
+import {files} from "../../storage";
 import {Services} from "../../index";
 import {Agent} from "../types";
 import {ManagerConfig} from "../service";
 
-export type AgentIdentifier<T extends  Agent> =  T["uri"] | T
+export type AgentIdentifier<T extends Agent> = T["uri"] | T
 
 
 export class Base {
@@ -32,7 +30,7 @@ export class Base {
 
     protected baseUpdate<T extends Agent>(agent: T | T["uri"], newAgent: Partial<T>, kind: keyof ManagerConfig["agents"]) {
         const obj = this.getAgent(agent, kind) as T;
-        const updated = { ...obj , ...newAgent,};
+        const updated = {...obj, ...newAgent,};
         // @ts-ignore
         Services.manager.config.agents[kind] = [...(Services.manager.config.agents[kind] as Agent[]).filter(a => a.uri !== (obj as T).uri), updated];
         this.save();
@@ -59,7 +57,6 @@ export class Base {
         }
         return agent;
     }
-
 
 
 }
