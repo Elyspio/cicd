@@ -25,6 +25,7 @@ export class StorageService {
     }
 
     readSync<T>(name: string) {
-        return JSON.parse(readFileSync(name).toString()) as T
+        const text = readFileSync(name).toString();
+        return JSON.parse(text) as T
     }
 }

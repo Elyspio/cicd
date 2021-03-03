@@ -1,5 +1,5 @@
-import {Apis} from "../../apis";
-import {BuildAgentModelAddAbilityEnum} from "../../apis/manager";
+import {Apis, managerServerUrl} from "../../apis";
+import {BuildAgentModelAdd, BuildAgentModelAddAbilityEnum} from "../../apis/manager";
 import {BuildConfig} from "../../../../../manager/back/src/core/services/manager/types";
 import {Services} from "../index";
 import {files} from "../storage";
@@ -7,28 +7,37 @@ import {files} from "../storage";
 import * as path from "path";
 import {exec} from "child_process";
 import {$log} from "@tsed/common";
+import {intervalBetweenKeepAlive, intervalBetweenRegister} from "../../../config/agent";
 
 export class BuilderAgentService {
 
+    async getConfig() {
+        return Services.storage.read<BuildAgentModelAdd>(files.conf);
+    }
+
     private buildNum = 1
 
+    async register() {
+        const config = await this.getConfig();
+        $log.info(`Registering to ${managerServerUrl}`, config)
+        await Apis.manager.automation.automationAddBuildAgent(config)
+    }
+
+    async keepAlive() {
+        $log.info(`Sending keep alive to ${managerServerUrl}`)
+        await Apis.manager.automation.automationBuilderAgentKeepAlive({url: (await this.getConfig()).uri})
+    }
+
+
     async init() {
-        const agent = {
-            uri: "http://localhost:4001",
-            ability: BuildAgentModelAddAbilityEnum.Docker
-        };
-        await Services.storage.store(files.conf, agent);
-        await Apis.manager.automation.automationAddBuildAgent(agent)
-
-        setInterval(() => {
-            Apis.manager.automation.automationBuilderAgentKeepAlive({url: agent.uri})
-        }, 2500)
-
+        await this.register()
+        setInterval(() => this.register(), intervalBetweenRegister)
+        setInterval(() => this.keepAlive(), intervalBetweenKeepAlive)
     }
 
     /**
      * Build a docker image from a repository and a dockerfile config
-     * At the end of the build this one is pushed to repository
+     * At the end of the builded image is pushed to repository
      * @param docker
      * @param github
      */
