@@ -1,5 +1,4 @@
 import {Server} from "../../../src/web/server"
-import * as SuperTest from "supertest";
 import {BuildConfigModel, DockerConfigModelPlatformsEnum} from "../../../../manager/back/tests/rest/api";
 import {BuildAgentApi} from "../api";
 import {PlatformExpress} from "@tsed/platform-express";
@@ -12,7 +11,7 @@ describe("Rest", () => {
     beforeAll(async () => {
         const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
         await platform.listen();
-    });
+    }, 10000);
 
     describe("POST /core/build-agent/build", () => {
 

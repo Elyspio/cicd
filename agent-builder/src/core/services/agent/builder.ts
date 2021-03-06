@@ -5,6 +5,9 @@ import {Services} from "../index";
 import {files} from "../storage";
 import {$log} from "@tsed/common";
 import {intervalBetweenKeepAlive, intervalBetweenRegister} from "../../../config/agent";
+import {promises} from "fs"
+const {rm} = promises;
+
 
 export class BuilderAgentService {
 
@@ -34,13 +37,20 @@ export class BuilderAgentService {
 
     /**
      * Build a docker image from a repository and a dockerfile config
-     * At the end of the builded image is pushed to repository
+     * At the end of the built image is pushed to repository
      * @param docker
      * @param github
      */
     async build({docker, github}: BuildConfig) {
         const p = await Services.git.initFolder(github)
         this.buildNum++;
-        return await Services.docker.buildAndPush(p, docker);
+        const strs =  await Services.docker.buildAndPush(p, docker);
+        try {
+            await rm(p, {recursive: true, force: true});
+        }
+        catch (e) {
+
+        }
+        return strs;
     }
 }
