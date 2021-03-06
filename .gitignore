@@ -2,3 +2,5 @@ node_modules
 *.js
 .idea
 manager/back/conf.json
+agent-builder/coverage
+coverage

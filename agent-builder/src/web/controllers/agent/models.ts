@@ -33,9 +33,9 @@ class DockerConfigModel implements Docker {
     dockerfiles: DockerFileConfigModel[]
 
     @Description("Platforms available for the future image")
-    @Enum("linux/arm64", "linux/amd64")
     @Required()
-    platforms: Docker["platforms"];
+    @Enum("linux/arm64", "linux/amd64")
+    platforms: ("linux/arm64" | "linux/amd64")[];
 
     @Required()
     @Property()

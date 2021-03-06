@@ -1,11 +1,8 @@
 import {Apis, managerServerUrl} from "../../apis";
-import {BuildAgentModelAdd, BuildAgentModelAddAbilityEnum} from "../../apis/manager";
+import {BuildAgentModelAdd} from "../../apis/manager";
 import {BuildConfig} from "../../../../../manager/back/src/core/services/manager/types";
 import {Services} from "../index";
 import {files} from "../storage";
-
-import * as path from "path";
-import {exec} from "child_process";
 import {$log} from "@tsed/common";
 import {intervalBetweenKeepAlive, intervalBetweenRegister} from "../../../config/agent";
 

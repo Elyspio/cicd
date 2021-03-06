@@ -18,6 +18,5 @@ COPY --from=builder-back /back/build /back/build
 
 WORKDIR /back
 ENV LOG_FOLDER /logs
-ENV BUILD_FOLDER /builds
 ENV NODE_ENV production
 CMD ["node", "build/app.js"]
