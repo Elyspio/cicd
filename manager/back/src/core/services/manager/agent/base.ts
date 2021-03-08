@@ -10,13 +10,13 @@ export class Base {
     save() {
         Services.manager.config.agents.production = Services.manager.config.agents.production
             .filter(a => a.uri)
-            .sort((a, b) => new Date(a.lastUptime).getTime() < new Date(b.lastUptime).getTime() ? -1 : 1)
+            .sort((a, b) => new Date(a.lastUptime).getTime() > new Date(b.lastUptime).getTime() ? -1 : 1)
             .filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
 
 
         Services.manager.config.agents.builder = Services.manager.config.agents.builder
             .filter(a => a.uri)
-            .sort((a, b) => new Date(a.lastUptime).getTime() < new Date(b.lastUptime).getTime() ? -1 : 1)
+            .sort((a, b) => new Date(a.lastUptime).getTime() > new Date(b.lastUptime).getTime() ? -1 : 1)
             .filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
 
         return Services.manager.saveConfig();

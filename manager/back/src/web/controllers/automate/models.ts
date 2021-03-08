@@ -22,19 +22,19 @@ export class AgentModel implements Agent {
 export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
     @Required()
     @Enum(...buildAbilities)
-    abilities: BuildAgent["abilities"];
+    abilities: typeof buildAbilities[number][]
 }
 
 
 export class BuildAgentModelAdd extends AgentModel implements Omit<BuildAgent, "availability" | "lastUptime"> {
     @Required()
     @Enum(...buildAbilities)
-    abilities: BuildAgent["abilities"];
+    abilities: typeof buildAbilities[number][]
 }
 
 
 export class ProductionAgentModel extends AgentModel implements Omit<ProductionAgent, "availability" | "lastUptime"> {
     @Required()
     @Enum(...prodAbilities)
-    abilities: ProductionAgent["abilities"];
+    abilities: typeof prodAbilities[number][]
 }
