@@ -1,16 +1,11 @@
 export interface ProductionAgent extends Agent {
-    docker: {
-        compose: {
-            path: string
-        }[]
-    }
+    abilities: ("docker" | "docker-compose")[]
 }
 
 
-export type Abilities = "docker";
-
 export interface BuildAgent extends Agent {
-    ability: Abilities[]
+    abilities: ("docker" | "docker-buildx")[]
+
 }
 
 export interface Agent {

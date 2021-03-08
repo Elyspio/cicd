@@ -1,8 +1,7 @@
 import {BodyParams, Controller, Post,} from "@tsed/common";
 import {Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
-import {BuildAgentModelAdd} from "../automate/models";
-import {BuildConfigModel} from "./model";
+import {BuildConfigModel, DeployConfigModel} from "./model";
 
 const examples: { build: BuildConfigModel } = {
     build: {
@@ -28,6 +27,16 @@ const examples: { build: BuildConfigModel } = {
 @Name("Operation")
 export class AutomationController {
 
+
+    @Post("/register")
+    async register(
+        @Required() @BodyParams("build", BuildConfigModel) build: BuildConfigModel,
+        @Required() @BodyParams("deploy", DeployConfigModel) deploy: DeployConfigModel
+    ) {
+        await Services.manager.registerMapping({build, deploy})
+    }
+
+
     @Post("/build")
     @Returns(204)
     async start(@Required() @BodyParams(BuildConfigModel) config: BuildConfigModel) {
@@ -36,7 +45,6 @@ export class AutomationController {
 
     @Post("/deployment")
     @Returns(204)
-    async deploy(@Required() @BodyParams(BuildAgentModelAdd) agent: BuildAgentModelAdd) {
-        Services.manager.builder.add(agent)
+    async deploy(@Required() @BodyParams(DeployConfigModel) agent: DeployConfigModel) {
     }
 }

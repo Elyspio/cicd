@@ -28,7 +28,8 @@ export class Builder extends Base implements ManagerMethods<BuildAgent> {
     }
 
     public askBuild(config: BuildConfig) {
-        Services.manager.config.queues.builds.enqueue(config)
+        Services.manager.config.queues.builds.enqueue({...config, createdAt: new Date(), finishedAt: null})
+        Services.manager.saveConfig();
     }
 
     public build(agent: BuildAgent, config: BuildConfig) {

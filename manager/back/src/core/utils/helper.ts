@@ -30,4 +30,27 @@ export namespace Helper {
     }
 
     export const isDev = () => process.env.NODE_ENV !== "production";
+
+
+    export const isEqual = (x: any, y: any) => {
+        x = JSON.parse(JSON.stringify(x))
+        y = JSON.parse(JSON.stringify(y))
+        if (x === y) {
+            return true;
+        } else if ((typeof x == "object" && x != null) && (typeof y == "object" && y != null)) {
+            if (Object.keys(x).length != Object.keys(y).length)
+                return false;
+
+            for (const prop in x) {
+                if (y.hasOwnProperty(prop)) {
+                    if (!isEqual(x[prop], y[prop]))
+                        return false;
+                } else
+                    return false;
+            }
+
+            return true;
+        } else
+            return false;
+    }
 }

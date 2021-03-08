@@ -26,10 +26,12 @@ export class Production extends Base implements ManagerMethods<ProductionAgent> 
     }
 
     public askDeploy(config: DeployConfig) {
-        Services.manager.config.queues.deployments.enqueue(config)
+        Services.manager.config.queues.deployments.enqueue({...config, createdAt: new Date(), finishedAt: null})
+        Services.manager.saveConfig();
     }
 
     public deploy(agent: AgentIdentifier<ProductionAgent>, config: DeployConfig) {
+
     }
 
 }

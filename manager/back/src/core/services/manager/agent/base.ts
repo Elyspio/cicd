@@ -1,4 +1,3 @@
-import {files} from "../../storage";
 import {Services} from "../../index";
 import {Agent} from "../types";
 import {ManagerConfig} from "../service";
@@ -8,13 +7,19 @@ export type AgentIdentifier<T extends Agent> = T["uri"] | T
 
 export class Base {
 
-
     save() {
-        Services.manager.config.agents.production = Services.manager.config.agents.production.filter(a => a.uri);
-        Services.manager.config.agents.builder = Services.manager.config.agents.builder.filter(a => a.uri);
+        Services.manager.config.agents.production = Services.manager.config.agents.production
+            .filter(a => a.uri)
+            .sort((a, b) => new Date(a.lastUptime).getTime() < new Date(b.lastUptime).getTime() ? -1 : 1)
+            .filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
 
-        return Services.storage.store(files.conf, Services.manager.config);
-        // TODO AJouter un appel vers le websocket
+
+        Services.manager.config.agents.builder = Services.manager.config.agents.builder
+            .filter(a => a.uri)
+            .sort((a, b) => new Date(a.lastUptime).getTime() < new Date(b.lastUptime).getTime() ? -1 : 1)
+            .filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
+
+        return Services.manager.saveConfig();
     }
 
     protected baseAdd<T extends Agent>(agent: Omit<T, "lastUptime" | "availability">, kind: keyof ManagerConfig["agents"]) {
@@ -32,7 +37,7 @@ export class Base {
         const obj = this.getAgent(agent, kind) as T;
         const updated = {...obj, ...newAgent,};
         // @ts-ignore
-        Services.manager.config.agents[kind] = [...(Services.manager.config.agents[kind] as Agent[]).filter(a => a.uri !== (obj as T).uri), updated];
+        Services.manager.config.agents[kind] = [...(Services.manager.config.agents[kind] as T[]).filter(a => a.uri !== (obj as T).uri), updated];
         this.save();
         return updated as T
 

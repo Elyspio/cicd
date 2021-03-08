@@ -27,6 +27,6 @@ export class DockerService {
                     })
                 })
             })
-          )
+        )
     }
 }

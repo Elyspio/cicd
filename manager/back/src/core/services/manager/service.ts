@@ -4,6 +4,15 @@ import {Builder} from "./agent/builder";
 import {files, StorageService} from "../storage";
 import * as dayjs from "dayjs"
 import {Queue} from "../../utils/data";
+import {Services} from "../index";
+import {Helper} from "../../utils/helper";
+
+
+type Timestamp = {
+    createdAt: Date,
+    finishedAt: Date | null
+}
+
 
 export interface ManagerConfig {
     agents: {
@@ -11,9 +20,13 @@ export interface ManagerConfig {
         builder: BuildAgent[]
     },
     queues: {
-        builds: Queue<BuildConfig>
-        deployments: Queue<DeployConfig>
-    }
+        builds: Queue<BuildConfig & Timestamp>
+        deployments: Queue<DeployConfig & Timestamp>
+    },
+    mappings: {
+        build: BuildConfig,
+        deploy: DeployConfig
+    }[]
 }
 
 export interface ManagerMethods<T extends Agent> {
@@ -53,12 +66,19 @@ export class ManagerService {
                 queues: {
                     builds: new Queue(),
                     deployments: new Queue()
-                }
+                },
+                mappings: []
             }
             storage.store(files.conf, this.config, true);
         }
         this.watch()
 
+    }
+
+    public saveConfig() {
+
+        return Services.storage.store(files.conf, Services.manager.config);
+        // TODO AJouter un appel vers le websocket
     }
 
     public watch() {
@@ -102,6 +122,13 @@ export class ManagerService {
 
 
         }, 1000)
+    }
+
+    async registerMapping(mapping: { build: BuildConfig; deploy: DeployConfig }) {
+        if (!this.config.mappings.some(map => Helper.isEqual(mapping, map))) {
+            this.config.mappings.push(mapping)
+            await this.saveConfig();
+        }
     }
 }
 

@@ -1,51 +1,40 @@
-import {Abilities, Agent, BuildAgent, ProductionAgent} from "../../../core/services/manager/types"
+import {Agent, BuildAgent, ProductionAgent} from "../../../core/services/manager/types"
 import {Enum, Property, Required} from "@tsed/schema";
 
+const availabilities: Agent["availability"][] = ["free", "running", "down"]
+
+const buildAbilities: BuildAgent["abilities"] = ["docker", "docker-buildx"]
+const prodAbilities: ProductionAgent["abilities"] = ["docker", "docker-compose"]
 
 export class AgentModel implements Agent {
     @Required()
     @Property()
     uri: string;
 
-    @Enum("down", "running", "free")
+    @Enum(...availabilities)
     availability: "down" | "running" | "free";
 
     @Property(Date)
     lastUptime: Date;
+
 }
 
 export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
-    @Enum("docker")
-    ability: Abilities[];
+    @Required()
+    @Enum(...buildAbilities)
+    abilities: BuildAgent["abilities"];
 }
 
 
 export class BuildAgentModelAdd extends AgentModel implements Omit<BuildAgent, "availability" | "lastUptime"> {
     @Required()
-    @Enum("docker")
-    ability: Abilities[];
-
-    @Required()
-    @Property()
-    uri: string;
+    @Enum(...buildAbilities)
+    abilities: BuildAgent["abilities"];
 }
 
-class DockerComposeModel {
-    @Property()
+
+export class ProductionAgentModel extends AgentModel implements Omit<ProductionAgent, "availability" | "lastUptime"> {
     @Required()
-    path: string
-}
-
-class DockerModel {
-    @Property(DockerComposeModel)
-    @Required()
-    compose: DockerComposeModel[]
-
-
-}
-
-export class ProductionAgentModel extends AgentModel implements Omit<ProductionAgent, "lastUptime"> {
-    @Property(DockerModel)
-    @Required()
-    docker: DockerModel;
+    @Enum(...prodAbilities)
+    abilities: ProductionAgent["abilities"];
 }

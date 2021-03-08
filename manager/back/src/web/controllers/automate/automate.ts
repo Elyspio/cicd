@@ -23,7 +23,7 @@ export class AutomationController {
 
     // endregion
 
-    // region add
+    // region subscribe
 
     @Post("/agent/production")
     @Returns(204)
@@ -44,13 +44,13 @@ export class AutomationController {
     @Post("/agent/build/keep-alive")
     @Returns(204)
     async builderAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
-        Services.manager.builder.keepAlive(url)
+        // Services.manager.builder.keepAlive(url)
     }
 
     @Post("/agent/production/keep-alive")
     @Returns(204)
     async productionAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
-        Services.manager.production.keepAlive(url)
+        // Services.manager.production.keepAlive(url)
     }
 
     // endregion

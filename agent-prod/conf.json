@@ -1,0 +1,7 @@
+{
+	"abilities": [
+		"docker-compose",
+		"docker"
+	],
+	"uri": "http://localhost:4002"
+}

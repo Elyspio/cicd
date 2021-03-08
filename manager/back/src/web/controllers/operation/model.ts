@@ -1,5 +1,5 @@
-import {Description, Example, Property, Required} from "@tsed/schema";
-import {BuildConfig} from "../../../core/services/manager/types";
+import {Description, Enum, Property, Required} from "@tsed/schema";
+import {BuildConfig, DeployConfig} from "../../../core/services/manager/types";
 
 class DockerFileConfigModel {
     @Description("Path to Dockerfile file")
@@ -28,11 +28,11 @@ class DockerConfigModel {
     @Required()
     dockerfiles: DockerFileConfigModel[]
 
+
     @Description("Platforms available for the future image")
-    @Example("linux/arm64", "linux/amd64")
     @Required()
-    @Property()
-    platforms: string[];
+    @Enum("linux/arm64", "linux/amd64")
+    platforms: ("linux/arm64" | "linux/amd64")[];
 
     @Required()
     @Property()
@@ -68,3 +68,26 @@ export class BuildConfigModel implements BuildConfig {
     docker: DockerConfigModel
 }
 
+
+export class DockerComposeField {
+    @Property()
+    @Description("Path where the docker-compose.yml file is")
+    path: string;
+}
+
+export class DockerField {
+    @Property(DockerComposeField)
+    compose?: DockerComposeField
+}
+
+export class DeployConfigModel implements DeployConfig {
+    @Property(DockerField)
+    @Description("Docker/Docker-Compose configuration")
+    @Required()
+    docker: DockerField
+
+    @Property()
+    @Required()
+    @Description("URI of the production agent")
+    uri: string;
+}

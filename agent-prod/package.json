@@ -3,17 +3,19 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "nodemon src/app.ts",
+		"start": "nodemon -e ts -w ./src src/app.ts",
 		"build": "tsc",
-		"docker": "cd .. && docker buildx build --platform linux/arm64,linux/amd64  -f agent-prod/Dockerfile  -t elyspio/automatize-github-docker:agent-production --push ."
+		"docker": "cd .. && docker buildx build --platform linux/arm64,linux/amd64  -f agent-prod/Dockerfile  -t elyspio/automatize-github-docker:agent-build --push .",
+		"test": "jest --watch"
 	},
 	"dependencies": {
-		"@tsed/common": "^6.24.0",
-		"@tsed/core": "^6.24.0",
-		"@tsed/di": "^6.24.0",
-		"@tsed/schema": "^6.24.0",
-		"@tsed/platform-express": "^6.24.0",
-		"@tsed/swagger": "^6.24.0",
+		"@tsed/common": "^6.28.0",
+		"@tsed/core": "^6.28.0",
+		"@tsed/di": "^6.28.0",
+		"@tsed/schema": "^6.28.0",
+		"simple-git": "^2.36.0",
+		"@tsed/platform-express": "^6.28.0",
+		"@tsed/swagger": "^6.28.0",
 		"body-parser": "^1.19.0",
 		"compression": "^1.7.4",
 		"cookie-parser": "^1.4.5",
@@ -28,6 +30,9 @@
 		"@types/node": "^14.14.22",
 		"nodemon": "latest",
 		"ts-node": "latest",
-		"typescript": "latest"
+		"typescript": "latest",
+		"@types/jest": "^26.0.20",
+		"jest": "^26.6.3",
+		"ts-jest": "^26.5.2"
 	}
 }
