@@ -1,5 +1,5 @@
-import {ManagerMethods} from "../service";
-import {BuildAgent, BuildConfig} from "../types";
+import {ExtraConfig, ManagerMethods} from "../service";
+import {BuildAgent, BuildConfig, DeployConfig} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
 import {BuildAgentApi, DockerConfigModelPlatformsEnum} from "../../../apis/agent-build";
@@ -28,11 +28,13 @@ export class Builder extends Base implements ManagerMethods<BuildAgent> {
     }
 
     public askBuild(config: BuildConfig) {
-        Services.manager.config.queues.builds.enqueue({...config, createdAt: new Date(), finishedAt: null})
+        const id = super.nextId;
+        Services.manager.config.queues.builds.enqueue({...config, createdAt: new Date(), finishedAt: null, id})
         Services.manager.saveConfig();
+        return id;
     }
 
-    public build(agent: BuildAgent, config: BuildConfig) {
+    public async build(agent: BuildAgent, config: ExtraConfig<BuildConfig>) {
         const platforms = Array<DockerConfigModelPlatformsEnum>();
         for (const key in DockerConfigModelPlatformsEnum) {
             if (config.docker.platforms.some(p => p === DockerConfigModelPlatformsEnum[key])) {
@@ -40,12 +42,16 @@ export class Builder extends Base implements ManagerMethods<BuildAgent> {
             }
         }
 
-        return new BuildAgentApi(undefined, agent.uri).buildAgentBuild({
+        const {data: stdouts} = await new BuildAgentApi(undefined, agent.uri).buildAgentBuild({
             ...config, docker: {
                 ...config.docker,
                 platforms
             }
         });
+
+        super.finishJob(config.id);
+
+
     }
 
 

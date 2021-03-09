@@ -10,7 +10,10 @@ $log.name = process.env.APP_NAME ?? "Automatize -- Manager"
 $log.appenders.set("everything", {
     type: 'file',
     filename: path.resolve((process.env.LOG_FOLDER ?? `${__dirname}/../../logs`), "app.log"),
-    pattern: '.yyyy-MM-dd'
+    pattern: '.yyyy-MM-dd',
+    maxLogSize: 10485760,
+    backups: 3,
+    compress: true
 });
 
 @Configuration(webConfig)

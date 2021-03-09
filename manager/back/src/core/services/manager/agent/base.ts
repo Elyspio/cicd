@@ -1,11 +1,38 @@
 import {Services} from "../../index";
 import {Agent} from "../types";
 import {ManagerConfig} from "../service";
+import { EventEmitter } from "events";
 
 export type AgentIdentifier<T extends Agent> = T["uri"] | T
 
 
-export class Base {
+export class Base extends EventEmitter {
+
+    private EVENT = {
+        jobFinished: "JOB_FINISHED"
+    }
+
+    public async waitForJob(id: number) {
+        return new Promise<void>(resolve => {
+            super.on(this.getJobKey(id), () => {
+                resolve()
+            })
+        })
+
+    }
+    private getJobKey(id) {
+        return `${this.EVENT.jobFinished}-${id}`
+    }
+
+    protected finishJob(id: number) {
+        super.emit(this.getJobKey(id));
+    }
+
+    private  currentId = 0;
+
+    protected get nextId() {
+        return this.currentId++;
+    }
 
     save() {
         Services.manager.config.agents.production = Services.manager.config.agents.production

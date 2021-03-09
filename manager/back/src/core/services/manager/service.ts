@@ -13,6 +13,10 @@ type Timestamp = {
     finishedAt: Date | null
 }
 
+export type ExtraConfig<T> = T & Timestamp & {
+    id: number
+}
+
 
 export interface ManagerConfig {
     agents: {
@@ -20,8 +24,8 @@ export interface ManagerConfig {
         builder: BuildAgent[]
     },
     queues: {
-        builds: Queue<BuildConfig & Timestamp>
-        deployments: Queue<DeployConfig & Timestamp>
+        builds: Queue<ExtraConfig<BuildConfig>>
+        deployments: Queue<ExtraConfig<DeployConfig>>
     },
     mappings: {
         build: BuildConfig,

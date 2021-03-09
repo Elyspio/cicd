@@ -1,4 +1,4 @@
-import {ManagerMethods} from "../service";
+import {ExtraConfig, ManagerMethods} from "../service";
 import {DeployConfig, ProductionAgent} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
@@ -27,13 +27,17 @@ export class Production extends Base implements ManagerMethods<ProductionAgent> 
     }
 
     public askDeploy(config: DeployConfig) {
-        Services.manager.config.queues.deployments.enqueue({...config, createdAt: new Date(), finishedAt: null})
+        const id = super.nextId;
+        Services.manager.config.queues.deployments.enqueue({...config, createdAt: new Date(), finishedAt: null, id})
         Services.manager.saveConfig();
+        return id;
     }
 
-    public deploy(agent: ProductionAgent, config: DeployConfig) {
+    public async deploy(agent: ProductionAgent, config: ExtraConfig<DeployConfig>) {
         if (config.docker != undefined) {
-            return new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(config as DeployConfigModel);
+            await new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(config as DeployConfigModel);
+            super.finishJob(config.id);
+
         }
     }
 

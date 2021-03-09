@@ -3,12 +3,12 @@ import {PlatformExpress} from "@tsed/platform-express";
 import * as Apis from "../api";
 import {GithubPushWebhook} from "../api";
 
-const port = 7003
+const port = 4000
 describe("Rest", () => {
 
     beforeAll(async () => {
-        const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
-        await platform.listen();
+        // const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
+        // await platform.listen();
     });
 
 
