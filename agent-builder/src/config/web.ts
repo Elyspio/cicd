@@ -29,6 +29,8 @@ export const webConfig: Partial<TsED.Configuration> = {
     swagger: [{
         path: "/swagger",
         specVersion: "3.0.1"
-    }]
-
+    }],
+    seq: {
+        url: "http://localhost:5341"
+    }
 };

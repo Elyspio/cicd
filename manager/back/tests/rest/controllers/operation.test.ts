@@ -1,10 +1,8 @@
-import {Server} from "../../../src/web/server"
-import {PlatformExpress} from "@tsed/platform-express";
 import * as Apis from "../api";
 import {DockerConfigModelPlatformsEnum} from "../api";
 import * as path from "path";
 
-const port = 7004
+const port = 4000
 
 const buildParam = {
     docker: {
@@ -35,8 +33,8 @@ const deployParam = {
 describe("Rest", () => {
 
     beforeAll(async () => {
-        const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
-        await platform.listen();
+        // const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
+        // await platform.listen();
     });
 
 

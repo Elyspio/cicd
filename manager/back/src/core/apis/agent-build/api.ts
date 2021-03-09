@@ -64,6 +64,27 @@ export interface DockerConfigModel {
      * @memberof DockerConfigModel
      */
     dockerfiles: Array<DockerFileConfigModel>;
+    /**
+     * Platforms available for the future image
+     * @type {Array<string>}
+     * @memberof DockerConfigModel
+     */
+    platforms: Array<DockerConfigModelPlatformsEnum>;
+    /**
+     *
+     * @type {string}
+     * @memberof DockerConfigModel
+     */
+    username: string;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum DockerConfigModelPlatformsEnum {
+    Arm64 = 'linux/arm64',
+    Amd64 = 'linux/amd64'
 }
 
 /**
@@ -131,14 +152,14 @@ export interface GithubConfigModel {
 export const BuildAgentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * Build and push a project following a configuration
          * @param {BuildConfigModel} buildConfigModel
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildAgentGetBuilderAgent: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
+        buildAgentBuild: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'buildConfigModel' is not null or undefined
-            assertParamExists('buildAgentGetBuilderAgent', 'buildConfigModel', buildConfigModel)
+            assertParamExists('buildAgentBuild', 'buildConfigModel', buildConfigModel)
             const localVarPath = `/core/build-agent/build`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -175,13 +196,13 @@ export const BuildAgentApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = BuildAgentApiAxiosParamCreator(configuration)
     return {
         /**
-         *
+         * Build and push a project following a configuration
          * @param {BuildConfigModel} buildConfigModel
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildAgentGetBuilderAgent(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildAgentGetBuilderAgent(buildConfigModel, options);
+        async buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildAgentBuild(buildConfigModel, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -195,13 +216,13 @@ export const BuildAgentApiFactory = function (configuration?: Configuration, bas
     const localVarFp = BuildAgentApiFp(configuration)
     return {
         /**
-         *
+         * Build and push a project following a configuration
          * @param {BuildConfigModel} buildConfigModel
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildAgentGetBuilderAgent(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<void> {
-            return localVarFp.buildAgentGetBuilderAgent(buildConfigModel, options).then((request) => request(axios, basePath));
+        buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<Array<string>> {
+            return localVarFp.buildAgentBuild(buildConfigModel, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -214,14 +235,14 @@ export const BuildAgentApiFactory = function (configuration?: Configuration, bas
  */
 export class BuildAgentApi extends BaseAPI {
     /**
-     *
+     * Build and push a project following a configuration
      * @param {BuildConfigModel} buildConfigModel
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BuildAgentApi
      */
-    public buildAgentGetBuilderAgent(buildConfigModel: BuildConfigModel, options?: any) {
-        return BuildAgentApiFp(this.configuration).buildAgentGetBuilderAgent(buildConfigModel, options).then((request) => request(this.axios, this.basePath));
+    public buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any) {
+        return BuildAgentApiFp(this.configuration).buildAgentBuild(buildConfigModel, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -4,3 +4,4 @@ node_modules
 manager/back/conf.json
 agent-builder/coverage
 coverage
+logs

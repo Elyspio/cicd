@@ -1,4 +1,7 @@
 {
 	"uri": "http://localhost:4001",
-	"abilities": ["docker", "docker-buildx"]
+	"abilities": [
+		"docker",
+		"docker-buildx"
+	]
 }

@@ -59,8 +59,8 @@ describe("Rest", () => {
         it("No Content", async () => {
             const data: Apis.BuildAgentModelAdd = {
                 "abilities": [
-                   BuildAgentModelAddAbilitiesEnum.Docker,
-                   BuildAgentModelAddAbilitiesEnum.DockerBuildx
+                    BuildAgentModelAddAbilitiesEnum.Docker,
+                    BuildAgentModelAddAbilitiesEnum.DockerBuildx
                 ],
                 "uri": "http://localhost:4002"
             };

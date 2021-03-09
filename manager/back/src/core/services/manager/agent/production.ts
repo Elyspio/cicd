@@ -2,6 +2,7 @@ import {ManagerMethods} from "../service";
 import {DeployConfig, ProductionAgent} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
+import {DeployConfigModel, ProductionAgentApi} from "../../../apis/agent-prod";
 
 export class Production extends Base implements ManagerMethods<ProductionAgent> {
 
@@ -30,8 +31,10 @@ export class Production extends Base implements ManagerMethods<ProductionAgent> 
         Services.manager.saveConfig();
     }
 
-    public deploy(agent: AgentIdentifier<ProductionAgent>, config: DeployConfig) {
-
+    public deploy(agent: ProductionAgent, config: DeployConfig) {
+        if (config.docker != undefined) {
+            return new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(config as DeployConfigModel);
+        }
     }
 
 }

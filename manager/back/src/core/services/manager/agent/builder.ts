@@ -2,7 +2,7 @@ import {ManagerMethods} from "../service";
 import {BuildAgent, BuildConfig} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
-import {BuildAgentApi} from "../../../apis/agent-build";
+import {BuildAgentApi, DockerConfigModelPlatformsEnum} from "../../../apis/agent-build";
 
 
 export class Builder extends Base implements ManagerMethods<BuildAgent> {
@@ -33,7 +33,19 @@ export class Builder extends Base implements ManagerMethods<BuildAgent> {
     }
 
     public build(agent: BuildAgent, config: BuildConfig) {
-        return new BuildAgentApi(undefined, agent.uri).buildAgentGetBuilderAgent(config);
+        const platforms = Array<DockerConfigModelPlatformsEnum>();
+        for (const key in DockerConfigModelPlatformsEnum) {
+            if (config.docker.platforms.some(p => p === DockerConfigModelPlatformsEnum[key])) {
+                platforms.push(DockerConfigModelPlatformsEnum[key])
+            }
+        }
+
+        return new BuildAgentApi(undefined, agent.uri).buildAgentBuild({
+            ...config, docker: {
+                ...config.docker,
+                platforms
+            }
+        });
     }
 
 
