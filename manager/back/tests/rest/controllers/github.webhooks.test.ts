@@ -1,5 +1,3 @@
-import {Server} from "../../../src/web/server"
-import {PlatformExpress} from "@tsed/platform-express";
 import * as Apis from "../api";
 import {GithubPushWebhook} from "../api";
 

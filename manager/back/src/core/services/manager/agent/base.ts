@@ -1,7 +1,7 @@
 import {Services} from "../../index";
 import {Agent} from "../types";
+import {EventEmitter} from "events";
 import {ManagerConfig} from "../service";
-import { EventEmitter } from "events";
 
 export type AgentIdentifier<T extends Agent> = T["uri"] | T
 
@@ -11,6 +11,11 @@ export class Base extends EventEmitter {
     private EVENT = {
         jobFinished: "JOB_FINISHED"
     }
+    private currentId = 0;
+
+    protected get nextId() {
+        return this.currentId++;
+    }
 
     public async waitForJob(id: number) {
         return new Promise<void>(resolve => {
@@ -19,19 +24,6 @@ export class Base extends EventEmitter {
             })
         })
 
-    }
-    private getJobKey(id) {
-        return `${this.EVENT.jobFinished}-${id}`
-    }
-
-    protected finishJob(id: number) {
-        super.emit(this.getJobKey(id));
-    }
-
-    private  currentId = 0;
-
-    protected get nextId() {
-        return this.currentId++;
     }
 
     save() {
@@ -47,6 +39,10 @@ export class Base extends EventEmitter {
             .filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
 
         return Services.manager.saveConfig();
+    }
+
+    protected finishJob(id: number) {
+        super.emit(this.getJobKey(id));
     }
 
     protected baseAdd<T extends Agent>(agent: Omit<T, "lastUptime" | "availability">, kind: keyof ManagerConfig["agents"]) {
@@ -80,6 +76,10 @@ export class Base extends EventEmitter {
     protected baseList<T extends Agent>(kind: keyof ManagerConfig["agents"]) {
         // @ts-ignore
         return Services.manager.config.agents[kind] as T[]
+    }
+
+    private getJobKey(id) {
+        return `${this.EVENT.jobFinished}-${id}`
     }
 
     private getAgent<T extends Agent>(agent: T | T["uri"], kind: keyof ManagerConfig["agents"]) {

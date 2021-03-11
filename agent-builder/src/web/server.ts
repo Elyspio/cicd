@@ -2,7 +2,6 @@ import {Configuration, Inject} from "@tsed/di";
 import {$log, PlatformApplication} from "@tsed/common";
 import {middlewares} from "./middleware/common/raw";
 import "@tsed/platform-express"; // /!\ keep this import
-import "@tsed/seq"; // import seq Ts.ED module
 import "@tsed/swagger";
 import {webConfig} from "../config/web";
 import * as path from "path";

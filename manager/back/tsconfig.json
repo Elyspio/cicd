@@ -18,7 +18,11 @@
 		"emitDecoratorMetadata": true,
 		"sourceMap": false,
 		"declaration": false,
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
+		"importHelpers": true,
+		"strictBindCallApply": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true
 	},
 	"include": [
 		"./src/**/*.ts"

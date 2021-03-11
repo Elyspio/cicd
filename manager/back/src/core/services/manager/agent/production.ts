@@ -1,8 +1,8 @@
-import {ExtraConfig, ManagerMethods} from "../service";
-import {DeployConfig, ProductionAgent} from "../types";
+import {DeployConfig, ExtraConfig, ProductionAgent} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
 import {DeployConfigModel, ProductionAgentApi} from "../../../apis/agent-prod";
+import {ManagerMethods} from "../service";
 
 export class Production extends Base implements ManagerMethods<ProductionAgent> {
 

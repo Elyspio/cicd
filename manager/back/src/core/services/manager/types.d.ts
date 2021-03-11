@@ -40,3 +40,11 @@ export interface DeployConfig extends Pick<ProductionAgent, "uri"> {
         }
     }
 }
+
+type Timestamp = {
+    createdAt: Date,
+    finishedAt: Date | null
+}
+export type ConfigWithId<T> = T & { id: number }
+export type ExtraConfig<T> = ConfigWithId<T> & Timestamp
+

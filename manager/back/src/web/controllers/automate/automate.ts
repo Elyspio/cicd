@@ -2,13 +2,18 @@ import {BodyParams, Controller, Get, Post,} from "@tsed/common";
 import {Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
 import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel} from "./models";
+import {AgentAutomateSocket} from "./socket/agent.automate.socket";
 
 @Controller("/automate")
 @Name("Automation")
 export class AutomationController {
 
-    // region get
+    private static socket: AgentAutomateSocket;
+    constructor(socket: AgentAutomateSocket) {
+        AutomationController.socket = socket;
+    }
 
+    // region get
     @Get("/agent/build")
     @Returns(200, Array).Of(BuildAgentModelReturn)
     async getBuilderAgent() {

@@ -70,6 +70,7 @@ export class Queue<T> extends Collection<T> implements IQueue<T> {
         this.storage.push(item);
     }
 
+    // @ts-ignore
     dequeue(): T | undefined {
         return this.storage.shift();
     }

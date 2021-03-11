@@ -1,4 +1,4 @@
-import {Agent, BuildAgent, BuildConfig, DeployConfig, ProductionAgent} from "./types";
+import {Agent, BuildAgent, BuildConfig, DeployConfig, ExtraConfig, ProductionAgent} from "./types";
 import {Production} from "./agent/production";
 import {Builder} from "./agent/builder";
 import {files, StorageService} from "../storage";
@@ -6,16 +6,6 @@ import * as dayjs from "dayjs"
 import {Queue} from "../../utils/data";
 import {Services} from "../index";
 import {Helper} from "../../utils/helper";
-
-
-type Timestamp = {
-    createdAt: Date,
-    finishedAt: Date | null
-}
-
-export type ExtraConfig<T> = T & Timestamp & {
-    id: number
-}
 
 
 export interface ManagerConfig {
@@ -107,7 +97,7 @@ export class ManagerService {
                     if (this.config.queues.builds.isEmpty()) break;
                     setImmediate(async () => {
                         this.builder.update(agent, {availability: "running"})
-                        await this.builder.build(agent, this.config.queues.builds.dequeue())
+                        await this.builder.build(agent, this.config.queues.builds.dequeue()!!)
                         this.builder.update(agent, {availability: "free"})
                     })
                 }
@@ -118,7 +108,7 @@ export class ManagerService {
                     if (this.config.queues.deployments.isEmpty()) break;
                     setImmediate(async () => {
                         this.production.update(agent, {availability: "running"})
-                        await this.production.deploy(agent, this.config.queues.deployments.dequeue())
+                        await this.production.deploy(agent, this.config.queues.deployments.dequeue()!!)
                         this.production.update(agent, {availability: "free"})
                     })
                 }

@@ -1,5 +1,6 @@
 import * as path from "path";
 import {$log} from "@tsed/common";
+import "@tsed/socketio"; // import socket.io Ts.ED module
 
 
 export const rootDir = path.resolve(__dirname, "..",);
@@ -29,6 +30,11 @@ export const webConfig: Partial<TsED.Configuration> = {
     swagger: [{
         path: "/swagger",
         specVersion: "3.0.1"
-    }]
+    }],
+    // @ts-ignore
+    socketIO: {
+        cors: {origin: true},
+    }
+
 
 };

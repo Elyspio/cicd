@@ -1,6 +1,6 @@
 import {Apis, managerServerUrl} from "../../apis";
 import {BuildAgentModelAdd} from "../../apis/manager";
-import {BuildConfig} from "../../../../../manager/back/src/core/services/manager/types";
+import {BuildConfig, ConfigWithId} from "../../../../../manager/back/src/core/services/manager/types";
 import {Services} from "../index";
 import {files} from "../storage";
 import {$log} from "@tsed/common";
@@ -31,21 +31,19 @@ export class BuilderAgentService {
 
 
     async init() {
-        await this.register()
         setInterval(() => this.register(), intervalBetweenRegister)
         setInterval(() => this.keepAlive(), intervalBetweenKeepAlive)
+        await this.register();
     }
 
     /**
      * Build a docker image from a repository and a dockerfile config
      * At the end of the built image is pushed to repository
-     * @param docker
-     * @param github
      */
-    async build({docker, github}: BuildConfig) {
-        const p = await Services.git.initFolder(github)
+    async build(config: ConfigWithId<BuildConfig>) {
+        const p = await Services.git.initFolder(config)
         this.buildNum++;
-        const strs = await Services.docker.buildAndPush(p, docker);
+        const strs = await Services.docker.buildAndPush(config, p);
         try {
             await rm(p, {recursive: true, force: true});
         } catch (e) {

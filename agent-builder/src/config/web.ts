@@ -10,6 +10,9 @@ $log.info({frontPath, rootDir});
 
 export const webConfig: Partial<TsED.Configuration> = {
     rootDir,
+    // seq: {
+    //     url: "http://192.168.0.59:8045/"
+    // },
     acceptMimes: ['application/json'],
     httpPort: process.env.HTTP_PORT || 4001,
     httpsPort: false, // CHANGE
@@ -29,8 +32,5 @@ export const webConfig: Partial<TsED.Configuration> = {
     swagger: [{
         path: "/swagger",
         specVersion: "3.0.1"
-    }],
-    seq: {
-        url: "http://localhost:5341"
-    }
+    }]
 };

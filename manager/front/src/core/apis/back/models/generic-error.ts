@@ -16,4 +16,4 @@
  * @export
  * @interface GenericError
  */
-export type  GenericError = {[key in string]: string}
+export type  GenericError = { [key in string]: string }

@@ -1,8 +1,8 @@
-import {ExtraConfig, ManagerMethods} from "../service";
-import {BuildAgent, BuildConfig, DeployConfig} from "../types";
+import {BuildAgent, BuildConfig, ExtraConfig} from "../types";
 import {AgentIdentifier, Base} from "./base";
 import {Services} from "../../index";
 import {BuildAgentApi, DockerConfigModelPlatformsEnum} from "../../../apis/agent-build";
+import {ManagerMethods} from "../service";
 
 
 export class Builder extends Base implements ManagerMethods<BuildAgent> {
