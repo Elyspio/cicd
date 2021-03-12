@@ -2,7 +2,7 @@ import {io} from "socket.io-client";
 
 
 const host = clearUrl(process.env.MANAGER_SOCKET_URL ?? "localhost:4000")
-const namespace = clearUrl(process.env.MANAGER_SOCKET_NAMESPACE ?? "/agent/job")
+const namespace = clearUrl(process.env.MANAGER_SOCKET_NAMESPACE ?? "/agent/jobs")
 
 export const createSocket = () => {
     const server = io(`http://${host}${namespace}`, {

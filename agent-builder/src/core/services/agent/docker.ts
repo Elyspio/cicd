@@ -32,7 +32,7 @@ export class DockerService {
                     process.stderr.on('data', (data) => {
                         console.error(`stderr: ${data}`);
                         stderr += data.toString()
-                        managerSocket.emit("job-stdout", id, data.toString())
+                        managerSocket.emit("jobs-stdout", id, data.toString())
 
                     });
 

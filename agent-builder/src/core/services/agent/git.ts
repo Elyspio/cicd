@@ -24,7 +24,7 @@ export class GitService {
         // if(commit) {
         //     await git.checkout(commit)
         // }
-        managerSocket.emit("job-stdout", id, `Repository ${remote} cloned at ${localPath}`)
+        managerSocket.emit("jobs-stdout", id, `Repository ${remote} cloned at ${localPath}`)
         return localPath;
     }
 }

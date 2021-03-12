@@ -1,4 +1,4 @@
-import {BodyParams, Controller, Get, Post,} from "@tsed/common";
+import {$log, BodyParams, Controller, Get, Post,} from "@tsed/common";
 import {Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
 import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel} from "./models";
@@ -49,13 +49,13 @@ export class AutomationController {
     @Post("/agent/build/keep-alive")
     @Returns(204)
     async builderAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
-        // Services.manager.builder.keepAlive(url)
+        Services.manager.builder.keepAlive(url)
     }
 
     @Post("/agent/production/keep-alive")
     @Returns(204)
     async productionAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
-        // Services.manager.production.keepAlive(url)
+       Services.manager.production.keepAlive(url)
     }
 
     // endregion

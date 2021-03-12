@@ -17,6 +17,7 @@ RUN cd /front && npm install
 COPY front/tsconfig.json /front/tsconfig.json
 COPY front/public /front/public
 COPY front/src /front/src
+COPY back/src /back/src
 RUN cd /front && npm run build
 
 # Running

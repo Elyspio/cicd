@@ -3,14 +3,15 @@ import {Paper} from "@material-ui/core";
 import "./Application.scss"
 import {connect, ConnectedProps} from "react-redux";
 import {Dispatch} from "redux";
-import {RootState} from "../store/reducer";
 import {toggleTheme} from "../store/module/theme/action";
 import Appbar from "./appbar/Appbar";
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import {Drawer} from "./utils/drawer/Drawer"
 import Example from "./test/Test";
+import {StoreState} from "../store";
+import {Automate} from "./automate/Automate";
 
-const mapStateToProps = (state: RootState) => ({theme: state.theme.current})
+const mapStateToProps = (state: StoreState) => ({theme: state.theme.current})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({toggleTheme: () => dispatch(toggleTheme())})
 
@@ -32,8 +33,7 @@ class Application extends React.Component<Props & ReduxTypes, State> {
                 <Drawer position={"right"}
                         actions={[{onClick: this.props.toggleTheme, text: "Switch lights", icon: <Brightness5Icon/>}]}>
                     <div className="content">
-                        <Appbar appName={"Example"}/>
-                        <Example/>
+                        <Automate/>
                     </div>
                 </Drawer>
             </Paper>

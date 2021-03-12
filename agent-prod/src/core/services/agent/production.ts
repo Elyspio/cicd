@@ -1,18 +1,12 @@
 import {Apis, managerServerUrl} from "../../apis";
 import {BuildAgentModelAdd} from "../../apis/manager";
-import {DeployConfig} from "../../../../../manager/back/src/core/services/manager/types";
+import {ConfigWithId, DeployConfig, Job} from "../../../../../manager/back/src/core/services/manager/types";
 import {Services} from "../index";
 import {files} from "../storage";
 import {$log} from "@tsed/common";
 import {intervalBetweenKeepAlive, intervalBetweenRegister} from "../../../config/agent";
-import {promises} from "fs"
-
-const {rm} = promises;
-
 
 export class ProductionAgentService {
-
-    private deployNum = 1
 
     async getConfig() {
         return Services.storage.read<BuildAgentModelAdd>(files.conf);
@@ -31,18 +25,18 @@ export class ProductionAgentService {
 
 
     async init() {
-        await this.register()
         setInterval(() => this.register(), intervalBetweenRegister)
         setInterval(() => this.keepAlive(), intervalBetweenKeepAlive)
+        await this.register();
     }
 
     /**
      * Deploy a docker-compose configuration
      */
-    async deploy(conf: DeployConfig) {
+    async deploy(conf: Job<DeployConfig>) {
         if (conf?.docker?.compose?.path) {
-            await Services.docker.compose.pull(conf.docker.compose.path)
-            await Services.docker.compose.up(conf.docker.compose.path)
+            await Services.docker.compose.pull(conf)
+            await Services.docker.compose.up(conf)
 
         }
     }

@@ -20,7 +20,8 @@ export const webConfig: Partial<TsED.Configuration> = {
         ]
     },
     exclude: [
-        '**/*.spec.ts'
+        '**/*.spec.ts',
+        "**/*.d.ts"
     ],
     statics: {
         '/': [
@@ -34,7 +35,10 @@ export const webConfig: Partial<TsED.Configuration> = {
     // @ts-ignore
     socketIO: {
         cors: {origin: true},
-    }
-
+    },
+    componentsScan: [
+        `${rootDir}/core/services/**/**.ts`
+    ],
+    customServiceOptions: {}
 
 };

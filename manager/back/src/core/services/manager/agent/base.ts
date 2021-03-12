@@ -1,7 +1,6 @@
 import {Services} from "../../index";
-import {Agent} from "../types";
+import {Agent, ManagerConfig} from "../types";
 import {EventEmitter} from "events";
-import {ManagerConfig} from "../service";
 
 export type AgentIdentifier<T extends Agent> = T["uri"] | T
 

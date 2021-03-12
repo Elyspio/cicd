@@ -1,4 +1,4 @@
-import {Agent, BuildAgent, BuildConfig, DeployConfig, ExtraConfig, ProductionAgent} from "./types";
+import {Agent, BuildConfig, DeployConfig, ManagerConfig} from "./types";
 import {Production} from "./agent/production";
 import {Builder} from "./agent/builder";
 import {files, StorageService} from "../storage";
@@ -6,22 +6,10 @@ import * as dayjs from "dayjs"
 import {Queue} from "../../utils/data";
 import {Services} from "../index";
 import {Helper} from "../../utils/helper";
+import {Service} from "@tsed/di";
+import {EventEmitter} from "events";
+import {events} from "../../../config/events";
 
-
-export interface ManagerConfig {
-    agents: {
-        production: ProductionAgent[],
-        builder: BuildAgent[]
-    },
-    queues: {
-        builds: Queue<ExtraConfig<BuildConfig>>
-        deployments: Queue<ExtraConfig<DeployConfig>>
-    },
-    mappings: {
-        build: BuildConfig,
-        deploy: DeployConfig
-    }[]
-}
 
 export interface ManagerMethods<T extends Agent> {
     add: (agent: Omit<T, "lastUptime" | "availability">) => void
@@ -31,12 +19,13 @@ export interface ManagerMethods<T extends Agent> {
     list: () => T[]
 }
 
-export class ManagerService {
+export class ManagerService extends EventEmitter {
     public production: Readonly<Production> = new Production()
     public builder: Readonly<Builder> = new Builder()
     public config: ManagerConfig
 
     constructor() {
+        super();
         let storage = new StorageService();
         try {
             this.config = storage.readSync<ManagerConfig>(files.conf)
@@ -50,12 +39,15 @@ export class ManagerService {
             this.config.queues.deployments.storage.forEach(value => {
                 this.config.queues.deployments.enqueue(value)
             })
-
         } catch (e) {
             this.config = {
                 agents: {
                     builder: [],
                     production: []
+                },
+                jobs: {
+                    builds: [],
+                    deployments: []
                 },
                 queues: {
                     builds: new Queue(),
@@ -70,8 +62,8 @@ export class ManagerService {
     }
 
     public saveConfig() {
-
-        return Services.storage.store(files.conf, Services.manager.config);
+        this.emit(events.config.update, this.config)
+        return Services.storage.store(files.conf, this.config);
         // TODO AJouter un appel vers le websocket
     }
 

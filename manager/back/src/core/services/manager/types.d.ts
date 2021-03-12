@@ -1,3 +1,5 @@
+import {Queue} from "../../utils/data";
+
 export interface ProductionAgent extends Agent {
     abilities: ("docker" | "docker-compose")[]
 }
@@ -14,8 +16,12 @@ export interface Agent {
     lastUptime: Date
 }
 
+interface Config {
 
-export interface BuildConfig {
+}
+
+
+export interface BuildConfig extends Config {
     github: {
         remote: string,
         branch: string,
@@ -33,7 +39,7 @@ export interface BuildConfig {
     }
 }
 
-export interface DeployConfig extends Pick<ProductionAgent, "uri"> {
+export interface DeployConfig extends Config, Pick<ProductionAgent, "uri"> {
     docker?: {
         compose?: {
             path: string
@@ -43,8 +49,31 @@ export interface DeployConfig extends Pick<ProductionAgent, "uri"> {
 
 type Timestamp = {
     createdAt: Date,
+    startedAt: Date | null,
     finishedAt: Date | null
 }
-export type ConfigWithId<T> = T & { id: number }
-export type ExtraConfig<T> = ConfigWithId<T> & Timestamp
+export type ConfigWithId<T extends Config> = T & { id: number }
+export type Job<T extends Config> = ConfigWithId<T> & Timestamp
 
+export interface ManagerConfig {
+    // List of known agents
+    agents: {
+        production: ProductionAgent[],
+        builder: BuildAgent[]
+    },
+    // Lists of jobs that will get processed once a agent is available
+    queues: {
+        builds: Queue<Job<BuildConfig>>
+        deployments: Queue<Job<DeployConfig>>
+    },
+    // Running and finished jobs
+    jobs: {
+        builds: Job<BuildConfig>[],
+        deployments: Job<DeployConfig>[]
+    }
+    // Mapping between a build (Github + docker image build) and a deployment
+    mappings: {
+        build: BuildConfig,
+        deploy: DeployConfig
+    }[]
+}

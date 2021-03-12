@@ -1,4 +1,9 @@
 version: "3"
 services:
   app:
-    image: elyspio/automatize-github-docker:test
+    image: elyspio/automatize-github-docker:agent-build
+    volumes:
+      - ./conf.json:/app/conf.json
+    environment:
+      CONF_PATH: /app/conf.json
+    restart: unless-stopped

@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import {connect, ConnectedProps, Provider} from "react-redux";
-import store from "./view/store";
+import store, {StoreState} from "./view/store";
 import Application from "./view/components/Application";
 import {ThemeProvider} from '@material-ui/core';
 import {themes} from "./config/theme";
-import {RootState} from "./view/store/reducer";
 
 
-const mapStateToProps = (state: RootState) => ({theme: state.theme.current})
+const mapStateToProps = (state: StoreState) => ({theme: state.theme.current})
 
 
 const connector = connect(mapStateToProps);
