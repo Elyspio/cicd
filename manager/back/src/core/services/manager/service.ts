@@ -35,6 +35,7 @@ export class ManagerService extends EventEmitter {
 
     public automate = new AutomateService()
 
+    private mappingNextId = 0;
 
     constructor() {
         super();
@@ -123,7 +124,7 @@ export class ManagerService extends EventEmitter {
 
     async registerMapping(mapping: { build: BuildConfig; deploy: DeployConfig }) {
         if (!this.config.mappings.some(map => Helper.isEqual(mapping, map))) {
-            this.config.mappings.push(mapping)
+            this.config.mappings.push({...mapping, id: this.mappingNextId++})
             await this.saveConfig();
         }
     }

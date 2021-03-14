@@ -2,13 +2,14 @@ import React from "react";
 import {Button, Chip, ListItem, ListItemAvatar, ListItemIcon, ListItemText, useTheme} from "@material-ui/core";
 import {BuildConfig, Config, DeployConfig, Job} from "../../../../../../back/src/core/services/manager/types";
 import {themeConnector, ThemeType} from "../agents/AgentItem";
-import {ReactComponent as BuildIcon} from "../icon/buildJob.svg"
-import {ReactComponent as DeployIcon} from "../icon/deploymentJob.svg"
-import {ReactComponent as DockerIcon} from "../icon/docker.svg"
-import {ReactComponent as GithubIcon} from "../icon/github.svg"
-import {ReactComponent as GitBranchIcon} from "../icon/git-branch.svg"
+import {ReactComponent as BuildIcon} from "../icons/buildJob.svg"
+import {ReactComponent as DeployIcon} from "../icons/deploymentJob.svg"
+import {ReactComponent as DockerIcon} from "../icons/docker.svg"
+import {ReactComponent as GithubIcon} from "../icons/github.svg"
+import {ReactComponent as GitBranchIcon} from "../icons/git-branch.svg"
 import {PaletteColor} from "@material-ui/core/styles/createPalette";
 import './JobItem.scss'
+import {CustomChip} from "../../utils/CustomChip";
 
 // region status
 
@@ -26,7 +27,7 @@ function StatusChip({status, theme}: StatusChipProps) {
         done: {label: "Done", color: palette.success[theme]},
     }
 
-    return <Chip className={"Chip"} label={texts[status].label} style={{backgroundColor: texts[status].color, fontWeight: "bold", fontSize: "90%"}}/>
+    return <CustomChip label={texts[status].label} color={texts[status].color}/>
 
 }
 
@@ -56,10 +57,9 @@ function TypeChip({type, theme}: TypeChipProps) {
         deployment: {label: "Deploy", color: colors["deployment"][theme]},
     }
 
-    return <Chip
-        className={"Chip"}
+    return <CustomChip
         label={texts[type].label}
-        style={{backgroundColor: texts[type].color, fontWeight: "bold", fontSize: "90%"}}
+        color={texts[type].color}
     />
 
 }
@@ -94,18 +94,18 @@ export function JobItem(props: JobItemProps) {
     const size = 16;
     const arr: JSX.Element[] = []
 
-    if(props.type === "build") {
+    if (props.type === "build") {
         const config = props.data.config as BuildConfig;
         const remote = config.github.remote.slice(config.github.remote.lastIndexOf("/") + 1, config.github.remote.lastIndexOf(".git"))
         arr.push(
-            <Chip label={<><GithubIcon  height={size} width={size} /> {remote}</>}/>,
-            <Chip label={<><GitBranchIcon  height={size} width={size}/> {config.github.branch}</>}/>
+            <CustomChip label={<><GithubIcon height={size} width={size}/> {remote}</>}/>,
+            <CustomChip label={<><GitBranchIcon height={size} width={size}/> {config.github.branch}</>}/>
         )
     }
 
-    if(props.type === "deployment") {
+    if (props.type === "deployment") {
         arr.push(
-            <Chip label={<><DockerIcon  height={size} width={size}/> {(props.data.config as DeployConfig).uri}</>}/>
+            <CustomChip label={<><DockerIcon height={size} width={size}/> {(props.data.config as DeployConfig).uri}</>}/>
         )
     }
 
@@ -116,7 +116,7 @@ export function JobItem(props: JobItemProps) {
             </ListItemAvatar>
             <ListItemText
                 primary={<div className={"info"}>
-                    <Chip label={props.data.id}/>
+                    <CustomChip label={props.data.id}/>
                     <TypeChipWithStore type={props.type}/>
                     <StatusChipWithStore status={props.status}/>
                     <div className={"meta-data"}>

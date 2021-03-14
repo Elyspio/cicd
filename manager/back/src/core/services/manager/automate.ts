@@ -1,7 +1,7 @@
 import {BuildAgent, BuildConfig, DeployConfig, Job, ProductionAgent} from "./types";
 import {BuildAgentApi, DockerConfigModelPlatformsEnum} from "../../apis/agent-build";
 import {Services} from "../index";
-import {DeployConfigModel, DeployJobModel, ProductionAgentApi} from "../../apis/agent-prod";
+import {DeployJobModel, ProductionAgentApi} from "../../apis/agent-prod";
 
 export class AutomateService {
 
@@ -42,7 +42,7 @@ export class AutomateService {
         job.startedAt = new Date();
         Services.manager.jobs.deployments.add(job);
         if (job.config.docker != undefined) {
-            await new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(job as DeployJobModel );
+            await new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(job as DeployJobModel);
             Services.manager.agents.production.finishJob(job.id);
 
         }

@@ -54,7 +54,7 @@ export type Timestamp = {
 }
 export type WithId<T> = T & { id: number }
 //export type Job<T extends Config> = ConfigWithId<T> & Timestamp
-export type Job<T extends Config> = WithId<Timestamp> & {config: T}
+export type Job<T extends Config> = WithId<Timestamp> & { config: T }
 
 export interface ManagerConfig {
     // List of known agents
@@ -75,7 +75,8 @@ export interface ManagerConfig {
     // Mapping between a build (Github + docker image build) and a deployment
     mappings: {
         build: BuildConfig,
-        deploy: DeployConfig
+        deploy: DeployConfig,
+        id: number
     }[]
 }
 

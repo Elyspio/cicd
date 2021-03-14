@@ -24,7 +24,6 @@ type Props = ReduxTypes & OwnProps
 export function JobBuildDetail({job}: Props) {
 
 
-
     return <div className={"JobBuildDetail"}>
         {job?.id}
     </div>

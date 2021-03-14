@@ -1,12 +1,13 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import {Chip, ListItem, ListItemIcon, ListItemText, Typography, useTheme} from "@material-ui/core";
 import {Agent} from "../../../../../../back/src/core/services/manager/types";
 import {StoreState} from "../../../store";
 import {Dispatch} from "redux";
 import {connect, ConnectedProps} from "react-redux";
-import {ReactComponent as BuildIcon} from "../icon/buildJob.svg"
-import {ReactComponent as DeployIcon} from "../icon/deploymentJob.svg"
+import {ReactComponent as BuildIcon} from "../icons/buildJob.svg"
+import {ReactComponent as DeployIcon} from "../icons/deploymentJob.svg"
 import "./AgentItem.scss"
+import {CustomChip} from "../../utils/CustomChip";
 
 type Props = {
     data: Agent
@@ -28,7 +29,10 @@ function StatusChip({status, theme}: StatusChipProps) {
         running: {label: "Working", color: palette.primary[theme]},
     }
 
-    return <Chip label={texts[status].label} style={{backgroundColor: texts[status].color, fontWeight: "bold", fontSize: "90%"}}/>
+    return <CustomChip
+        label={texts[status].label}
+        color={texts[status].color}
+    />
 
 }
 

@@ -10,6 +10,7 @@ import Jobs from "./jobs/Jobs";
 import {Route, Switch} from 'react-router'
 import JobBuildDetail from "./jobs/detail/JobBuildDetail";
 import JobDeployDetail from "./jobs/detail/JobDeployDetail";
+import Mappings from "./mappings/Mappings";
 
 const mapStateToProps = (state: StoreState) => ({})
 
@@ -27,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
     },
     left: {
         width: '30%',
+        minWidth: "30%",
         maxHeight: "100vh",
         overflow: "auto",
         padding: 20,
     },
     right: {
-        width: '70%',
+        width: '100%',
         padding: 20
 
     }
@@ -56,14 +58,14 @@ export function Automate(props: ReduxTypes) {
             </SimpleAccordion>
 
             <SimpleAccordion label={"Mappings"}>
-
+                <Mappings/>
             </SimpleAccordion>
 
         </Paper>
         <Paper className={classes.right}>
             <Switch>
-                <Route exact path="/job/build/:id" render={({match: {params: {id}}}) => id &&  <JobBuildDetail id={Number.parseInt(id)}/>}/>
-                <Route exact path="/job/deploy/:id" render={({match: {params: {id}}}) => id &&  <JobDeployDetail id={Number.parseInt(id)}/>}/>
+                <Route exact path="/job/build/:id" render={({match: {params: {id}}}) => id && <JobBuildDetail id={Number.parseInt(id)}/>}/>
+                <Route exact path="/job/deploy/:id" render={({match: {params: {id}}}) => id && <JobDeployDetail id={Number.parseInt(id)}/>}/>
                 <Route render={() => <Typography>Please select one item on the left to see its details</Typography>}/>
             </Switch>
         </Paper>

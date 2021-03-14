@@ -1,5 +1,11 @@
-.AgentItem {
-	.Avatar {
-		margin-right: 1rem;
+
+.Agents {
+	.AgentItem {
+		.Avatar {
+			margin-right: 1rem;
+		}
 	}
+
+	overflow-x: hidden;
 }
+

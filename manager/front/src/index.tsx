@@ -31,7 +31,7 @@ const ConnectedWrapper = connector(Wrapper) as any;
 
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedRouter history={history}> { /* place ConnectedRouter under Provider */ }
+        <ConnectedRouter history={history}> { /* place ConnectedRouter under Provider */}
             <ConnectedWrapper/>
         </ConnectedRouter>
     </Provider>,
