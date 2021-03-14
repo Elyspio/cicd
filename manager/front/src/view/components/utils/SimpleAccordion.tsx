@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {makeStyles} from "@material-ui/core/styles";
@@ -14,7 +14,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function SimpleAccordion(props: { label: string, children?: React.ReactChild[] | React.ReactChild }) {
+type Props = { label: string | ReactNode, children?: ReactNode | ReactNode[] };
+
+export function SimpleAccordion({label, children}: Props) {
     const classes = useStyles();
 
     return (
@@ -24,10 +26,13 @@ export function SimpleAccordion(props: { label: string, children?: React.ReactCh
                 aria-controls="label-content"
                 id="label-header"
             >
-                <Typography className={classes.heading}>{props.label}</Typography>
+                {typeof label === "string"
+                    ? <Typography className={classes.heading}>{label}</Typography>
+                    : label
+                }
             </AccordionSummary>
             <AccordionDetails>
-                {props.children}
+                {children}
             </AccordionDetails>
         </Accordion>
     );
