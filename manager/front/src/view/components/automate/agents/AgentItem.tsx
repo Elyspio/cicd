@@ -1,11 +1,12 @@
 import React from "react";
-import {Avatar, Chip, ListItem, ListItemAvatar, ListItemText, Typography, useTheme} from "@material-ui/core";
-import {BuildAgent as IBuildAgent, Agent} from "../../../../../../back/src/core/services/manager/types";
-import FolderIcon from '@material-ui/icons/Folder';
-import MapIcon from '@material-ui/icons/Map';
+import {Chip, ListItem, ListItemIcon, ListItemText, Typography, useTheme} from "@material-ui/core";
+import {Agent} from "../../../../../../back/src/core/services/manager/types";
 import {StoreState} from "../../../store";
 import {Dispatch} from "redux";
 import {connect, ConnectedProps} from "react-redux";
+import {ReactComponent as BuildIcon} from "../icon/buildJob.svg"
+import {ReactComponent as DeployIcon} from "../icon/deploymentJob.svg"
+import "./AgentItem.scss"
 
 type Props = {
     data: Agent
@@ -13,13 +14,13 @@ type Props = {
 }
 
 
-type StatusChipProps = StatusChipReduxTypes &{
+type StatusChipProps = ThemeType & {
     status: Agent["availability"]
 }
 
 function StatusChip({status, theme}: StatusChipProps) {
 
-    const  {palette} = useTheme();
+    const {palette} = useTheme();
 
     const texts: { [key in typeof status]: { label: string, color: string } } = {
         down: {label: "Down", color: palette.error[theme]},
@@ -37,17 +38,15 @@ const mapStateToProps = (state: StoreState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({})
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type StatusChipReduxTypes = ConnectedProps<typeof connector>;
-const StatusChipWithStore = connector(StatusChip)
+export const themeConnector = connect(mapStateToProps, mapDispatchToProps);
+export type ThemeType = ConnectedProps<typeof themeConnector>;
+const StatusChipWithStore = themeConnector(StatusChip)
 
 export function AgentItem(props: Props) {
-    return <ListItem>
-        <ListItemAvatar>
-            <Avatar>
-                {props.type === "production" ? <FolderIcon/> : <MapIcon/>}
-            </Avatar>
-        </ListItemAvatar>
+    return <ListItem className={"AgentItem"}>
+        <ListItemIcon className={"Avatar"}>
+            {props.type === "production" ? <DeployIcon width={48} height={48}/> : <BuildIcon width={48} height={48}/>}
+        </ListItemIcon>
         <ListItemText
             primary={props.data.uri}
             secondary={<Typography>Status: <StatusChipWithStore status={props.data.availability}/></Typography>}

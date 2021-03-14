@@ -1,5 +1,5 @@
 import {Description, Enum, Property, Required} from "@tsed/schema";
-import {BuildConfig, ConfigWithId} from "../../../../../manager/back/src/core/services/manager/types";
+import {BuildConfig, Job, Timestamp} from "../../../../../manager/back/src/core/services/manager/types";
 
 
 type Docker = BuildConfig["docker"]
@@ -64,7 +64,8 @@ class GithubConfigModel {
     commit?: string
 }
 
-export class BuildConfigModel extends JobModel implements ConfigWithId<BuildConfig> {
+
+class GithubDockerModel implements BuildConfig {
     @Description("Github configuration")
     @Property(GithubConfigModel)
     @Required()
@@ -75,5 +76,9 @@ export class BuildConfigModel extends JobModel implements ConfigWithId<BuildConf
     @Property(DockerConfigModel)
     docker: DockerConfigModel
 
+}
 
+export class BuildConfigModel extends JobModel implements Omit<Job<BuildConfig>, keyof Timestamp> {
+    @Property(GithubDockerModel)
+    config: GithubDockerModel
 }

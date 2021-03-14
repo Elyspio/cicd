@@ -20,7 +20,7 @@ describe("Rest", () => {
                 "created": false,
                 "deleted": false,
                 "forced": false,
-                "base_ref": null,
+                "base_ref": "",
                 "compare": "https://github.com/Elyspio/automatize-github-docker/compare/aa912d52b1d6...9f50882ddc9a",
                 "commits": [
                     "[object Object]"
@@ -101,7 +101,7 @@ describe("Rest", () => {
                     "ssh_url": "git@github.com:Elyspio/automatize-github-docker.git",
                     "clone_url": "https://github.com/Elyspio/automatize-github-docker.git",
                     "svn_url": "https://github.com/Elyspio/automatize-github-docker",
-                    "homepage": null,
+                    "homepage": {},
                     "size": 439,
                     "stargazers_count": 0,
                     "watchers_count": 0,
@@ -112,7 +112,7 @@ describe("Rest", () => {
                     "has_wiki": true,
                     "has_pages": false,
                     "forks_count": 0,
-                    "mirror_url": null,
+                    "mirror_url": {},
                     "archived": false,
                     "disabled": false,
                     "open_issues_count": 0,
@@ -153,7 +153,7 @@ describe("Rest", () => {
             };
             const ret = await new Apis.GithubWebhooksApi(undefined, "http://localhost:" + port).githubWebhooksPush(data);
             expect(ret.status).toEqual(204);
-        });
+        }, 60000);
     });
 
 });

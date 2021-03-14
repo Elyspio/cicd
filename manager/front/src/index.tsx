@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import {connect, ConnectedProps, Provider} from "react-redux";
-import store, {StoreState} from "./view/store";
+import {StoreState, store, history} from "./view/store";
 import Application from "./view/components/Application";
 import {ThemeProvider} from '@material-ui/core';
 import {themes} from "./config/theme";
+import {ConnectedRouter} from "connected-react-router";
 
 
 const mapStateToProps = (state: StoreState) => ({theme: state.theme.current})
@@ -30,7 +31,9 @@ const ConnectedWrapper = connector(Wrapper) as any;
 
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedWrapper/>
+        <ConnectedRouter history={history}> { /* place ConnectedRouter under Provider */ }
+            <ConnectedWrapper/>
+        </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
 );

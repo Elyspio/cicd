@@ -18,8 +18,8 @@ export function Agents(props: ReduxTypes) {
     }, [props.agents?.builder, props.agents?.production])
 
     return <List className={"Agents"}>
-        {agents.builder.map(builder => <AgentItem data={builder} type={"builder"}/>)}
-        {agents.production.map(builder => <AgentItem data={builder} type={"production"}/>)}
+        {agents.builder.map((agent, index) => <AgentItem key={`b-${agent.uri}-${index}`} data={agent} type={"builder"}/>)}
+        {agents.production.map((agent, index) => <AgentItem key={`p-${agent.uri}-${index}`} data={agent} type={"production"}/>)}
     </List>
 }
 

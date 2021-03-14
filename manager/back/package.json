@@ -6,7 +6,7 @@
 		"start": "nodemon -e ts -w ./src src/app.ts",
 		"build": "tsc",
 		"docker": "cd .. && docker buildx build --platform linux/arm64,linux/amd64   -t elyspio/automatize-github-docker:manager --push .",
-		"test": "jest --watch"
+		"test": "jest"
 	},
 	"dependencies": {
 		"@tsed/common": "^6.32.2",

@@ -1,26 +1,26 @@
-import {BuildConfig, ConfigWithId} from "../../../../../manager/back/src/core/services/manager/types";
 import * as path from "path";
 import {$log} from "@tsed/common";
 import {spawn} from "child_process";
 import {managerSocket} from "./socket";
+import {BuildConfigModel} from "../../../web/controllers/agent/models";
 
 export class DockerService {
-    async buildAndPush({docker: conf, id}: ConfigWithId<BuildConfig>, folder: string) {
+    async buildAndPush({config: {docker}, id}: BuildConfigModel, folder: string) {
         let command = ["docker"];
-        if (conf.platforms.length > 0) {
+        if (docker.platforms.length > 0) {
             command.push("buildx")
         }
         command.push(`build`)
-        if (conf.platforms.length > 0) {
-            command.push(` --platform ${conf.platforms.join(",")}`)
+        if (docker.platforms.length > 0) {
+            command.push(` --platform ${docker.platforms.join(",")}`)
         }
 
 
         return Promise.all(
-            conf.dockerfiles.map(df => {
+            docker.dockerfiles.map(df => {
                 const dockerfilePath = path.join(folder, df.path)
                 return new Promise<string>((resolve, reject) => {
-                    const completedCommand = `${command.join(" ")} -f ${dockerfilePath} ${df.wd} -t ${conf.username}/${df.image}:${df.tag ?? "latest"} --push`;
+                    const completedCommand = `${command.join(" ")} -f ${dockerfilePath} ${df.wd} -t ${docker.username}/${df.image}:${df.tag ?? "latest"} --push`;
                     $log.info("BuilderAgentService.build", {completedCommand, df})
                     const splited = completedCommand.split(" ").filter(x => x.length > 0)
                     const process = spawn(splited[0], splited.slice(1));

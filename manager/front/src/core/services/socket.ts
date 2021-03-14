@@ -21,7 +21,6 @@ function clearUrl(url: string): string {
 }
 
 
-
 export const events = {
     job: {
         new: "JOB_NEW"

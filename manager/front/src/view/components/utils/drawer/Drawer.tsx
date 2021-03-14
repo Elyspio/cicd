@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         mainSmaller: {
             width: `calc(100% - ${drawerWidth}px) !important`,
+            height: "100%",
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,

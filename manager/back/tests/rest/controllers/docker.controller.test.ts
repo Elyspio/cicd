@@ -1,13 +1,11 @@
-import {Server} from "../../../src/web/server"
-import {PlatformExpress} from "@tsed/platform-express";
 import * as Apis from "../api";
 
-const port = 7002
+const port = 4000
 describe("Rest", () => {
 
     beforeAll(async () => {
-        const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
-        await platform.listen();
+        // const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
+        // await platform.listen();
     });
 
 

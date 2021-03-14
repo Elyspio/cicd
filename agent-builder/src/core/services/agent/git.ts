@@ -1,8 +1,8 @@
 import simpleGit, {SimpleGit} from 'simple-git';
-import {BuildConfig, ConfigWithId} from "../../../../../manager/back/src/core/services/manager/types";
 import * as path from "path";
 import {rm, stat} from "fs/promises";
 import {managerSocket} from "./socket";
+import {BuildConfigModel} from "../../../web/controllers/agent/models";
 
 const git: SimpleGit = simpleGit();
 
@@ -10,7 +10,7 @@ const git: SimpleGit = simpleGit();
 const buildFolder = process.env.BUILD_FOLDER ?? path.resolve(__dirname, "..", "..", "..", "..", "builds")
 
 export class GitService {
-    async initFolder({github: {remote, branch}, id}: ConfigWithId<BuildConfig>) {
+    async initFolder({config: {github: {remote, branch}}, id}: BuildConfigModel) {
         const localPath = path.resolve(buildFolder, remote.slice(remote.lastIndexOf("/") + 1, remote.indexOf(".git")));
 
         try {

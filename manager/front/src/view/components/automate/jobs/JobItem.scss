@@ -1,0 +1,28 @@
+.JobItem {
+
+	text-transform: unset !important;
+	padding: 0 !important;
+	width: 100%;
+
+	.Avatar {
+		margin-right: 1rem;
+	}
+
+	.info {
+		display: grid;
+		grid-template-columns: 0fr 6rem 6rem 1fr;
+		column-gap: 1rem;
+		.MuiChip-root {
+
+		}
+
+		.meta-data {
+			display: flex;
+			> .MuiChip-root  {
+				margin-right: 1rem !important;
+			}
+		}
+
+	}
+
+}

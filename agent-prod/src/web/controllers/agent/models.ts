@@ -1,5 +1,13 @@
 import {Description, Property, Required} from "@tsed/schema";
-import {DeployConfig} from "../../../../../manager/back/src/core/services/manager/types";
+import {DeployConfig, Job, Timestamp} from "../../../../../manager/back/src/core/services/manager/types";
+
+
+class JobModel {
+    @Required()
+    @Description("Job id")
+    id: number
+}
+
 
 export class DockerComposeField {
     @Property()
@@ -12,7 +20,7 @@ export class DockerField {
     compose?: DockerComposeField
 }
 
-export class DeployConfigModel implements DeployConfig {
+export class DeployConfigModel {
     @Property(DockerField)
     @Description("Docker/Docker-Compose configuration")
     @Required()
@@ -23,3 +31,11 @@ export class DeployConfigModel implements DeployConfig {
     @Description("URI of the production agent")
     uri: string;
 }
+
+export class DeployJobModel extends JobModel implements Omit<Job<DeployConfig>, keyof Timestamp> {
+    @Property(DeployConfigModel)
+    config: DeployConfigModel
+}
+
+
+

@@ -1,11 +1,15 @@
 import {connect, ConnectedProps} from "react-redux";
 import {Dispatch} from "redux";
 import {StoreState} from "../../store";
-import {Paper} from "@material-ui/core";
+import {Paper, Typography} from "@material-ui/core";
 import React from "react";
 import {SimpleAccordion} from "../utils/SimpleAccordion";
 import Agents from "./agents/Agents";
 import {makeStyles} from "@material-ui/core/styles";
+import Jobs from "./jobs/Jobs";
+import {Route, Switch} from 'react-router'
+import JobBuildDetail from "./jobs/detail/JobBuildDetail";
+import JobDeployDetail from "./jobs/detail/JobDeployDetail";
 
 const mapStateToProps = (state: StoreState) => ({})
 
@@ -15,19 +19,6 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type ReduxTypes = ConnectedProps<typeof connector>;
 
 
-// type AccordionsState = {
-//     agents: boolean,
-//     jobs: boolean,
-//     mappings: boolean,
-//     queues: boolean
-// }
-//
-// const defaultState: AccordionsState = {
-//     agents: false,
-//     jobs: false,
-//     mappings: false,
-//     queues: false
-// }
 const useStyles = makeStyles((theme) => ({
     root: {
         height: "100%",
@@ -36,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
     },
     left: {
         width: '30%',
+        maxHeight: "100vh",
+        overflow: "auto",
         padding: 20,
     },
     right: {
@@ -59,20 +52,30 @@ export function Automate(props: ReduxTypes) {
             </SimpleAccordion>
 
             <SimpleAccordion label={"Jobs"}>
-
+                <Jobs/>
             </SimpleAccordion>
 
             <SimpleAccordion label={"Mappings"}>
 
             </SimpleAccordion>
 
-            <SimpleAccordion label={"Queues"}>
-
-            </SimpleAccordion>
         </Paper>
         <Paper className={classes.right}>
-
+            <Switch>
+                <Route exact path="/job/build/:id" render={({match: {params: {id}}}) => id &&  <JobBuildDetail id={Number.parseInt(id)}/>}/>
+                <Route exact path="/job/deploy/:id" render={({match: {params: {id}}}) => id &&  <JobDeployDetail id={Number.parseInt(id)}/>}/>
+                <Route render={() => <Typography>Please select one item on the left to see its details</Typography>}/>
+            </Switch>
         </Paper>
 
     </Paper>
+}
+
+export const reactRouterPath = {
+    getBuildPath(id: number) {
+        return `/job/build/${id}`
+    },
+    getDeployPath(id: number) {
+        return `/job/deploy/${id}`
+    }
 }

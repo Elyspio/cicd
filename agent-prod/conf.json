@@ -3,5 +3,5 @@
 		"docker-compose",
 		"docker"
 	],
-	"uri": "http://192.168.0.59:4002"
+	"uri": "http://localhost:4002"
 }

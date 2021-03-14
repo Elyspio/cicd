@@ -62,7 +62,7 @@ describe("Rest", () => {
                     BuildAgentModelAddAbilitiesEnum.Docker,
                     BuildAgentModelAddAbilitiesEnum.DockerBuildx
                 ],
-                "uri": "http://localhost:4002"
+                "uri": "http://localhost:4001"
             };
             const ret = await new Apis.AutomationApi(undefined, "http://localhost:" + port).automationAddBuildAgent(data);
             expect(ret.status).toEqual(204);

@@ -1,10 +1,11 @@
 import {Apis, managerServerUrl} from "../../apis";
 import {BuildAgentModelAdd} from "../../apis/manager";
-import {ConfigWithId, DeployConfig, Job} from "../../../../../manager/back/src/core/services/manager/types";
+import {DeployConfig, Job} from "../../../../../manager/back/src/core/services/manager/types";
 import {Services} from "../index";
 import {files} from "../storage";
 import {$log} from "@tsed/common";
 import {intervalBetweenKeepAlive, intervalBetweenRegister} from "../../../config/agent";
+import {DeployJobModel} from "../../../web/controllers/agent/models";
 
 export class ProductionAgentService {
 
@@ -33,10 +34,10 @@ export class ProductionAgentService {
     /**
      * Deploy a docker-compose configuration
      */
-    async deploy(conf: Job<DeployConfig>) {
-        if (conf?.docker?.compose?.path) {
-            await Services.docker.compose.pull(conf)
-            await Services.docker.compose.up(conf)
+    async deploy({config}: DeployJobModel) {
+        if (config?.docker?.compose?.path) {
+            await Services.docker.compose.pull(config)
+            await Services.docker.compose.up(config)
 
         }
     }

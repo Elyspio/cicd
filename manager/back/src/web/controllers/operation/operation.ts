@@ -40,7 +40,7 @@ export class AutomationController {
     @Post("/build")
     @Returns(204)
     async start(@Required() @BodyParams(BuildConfigModel) config: BuildConfigModel) {
-        Services.manager.builder.askBuild(config);
+        Services.manager.agents.builder.askBuild(config);
     }
 
     @Post("/deployment")

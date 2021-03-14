@@ -1,6 +1,5 @@
 import React from "react";
 import {Divider} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
 
 export function joinComponent(wit: "divider", ...elements: JSX.Element[]) {
     const a: JSX.Element[] = [];

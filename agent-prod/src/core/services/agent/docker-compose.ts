@@ -1,12 +1,13 @@
-import {ConfigWithId, DeployConfig} from "../../../../../manager/back/src/core/services/manager/types";
+import {DeployConfig} from "../../../../../manager/back/src/core/services/manager/types";
 import {$log} from "@tsed/common";
 import {exec} from "child_process";
 import * as  path from "path";
+import {DeployConfigModel} from "../../../web/controllers/agent/models";
 
 export class DockerComposeService {
 
 
-    async pull({docker}: ConfigWithId<DeployConfig>) {
+    async pull({docker}: DeployConfigModel) {
 
         return new Promise<string>((resolve, reject) => {
 
@@ -27,7 +28,7 @@ export class DockerComposeService {
         })
     }
 
-    async up({docker}: ConfigWithId<DeployConfig>, daemon = true) {
+    async up({docker}: DeployConfigModel, daemon = true) {
         return new Promise<string>((resolve, reject) => {
             if (!docker || !docker.compose) {
                 reject("Not implemented yet")
@@ -45,7 +46,7 @@ export class DockerComposeService {
         })
     }
 
-    async down({docker}: ConfigWithId<DeployConfig>) {
+    async down({docker}: DeployConfigModel) {
         return new Promise<string>((resolve, reject) => {
             if (!docker || !docker.compose) {
                 reject("Not implemented yet")

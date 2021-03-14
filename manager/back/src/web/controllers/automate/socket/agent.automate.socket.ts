@@ -1,4 +1,4 @@
-import {Args, Input, IO, Nsp, Socket, SocketService, SocketSession} from "@tsed/socketio";
+import {Args, Input, IO, Nsp, Socket, SocketService} from "@tsed/socketio";
 import * as SocketIO from "socket.io";
 import {$log} from "@tsed/common";
 import {FrontAutomateSocket} from "./front.automate.socket";

@@ -1,16 +1,41 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
 import {reducer as themeReducer} from "./module/theme/reducer";
 import {reducer as environmentReducer} from "./module/environments/reducer";
 import {automationReducer} from "./module/job/jobSplice";
+import {createBrowserHistory} from 'history';
+import {connectRouter, routerMiddleware} from 'connected-react-router'
 
-const store = configureStore({
-    reducer: {
+
+export const history = createBrowserHistory();
+
+
+export function configureCustomStore() {
+
+    const reducers = {
         theme: themeReducer,
         environments: environmentReducer,
-        automation: automationReducer
-    },
-});
+        automation: automationReducer,
+    };
 
-export default store;
+    const middleware = [
+        ...getDefaultMiddleware(),
+        routerMiddleware(history)
+    ];
+
+    const rootReducer = combineReducers({
+        ...reducers,
+        router: connectRouter(history),
+    });
+
+    return configureStore({
+        reducer: rootReducer,
+        middleware,
+    });
+}
+
+
+export const store = configureCustomStore();
 
 export type StoreState = ReturnType<typeof store.getState>
+
+export default store;

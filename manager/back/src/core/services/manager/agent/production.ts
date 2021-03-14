@@ -1,10 +1,8 @@
-import {DeployConfig, Job, ProductionAgent} from "../types";
-import {AgentIdentifier, Base} from "./base";
+import {DeployConfig, ProductionAgent} from "../types";
+import {AgentIdentifier, AgentMethods, Base} from "./base";
 import {Services} from "../../index";
-import {DeployConfigModel, ProductionAgentApi} from "../../../apis/agent-prod";
-import {ManagerMethods} from "../service";
 
-export class Production extends Base implements ManagerMethods<ProductionAgent> {
+export class AgentProduction extends Base implements AgentMethods<ProductionAgent> {
 
     public add(agent: Omit<ProductionAgent, "lastUptime" | "availability">) {
         return super.baseAdd<ProductionAgent>(agent, "production");
@@ -28,24 +26,9 @@ export class Production extends Base implements ManagerMethods<ProductionAgent> 
 
     public askDeploy(config: DeployConfig) {
         const id = super.nextId;
-        Services.manager.config.queues.deployments.enqueue({...config, createdAt: new Date(), finishedAt: null, startedAt: null, id})
+        Services.manager.config.queues.deployments.enqueue({config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id})
         Services.manager.saveConfig();
         return id;
-    }
-
-    public async deploy(agent: ProductionAgent, config: Job<DeployConfig>) {
-        config.startedAt = new Date();
-        await super.save();
-
-        if (config.docker != undefined) {
-            await new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(config as DeployConfigModel);
-            super.finishJob(config.id);
-
-        }
-
-        config.finishedAt = new Date();
-        await super.save()
-
     }
 
 }

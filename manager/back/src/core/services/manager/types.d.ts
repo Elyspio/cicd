@@ -47,13 +47,14 @@ export interface DeployConfig extends Config, Pick<ProductionAgent, "uri"> {
     }
 }
 
-type Timestamp = {
+export type Timestamp = {
     createdAt: Date,
     startedAt: Date | null,
     finishedAt: Date | null
 }
-export type ConfigWithId<T extends Config> = T & { id: number }
-export type Job<T extends Config> = ConfigWithId<T> & Timestamp
+export type WithId<T> = T & { id: number }
+//export type Job<T extends Config> = ConfigWithId<T> & Timestamp
+export type Job<T extends Config> = WithId<Timestamp> & {config: T}
 
 export interface ManagerConfig {
     // List of known agents
@@ -77,3 +78,14 @@ export interface ManagerConfig {
         deploy: DeployConfig
     }[]
 }
+
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+
+export type ManagerConfigExport = Modify<ManagerConfig, {
+    queues: {
+        builds: Array<Job<BuildConfig>>
+        deployments: Array<Job<DeployConfig>>
+    },
+}>
+

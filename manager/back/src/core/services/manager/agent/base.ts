@@ -40,7 +40,7 @@ export class Base extends EventEmitter {
         return Services.manager.saveConfig();
     }
 
-    protected finishJob(id: number) {
+    public finishJob(id: number) {
         super.emit(this.getJobKey(id));
     }
 
@@ -68,7 +68,7 @@ export class Base extends EventEmitter {
     protected baseDelete<T extends Agent>(agent: T | T["uri"], kind: keyof ManagerConfig["agents"]) {
         const obj = this.getAgent(agent, kind);
         // @ts-ignore
-        Services.manager.config.agents[kind] = [...(Services.manager.config.agents[kind] as Agent[]).filter(a => a.uri === obj.uri)];
+        Services.manager.config.agents[kind] = [...(Services.manager.config.agents[kind] as Agent[]).filter(a => a?.uri === obj.uri)];
         this.save();
     }
 
@@ -90,4 +90,12 @@ export class Base extends EventEmitter {
     }
 
 
+}
+
+export interface AgentMethods<T extends Agent> {
+    add: (agent: Omit<T, "lastUptime" | "availability">) => void
+    delete: (agent: T | T["uri"]) => void
+    update: (agent: T | T["uri"], data: Partial<T>) => T
+    keepAlive: (agent: T | T["uri"]) => void
+    list: () => T[]
 }
