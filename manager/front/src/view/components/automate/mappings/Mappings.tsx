@@ -14,7 +14,7 @@ export function Mappings(props: ReduxTypes) {
     }, [props.mappings])
 
     return <List className={"Mappings"}>
-        {mappings.map((agent, index) => <Mapping key={agent.id} data={agent}/>)}
+        {mappings.map((agent, index) => <Mapping key={`M-${agent.id}`} data={agent}/>)}
     </List>
 }
 

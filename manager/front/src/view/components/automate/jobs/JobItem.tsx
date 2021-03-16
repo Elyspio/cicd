@@ -98,14 +98,14 @@ export function JobItem(props: JobItemProps) {
         const config = props.data.config as BuildConfig;
         const remote = config.github.remote.slice(config.github.remote.lastIndexOf("/") + 1, config.github.remote.lastIndexOf(".git"))
         arr.push(
-            <CustomChip label={<><GithubIcon height={size} width={size}/> {remote}</>}/>,
-            <CustomChip label={<><GitBranchIcon height={size} width={size}/> {config.github.branch}</>}/>
+            <CustomChip key={1} label={<><GithubIcon height={size} width={size}/> {remote}</>}/>,
+            <CustomChip key={2} label={<><GitBranchIcon height={size} width={size}/> {config.github.branch}</>}/>
         )
     }
 
     if (props.type === "deployment") {
         arr.push(
-            <CustomChip label={<><DockerIcon height={size} width={size}/> {(props.data.config as DeployConfig).uri}</>}/>
+            <CustomChip key={3} label={<><DockerIcon height={size} width={size}/> {(props.data.config as DeployConfig).uri}</>}/>
         )
     }
 
