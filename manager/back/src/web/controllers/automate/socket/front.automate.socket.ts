@@ -30,6 +30,7 @@ export class FrontAutomateSocket {
      */
     $onConnection(@Socket socket: SocketIO.Socket, @SocketSession session: SocketSession) {
         $log.info("A new client is born")
+        this.nsp.emit(events.config.update, Services.manager.exportConfig())
     }
 
     /**
