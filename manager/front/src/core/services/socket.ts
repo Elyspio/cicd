@@ -1,28 +1,19 @@
 import {io} from "socket.io-client";
+import {initConf} from "../../view/store/module/config/reducer";
 
 
-const host = clearUrl("localhost:4000")
-const namespace = clearUrl("/front")
 
 export const createSocket = () => {
-    const server = io(`http://${host}${namespace}`, {
+    const conf = initConf.endpoints.core
+
+    const namespace = clearUrl(conf.socket.namespace)
+
+    const server = io(`${conf.api}${namespace}`, {
         autoConnect: false
     });
-    // @ts-ignore
-    // server.nsp = namespace
-    // server.io.opts.path = namespace
     return server.connect();
 };
 
-export const managerSocket = createSocket();
-
 function clearUrl(url: string): string {
     return url.replace(/\/\//g, "/")
-}
-
-
-export const events = {
-    job: {
-        new: "JOB_NEW"
-    }
 }

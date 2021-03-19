@@ -31,7 +31,7 @@ const Header = (props: { onClick: (e: React.MouseEvent<HTMLButtonElement, MouseE
     return <div className={classes.header}>
         <Typography>Mapping</Typography>
         <div className={classes.btns}>
-            <IconButton onClick={e => props.onClick(e)}><Add/></IconButton>
+            <IconButton color={"primary"} onClick={e => props.onClick(e)}><Add/></IconButton>
         </div>
     </div>
 }

@@ -1,6 +1,7 @@
 import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
 import {reducer as themeReducer} from "./module/theme/reducer";
 import {reducer as environmentReducer} from "./module/environments/reducer";
+import {reducer as configReducer} from "./module/config/reducer";
 import {automationReducer} from "./module/job/jobSplice";
 import {createBrowserHistory} from 'history';
 import {connectRouter, routerMiddleware} from 'connected-react-router'
@@ -15,6 +16,7 @@ export function configureCustomStore() {
         theme: themeReducer,
         environments: environmentReducer,
         automation: automationReducer,
+        config: configReducer
     };
 
     const middleware = [

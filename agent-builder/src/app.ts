@@ -14,7 +14,7 @@ async function bootstrap() {
         const platform = await PlatformExpress.bootstrap(Server, {});
         await platform.listen();
         $log.debug("Server initialized");
-        Services.agent.init();
+        await Services.agent.init();
     } catch (er) {
         $log.error(er);
     }

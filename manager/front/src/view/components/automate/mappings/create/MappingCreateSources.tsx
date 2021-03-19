@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
+import {Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, Typography} from "@material-ui/core";
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {Apis} from "../../../../../core/apis";
@@ -21,14 +21,28 @@ export function MappingCreateSources(props: Props) {
     const [repo, setRepo] = React.useState<string | undefined>()
     const [repos, setRepos] = React.useState(Array<string>())
     const [branches, setBranches] = React.useState(Array<string>())
+    const [uses, setUses] = React.useState(Array<boolean>())
+
+
+    React.useEffect(() => {
+        if (repo) props.onChanges.repo(repo)
+        setBranch(repos[0])
+    }, [repo, repos])
+
+    React.useEffect(() => {
+        if (branch) props.onChanges.branch(branch)
+    }, [branch,])
+
+    React.useEffect(() => {
+        if (username) props.onChanges.username(username)
+    }, [username])
 
     React.useEffect(() => {
         (async () => {
             const {data: username} = await Apis.core.github.githubGetUsernameFromCookies()
             setUsername(username);
-            props.onChanges.username(username)
         })()
-    }, [props.onChanges, username])
+    }, [username])
 
     React.useEffect(() => {
         if (username) {
@@ -46,6 +60,11 @@ export function MappingCreateSources(props: Props) {
                 const {data: branches} = await Apis.core.github.githubGetBranchesForRepository(username, repo)
                 setBranches(branches);
                 setBranch(branches[0])
+                const newArr = Array<boolean>();
+                for(let i=0; i < branches.length; i++) {
+                    newArr.push(true)
+                }
+                setUses(newArr)
             })()
         }
     }, [repo, username])
@@ -61,6 +80,7 @@ export function MappingCreateSources(props: Props) {
         props.onChanges.branch(e.target.value as string)
         setBranch(e.target.value as string);
     };
+
 
 
     return <div className="MappingCreateSources">
@@ -95,6 +115,8 @@ export function MappingCreateSources(props: Props) {
                     {branches.map(branch => <MenuItem key={branch} value={branch}>{branch}</MenuItem>)}
                 </Select>
             </FormControl>
+
+
         </Container>
 
 

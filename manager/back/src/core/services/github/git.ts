@@ -41,7 +41,7 @@ export class GitService {
 
     private async initFolder(remote: string, branch: string) {
         const repoName = remote.slice(remote.lastIndexOf("/") + 1, remote.indexOf(".git"));
-        const tempDir = nodePath.join(os.tmpdir(), "repositories", repoName);
+        const tempDir = nodePath.join(os.tmpdir(), "repositories", repoName, branch);
 
         try {
             await stat(tempDir);

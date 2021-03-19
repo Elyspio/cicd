@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@material-ui/core";
+import {Box, Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography} from "@material-ui/core";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
 import {Apis} from "../../../../../core/apis";
 import {BuildConfig} from "../../../../../../../back/src/core/services/manager/types";
@@ -7,7 +7,7 @@ import {deepClone} from "../../../../../core/util/data";
 import {DockerConfigModelPlatformsEnum} from "../../../../../core/apis/back";
 
 export type DockerfilesParams = {
-    dockerfile: BuildConfig["docker"]["dockerfiles"][number],
+    dockerfile: BuildConfig["docker"]["dockerfiles"][number] & {use: boolean},
     platforms: BuildConfig["docker"]["platforms"],
 }[];
 type Props = {
@@ -33,7 +33,7 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
         if (username && repository && branch) {
             (async () => {
                 const {data: dockerfiles} = await Apis.core.github.githubGetDockerfilesForRepository(username, repository, branch)
-                setConf(dockerfiles.map(x => ({platforms: platforms, dockerfile: {path: x.path, tag: "", image: "", wd: "/"}})));
+                setConf(dockerfiles.map(x => ({platforms: platforms, dockerfile: {path: x.path, tag: "", image: "", wd: "/", use: true}})));
                 setDockerfiles(dockerfiles.map(x => x.path))
             })()
         }
@@ -43,6 +43,9 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
     function update(event: React.ChangeEvent<{ value: any }>, key: keyof DockerfilesParams[number]["dockerfile"], index: number) {
         const clone = deepClone(conf);
         const dockerfileConf = clone[index].dockerfile;
+        if(key === "use")
+            dockerfileConf[key] = !dockerfileConf[key]
+        else
         dockerfileConf[key] = event.target.value
         syncChanges(clone)
     }
@@ -52,6 +55,8 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
         clone[index].platforms = event.target.value
         syncChanges(clone)
     }
+
+
 
     function syncChanges(configuration: typeof conf) {
         setConf(configuration)
@@ -122,7 +127,16 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
                         </Select>
                     </FormControl>
 
-
+                    <FormControlLabel
+                        control={<Switch
+                            color="primary"
+                            size="small"
+                            checked={conf.dockerfile.use}
+                            onChange={e => update(e, "use", index)}
+                        />}
+                        labelPlacement="top"
+                        label="Use"
+                    />
                 </Box>
 
 
