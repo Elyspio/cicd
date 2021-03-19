@@ -1,9 +1,6 @@
-import {ConnectedRouterProps} from "connected-react-router";
 import {connect, ConnectedProps} from "react-redux";
 import {Dispatch} from "redux";
 import {StoreState} from "../../../../store";
-import {RouteComponentProps} from "react-router";
-import {Box} from "@material-ui/core";
 import React from "react";
 
 const mapStateToProps = (state: StoreState, props: OwnProps) => ({

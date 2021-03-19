@@ -1,5 +1,5 @@
-import React, {CSSProperties} from "react";
-import {Chip, ListItem, ListItemIcon, ListItemText, Typography, useTheme} from "@material-ui/core";
+import React from "react";
+import {ListItem, ListItemIcon, ListItemText, Typography, useTheme} from "@material-ui/core";
 import {Agent} from "../../../../../../back/src/core/services/manager/types";
 import {StoreState} from "../../../store";
 import {Dispatch} from "redux";

@@ -447,3 +447,19 @@ export class GithubPushWebhook {
     @Required()
     sender: User;
 }
+
+
+export class FileModel {
+
+    @Property(String)
+    @Required()
+    path: string
+
+    @Property(String)
+    @Required()
+    key: string
+
+    @Property(Number)
+    @Required()
+    size: number
+}

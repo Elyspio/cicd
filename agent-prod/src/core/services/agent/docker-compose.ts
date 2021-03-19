@@ -1,4 +1,3 @@
-import {DeployConfig} from "../../../../../manager/back/src/core/services/manager/types";
 import {$log} from "@tsed/common";
 import {exec} from "child_process";
 import * as  path from "path";

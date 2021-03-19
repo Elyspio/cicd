@@ -1,10 +1,14 @@
-import {EnvironmentsApi, ExampleApi} from "./back"
 import store from "../../view/store";
+import {AuthenticationApi} from "./authentification";
+import {DockerControllerApi, GithubApi} from "./back";
 
 type Apis = {
     core: {
-        example: ExampleApi,
-        environments: EnvironmentsApi
+        github: GithubApi,
+        docker: DockerControllerApi
+    },
+    authentication: {
+        login: AuthenticationApi,
     }
 }
 
@@ -14,13 +18,19 @@ const getEnv = (name: string, fallback: string): string => {
 
 export var Apis: Apis = createApis();
 
+
 export function createApis(): Apis {
 
+    const isDev = window.location.href.startsWith("http://localhost")
+    const authentication = isDev ? "http://localhost:3001/" : "https://elyspio.fr/authentication/"
     const backend = getEnv("BACKEND_HOST", "http://localhost:4000");
     Apis = {
         core: {
-            example: new ExampleApi({basePath: backend}),
-            environments: new EnvironmentsApi({basePath: backend})
+            docker: new DockerControllerApi(undefined, backend),
+            github: new GithubApi(undefined, backend),
+        },
+        authentication: {
+            login: new AuthenticationApi(undefined, authentication),
         }
     }
     return Apis;

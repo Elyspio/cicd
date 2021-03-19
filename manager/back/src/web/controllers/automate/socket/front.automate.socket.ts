@@ -29,13 +29,13 @@ export class FrontAutomateSocket {
      * Triggered when a new client connects to the Namespace.
      */
     $onConnection(@Socket socket: SocketIO.Socket, @SocketSession session: SocketSession) {
-        $log.info("A new client is born", {socket, session})
+        $log.info("A new client is born")
     }
 
     /**
      * Triggered when a client disconnects from the Namespace.
      */
     $onDisconnect(@Socket socket: SocketIO.Socket) {
-        $log.info("A new client left", {socket})
+        $log.info("A new client left")
     }
 }

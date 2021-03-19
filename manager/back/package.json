@@ -9,6 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"@octokit/rest": "^18.3.5",
 		"@tsed/common": "^6.32.2",
 		"@tsed/core": "^6.32.2",
 		"@tsed/di": "^6.32.2",
@@ -24,7 +25,8 @@
 		"cors": "^2.8.5",
 		"dayjs": "^1.10.4",
 		"method-override": "^3.0.0",
-		"tslib": "^2.1.0"
+		"tslib": "^2.1.0",
+		"simple-git": "^2.37.0"
 	},
 	"devDependencies": {
 		"@types/socket.io": "^2.1.13",

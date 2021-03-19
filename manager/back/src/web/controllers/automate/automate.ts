@@ -1,5 +1,5 @@
 import {BodyParams, Controller, Get, Post,} from "@tsed/common";
-import {Name, Required, Returns} from "@tsed/schema";
+import {Description, Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
 import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel} from "./models";
 import {AgentAutomateSocket} from "./socket/agent.automate.socket";

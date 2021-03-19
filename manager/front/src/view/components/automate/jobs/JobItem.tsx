@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Chip, ListItem, ListItemAvatar, ListItemIcon, ListItemText, useTheme} from "@material-ui/core";
+import {Button, ListItem, ListItemAvatar, ListItemIcon, ListItemText, useTheme} from "@material-ui/core";
 import {BuildConfig, Config, DeployConfig, Job} from "../../../../../../back/src/core/services/manager/types";
 import {themeConnector, ThemeType} from "../agents/AgentItem";
 import {ReactComponent as BuildIcon} from "../icons/buildJob.svg"

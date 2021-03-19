@@ -1,6 +1,5 @@
 import {Apis, managerServerUrl} from "../../apis";
 import {BuildAgentModelAdd} from "../../apis/manager";
-import {DeployConfig, Job} from "../../../../../manager/back/src/core/services/manager/types";
 import {Services} from "../index";
 import {files} from "../storage";
 import {$log} from "@tsed/common";

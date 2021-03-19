@@ -19,12 +19,15 @@ export class RequireLogin implements IMiddleware {
     public async use(@Req() req, @QueryParams("token") token: string) {
 
         // token ??= token
-
-        try {
-            await Services.authentication.isAuthenticated(token)
-            return true
-        } catch (e) {
-            throw new Unauthorized("You must be logged to access to this resource see https://elyspio.fr/authentication");
+        if (process.env.NODE_ENV === "production") {
+            try {
+                await Services.authentication.isAuthenticated(token)
+                return true
+            } catch (e) {
+                throw new Unauthorized("You must be logged to access to this resource see https://elyspio.fr/authentication");
+            }
         }
+
+
     }
 }

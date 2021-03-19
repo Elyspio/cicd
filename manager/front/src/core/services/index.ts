@@ -1,9 +1,5 @@
-import {TestService} from "./test";
-import {ApiServices} from "./Api";
-import {EnvironmentService} from "./Environments";
+import {AuthenticationService} from "./authentication";
 
 export const Services = {
-    test: new TestService(),
-    api: new ApiServices(),
-    environments: new EnvironmentService()
+    authentication: new AuthenticationService()
 }

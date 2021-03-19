@@ -1,13 +1,13 @@
-import React, {MouseEventHandler} from 'react';
+import React from 'react';
 import {SimpleAccordion} from "../../utils/SimpleAccordion";
 import Mappings from "./Mappings";
-import {Button, IconButton, Typography} from "@material-ui/core";
+import {IconButton, Typography} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {connect, ConnectedProps} from "react-redux";
 import {Dispatch} from "redux";
 import {StoreState} from "../../../store";
-import { push } from 'connected-react-router';
+import {push} from 'connected-react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,8 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-
-const Header = (props: {onClick: (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => any}) => {
+const Header = (props: { onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any }) => {
     const classes = useStyles();
     return <div className={classes.header}>
         <Typography>Mapping</Typography>
@@ -41,7 +40,7 @@ const Header = (props: {onClick: (e:  React.MouseEvent<HTMLButtonElement, MouseE
 const mapStateToProps = (state: StoreState) => ({})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    addMapping: (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    addMapping: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.stopPropagation();
         dispatch(push("/mapping/add"));
     }

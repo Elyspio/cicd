@@ -8,7 +8,7 @@ const darkTheme = createMuiTheme({
             ...colors.grey,
             main: colors.grey["500"],
         },
-   
+
         primary: {
             ...colors.blue,
             main: colors.blue["400"],

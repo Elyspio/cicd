@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Chip, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Button, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {ManagerConfigExport} from "../../../../../../back/src/core/services/manager/types";
 import {ReactComponent as LinkIcon} from "../icons/link.svg"
 import "./Mapping.scss"

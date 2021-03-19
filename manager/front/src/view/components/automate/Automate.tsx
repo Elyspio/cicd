@@ -1,7 +1,7 @@
 import {connect, ConnectedProps} from "react-redux";
 import {Dispatch} from "redux";
 import {StoreState} from "../../store";
-import {Button, Paper, Typography} from "@material-ui/core";
+import {Paper, Typography} from "@material-ui/core";
 import React from "react";
 import {SimpleAccordion} from "../utils/SimpleAccordion";
 import Agents from "./agents/Agents";
@@ -10,8 +10,8 @@ import Jobs from "./jobs/Jobs";
 import {Route, Switch} from 'react-router'
 import JobBuildDetail from "./jobs/detail/JobBuildDetail";
 import JobDeployDetail from "./jobs/detail/JobDeployDetail";
-import Mappings from "./mappings/Mappings";
 import MappingAccordion from "./mappings/MappingAccordion";
+import {MappingCreate} from "./mappings/create/MappingCreate";
 
 const mapStateToProps = (state: StoreState) => ({})
 
@@ -65,7 +65,7 @@ export function Automate(props: ReduxTypes) {
             <Switch>
                 <Route exact path="/job/build/:id" render={({match: {params: {id}}}) => id && <JobBuildDetail id={Number.parseInt(id)}/>}/>
                 <Route exact path="/job/deploy/:id" render={({match: {params: {id}}}) => id && <JobDeployDetail id={Number.parseInt(id)}/>}/>
-                <Route exact path={"/mapping/add"} render={() => <div>MAPPING ADD WIP</div>}/>
+                <Route exact path={"/mapping/add"} component={MappingCreate}/>
                 <Route render={() => <Typography>Please select one item on the left to see its details</Typography>}/>
             </Switch>
         </Paper>

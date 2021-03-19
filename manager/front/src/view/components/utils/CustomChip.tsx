@@ -44,7 +44,7 @@ function CustomChip_({label, theme, color, className, fontWeight}: Props) {
 
     return <Chip
         component={"span"}
-        className={`Chip${className ?? ""} ${classes.chip}`}
+        className={`Chip ${className ?? ""} ${classes.chip}`}
         variant={theme === "dark" ? "outlined" : undefined}
         label={label}
         style={{...style, fontWeight: fontWeight,}}/>
