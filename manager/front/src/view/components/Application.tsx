@@ -21,8 +21,7 @@ type ReduxTypes = ConnectedProps<typeof connector>;
 export interface Props {
 }
 
-interface State {
-}
+
 
 function Application(props: Props & ReduxTypes) {
 

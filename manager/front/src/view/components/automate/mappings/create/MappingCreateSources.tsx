@@ -28,7 +28,7 @@ export function MappingCreateSources(props: Props) {
             setUsername(username);
             props.onChanges.username(username)
         })()
-    }, [])
+    }, [props.onChanges, username])
 
     React.useEffect(() => {
         if (username) {
@@ -48,7 +48,7 @@ export function MappingCreateSources(props: Props) {
                 setBranch(branches[0])
             })()
         }
-    }, [repo])
+    }, [repo, username])
 
     const size = 16
 

@@ -26,7 +26,7 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
 
     const [conf, setConf] = React.useState<DockerfilesParams>([])
     const [dockerfiles, setDockerfiles] = React.useState<string[]>([])
-    const platforms = [DockerConfigModelPlatformsEnum.Arm64, DockerConfigModelPlatformsEnum.Amd64]
+    const platforms = React.useMemo(() => [DockerConfigModelPlatformsEnum.Arm64, DockerConfigModelPlatformsEnum.Amd64], []);
 
 
     React.useEffect(() => {
@@ -37,7 +37,7 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
                 setDockerfiles(dockerfiles.map(x => x.path))
             })()
         }
-    }, [username, repository, branch])
+    }, [username, repository, branch, platforms])
 
 
     function update(event: React.ChangeEvent<{ value: any }>, key: keyof DockerfilesParams[number]["dockerfile"], index: number) {
@@ -69,7 +69,7 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
 
     const size = 16
 
-    return <div className="MappingCreateSources">
+    return <div className="MappingCreateImages">
 
         <Container className={"Container"}>
             <Typography variant={"h6"}>Docker (Images)</Typography>

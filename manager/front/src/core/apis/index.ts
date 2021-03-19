@@ -2,7 +2,7 @@ import store from "../../view/store";
 import {AuthenticationApi} from "./authentification";
 import {DockerControllerApi, GithubApi} from "./back";
 
-type Apis = {
+type _Apis = {
     core: {
         github: GithubApi,
         docker: DockerControllerApi
@@ -16,10 +16,10 @@ const getEnv = (name: string, fallback: string): string => {
     return store.getState().environments.envs[name] ?? fallback
 }
 
-export var Apis: Apis = createApis();
+export let Apis: _Apis = createApis();
 
 
-export function createApis(): Apis {
+export function createApis(): _Apis {
 
     const isDev = window.location.href.startsWith("http://localhost")
     const authentication = isDev ? "http://localhost:3001/" : "https://elyspio.fr/authentication/"
