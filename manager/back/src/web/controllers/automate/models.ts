@@ -6,7 +6,14 @@ const availabilities: Agent["availability"][] = ["free", "running", "down"]
 const buildAbilities: BuildAgent["abilities"] = ["docker", "docker-buildx"]
 const prodAbilities: ProductionAgent["abilities"] = ["docker", "docker-compose"]
 
-export class AgentModel implements Agent {
+
+class AgentSubscribe {
+    @Required()
+    @Property()
+    uri: string;
+}
+
+export class AgentModel extends AgentSubscribe implements Agent {
     @Required()
     @Property()
     uri: string;
@@ -19,6 +26,7 @@ export class AgentModel implements Agent {
 
 }
 
+
 export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
     @Required()
     @Enum(...buildAbilities)
@@ -26,15 +34,50 @@ export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
 }
 
 
-export class BuildAgentModelAdd extends AgentModel implements Omit<BuildAgent, "availability" | "lastUptime"> {
+export class BuildAgentModelAdd extends AgentSubscribe implements Omit<BuildAgent, "availability" | "lastUptime"> {
     @Required()
     @Enum(...buildAbilities)
     abilities: typeof buildAbilities[number][]
 }
 
 
-export class ProductionAgentModel extends AgentModel implements Omit<ProductionAgent, "availability" | "lastUptime"> {
+
+
+class FoldersModel {
+    @Required()
+    @Property(String)
+    apps: string[]
+}
+
+export class ProductionAgentModelAdd extends AgentSubscribe implements Omit<ProductionAgent, "availability" | "lastUptime"> {
     @Required()
     @Enum(...prodAbilities)
     abilities: typeof prodAbilities[number][]
+
+    @Required()
+    @Property(FoldersModel)
+    folders: FoldersModel
+}
+
+export class ProductionAgentModel extends AgentModel implements ProductionAgent  {
+    @Required()
+    @Enum(...prodAbilities)
+    abilities: typeof prodAbilities[number][]
+
+
+    @Required()
+    @Property(FoldersModel)
+    folders: FoldersModel
+}
+
+
+export class ProductionApplications {
+    @Required()
+    @Property(ProductionAgentModel)
+    agent: ProductionAgent
+
+    @Required()
+    @Property(String)
+    apps: string[]
+
 }

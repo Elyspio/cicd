@@ -1,4 +1,6 @@
 import {exec as _exec, ExecException} from "child_process";
+import {resolve} from "path";
+import {readdir} from "fs/promises";
 
 export namespace Helper {
 
@@ -30,4 +32,13 @@ export namespace Helper {
     }
 
     export const isDev = () => process.env.NODE_ENV !== "production";
+
+    export async function getFiles(dir: string) {
+        const dirents = await readdir(dir, {withFileTypes: true});
+        const files = await Promise.all(dirents.map((dirent) => {
+            const res = resolve(dir, dirent.name);
+            return dirent.isDirectory() ? getFiles(res) : res;
+        }));
+        return Array.prototype.concat(...files) as string[];
+    }
 }

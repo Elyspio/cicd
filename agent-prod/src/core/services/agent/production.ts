@@ -1,15 +1,15 @@
 import {Apis, managerServerUrl} from "../../apis";
-import {BuildAgentModelAdd} from "../../apis/manager";
 import {Services} from "../index";
 import {files} from "../storage";
 import {$log} from "@tsed/common";
 import {intervalBetweenKeepAlive, intervalBetweenRegister} from "../../../config/agent";
 import {DeployJobModel} from "../../../web/controllers/agent/models";
+import {ProductionAgentModelAdd} from "../../apis/manager";
 
 export class ProductionAgentService {
 
     async getConfig() {
-        return Services.storage.read<BuildAgentModelAdd>(files.conf);
+        return Services.storage.read<ProductionAgentModelAdd>(files.conf);
     }
 
     async register() {

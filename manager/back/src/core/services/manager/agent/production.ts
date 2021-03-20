@@ -1,6 +1,8 @@
 import {DeployConfig, ProductionAgent} from "../types";
 import {AgentIdentifier, AgentMethods, Base} from "./base";
 import {Services} from "../../index";
+import {AutomateApi} from "../../../apis/agent-prod";
+import {ProductionApplications} from "../../../../web/controllers/automate/models";
 
 export class AgentProduction extends Base implements AgentMethods<ProductionAgent> {
 
@@ -30,6 +32,21 @@ export class AgentProduction extends Base implements AgentMethods<ProductionAgen
         Services.manager.saveConfig();
         return id;
     }
+
+    public get(agent: AgentIdentifier<ProductionAgent>) {
+        return Services.manager.config.agents.production.find(a => a.uri === agent)
+    }
+
+    public async getApps(): Promise<ProductionApplications[]> {
+        const agents = this.list();
+        return await Promise.all(agents.map(agent => new AutomateApi(undefined, agent.uri)
+            .automateGetApps()
+            .then(x => ({
+                apps: x.data,
+                agent
+            }))));
+    }
+
 
 }
 

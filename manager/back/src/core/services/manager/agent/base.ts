@@ -97,5 +97,6 @@ export interface AgentMethods<T extends Agent> {
     delete: (agent: T | T["uri"]) => void
     update: (agent: T | T["uri"], data: Partial<T>) => T
     keepAlive: (agent: T | T["uri"]) => void
+    get: (agent: T["uri"]) => T | undefined
     list: () => T[]
 }

@@ -1,5 +1,5 @@
 import {AuthenticationApi} from "./authentification";
-import {DockerControllerApi, GithubApi} from "./back";
+import {DockerControllerApi, GithubApi, AutomationApi} from "./back";
 
 
 const isDev = window.location.href.startsWith("http://localhost")
@@ -11,6 +11,7 @@ export const Apis = {
     core: {
         docker: new DockerControllerApi(undefined, backend),
         github: new GithubApi(undefined, backend),
+        automate: new AutomationApi(undefined, backend)
     },
     authentication: {
         login: new AuthenticationApi(undefined, authentication),

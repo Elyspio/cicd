@@ -33,8 +33,8 @@ export class AgentBuilder extends Base implements AgentMethods<BuildAgent> {
         return id;
     }
 
-    private saveJob(job: Job<BuildAgent>) {
-
+    public get(uri: AgentIdentifier<BuildAgent>) {
+        return Services.manager.config.agents.builder.find(a => a.uri === uri)
     }
 
 

@@ -2,7 +2,6 @@ import {io} from "socket.io-client";
 import {initConf} from "../../view/store/module/config/reducer";
 
 
-
 export const createSocket = () => {
     const conf = initConf.endpoints.core
 

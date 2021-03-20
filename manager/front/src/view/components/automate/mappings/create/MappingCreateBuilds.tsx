@@ -2,26 +2,33 @@ import React from "react";
 import {Box, Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography} from "@material-ui/core";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
 import {Apis} from "../../../../../core/apis";
-import {BuildConfig} from "../../../../../../../back/src/core/services/manager/types";
 import {deepClone} from "../../../../../core/util/data";
 import {DockerConfigModelPlatformsEnum} from "../../../../../core/apis/back";
+import {DockerfilesParams} from "../../../../store/module/job/types";
 
-export type DockerfilesParams = {
-    dockerfile: BuildConfig["docker"]["dockerfiles"][number] & {use: boolean},
-    platforms: BuildConfig["docker"]["platforms"],
-}[];
-type Props = {
-    onChanges: {
-        dockerfiles: (config: DockerfilesParams) => void,
-    },
-    sources: {
-        username: string,
-        repository: string,
-        branch: string
-    }
-};
 
-export function MappingCreateImages({onChanges, sources: {repository, branch, username}}: Props) {
+import {connect, ConnectedProps} from "react-redux";
+import {Dispatch} from "redux";
+import {StoreState} from "../../../../store";
+import {automationActions} from "../../../../store/module/job/jobSplice";
+
+
+const mapStateToProps = (state: StoreState) => ({
+    sources: state.automation.sources
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    updateImages: (conf: StoreState["automation"]["build"]) => dispatch(automationActions.updateImages(conf))
+})
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxTypes = ConnectedProps<typeof connector>;
+
+
+type Props = ReduxTypes & {};
+
+
+function MappingCreateBuilds({updateImages, sources: {repository, branch, username}}: Props) {
 
 
     const [conf, setConf] = React.useState<DockerfilesParams>([])
@@ -33,7 +40,7 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
         if (username && repository && branch) {
             (async () => {
                 const {data: dockerfiles} = await Apis.core.github.githubGetDockerfilesForRepository(username, repository, branch)
-                setConf(dockerfiles.map(x => ({platforms: platforms, dockerfile: {path: x.path, tag: "", image: "", wd: "/", use: true}})));
+                setConf(dockerfiles.map(x => ({platforms: platforms, dockerfile: {path: x.path, tag: "", image: "", wd: "/", use: false}})));
                 setDockerfiles(dockerfiles.map(x => x.path))
             })()
         }
@@ -43,10 +50,10 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
     function update(event: React.ChangeEvent<{ value: any }>, key: keyof DockerfilesParams[number]["dockerfile"], index: number) {
         const clone = deepClone(conf);
         const dockerfileConf = clone[index].dockerfile;
-        if(key === "use")
+        if (key === "use")
             dockerfileConf[key] = !dockerfileConf[key]
         else
-        dockerfileConf[key] = event.target.value
+            dockerfileConf[key] = event.target.value
         syncChanges(clone)
     }
 
@@ -57,15 +64,14 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
     }
 
 
-
     function syncChanges(configuration: typeof conf) {
         setConf(configuration)
-        onChanges.dockerfiles(configuration.map(c => {
+        updateImages(configuration.filter(c => c.dockerfile.use).map(c => {
             return {
                 ...c,
                 dockerfile: {
                     ...c.dockerfile,
-                    wd: c.dockerfile.image.slice(c.dockerfile.image.indexOf(":") + 1),
+                    tag: c.dockerfile.image.slice(c.dockerfile.image.indexOf(":") + 1),
                     image: c.dockerfile.image.slice(0, c.dockerfile.image.indexOf(":")),
                 },
             }
@@ -100,6 +106,7 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
                         label="Working directory"
                         value={conf.dockerfile.wd}
                         required
+                        error={conf.dockerfile.use && conf.dockerfile.wd.length === 0 }
                         onChange={e => update(e, "wd", index)}
                     />
 
@@ -109,6 +116,7 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
                         id={`mapping-create-image-input-${index}`}
                         label="Image name"
                         value={conf.dockerfile.image}
+                        error={conf.dockerfile.use && conf.dockerfile.image.length === 0 }
                         required
                         onChange={e => update(e, "image", index)}
                     />
@@ -149,3 +157,4 @@ export function MappingCreateImages({onChanges, sources: {repository, branch, us
     </div>
 }
 
+export default connector(MappingCreateBuilds)

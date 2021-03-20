@@ -1,33 +1,47 @@
-
 import React from "react";
 import {Typography} from "@material-ui/core";
-import {MappingCreateSources} from "./MappingCreateSources";
+import MappingCreateSources from "./MappingCreateSources";
 import "./MappingCreate.scss";
-import {DockerfilesParams, MappingCreateImages} from "./MappingCreateImages";
+import MappingCreateImages from "./MappingCreateBuilds";
+import MappingCreateDeployment from "./MappingCreateDeployment";
 
 
+import {connect, ConnectedProps} from "react-redux";
+import {Dispatch} from "redux";
+import {StoreState} from "../../../../store";
 
 
-export function MappingCreate() {
+const mapStateToProps = (state: StoreState) => ({
+    ...state.automation.sources
+})
 
-    const [branch, setBranch] = React.useState<string | undefined>()
-    const [repo, setRepo] = React.useState<string | undefined>()
-    const [username, setUsername] = React.useState<string | undefined>()
-    const [dockerfiles, setDockerFiles] = React.useState<DockerfilesParams>([])
+const mapDispatchToProps = (dispatch: Dispatch) => ({})
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxTypes = ConnectedProps<typeof connector>;
+
+
+type Props = ReduxTypes & {};
+
+
+function MappingCreate({branch, username, repository}: Props) {
+
 
     return <div className="MappingCreate">
 
 
         <Typography variant={"h4"} align={"center"}>Create a new mapping</Typography>
 
-        <MappingCreateSources onChanges={{repo: setRepo, branch: setBranch, username: setUsername}}/>
+        <MappingCreateSources/>
 
-        {username && repo && branch && <MappingCreateImages
-            onChanges={{dockerfiles: setDockerFiles}}
-            sources={{branch, username, repository: repo}}
+        {username && repository && branch && <MappingCreateImages
+
         />}
 
+        <MappingCreateDeployment/>
 
     </div>
 }
+
+export default connector(MappingCreate)
 

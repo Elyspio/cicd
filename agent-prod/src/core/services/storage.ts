@@ -21,7 +21,7 @@ export class StorageService {
     }
 
     async read<T = undefined>(name: string) {
-        return await readFile(name).then(x => JSON.parse(x.toString()))
+        return await readFile(name).then(x => JSON.parse(x.toString())) as T
     }
 
     readSync<T>(name: string) {

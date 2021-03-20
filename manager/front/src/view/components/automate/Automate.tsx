@@ -11,7 +11,7 @@ import {Route, Switch} from 'react-router'
 import JobBuildDetail from "./jobs/detail/JobBuildDetail";
 import JobDeployDetail from "./jobs/detail/JobDeployDetail";
 import MappingAccordion from "./mappings/MappingAccordion";
-import {MappingCreate} from "./mappings/create/MappingCreate";
+import MappingCreate from "./mappings/create/MappingCreate";
 
 const mapStateToProps = (state: StoreState) => ({})
 

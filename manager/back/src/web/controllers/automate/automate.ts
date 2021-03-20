@@ -1,7 +1,7 @@
 import {BodyParams, Controller, Get, Post,} from "@tsed/common";
 import {Description, Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
-import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel} from "./models";
+import {BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel, ProductionAgentModelAdd, ProductionApplications} from "./models";
 import {AgentAutomateSocket} from "./socket/agent.automate.socket";
 
 @Controller("/automate")
@@ -27,13 +27,19 @@ export class AutomationController {
         return Services.manager.agents.production.list()
     }
 
+    @Get("/agent/production/apps")
+    @Returns(200, Array).Of(ProductionApplications)
+    async getProductionApps()  {
+        return Services.manager.agents.production.getApps()
+    }
+
     // endregion
 
     // region subscribe
 
     @Post("/agent/production")
     @Returns(204)
-    async addProductionAgent(@Required() @BodyParams(ProductionAgentModel) agent: ProductionAgentModel) {
+    async addProductionAgent(@Required() @BodyParams(ProductionAgentModelAdd) agent: ProductionAgentModelAdd) {
         Services.manager.agents.production.add(agent)
     }
 

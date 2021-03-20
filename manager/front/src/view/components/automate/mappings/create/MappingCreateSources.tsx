@@ -1,48 +1,59 @@
 import React from "react";
-import {Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, Typography} from "@material-ui/core";
+import {Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {Apis} from "../../../../../core/apis";
+import {connect, ConnectedProps} from "react-redux";
+import {Dispatch} from "redux";
+import {StoreState} from "../../../../store";
+import {automationActions} from "../../../../store/module/job/jobSplice";
+import {usePrevious} from "../../../../hooks/usePrevious";
 
 
-type Props = {
-    onChanges: {
-        repo: (repo: string) => void,
-        branch: (branch: string) => void,
-        username: (name: string) => void
-    }
-};
+const mapStateToProps = (state: StoreState) => ({})
 
-export function MappingCreateSources(props: Props) {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    updateSources: (conf: StoreState["automation"]["sources"]) => dispatch(automationActions.updateSources(conf))
+})
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxTypes = ConnectedProps<typeof connector>;
+
+
+type Props = ReduxTypes & {};
+
+function MappingCreateSources(props: Props) {
 
 
     const [username, setUsername] = React.useState<string | undefined>()
     const [branch, setBranch] = React.useState<string | undefined>()
-    const [repo, setRepo] = React.useState<string | undefined>()
+    const [repository, setRepo] = React.useState<string | undefined>()
     const [repos, setRepos] = React.useState(Array<string>())
     const [branches, setBranches] = React.useState(Array<string>())
-    const [uses, setUses] = React.useState(Array<boolean>())
+
+    // region reflect on store
+
+    const previous = usePrevious(repository);
 
 
     React.useEffect(() => {
-        if (repo) props.onChanges.repo(repo)
-        setBranch(repos[0])
-    }, [repo, repos])
+        if (repository !== previous) setBranch(branches[0])
+        props.updateSources({repository, branch, username})
+    }, [repository, repos, username, previous, props.updateSources, branch])
 
-    React.useEffect(() => {
-        if (branch) props.onChanges.branch(branch)
-    }, [branch,])
 
-    React.useEffect(() => {
-        if (username) props.onChanges.username(username)
-    }, [username])
+
+    // endregion
+
+    // region fetch
 
     React.useEffect(() => {
         (async () => {
             const {data: username} = await Apis.core.github.githubGetUsernameFromCookies()
             setUsername(username);
         })()
-    }, [username])
+    }, [    ])
+
 
     React.useEffect(() => {
         if (username) {
@@ -55,32 +66,26 @@ export function MappingCreateSources(props: Props) {
     }, [username])
 
     React.useEffect(() => {
-        if (repo && username) {
+        if (repository && username) {
             (async () => {
-                const {data: branches} = await Apis.core.github.githubGetBranchesForRepository(username, repo)
+                const {data: branches} = await Apis.core.github.githubGetBranchesForRepository(username, repository)
                 setBranches(branches);
                 setBranch(branches[0])
-                const newArr = Array<boolean>();
-                for(let i=0; i < branches.length; i++) {
-                    newArr.push(true)
-                }
-                setUses(newArr)
             })()
         }
-    }, [repo, username])
+    }, [repository, username])
+
+    // endregion
 
     const size = 16
 
     const onRepoChange = (e) => {
-        props.onChanges.repo(e.target.value as string)
         setRepo(e.target.value as string);
     };
 
     const onBranchChange = (e) => {
-        props.onChanges.branch(e.target.value as string)
         setBranch(e.target.value as string);
     };
-
 
 
     return <div className="MappingCreateSources">
@@ -92,7 +97,7 @@ export function MappingCreateSources(props: Props) {
                 <Select
                     labelId="mapping-create-repository-label"
                     id="mapping-create-repository-input"
-                    value={repo ?? ""}
+                    value={repository ?? ""}
                     required
                     onChange={onRepoChange}
                     renderValue={(value) => <div><GithubIcon width={size} height={size}/> {value}</div>}
@@ -123,3 +128,4 @@ export function MappingCreateSources(props: Props) {
     </div>
 }
 
+export default connector(MappingCreateSources)

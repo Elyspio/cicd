@@ -1,4 +1,3 @@
-
 export class Api {
 
     public static redirect = (newLocation) => {

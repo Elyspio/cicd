@@ -22,7 +22,6 @@ export interface Props {
 }
 
 
-
 function Application(props: Props & ReduxTypes) {
 
     const actions = [{

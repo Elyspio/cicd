@@ -2,12 +2,14 @@ import {Queue} from "../../utils/data";
 
 export interface ProductionAgent extends Agent {
     abilities: ("docker" | "docker-compose")[]
+    folders: {
+        apps: string[]
+    }
 }
 
 
 export interface BuildAgent extends Agent {
     abilities: ("docker" | "docker-buildx")[]
-
 }
 
 export interface Agent {
