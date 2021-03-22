@@ -1,4 +1,4 @@
-import {Queue} from "../../utils/data";
+import {IQueue as Queue} from "../../utils/data.types";
 
 export interface ProductionAgent extends Agent {
     abilities: ("docker" | "docker-compose")[]
@@ -21,6 +21,7 @@ export interface Agent {
 interface Config {
 
 }
+
 
 
 export interface BuildConfig extends Config {

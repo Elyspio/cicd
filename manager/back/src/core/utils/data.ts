@@ -1,3 +1,5 @@
+import {Comparable, IQueue, IStack} from "./data.types";
+
 abstract class Collection<T> {
     public storage: T[] = [];
 
@@ -10,24 +12,6 @@ abstract class Collection<T> {
     isEmpty() {
         return this.size() === 0;
     }
-}
-
-interface IQueue<T> {
-    enqueue(item: T): void;
-
-    dequeue(): T;
-
-    size(): number;
-}
-
-interface IStack<T> {
-    push(item: T): void;
-
-    pop(): T | undefined;
-
-    peek(): T | undefined;
-
-    size(): number;
 }
 
 export class Stack<T> extends Collection<T> implements IStack<T> {
@@ -70,7 +54,6 @@ export class Queue<T> extends Collection<T> implements IQueue<T> {
         this.storage.push(item);
     }
 
-    // @ts-ignore
     dequeue(): T | undefined {
         return this.storage.shift();
     }
@@ -86,9 +69,7 @@ let mutex = {
     locked: false
 }
 
-export interface Comparable<T> {
-    equal(obj: T): boolean
-}
+
 
 export class CustomSet<T extends Comparable<T>> {
     private content: Array<T>

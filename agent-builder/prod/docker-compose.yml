@@ -1,0 +1,19 @@
+version: "3.5"
+services:
+  builder:
+    image: elyspio/automatize-github-docker:agent-build
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./conf.json:/back/conf.json
+    environment:
+      MANAGER_SERVER_URL: https://elyspio.fr/automate/cicd/manager/
+      HTTP_PORT: 4000
+      CONF_PATH: /back/conf.json
+      DOCKER_USER: ${DOCKER_USER}
+      DOCKER_PASSWORD: ${DOCKER_PASSWORD}
+      MANAGER_SOCKET_URL: https://elyspio.fr/automate/cicd/manager/
+    ports:
+      - 4000:4000
+
+

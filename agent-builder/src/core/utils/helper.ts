@@ -30,4 +30,10 @@ export namespace Helper {
     }
 
     export const isDev = () => process.env.NODE_ENV !== "production";
+
+
+    export function removeTrallingSlash(uri) {
+        if(uri[uri.length-1] === "/") uri = uri.slice(0, -1)
+        return uri;
+    }
 }
