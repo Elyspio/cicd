@@ -12,7 +12,7 @@ import {StoreState} from "../../../../store";
 
 
 const mapStateToProps = (state: StoreState) => ({
-    ...state.automation.sources
+	...state.automation.sources
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({})
@@ -27,20 +27,20 @@ type Props = ReduxTypes & {};
 function MappingCreate({branch, username, repository}: Props) {
 
 
-    return <div className="MappingCreate">
+	return <div className="MappingCreate">
 
 
-        <Typography variant={"h4"} align={"center"}>Create a new mapping</Typography>
+		<Typography variant={"h4"} align={"center"}>Create a new mapping</Typography>
 
-        <MappingCreateSources/>
+		<MappingCreateSources/>
 
-        {username && repository && branch && <MappingCreateImages
+		{username && repository && branch && <MappingCreateImages
 
         />}
 
-        <MappingCreateDeployment/>
+		<MappingCreateDeployment/>
 
-    </div>
+	</div>
 }
 
 export default connector(MappingCreate)

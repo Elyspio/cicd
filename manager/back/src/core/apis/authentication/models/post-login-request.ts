@@ -18,16 +18,16 @@
  * @interface PostLoginRequest
  */
 export interface PostLoginRequest {
-    /**
-     *
-     * @type {string}
-     * @memberof PostLoginRequest
-     */
-    hash?: any;
-    /**
-     *
-     * @type {string}
-     * @memberof PostLoginRequest
-     */
-    name?: any;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof PostLoginRequest
+	 */
+	hash?: any;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof PostLoginRequest
+	 */
+	name?: any;
 }

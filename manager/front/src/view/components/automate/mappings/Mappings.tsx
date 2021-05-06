@@ -8,19 +8,19 @@ import {Mapping} from "./Mapping";
 
 export function Mappings(props: ReduxTypes) {
 
-    const mappings = React.useMemo(() => {
-        return [...props.mappings ?? []].sort((a, b) => a.id > b.id ? -1 : 1)
+	const mappings = React.useMemo(() => {
+		return [...props.mappings ?? []].sort((a, b) => a.id > b.id ? -1 : 1)
 
-    }, [props.mappings])
+	}, [props.mappings])
 
-    return <List className={"Mappings"}>
-        {mappings.map((agent, index) => <Mapping key={`M-${agent.id}`} data={agent}/>)}
-    </List>
+	return <List className={"Mappings"}>
+		{mappings.map((agent, index) => <Mapping key={`M-${agent.id}`} data={agent}/>)}
+	</List>
 }
 
 
 const mapStateToProps = (state: StoreState) => ({
-    mappings: state.automation.config?.mappings
+	mappings: state.automation.config?.mappings
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({})

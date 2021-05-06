@@ -1,32 +1,32 @@
 export interface ICollection<T> {
-    storage: T[]
+	storage: T[]
 
-    size(): number;
+	size(): number;
 }
 
 
 export interface IQueue<T> extends ICollection<T> {
-    storage: T[]
+	storage: T[]
 
-    enqueue(item: T): void;
+	enqueue(item: T): void;
 
-    dequeue(): T | undefined;
+	dequeue(): T | undefined;
 
-    size(): number;
+	size(): number;
 
-    isEmpty(): boolean
+	isEmpty(): boolean
 }
 
 export interface IStack<T> extends ICollection<T> {
-    push(item: T): void;
+	push(item: T): void;
 
-    pop(): T | undefined;
+	pop(): T | undefined;
 
-    peek(): T | undefined;
+	peek(): T | undefined;
 
-    size(): number;
+	size(): number;
 }
 
 export interface Comparable<T> {
-    equal(obj: T): boolean
+	equal(obj: T): boolean
 }

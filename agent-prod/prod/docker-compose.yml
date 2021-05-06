@@ -1,0 +1,17 @@
+version: "3.5"
+services:
+  agent-production:
+    image: elyspio/automatize-github-docker:agent-prod
+    restart: unless-stopped
+    volumes:
+      - ./conf.json:/back/conf.json
+    environment:
+      MANAGER_SERVER_URL: https://elyspio.fr/automate/cicd/manager
+      RUNNER_HOST: https://elyspio.fr/runner/elyspi-4
+      HTTP_PORT: 4000
+      CONF_PATH: /back/conf.json
+    ports:
+      - 4009:4000
+    container_name: cicd-agent-production
+
+

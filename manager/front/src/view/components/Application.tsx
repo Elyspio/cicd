@@ -24,26 +24,26 @@ export interface Props {
 
 function Application(props: Props & ReduxTypes) {
 
-    const actions = [{
-        onClick: props.toggleTheme,
-        text: "Switch lights",
-        icon: <Brightness5Icon/>
-    }, {
-        onClick: Services.authentication.login,
-        text: "Login",
-        icon: <Face/>
-    }]
+	const actions = [{
+		onClick: props.toggleTheme,
+		text: "Switch lights",
+		icon: <Brightness5Icon/>
+	}, {
+		onClick: Services.authentication.login,
+		text: "Login",
+		icon: <Face/>
+	}]
 
-    return (
-        <Paper square={true} className={"Application"}>
-            <Drawer position={"right"}
-                    actions={actions}>
-                <div className="content">
-                    <Automate/>
-                </div>
-            </Drawer>
-        </Paper>
-    );
+	return (
+		<Paper square={true} className={"Application"}>
+			<Drawer position={"right"}
+			        actions={actions}>
+				<div className="content">
+					<Automate/>
+				</div>
+			</Drawer>
+		</Paper>
+	);
 }
 
 export default connector(Application)

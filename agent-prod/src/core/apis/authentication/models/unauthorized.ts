@@ -18,34 +18,34 @@
  * @interface Unauthorized
  */
 export interface Unauthorized {
-    /**
-     * The error name
-     * @type {string}
-     * @memberof Unauthorized
-     */
-    name: any;
-    /**
-     * An error message
-     * @type {string}
-     * @memberof Unauthorized
-     */
-    message: any;
-    /**
-     * The status code of the exception
-     * @type {number}
-     * @memberof Unauthorized
-     */
-    status: any;
-    /**
-     * A list of related errors
-     * @type {Array&lt;GenericError&gt;}
-     * @memberof Unauthorized
-     */
-    errors?: any;
-    /**
-     * The stack trace (only in development mode)
-     * @type {Array&lt;string&gt;}
-     * @memberof Unauthorized
-     */
-    stack?: any;
+	/**
+	 * The error name
+	 * @type {string}
+	 * @memberof Unauthorized
+	 */
+	name: any;
+	/**
+	 * An error message
+	 * @type {string}
+	 * @memberof Unauthorized
+	 */
+	message: any;
+	/**
+	 * The status code of the exception
+	 * @type {number}
+	 * @memberof Unauthorized
+	 */
+	status: any;
+	/**
+	 * A list of related errors
+	 * @type {Array&lt;GenericError&gt;}
+	 * @memberof Unauthorized
+	 */
+	errors?: any;
+	/**
+	 * The stack trace (only in development mode)
+	 * @type {Array&lt;string&gt;}
+	 * @memberof Unauthorized
+	 */
+	stack?: any;
 }

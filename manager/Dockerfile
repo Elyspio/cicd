@@ -26,9 +26,13 @@ FROM node:14-alpine
 COPY --from=builder-back /back/package.json /back/package.json
 RUN cd /back && npm i --only=production
 COPY --from=builder-back /back/build /back/build
-COPY --from=builder-front /front/build /front
+COPY --from=builder-front /front/build /front/build
+
 
 WORKDIR /back
 ENV LOG_FOLDER /logs
 ENV NODE_ENV production
+
+RUN apk add --no-cache git
+
 CMD ["node", "build/app.js"]

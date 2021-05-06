@@ -4,12 +4,12 @@ import isDev = Helper.isDev;
 
 
 const authenticationApi = isDev()
-    ? "http://localhost:4004"
-    : "https://elyspio.fr/authentication/"
+	? "http://localhost:4004"
+	: "https://elyspio.fr/authentication"
 
 export const Apis = {
-    authentication: {
-        login: new AuthenticationApi(undefined, authenticationApi),
-        user: new UsersApi(undefined, authenticationApi)
-    }
+	authentication: {
+		login: new AuthenticationApi(undefined, authenticationApi),
+		user: new UsersApi(undefined, authenticationApi)
+	}
 }

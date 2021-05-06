@@ -18,16 +18,16 @@ import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import {
-    assertParamExists,
-    createRequestFunction,
-    DUMMY_BASE_URL,
-    serializeDataIfNeeded,
-    setApiKeyToObject,
-    setBasicAuthToObject,
-    setBearerAuthToObject,
-    setOAuthToObject,
-    setSearchParams,
-    toPathString
+	assertParamExists,
+	createRequestFunction,
+	DUMMY_BASE_URL,
+	serializeDataIfNeeded,
+	setApiKeyToObject,
+	setBasicAuthToObject,
+	setBearerAuthToObject,
+	setOAuthToObject,
+	setSearchParams,
+	toPathString
 } from './common';
 // @ts-ignore
 import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from './base';
@@ -38,18 +38,18 @@ import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from
  * @interface BuildAgentModelAdd
  */
 export interface BuildAgentModelAdd {
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelAdd
-     */
-    ability?: BuildAgentModelAddAbilityEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelAdd
-     */
-    uri?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelAdd
+	 */
+	ability?: BuildAgentModelAddAbilityEnum;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelAdd
+	 */
+	uri?: string;
 }
 
 /**
@@ -57,7 +57,7 @@ export interface BuildAgentModelAdd {
  * @enum {string}
  */
 export enum BuildAgentModelAddAbilityEnum {
-    Docker = 'docker'
+	Docker = 'docker'
 }
 
 /**
@@ -66,30 +66,30 @@ export enum BuildAgentModelAddAbilityEnum {
  * @interface BuildAgentModelReturn
  */
 export interface BuildAgentModelReturn {
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelReturn
-     */
-    availability?: BuildAgentModelReturnAvailabilityEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelReturn
-     */
-    uri?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelReturn
-     */
-    lastUptime?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelReturn
-     */
-    ability?: BuildAgentModelReturnAbilityEnum;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelReturn
+	 */
+	availability?: BuildAgentModelReturnAvailabilityEnum;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelReturn
+	 */
+	uri?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelReturn
+	 */
+	lastUptime?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelReturn
+	 */
+	ability?: BuildAgentModelReturnAbilityEnum;
 }
 
 /**
@@ -97,9 +97,9 @@ export interface BuildAgentModelReturn {
  * @enum {string}
  */
 export enum BuildAgentModelReturnAvailabilityEnum {
-    Down = 'down',
-    Running = 'running',
-    Free = 'free'
+	Down = 'down',
+	Running = 'running',
+	Free = 'free'
 }
 
 /**
@@ -107,7 +107,7 @@ export enum BuildAgentModelReturnAvailabilityEnum {
  * @enum {string}
  */
 export enum BuildAgentModelReturnAbilityEnum {
-    Docker = 'docker'
+	Docker = 'docker'
 }
 
 /**
@@ -116,12 +116,12 @@ export enum BuildAgentModelReturnAbilityEnum {
  * @interface DockerComposeModel
  */
 export interface DockerComposeModel {
-    /**
-     *
-     * @type {string}
-     * @memberof DockerComposeModel
-     */
-    path?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof DockerComposeModel
+	 */
+	path?: string;
 }
 
 /**
@@ -130,12 +130,12 @@ export interface DockerComposeModel {
  * @interface DockerModel
  */
 export interface DockerModel {
-    /**
-     *
-     * @type {Array<DockerComposeModel>}
-     * @memberof DockerModel
-     */
-    compose?: Array<DockerComposeModel>;
+	/**
+	 *
+	 * @type {Array<DockerComposeModel>}
+	 * @memberof DockerModel
+	 */
+	compose?: Array<DockerComposeModel>;
 }
 
 /**
@@ -144,12 +144,12 @@ export interface DockerModel {
  * @interface InlineObject
  */
 export interface InlineObject {
-    /**
-     *
-     * @type {string}
-     * @memberof InlineObject
-     */
-    url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof InlineObject
+	 */
+	url: string;
 }
 
 /**
@@ -158,12 +158,12 @@ export interface InlineObject {
  * @interface InlineObject1
  */
 export interface InlineObject1 {
-    /**
-     *
-     * @type {string}
-     * @memberof InlineObject1
-     */
-    url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof InlineObject1
+	 */
+	url: string;
 }
 
 /**
@@ -172,30 +172,30 @@ export interface InlineObject1 {
  * @interface ProductionAgentModel
  */
 export interface ProductionAgentModel {
-    /**
-     *
-     * @type {string}
-     * @memberof ProductionAgentModel
-     */
-    availability?: ProductionAgentModelAvailabilityEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof ProductionAgentModel
-     */
-    uri?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ProductionAgentModel
-     */
-    lastUptime?: string;
-    /**
-     *
-     * @type {DockerModel}
-     * @memberof ProductionAgentModel
-     */
-    docker?: DockerModel;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ProductionAgentModel
+	 */
+	availability?: ProductionAgentModelAvailabilityEnum;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ProductionAgentModel
+	 */
+	uri?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ProductionAgentModel
+	 */
+	lastUptime?: string;
+	/**
+	 *
+	 * @type {DockerModel}
+	 * @memberof ProductionAgentModel
+	 */
+	docker?: DockerModel;
 }
 
 /**
@@ -203,9 +203,9 @@ export interface ProductionAgentModel {
  * @enum {string}
  */
 export enum ProductionAgentModelAvailabilityEnum {
-    Down = 'down',
-    Running = 'running',
-    Free = 'free'
+	Down = 'down',
+	Running = 'running',
+	Free = 'free'
 }
 
 
@@ -214,196 +214,196 @@ export enum ProductionAgentModelAvailabilityEnum {
  * @export
  */
 export const AutomationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         *
-         * @param {BuildAgentModelAdd} [buildAgentModelAdd]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddBuildAgent: async (buildAgentModelAdd?: BuildAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/automate/agent/build`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+	return {
+		/**
+		 *
+		 * @param {BuildAgentModelAdd} [buildAgentModelAdd]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddBuildAgent: async (buildAgentModelAdd?: BuildAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/automate/agent/build`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(buildAgentModelAdd, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {ProductionAgentModel} [productionAgentModel]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddProductionAgent: async (productionAgentModel?: ProductionAgentModel, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/automate/agent/production`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(productionAgentModel, localVarRequestOptions, configuration)
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(buildAgentModelAdd, localVarRequestOptions, configuration)
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {InlineObject} inlineObject
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationBuilderAgentKeepAlive: async (inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'inlineObject' is not null or undefined
-            assertParamExists('automationBuilderAgentKeepAlive', 'inlineObject', inlineObject)
-            const localVarPath = `/core/automate/agent/build/keep-alive`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {ProductionAgentModel} [productionAgentModel]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddProductionAgent: async (productionAgentModel?: ProductionAgentModel, options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/automate/agent/production`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(productionAgentModel, localVarRequestOptions, configuration)
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetBuilderAgent: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/automate/agent/build`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationBuilderAgentKeepAlive: async (inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'inlineObject' is not null or undefined
+			assertParamExists('automationBuilderAgentKeepAlive', 'inlineObject', inlineObject)
+			const localVarPath = `/core/automate/agent/build/keep-alive`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetProductionAgent: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/automate/agent/production`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {InlineObject1} inlineObject1
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationProductionAgentKeepAlive: async (inlineObject1: InlineObject1, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'inlineObject1' is not null or undefined
-            assertParamExists('automationProductionAgentKeepAlive', 'inlineObject1', inlineObject1)
-            const localVarPath = `/core/automate/agent/production/keep-alive`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetBuilderAgent: async (options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/automate/agent/build`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetProductionAgent: async (options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/automate/agent/production`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
+			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {InlineObject1} inlineObject1
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationProductionAgentKeepAlive: async (inlineObject1: InlineObject1, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'inlineObject1' is not null or undefined
+			assertParamExists('automationProductionAgentKeepAlive', 'inlineObject1', inlineObject1)
+			const localVarPath = `/core/automate/agent/production/keep-alive`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+
+			localVarHeaderParameter['Content-Type'] = 'application/json';
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	}
 };
 
 /**
@@ -411,67 +411,67 @@ export const AutomationApiAxiosParamCreator = function (configuration?: Configur
  * @export
  */
 export const AutomationApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration)
-    return {
-        /**
-         *
-         * @param {BuildAgentModelAdd} [buildAgentModelAdd]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationAddBuildAgent(buildAgentModelAdd?: BuildAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddBuildAgent(buildAgentModelAdd, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {ProductionAgentModel} [productionAgentModel]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationAddProductionAgent(productionAgentModel?: ProductionAgentModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddProductionAgent(productionAgentModel, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {InlineObject} inlineObject
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationBuilderAgentKeepAlive(inlineObject, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationGetBuilderAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BuildAgentModelReturn>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetBuilderAgent(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationGetProductionAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductionAgentModel>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetProductionAgent(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {InlineObject1} inlineObject1
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationProductionAgentKeepAlive(inlineObject1, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
+	const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration)
+	return {
+		/**
+		 *
+		 * @param {BuildAgentModelAdd} [buildAgentModelAdd]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationAddBuildAgent(buildAgentModelAdd?: BuildAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddBuildAgent(buildAgentModelAdd, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {ProductionAgentModel} [productionAgentModel]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationAddProductionAgent(productionAgentModel?: ProductionAgentModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddProductionAgent(productionAgentModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationBuilderAgentKeepAlive(inlineObject, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationGetBuilderAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BuildAgentModelReturn>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetBuilderAgent(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationGetProductionAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductionAgentModel>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetProductionAgent(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {InlineObject1} inlineObject1
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationProductionAgentKeepAlive(inlineObject1, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	}
 };
 
 /**
@@ -479,61 +479,61 @@ export const AutomationApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const AutomationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AutomationApiFp(configuration)
-    return {
-        /**
-         *
-         * @param {BuildAgentModelAdd} [buildAgentModelAdd]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddBuildAgent(buildAgentModelAdd?: BuildAgentModelAdd, options?: any): AxiosPromise<void> {
-            return localVarFp.automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {ProductionAgentModel} [productionAgentModel]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddProductionAgent(productionAgentModel?: ProductionAgentModel, options?: any): AxiosPromise<void> {
-            return localVarFp.automationAddProductionAgent(productionAgentModel, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {InlineObject} inlineObject
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): AxiosPromise<void> {
-            return localVarFp.automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetBuilderAgent(options?: any): AxiosPromise<Array<BuildAgentModelReturn>> {
-            return localVarFp.automationGetBuilderAgent(options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetProductionAgent(options?: any): AxiosPromise<Array<ProductionAgentModel>> {
-            return localVarFp.automationGetProductionAgent(options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {InlineObject1} inlineObject1
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): AxiosPromise<void> {
-            return localVarFp.automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(axios, basePath));
-        },
-    };
+	const localVarFp = AutomationApiFp(configuration)
+	return {
+		/**
+		 *
+		 * @param {BuildAgentModelAdd} [buildAgentModelAdd]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddBuildAgent(buildAgentModelAdd?: BuildAgentModelAdd, options?: any): AxiosPromise<void> {
+			return localVarFp.automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {ProductionAgentModel} [productionAgentModel]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddProductionAgent(productionAgentModel?: ProductionAgentModel, options?: any): AxiosPromise<void> {
+			return localVarFp.automationAddProductionAgent(productionAgentModel, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): AxiosPromise<void> {
+			return localVarFp.automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetBuilderAgent(options?: any): AxiosPromise<Array<BuildAgentModelReturn>> {
+			return localVarFp.automationGetBuilderAgent(options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetProductionAgent(options?: any): AxiosPromise<Array<ProductionAgentModel>> {
+			return localVarFp.automationGetProductionAgent(options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {InlineObject1} inlineObject1
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): AxiosPromise<void> {
+			return localVarFp.automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(axios, basePath));
+		},
+	};
 };
 
 /**
@@ -543,69 +543,69 @@ export const AutomationApiFactory = function (configuration?: Configuration, bas
  * @extends {BaseAPI}
  */
 export class AutomationApi extends BaseAPI {
-    /**
-     *
-     * @param {BuildAgentModelAdd} [buildAgentModelAdd]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationAddBuildAgent(buildAgentModelAdd?: BuildAgentModelAdd, options?: any) {
-        return AutomationApiFp(this.configuration).automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {BuildAgentModelAdd} [buildAgentModelAdd]
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationAddBuildAgent(buildAgentModelAdd?: BuildAgentModelAdd, options?: any) {
+		return AutomationApiFp(this.configuration).automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {ProductionAgentModel} [productionAgentModel]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationAddProductionAgent(productionAgentModel?: ProductionAgentModel, options?: any) {
-        return AutomationApiFp(this.configuration).automationAddProductionAgent(productionAgentModel, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {ProductionAgentModel} [productionAgentModel]
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationAddProductionAgent(productionAgentModel?: ProductionAgentModel, options?: any) {
+		return AutomationApiFp(this.configuration).automationAddProductionAgent(productionAgentModel, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {InlineObject} inlineObject
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any) {
-        return AutomationApiFp(this.configuration).automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {InlineObject} inlineObject
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any) {
+		return AutomationApiFp(this.configuration).automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationGetBuilderAgent(options?: any) {
-        return AutomationApiFp(this.configuration).automationGetBuilderAgent(options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationGetBuilderAgent(options?: any) {
+		return AutomationApiFp(this.configuration).automationGetBuilderAgent(options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationGetProductionAgent(options?: any) {
-        return AutomationApiFp(this.configuration).automationGetProductionAgent(options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationGetProductionAgent(options?: any) {
+		return AutomationApiFp(this.configuration).automationGetProductionAgent(options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {InlineObject1} inlineObject1
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any) {
-        return AutomationApiFp(this.configuration).automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {InlineObject1} inlineObject1
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any) {
+		return AutomationApiFp(this.configuration).automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(this.axios, this.basePath));
+	}
 }
 
 
@@ -614,41 +614,41 @@ export class AutomationApi extends BaseAPI {
  * @export
  */
 export const DockerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         *
-         * @param {Array<'web-front' | 'web-back'>} [preset]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        dockerControllerGet: async (preset?: Array<'web-front' | 'web-back'>, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/docker/dockerfiles`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+	return {
+		/**
+		 *
+		 * @param {Array<'web-front' | 'web-back'>} [preset]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		dockerControllerGet: async (preset?: Array<'web-front' | 'web-back'>, options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/docker/dockerfiles`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
-            if (preset) {
-                localVarQueryParameter['preset'] = preset;
-            }
+			if (preset) {
+				localVarQueryParameter['preset'] = preset;
+			}
 
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	}
 };
 
 /**
@@ -656,19 +656,19 @@ export const DockerControllerApiAxiosParamCreator = function (configuration?: Co
  * @export
  */
 export const DockerControllerApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DockerControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         *
-         * @param {Array<'web-front' | 'web-back'>} [preset]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dockerControllerGet(preset, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
+	const localVarAxiosParamCreator = DockerControllerApiAxiosParamCreator(configuration)
+	return {
+		/**
+		 *
+		 * @param {Array<'web-front' | 'web-back'>} [preset]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.dockerControllerGet(preset, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	}
 };
 
 /**
@@ -676,18 +676,18 @@ export const DockerControllerApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const DockerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DockerControllerApiFp(configuration)
-    return {
-        /**
-         *
-         * @param {Array<'web-front' | 'web-back'>} [preset]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): AxiosPromise<string> {
-            return localVarFp.dockerControllerGet(preset, options).then((request) => request(axios, basePath));
-        },
-    };
+	const localVarFp = DockerControllerApiFp(configuration)
+	return {
+		/**
+		 *
+		 * @param {Array<'web-front' | 'web-back'>} [preset]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): AxiosPromise<string> {
+			return localVarFp.dockerControllerGet(preset, options).then((request) => request(axios, basePath));
+		},
+	};
 };
 
 /**
@@ -697,16 +697,16 @@ export const DockerControllerApiFactory = function (configuration?: Configuratio
  * @extends {BaseAPI}
  */
 export class DockerControllerApi extends BaseAPI {
-    /**
-     *
-     * @param {Array<'web-front' | 'web-back'>} [preset]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DockerControllerApi
-     */
-    public dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any) {
-        return DockerControllerApiFp(this.configuration).dockerControllerGet(preset, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {Array<'web-front' | 'web-back'>} [preset]
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof DockerControllerApi
+	 */
+	public dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any) {
+		return DockerControllerApiFp(this.configuration).dockerControllerGet(preset, options).then((request) => request(this.axios, this.basePath));
+	}
 }
 
 

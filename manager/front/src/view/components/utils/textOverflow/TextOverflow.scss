@@ -1,0 +1,22 @@
+.TextOverflow {
+	width: 200px;
+	height: 30px;
+	overflow: hidden;
+	line-height: 30px;
+	padding: 5px;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.TextOverflow > span {
+	position: absolute;
+	white-space: nowrap;
+	transform: translateX(0);
+	transition: 3s ease-in-out;
+	font-size: 90%;
+}
+
+.TextOverflow:hover > span {
+	transform: translateX(calc(11rem - 100%));
+}

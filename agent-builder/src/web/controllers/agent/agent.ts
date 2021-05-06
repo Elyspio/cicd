@@ -8,11 +8,11 @@ import {Services} from "../../../core/services";
 @Name("BuildAgent")
 export class AutomationController {
 
-    @Post("/build")
-    @Description("Build and push a project following a configuration")
-    @Returns(200, Array).Of(String)
-    async build(@Required() @BodyParams(BuildConfigModel) conf: BuildConfigModel) {
-        return Services.agent.build(conf);
-    }
+	@Post("/build")
+	@Description("Build and push a project following a configuration")
+	@Returns(200, Array).Of(String)
+	async build(@Required() @BodyParams(BuildConfigModel) conf: BuildConfigModel) {
+		return Services.agent.build(conf);
+	}
 
 }

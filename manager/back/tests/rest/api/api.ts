@@ -18,16 +18,16 @@ import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import {
-    assertParamExists,
-    createRequestFunction,
-    DUMMY_BASE_URL,
-    serializeDataIfNeeded,
-    setApiKeyToObject,
-    setBasicAuthToObject,
-    setBearerAuthToObject,
-    setOAuthToObject,
-    setSearchParams,
-    toPathString
+	assertParamExists,
+	createRequestFunction,
+	DUMMY_BASE_URL,
+	serializeDataIfNeeded,
+	setApiKeyToObject,
+	setBasicAuthToObject,
+	setBearerAuthToObject,
+	setOAuthToObject,
+	setSearchParams,
+	toPathString
 } from './common';
 // @ts-ignore
 import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from './base';
@@ -38,30 +38,30 @@ import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from
  * @interface BuildAgentModelAdd
  */
 export interface BuildAgentModelAdd {
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelAdd
-     */
-    uri: string;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelAdd
-     */
-    availability?: BuildAgentModelAddAvailabilityEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelAdd
-     */
-    lastUptime?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof BuildAgentModelAdd
-     */
-    abilities: Array<BuildAgentModelAddAbilitiesEnum>;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelAdd
+	 */
+	uri: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelAdd
+	 */
+	availability?: BuildAgentModelAddAvailabilityEnum;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelAdd
+	 */
+	lastUptime?: string;
+	/**
+	 *
+	 * @type {Array<string>}
+	 * @memberof BuildAgentModelAdd
+	 */
+	abilities: Array<BuildAgentModelAddAbilitiesEnum>;
 }
 
 /**
@@ -69,9 +69,9 @@ export interface BuildAgentModelAdd {
  * @enum {string}
  */
 export enum BuildAgentModelAddAvailabilityEnum {
-    Free = 'free',
-    Running = 'running',
-    Down = 'down'
+	Free = 'free',
+	Running = 'running',
+	Down = 'down'
 }
 
 /**
@@ -79,8 +79,8 @@ export enum BuildAgentModelAddAvailabilityEnum {
  * @enum {string}
  */
 export enum BuildAgentModelAddAbilitiesEnum {
-    Docker = 'docker',
-    DockerBuildx = 'docker-buildx'
+	Docker = 'docker',
+	DockerBuildx = 'docker-buildx'
 }
 
 /**
@@ -89,30 +89,30 @@ export enum BuildAgentModelAddAbilitiesEnum {
  * @interface BuildAgentModelReturn
  */
 export interface BuildAgentModelReturn {
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelReturn
-     */
-    uri: string;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelReturn
-     */
-    availability?: BuildAgentModelReturnAvailabilityEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof BuildAgentModelReturn
-     */
-    lastUptime?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof BuildAgentModelReturn
-     */
-    abilities: Array<BuildAgentModelReturnAbilitiesEnum>;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelReturn
+	 */
+	uri: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelReturn
+	 */
+	availability?: BuildAgentModelReturnAvailabilityEnum;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BuildAgentModelReturn
+	 */
+	lastUptime?: string;
+	/**
+	 *
+	 * @type {Array<string>}
+	 * @memberof BuildAgentModelReturn
+	 */
+	abilities: Array<BuildAgentModelReturnAbilitiesEnum>;
 }
 
 /**
@@ -120,9 +120,9 @@ export interface BuildAgentModelReturn {
  * @enum {string}
  */
 export enum BuildAgentModelReturnAvailabilityEnum {
-    Free = 'free',
-    Running = 'running',
-    Down = 'down'
+	Free = 'free',
+	Running = 'running',
+	Down = 'down'
 }
 
 /**
@@ -130,8 +130,8 @@ export enum BuildAgentModelReturnAvailabilityEnum {
  * @enum {string}
  */
 export enum BuildAgentModelReturnAbilitiesEnum {
-    Docker = 'docker',
-    DockerBuildx = 'docker-buildx'
+	Docker = 'docker',
+	DockerBuildx = 'docker-buildx'
 }
 
 /**
@@ -140,18 +140,18 @@ export enum BuildAgentModelReturnAbilitiesEnum {
  * @interface BuildConfigModel
  */
 export interface BuildConfigModel {
-    /**
-     *
-     * @type {GithubConfigModel}
-     * @memberof BuildConfigModel
-     */
-    github: GithubConfigModel;
-    /**
-     *
-     * @type {DockerConfigModel}
-     * @memberof BuildConfigModel
-     */
-    docker: DockerConfigModel;
+	/**
+	 *
+	 * @type {GithubConfigModel}
+	 * @memberof BuildConfigModel
+	 */
+	github: GithubConfigModel;
+	/**
+	 *
+	 * @type {DockerConfigModel}
+	 * @memberof BuildConfigModel
+	 */
+	docker: DockerConfigModel;
 }
 
 /**
@@ -160,18 +160,18 @@ export interface BuildConfigModel {
  * @interface DeployConfigModel
  */
 export interface DeployConfigModel {
-    /**
-     *
-     * @type {DockerField}
-     * @memberof DeployConfigModel
-     */
-    docker: DockerField;
-    /**
-     * URI of the production agent
-     * @type {string}
-     * @memberof DeployConfigModel
-     */
-    uri: string;
+	/**
+	 *
+	 * @type {DockerField}
+	 * @memberof DeployConfigModel
+	 */
+	docker: DockerField;
+	/**
+	 * URI of the production agent
+	 * @type {string}
+	 * @memberof DeployConfigModel
+	 */
+	uri: string;
 }
 
 /**
@@ -180,12 +180,12 @@ export interface DeployConfigModel {
  * @interface DockerComposeField
  */
 export interface DockerComposeField {
-    /**
-     * Path where the docker-compose.yml file is
-     * @type {string}
-     * @memberof DockerComposeField
-     */
-    path?: string;
+	/**
+	 * Path where the docker-compose.yml file is
+	 * @type {string}
+	 * @memberof DockerComposeField
+	 */
+	path?: string;
 }
 
 /**
@@ -194,24 +194,24 @@ export interface DockerComposeField {
  * @interface DockerConfigModel
  */
 export interface DockerConfigModel {
-    /**
-     * Dockerfiles to build
-     * @type {Array<DockerFileConfigModel>}
-     * @memberof DockerConfigModel
-     */
-    dockerfiles: Array<DockerFileConfigModel>;
-    /**
-     * Platforms available for the future image
-     * @type {Array<string>}
-     * @memberof DockerConfigModel
-     */
-    platforms: Array<DockerConfigModelPlatformsEnum>;
-    /**
-     *
-     * @type {string}
-     * @memberof DockerConfigModel
-     */
-    username: string;
+	/**
+	 * Dockerfiles to build
+	 * @type {Array<DockerFileConfigModel>}
+	 * @memberof DockerConfigModel
+	 */
+	dockerfiles: Array<DockerFileConfigModel>;
+	/**
+	 * Platforms available for the future image
+	 * @type {Array<string>}
+	 * @memberof DockerConfigModel
+	 */
+	platforms: Array<DockerConfigModelPlatformsEnum>;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof DockerConfigModel
+	 */
+	username: string;
 }
 
 /**
@@ -219,8 +219,8 @@ export interface DockerConfigModel {
  * @enum {string}
  */
 export enum DockerConfigModelPlatformsEnum {
-    Arm64 = 'linux/arm64',
-    Amd64 = 'linux/amd64'
+	Arm64 = 'linux/arm64',
+	Amd64 = 'linux/amd64'
 }
 
 /**
@@ -229,12 +229,12 @@ export enum DockerConfigModelPlatformsEnum {
  * @interface DockerField
  */
 export interface DockerField {
-    /**
-     *
-     * @type {DockerComposeField}
-     * @memberof DockerField
-     */
-    compose?: DockerComposeField;
+	/**
+	 *
+	 * @type {DockerComposeField}
+	 * @memberof DockerField
+	 */
+	compose?: DockerComposeField;
 }
 
 /**
@@ -243,30 +243,30 @@ export interface DockerField {
  * @interface DockerFileConfigModel
  */
 export interface DockerFileConfigModel {
-    /**
-     * Path to Dockerfile file
-     * @type {string}
-     * @memberof DockerFileConfigModel
-     */
-    path: string;
-    /**
-     * Working directory from origin
-     * @type {string}
-     * @memberof DockerFileConfigModel
-     */
-    wd: string;
-    /**
-     * Name for the image
-     * @type {string}
-     * @memberof DockerFileConfigModel
-     */
-    image: string;
-    /**
-     * Tag for the image
-     * @type {string}
-     * @memberof DockerFileConfigModel
-     */
-    tag?: string;
+	/**
+	 * Path to Dockerfile file
+	 * @type {string}
+	 * @memberof DockerFileConfigModel
+	 */
+	path: string;
+	/**
+	 * Working directory from origin
+	 * @type {string}
+	 * @memberof DockerFileConfigModel
+	 */
+	wd: string;
+	/**
+	 * Name for the image
+	 * @type {string}
+	 * @memberof DockerFileConfigModel
+	 */
+	image: string;
+	/**
+	 * Tag for the image
+	 * @type {string}
+	 * @memberof DockerFileConfigModel
+	 */
+	tag?: string;
 }
 
 /**
@@ -275,24 +275,24 @@ export interface DockerFileConfigModel {
  * @interface GithubConfigModel
  */
 export interface GithubConfigModel {
-    /**
-     * Url of the repo
-     * @type {string}
-     * @memberof GithubConfigModel
-     */
-    remote: string;
-    /**
-     * Branch on the repo
-     * @type {string}
-     * @memberof GithubConfigModel
-     */
-    branch: string;
-    /**
-     * Commit Sha
-     * @type {string}
-     * @memberof GithubConfigModel
-     */
-    commit?: string;
+	/**
+	 * Url of the repo
+	 * @type {string}
+	 * @memberof GithubConfigModel
+	 */
+	remote: string;
+	/**
+	 * Branch on the repo
+	 * @type {string}
+	 * @memberof GithubConfigModel
+	 */
+	branch: string;
+	/**
+	 * Commit Sha
+	 * @type {string}
+	 * @memberof GithubConfigModel
+	 */
+	commit?: string;
 }
 
 /**
@@ -301,84 +301,84 @@ export interface GithubConfigModel {
  * @interface GithubPushWebhook
  */
 export interface GithubPushWebhook {
-    /**
-     *
-     * @type {string}
-     * @memberof GithubPushWebhook
-     */
-    ref: string;
-    /**
-     *
-     * @type {string}
-     * @memberof GithubPushWebhook
-     */
-    before: string;
-    /**
-     *
-     * @type {string}
-     * @memberof GithubPushWebhook
-     */
-    after: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof GithubPushWebhook
-     */
-    created: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof GithubPushWebhook
-     */
-    deleted: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof GithubPushWebhook
-     */
-    forced: boolean;
-    /**
-     *
-     * @type {string}
-     * @memberof GithubPushWebhook
-     */
-    base_ref: string;
-    /**
-     *
-     * @type {string}
-     * @memberof GithubPushWebhook
-     */
-    compare: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof GithubPushWebhook
-     */
-    commits: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof GithubPushWebhook
-     */
-    head_commit?: string;
-    /**
-     *
-     * @type {Repository}
-     * @memberof GithubPushWebhook
-     */
-    repository: Repository;
-    /**
-     *
-     * @type {Pusher}
-     * @memberof GithubPushWebhook
-     */
-    pusher: Pusher;
-    /**
-     *
-     * @type {User}
-     * @memberof GithubPushWebhook
-     */
-    sender: User;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof GithubPushWebhook
+	 */
+	ref: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof GithubPushWebhook
+	 */
+	before: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof GithubPushWebhook
+	 */
+	after: string;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof GithubPushWebhook
+	 */
+	created: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof GithubPushWebhook
+	 */
+	deleted: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof GithubPushWebhook
+	 */
+	forced: boolean;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof GithubPushWebhook
+	 */
+	base_ref: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof GithubPushWebhook
+	 */
+	compare: string;
+	/**
+	 *
+	 * @type {Array<string>}
+	 * @memberof GithubPushWebhook
+	 */
+	commits: Array<string>;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof GithubPushWebhook
+	 */
+	head_commit?: string;
+	/**
+	 *
+	 * @type {Repository}
+	 * @memberof GithubPushWebhook
+	 */
+	repository: Repository;
+	/**
+	 *
+	 * @type {Pusher}
+	 * @memberof GithubPushWebhook
+	 */
+	pusher: Pusher;
+	/**
+	 *
+	 * @type {User}
+	 * @memberof GithubPushWebhook
+	 */
+	sender: User;
 }
 
 /**
@@ -387,12 +387,12 @@ export interface GithubPushWebhook {
  * @interface InlineObject
  */
 export interface InlineObject {
-    /**
-     *
-     * @type {string}
-     * @memberof InlineObject
-     */
-    url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof InlineObject
+	 */
+	url: string;
 }
 
 /**
@@ -401,12 +401,12 @@ export interface InlineObject {
  * @interface InlineObject1
  */
 export interface InlineObject1 {
-    /**
-     *
-     * @type {string}
-     * @memberof InlineObject1
-     */
-    url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof InlineObject1
+	 */
+	url: string;
 }
 
 /**
@@ -415,18 +415,18 @@ export interface InlineObject1 {
  * @interface InlineObject2
  */
 export interface InlineObject2 {
-    /**
-     *
-     * @type {BuildConfigModel}
-     * @memberof InlineObject2
-     */
-    build: BuildConfigModel;
-    /**
-     *
-     * @type {DeployConfigModel}
-     * @memberof InlineObject2
-     */
-    deploy: DeployConfigModel;
+	/**
+	 *
+	 * @type {BuildConfigModel}
+	 * @memberof InlineObject2
+	 */
+	build: BuildConfigModel;
+	/**
+	 *
+	 * @type {DeployConfigModel}
+	 * @memberof InlineObject2
+	 */
+	deploy: DeployConfigModel;
 }
 
 /**
@@ -435,30 +435,30 @@ export interface InlineObject2 {
  * @interface ProductionAgentModel
  */
 export interface ProductionAgentModel {
-    /**
-     *
-     * @type {string}
-     * @memberof ProductionAgentModel
-     */
-    uri: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ProductionAgentModel
-     */
-    availability?: ProductionAgentModelAvailabilityEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof ProductionAgentModel
-     */
-    lastUptime?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof ProductionAgentModel
-     */
-    abilities: Array<ProductionAgentModelAbilitiesEnum>;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ProductionAgentModel
+	 */
+	uri: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ProductionAgentModel
+	 */
+	availability?: ProductionAgentModelAvailabilityEnum;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ProductionAgentModel
+	 */
+	lastUptime?: string;
+	/**
+	 *
+	 * @type {Array<string>}
+	 * @memberof ProductionAgentModel
+	 */
+	abilities: Array<ProductionAgentModelAbilitiesEnum>;
 }
 
 /**
@@ -466,9 +466,9 @@ export interface ProductionAgentModel {
  * @enum {string}
  */
 export enum ProductionAgentModelAvailabilityEnum {
-    Free = 'free',
-    Running = 'running',
-    Down = 'down'
+	Free = 'free',
+	Running = 'running',
+	Down = 'down'
 }
 
 /**
@@ -476,8 +476,8 @@ export enum ProductionAgentModelAvailabilityEnum {
  * @enum {string}
  */
 export enum ProductionAgentModelAbilitiesEnum {
-    Docker = 'docker',
-    DockerCompose = 'docker-compose'
+	Docker = 'docker',
+	DockerCompose = 'docker-compose'
 }
 
 /**
@@ -486,18 +486,18 @@ export enum ProductionAgentModelAbilitiesEnum {
  * @interface Pusher
  */
 export interface Pusher {
-    /**
-     *
-     * @type {string}
-     * @memberof Pusher
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Pusher
-     */
-    email: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Pusher
+	 */
+	name: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Pusher
+	 */
+	email: string;
 }
 
 /**
@@ -506,456 +506,456 @@ export interface Pusher {
  * @interface Repository
  */
 export interface Repository {
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    id: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    node_id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    full_name: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    _private: boolean;
-    /**
-     *
-     * @type {User}
-     * @memberof Repository
-     */
-    owner: User;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    html_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    description: string | null;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    fork: boolean;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    forks_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    keys_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    collaborators_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    teams_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    hooks_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    issue_events_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    events_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    assignees_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    branches_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    tags_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    blobs_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    git_tags_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    git_refs_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    trees_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    statuses_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    languages_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    stargazers_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    contributors_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    subscribers_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    subscription_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    commits_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    git_commits_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    comments_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    issue_comment_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    contents_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    compare_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    merges_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    archive_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    downloads_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    issues_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    pulls_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    milestones_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    notifications_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    labels_url?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    releases_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    deployments_url: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    created_at: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    updated_at: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    pushed_at: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    git_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    ssh_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    clone_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    svn_url: string;
-    /**
-     *
-     * @type {object}
-     * @memberof Repository
-     */
-    homepage: object;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    size: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    stargazers_count: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    watchers_count: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    language: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    has_issues: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    has_projects: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    has_downloads: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    has_wiki: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    has_pages: boolean;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    forks_count: number;
-    /**
-     *
-     * @type {object}
-     * @memberof Repository
-     */
-    mirror_url: object;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    archived: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof Repository
-     */
-    disabled: boolean;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    open_issues_count: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    license: string | null;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    forks: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    open_issues: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    watchers: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    default_branch: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Repository
-     */
-    stargazers: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Repository
-     */
-    master_branch: string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	id: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	node_id: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	name: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	full_name: string;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	_private: boolean;
+	/**
+	 *
+	 * @type {User}
+	 * @memberof Repository
+	 */
+	owner: User;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	html_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	description: string | null;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	fork: boolean;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	forks_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	keys_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	collaborators_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	teams_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	hooks_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	issue_events_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	events_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	assignees_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	branches_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	tags_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	blobs_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	git_tags_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	git_refs_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	trees_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	statuses_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	languages_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	stargazers_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	contributors_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	subscribers_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	subscription_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	commits_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	git_commits_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	comments_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	issue_comment_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	contents_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	compare_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	merges_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	archive_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	downloads_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	issues_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	pulls_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	milestones_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	notifications_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	labels_url?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	releases_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	deployments_url: string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	created_at: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	updated_at: string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	pushed_at: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	git_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	ssh_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	clone_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	svn_url: string;
+	/**
+	 *
+	 * @type {object}
+	 * @memberof Repository
+	 */
+	homepage: object;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	size: number;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	stargazers_count: number;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	watchers_count: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	language: string;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	has_issues: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	has_projects: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	has_downloads: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	has_wiki: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	has_pages: boolean;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	forks_count: number;
+	/**
+	 *
+	 * @type {object}
+	 * @memberof Repository
+	 */
+	mirror_url: object;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	archived: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Repository
+	 */
+	disabled: boolean;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	open_issues_count: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	license: string | null;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	forks: number;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	open_issues: number;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	watchers: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	default_branch: string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Repository
+	 */
+	stargazers: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Repository
+	 */
+	master_branch: string;
 }
 
 /**
@@ -964,126 +964,126 @@ export interface Repository {
  * @interface User
  */
 export interface User {
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    email: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    login: string;
-    /**
-     *
-     * @type {number}
-     * @memberof User
-     */
-    id: number;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    node_id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    avatar_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    gravatar_id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    html_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    followers_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    following_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    gists_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    starred_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    subscriptions_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    organizations_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    repos_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    events_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    received_events_url: string;
-    /**
-     *
-     * @type {string}
-     * @memberof User
-     */
-    type: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof User
-     */
-    site_admin: boolean;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	name: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	email: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	login: string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof User
+	 */
+	id: number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	node_id: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	avatar_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	gravatar_id: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	html_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	followers_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	following_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	gists_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	starred_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	subscriptions_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	organizations_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	repos_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	events_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	received_events_url: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof User
+	 */
+	type: string;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof User
+	 */
+	site_admin: boolean;
 }
 
 /**
@@ -1091,200 +1091,200 @@ export interface User {
  * @export
  */
 export const AutomationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         *
-         * @param {BuildAgentModelAdd} buildAgentModelAdd
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddBuildAgent: async (buildAgentModelAdd: BuildAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'buildAgentModelAdd' is not null or undefined
-            assertParamExists('automationAddBuildAgent', 'buildAgentModelAdd', buildAgentModelAdd)
-            const localVarPath = `/core/automate/agent/build`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+	return {
+		/**
+		 *
+		 * @param {BuildAgentModelAdd} buildAgentModelAdd
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddBuildAgent: async (buildAgentModelAdd: BuildAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'buildAgentModelAdd' is not null or undefined
+			assertParamExists('automationAddBuildAgent', 'buildAgentModelAdd', buildAgentModelAdd)
+			const localVarPath = `/core/automate/agent/build`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(buildAgentModelAdd, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {ProductionAgentModel} productionAgentModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddProductionAgent: async (productionAgentModel: ProductionAgentModel, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'productionAgentModel' is not null or undefined
-            assertParamExists('automationAddProductionAgent', 'productionAgentModel', productionAgentModel)
-            const localVarPath = `/core/automate/agent/production`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(productionAgentModel, localVarRequestOptions, configuration)
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(buildAgentModelAdd, localVarRequestOptions, configuration)
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {InlineObject} inlineObject
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationBuilderAgentKeepAlive: async (inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'inlineObject' is not null or undefined
-            assertParamExists('automationBuilderAgentKeepAlive', 'inlineObject', inlineObject)
-            const localVarPath = `/core/automate/agent/build/keep-alive`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {ProductionAgentModel} productionAgentModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddProductionAgent: async (productionAgentModel: ProductionAgentModel, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'productionAgentModel' is not null or undefined
+			assertParamExists('automationAddProductionAgent', 'productionAgentModel', productionAgentModel)
+			const localVarPath = `/core/automate/agent/production`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetBuilderAgent: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/automate/agent/build`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetProductionAgent: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/automate/agent/production`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(productionAgentModel, localVarRequestOptions, configuration)
 
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationBuilderAgentKeepAlive: async (inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'inlineObject' is not null or undefined
+			assertParamExists('automationBuilderAgentKeepAlive', 'inlineObject', inlineObject)
+			const localVarPath = `/core/automate/agent/build/keep-alive`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {InlineObject1} inlineObject1
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationProductionAgentKeepAlive: async (inlineObject1: InlineObject1, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'inlineObject1' is not null or undefined
-            assertParamExists('automationProductionAgentKeepAlive', 'inlineObject1', inlineObject1)
-            const localVarPath = `/core/automate/agent/production/keep-alive`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetBuilderAgent: async (options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/automate/agent/build`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetProductionAgent: async (options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/automate/agent/production`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {InlineObject1} inlineObject1
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationProductionAgentKeepAlive: async (inlineObject1: InlineObject1, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'inlineObject1' is not null or undefined
+			assertParamExists('automationProductionAgentKeepAlive', 'inlineObject1', inlineObject1)
+			const localVarPath = `/core/automate/agent/production/keep-alive`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+
+			localVarHeaderParameter['Content-Type'] = 'application/json';
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	}
 };
 
 /**
@@ -1292,67 +1292,67 @@ export const AutomationApiAxiosParamCreator = function (configuration?: Configur
  * @export
  */
 export const AutomationApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration)
-    return {
-        /**
-         *
-         * @param {BuildAgentModelAdd} buildAgentModelAdd
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddBuildAgent(buildAgentModelAdd, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {ProductionAgentModel} productionAgentModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationAddProductionAgent(productionAgentModel: ProductionAgentModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddProductionAgent(productionAgentModel, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {InlineObject} inlineObject
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationBuilderAgentKeepAlive(inlineObject, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationGetBuilderAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BuildAgentModelReturn>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetBuilderAgent(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationGetProductionAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductionAgentModel>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetProductionAgent(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {InlineObject1} inlineObject1
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.automationProductionAgentKeepAlive(inlineObject1, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
+	const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration)
+	return {
+		/**
+		 *
+		 * @param {BuildAgentModelAdd} buildAgentModelAdd
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddBuildAgent(buildAgentModelAdd, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {ProductionAgentModel} productionAgentModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationAddProductionAgent(productionAgentModel: ProductionAgentModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddProductionAgent(productionAgentModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationBuilderAgentKeepAlive(inlineObject, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationGetBuilderAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BuildAgentModelReturn>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetBuilderAgent(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationGetProductionAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductionAgentModel>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationGetProductionAgent(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {InlineObject1} inlineObject1
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.automationProductionAgentKeepAlive(inlineObject1, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	}
 };
 
 /**
@@ -1360,61 +1360,61 @@ export const AutomationApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const AutomationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AutomationApiFp(configuration)
-    return {
-        /**
-         *
-         * @param {BuildAgentModelAdd} buildAgentModelAdd
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): AxiosPromise<void> {
-            return localVarFp.automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {ProductionAgentModel} productionAgentModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationAddProductionAgent(productionAgentModel: ProductionAgentModel, options?: any): AxiosPromise<void> {
-            return localVarFp.automationAddProductionAgent(productionAgentModel, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {InlineObject} inlineObject
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): AxiosPromise<void> {
-            return localVarFp.automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetBuilderAgent(options?: any): AxiosPromise<Array<BuildAgentModelReturn>> {
-            return localVarFp.automationGetBuilderAgent(options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationGetProductionAgent(options?: any): AxiosPromise<Array<ProductionAgentModel>> {
-            return localVarFp.automationGetProductionAgent(options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {InlineObject1} inlineObject1
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): AxiosPromise<void> {
-            return localVarFp.automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(axios, basePath));
-        },
-    };
+	const localVarFp = AutomationApiFp(configuration)
+	return {
+		/**
+		 *
+		 * @param {BuildAgentModelAdd} buildAgentModelAdd
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): AxiosPromise<void> {
+			return localVarFp.automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {ProductionAgentModel} productionAgentModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationAddProductionAgent(productionAgentModel: ProductionAgentModel, options?: any): AxiosPromise<void> {
+			return localVarFp.automationAddProductionAgent(productionAgentModel, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): AxiosPromise<void> {
+			return localVarFp.automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetBuilderAgent(options?: any): AxiosPromise<Array<BuildAgentModelReturn>> {
+			return localVarFp.automationGetBuilderAgent(options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationGetProductionAgent(options?: any): AxiosPromise<Array<ProductionAgentModel>> {
+			return localVarFp.automationGetProductionAgent(options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {InlineObject1} inlineObject1
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): AxiosPromise<void> {
+			return localVarFp.automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(axios, basePath));
+		},
+	};
 };
 
 /**
@@ -1424,69 +1424,69 @@ export const AutomationApiFactory = function (configuration?: Configuration, bas
  * @extends {BaseAPI}
  */
 export class AutomationApi extends BaseAPI {
-    /**
-     *
-     * @param {BuildAgentModelAdd} buildAgentModelAdd
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any) {
-        return AutomationApiFp(this.configuration).automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {BuildAgentModelAdd} buildAgentModelAdd
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any) {
+		return AutomationApiFp(this.configuration).automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {ProductionAgentModel} productionAgentModel
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationAddProductionAgent(productionAgentModel: ProductionAgentModel, options?: any) {
-        return AutomationApiFp(this.configuration).automationAddProductionAgent(productionAgentModel, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {ProductionAgentModel} productionAgentModel
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationAddProductionAgent(productionAgentModel: ProductionAgentModel, options?: any) {
+		return AutomationApiFp(this.configuration).automationAddProductionAgent(productionAgentModel, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {InlineObject} inlineObject
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any) {
-        return AutomationApiFp(this.configuration).automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {InlineObject} inlineObject
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any) {
+		return AutomationApiFp(this.configuration).automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationGetBuilderAgent(options?: any) {
-        return AutomationApiFp(this.configuration).automationGetBuilderAgent(options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationGetBuilderAgent(options?: any) {
+		return AutomationApiFp(this.configuration).automationGetBuilderAgent(options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationGetProductionAgent(options?: any) {
-        return AutomationApiFp(this.configuration).automationGetProductionAgent(options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationGetProductionAgent(options?: any) {
+		return AutomationApiFp(this.configuration).automationGetProductionAgent(options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {InlineObject1} inlineObject1
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutomationApi
-     */
-    public automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any) {
-        return AutomationApiFp(this.configuration).automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {InlineObject1} inlineObject1
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomationApi
+	 */
+	public automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any) {
+		return AutomationApiFp(this.configuration).automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(this.axios, this.basePath));
+	}
 }
 
 
@@ -1495,41 +1495,41 @@ export class AutomationApi extends BaseAPI {
  * @export
  */
 export const DockerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         *
-         * @param {Array<'web-front' | 'web-back'>} [preset]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        dockerControllerGet: async (preset?: Array<'web-front' | 'web-back'>, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/core/docker/dockerfiles`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+	return {
+		/**
+		 *
+		 * @param {Array<'web-front' | 'web-back'>} [preset]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		dockerControllerGet: async (preset?: Array<'web-front' | 'web-back'>, options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/core/docker/dockerfiles`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
-            if (preset) {
-                localVarQueryParameter['preset'] = preset;
-            }
+			if (preset) {
+				localVarQueryParameter['preset'] = preset;
+			}
 
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	}
 };
 
 /**
@@ -1537,19 +1537,19 @@ export const DockerControllerApiAxiosParamCreator = function (configuration?: Co
  * @export
  */
 export const DockerControllerApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DockerControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         *
-         * @param {Array<'web-front' | 'web-back'>} [preset]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dockerControllerGet(preset, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
+	const localVarAxiosParamCreator = DockerControllerApiAxiosParamCreator(configuration)
+	return {
+		/**
+		 *
+		 * @param {Array<'web-front' | 'web-back'>} [preset]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.dockerControllerGet(preset, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	}
 };
 
 /**
@@ -1557,18 +1557,18 @@ export const DockerControllerApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const DockerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DockerControllerApiFp(configuration)
-    return {
-        /**
-         *
-         * @param {Array<'web-front' | 'web-back'>} [preset]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): AxiosPromise<string> {
-            return localVarFp.dockerControllerGet(preset, options).then((request) => request(axios, basePath));
-        },
-    };
+	const localVarFp = DockerControllerApiFp(configuration)
+	return {
+		/**
+		 *
+		 * @param {Array<'web-front' | 'web-back'>} [preset]
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any): AxiosPromise<string> {
+			return localVarFp.dockerControllerGet(preset, options).then((request) => request(axios, basePath));
+		},
+	};
 };
 
 /**
@@ -1578,16 +1578,16 @@ export const DockerControllerApiFactory = function (configuration?: Configuratio
  * @extends {BaseAPI}
  */
 export class DockerControllerApi extends BaseAPI {
-    /**
-     *
-     * @param {Array<'web-front' | 'web-back'>} [preset]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DockerControllerApi
-     */
-    public dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any) {
-        return DockerControllerApiFp(this.configuration).dockerControllerGet(preset, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {Array<'web-front' | 'web-back'>} [preset]
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof DockerControllerApi
+	 */
+	public dockerControllerGet(preset?: Array<'web-front' | 'web-back'>, options?: any) {
+		return DockerControllerApiFp(this.configuration).dockerControllerGet(preset, options).then((request) => request(this.axios, this.basePath));
+	}
 }
 
 
@@ -1596,42 +1596,42 @@ export class DockerControllerApi extends BaseAPI {
  * @export
  */
 export const GithubWebhooksApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         *
-         * @param {GithubPushWebhook} githubPushWebhook
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        githubWebhooksPush: async (githubPushWebhook: GithubPushWebhook, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'githubPushWebhook' is not null or undefined
-            assertParamExists('githubWebhooksPush', 'githubPushWebhook', githubPushWebhook)
-            const localVarPath = `/core/github/webhook/push`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+	return {
+		/**
+		 *
+		 * @param {GithubPushWebhook} githubPushWebhook
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		githubWebhooksPush: async (githubPushWebhook: GithubPushWebhook, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'githubPushWebhook' is not null or undefined
+			assertParamExists('githubWebhooksPush', 'githubPushWebhook', githubPushWebhook)
+			const localVarPath = `/core/github/webhook/push`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(githubPushWebhook, localVarRequestOptions, configuration)
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(githubPushWebhook, localVarRequestOptions, configuration)
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	}
 };
 
 /**
@@ -1639,19 +1639,19 @@ export const GithubWebhooksApiAxiosParamCreator = function (configuration?: Conf
  * @export
  */
 export const GithubWebhooksApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = GithubWebhooksApiAxiosParamCreator(configuration)
-    return {
-        /**
-         *
-         * @param {GithubPushWebhook} githubPushWebhook
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.githubWebhooksPush(githubPushWebhook, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
+	const localVarAxiosParamCreator = GithubWebhooksApiAxiosParamCreator(configuration)
+	return {
+		/**
+		 *
+		 * @param {GithubPushWebhook} githubPushWebhook
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.githubWebhooksPush(githubPushWebhook, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	}
 };
 
 /**
@@ -1659,18 +1659,18 @@ export const GithubWebhooksApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const GithubWebhooksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = GithubWebhooksApiFp(configuration)
-    return {
-        /**
-         *
-         * @param {GithubPushWebhook} githubPushWebhook
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any): AxiosPromise<void> {
-            return localVarFp.githubWebhooksPush(githubPushWebhook, options).then((request) => request(axios, basePath));
-        },
-    };
+	const localVarFp = GithubWebhooksApiFp(configuration)
+	return {
+		/**
+		 *
+		 * @param {GithubPushWebhook} githubPushWebhook
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any): AxiosPromise<void> {
+			return localVarFp.githubWebhooksPush(githubPushWebhook, options).then((request) => request(axios, basePath));
+		},
+	};
 };
 
 /**
@@ -1680,16 +1680,16 @@ export const GithubWebhooksApiFactory = function (configuration?: Configuration,
  * @extends {BaseAPI}
  */
 export class GithubWebhooksApi extends BaseAPI {
-    /**
-     *
-     * @param {GithubPushWebhook} githubPushWebhook
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GithubWebhooksApi
-     */
-    public githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any) {
-        return GithubWebhooksApiFp(this.configuration).githubWebhooksPush(githubPushWebhook, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {GithubPushWebhook} githubPushWebhook
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof GithubWebhooksApi
+	 */
+	public githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any) {
+		return GithubWebhooksApiFp(this.configuration).githubWebhooksPush(githubPushWebhook, options).then((request) => request(this.axios, this.basePath));
+	}
 }
 
 
@@ -1698,110 +1698,110 @@ export class GithubWebhooksApi extends BaseAPI {
  * @export
  */
 export const OperationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         *
-         * @param {DeployConfigModel} deployConfigModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        operationDeploy: async (deployConfigModel: DeployConfigModel, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'deployConfigModel' is not null or undefined
-            assertParamExists('operationDeploy', 'deployConfigModel', deployConfigModel)
-            const localVarPath = `/core/automate/operation/deployment`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+	return {
+		/**
+		 *
+		 * @param {DeployConfigModel} deployConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		operationDeploy: async (deployConfigModel: DeployConfigModel, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'deployConfigModel' is not null or undefined
+			assertParamExists('operationDeploy', 'deployConfigModel', deployConfigModel)
+			const localVarPath = `/core/automate/operation/deployment`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(deployConfigModel, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {InlineObject2} inlineObject2
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        operationRegister: async (inlineObject2: InlineObject2, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'inlineObject2' is not null or undefined
-            assertParamExists('operationRegister', 'inlineObject2', inlineObject2)
-            const localVarPath = `/core/automate/operation/register`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject2, localVarRequestOptions, configuration)
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(deployConfigModel, localVarRequestOptions, configuration)
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {BuildConfigModel} buildConfigModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        operationStart: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'buildConfigModel' is not null or undefined
-            assertParamExists('operationStart', 'buildConfigModel', buildConfigModel)
-            const localVarPath = `/core/automate/operation/build`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {InlineObject2} inlineObject2
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		operationRegister: async (inlineObject2: InlineObject2, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'inlineObject2' is not null or undefined
+			assertParamExists('operationRegister', 'inlineObject2', inlineObject2)
+			const localVarPath = `/core/automate/operation/register`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
 
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
 
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration)
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject2, localVarRequestOptions, configuration)
 
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {BuildConfigModel} buildConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		operationStart: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'buildConfigModel' is not null or undefined
+			assertParamExists('operationStart', 'buildConfigModel', buildConfigModel)
+			const localVarPath = `/core/automate/operation/build`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+
+			localVarHeaderParameter['Content-Type'] = 'application/json';
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration)
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	}
 };
 
 /**
@@ -1809,39 +1809,39 @@ export const OperationApiAxiosParamCreator = function (configuration?: Configura
  * @export
  */
 export const OperationApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = OperationApiAxiosParamCreator(configuration)
-    return {
-        /**
-         *
-         * @param {DeployConfigModel} deployConfigModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async operationDeploy(deployConfigModel: DeployConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.operationDeploy(deployConfigModel, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {InlineObject2} inlineObject2
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async operationRegister(inlineObject2: InlineObject2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.operationRegister(inlineObject2, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *
-         * @param {BuildConfigModel} buildConfigModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async operationStart(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.operationStart(buildConfigModel, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
+	const localVarAxiosParamCreator = OperationApiAxiosParamCreator(configuration)
+	return {
+		/**
+		 *
+		 * @param {DeployConfigModel} deployConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async operationDeploy(deployConfigModel: DeployConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.operationDeploy(deployConfigModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {InlineObject2} inlineObject2
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async operationRegister(inlineObject2: InlineObject2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.operationRegister(inlineObject2, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {BuildConfigModel} buildConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async operationStart(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.operationStart(buildConfigModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	}
 };
 
 /**
@@ -1849,36 +1849,36 @@ export const OperationApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const OperationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = OperationApiFp(configuration)
-    return {
-        /**
-         *
-         * @param {DeployConfigModel} deployConfigModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        operationDeploy(deployConfigModel: DeployConfigModel, options?: any): AxiosPromise<void> {
-            return localVarFp.operationDeploy(deployConfigModel, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {InlineObject2} inlineObject2
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        operationRegister(inlineObject2: InlineObject2, options?: any): AxiosPromise<void> {
-            return localVarFp.operationRegister(inlineObject2, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
-         * @param {BuildConfigModel} buildConfigModel
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        operationStart(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<void> {
-            return localVarFp.operationStart(buildConfigModel, options).then((request) => request(axios, basePath));
-        },
-    };
+	const localVarFp = OperationApiFp(configuration)
+	return {
+		/**
+		 *
+		 * @param {DeployConfigModel} deployConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		operationDeploy(deployConfigModel: DeployConfigModel, options?: any): AxiosPromise<void> {
+			return localVarFp.operationDeploy(deployConfigModel, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {InlineObject2} inlineObject2
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		operationRegister(inlineObject2: InlineObject2, options?: any): AxiosPromise<void> {
+			return localVarFp.operationRegister(inlineObject2, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {BuildConfigModel} buildConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		operationStart(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<void> {
+			return localVarFp.operationStart(buildConfigModel, options).then((request) => request(axios, basePath));
+		},
+	};
 };
 
 /**
@@ -1888,38 +1888,38 @@ export const OperationApiFactory = function (configuration?: Configuration, base
  * @extends {BaseAPI}
  */
 export class OperationApi extends BaseAPI {
-    /**
-     *
-     * @param {DeployConfigModel} deployConfigModel
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationApi
-     */
-    public operationDeploy(deployConfigModel: DeployConfigModel, options?: any) {
-        return OperationApiFp(this.configuration).operationDeploy(deployConfigModel, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {DeployConfigModel} deployConfigModel
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof OperationApi
+	 */
+	public operationDeploy(deployConfigModel: DeployConfigModel, options?: any) {
+		return OperationApiFp(this.configuration).operationDeploy(deployConfigModel, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {InlineObject2} inlineObject2
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationApi
-     */
-    public operationRegister(inlineObject2: InlineObject2, options?: any) {
-        return OperationApiFp(this.configuration).operationRegister(inlineObject2, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {InlineObject2} inlineObject2
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof OperationApi
+	 */
+	public operationRegister(inlineObject2: InlineObject2, options?: any) {
+		return OperationApiFp(this.configuration).operationRegister(inlineObject2, options).then((request) => request(this.axios, this.basePath));
+	}
 
-    /**
-     *
-     * @param {BuildConfigModel} buildConfigModel
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationApi
-     */
-    public operationStart(buildConfigModel: BuildConfigModel, options?: any) {
-        return OperationApiFp(this.configuration).operationStart(buildConfigModel, options).then((request) => request(this.axios, this.basePath));
-    }
+	/**
+	 *
+	 * @param {BuildConfigModel} buildConfigModel
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof OperationApi
+	 */
+	public operationStart(buildConfigModel: BuildConfigModel, options?: any) {
+		return OperationApiFp(this.configuration).operationStart(buildConfigModel, options).then((request) => request(this.axios, this.basePath));
+	}
 }
 
 

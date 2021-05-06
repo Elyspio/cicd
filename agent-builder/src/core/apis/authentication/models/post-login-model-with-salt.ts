@@ -18,10 +18,10 @@
  * @interface PostLoginModelWithSalt
  */
 export interface PostLoginModelWithSalt {
-    /**
-     *
-     * @type {string}
-     * @memberof PostLoginModelWithSalt
-     */
-    salt?: any;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof PostLoginModelWithSalt
+	 */
+	salt?: any;
 }

@@ -18,16 +18,16 @@
  * @interface GenericError
  */
 export interface GenericError {
-    /**
-     * The error name
-     * @type {string}
-     * @memberof GenericError
-     */
-    name: any;
-    /**
-     * An error message
-     * @type {string}
-     * @memberof GenericError
-     */
-    message: any;
+	/**
+	 * The error name
+	 * @type {string}
+	 * @memberof GenericError
+	 */
+	name: any;
+	/**
+	 * An error message
+	 * @type {string}
+	 * @memberof GenericError
+	 */
+	message: any;
 }

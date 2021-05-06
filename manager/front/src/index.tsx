@@ -16,26 +16,26 @@ const connector = connect(mapStateToProps);
 type ReduxTypes = ConnectedProps<typeof connector>;
 
 class Wrapper extends Component<ReduxTypes> {
-    render() {
-        const theme = this.props.theme === "dark" ? themes.dark : themes.light;
+	render() {
+		const theme = this.props.theme === "dark" ? themes.dark : themes.light;
 
-        return (
-            <ThemeProvider theme={theme}>
-                <Application/>
-            </ThemeProvider>
-        );
-    }
+		return (
+			<ThemeProvider theme={theme}>
+				<Application/>
+			</ThemeProvider>
+		);
+	}
 }
 
 const ConnectedWrapper = connector(Wrapper) as any;
 
 ReactDOM.render(
-    <Provider store={store}>
-        <ConnectedRouter history={history}> { /* place ConnectedRouter under Provider */}
-            <ConnectedWrapper/>
-        </ConnectedRouter>
-    </Provider>,
-    document.getElementById('root')
+	<Provider store={store}>
+		<ConnectedRouter history={history}> { /* place ConnectedRouter under Provider */}
+			<ConnectedWrapper/>
+		</ConnectedRouter>
+	</Provider>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

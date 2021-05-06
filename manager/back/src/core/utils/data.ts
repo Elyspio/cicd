@@ -1,132 +1,131 @@
 import {Comparable, IQueue, IStack} from "./data.types";
 
 abstract class Collection<T> {
-    public storage: T[] = [];
+	public storage: T[] = [];
 
-    size(): number {
-        return this.storage.length;
-    }
+	size(): number {
+		return this.storage.length;
+	}
 
-    abstract isFull(): boolean;
+	abstract isFull(): boolean;
 
-    isEmpty() {
-        return this.size() === 0;
-    }
+	isEmpty() {
+		return this.size() === 0;
+	}
 }
 
 export class Stack<T> extends Collection<T> implements IStack<T> {
-    constructor(private capacity: number = 1e3) {
-        super();
-    }
+	constructor(private capacity: number = 1e3) {
+		super();
+	}
 
-    push(item: T) {
-        if (this.isFull()) {
-            throw Error("Stack has reached max capacity, you cannot add more items");
-        }
-        // In the derived class, we can access protected properties of the abstract class
-        this.storage.push(item);
-    }
+	push(item: T) {
+		if (this.isFull()) {
+			throw Error("Stack has reached max capacity, you cannot add more items");
+		}
+		// In the derived class, we can access protected properties of the abstract class
+		this.storage.push(item);
+	}
 
-    pop(): T | undefined {
-        return this.storage.pop();
-    }
+	pop(): T | undefined {
+		return this.storage.pop();
+	}
 
-    peek(): T | undefined {
-        return this.storage[this.size() - 1];
-    }
+	peek(): T | undefined {
+		return this.storage[this.size() - 1];
+	}
 
-    // Implementation of the abstract method
-    isFull(): boolean {
-        return this.capacity === this.size();
-    }
+	// Implementation of the abstract method
+	isFull(): boolean {
+		return this.capacity === this.size();
+	}
 }
 
 export class Queue<T> extends Collection<T> implements IQueue<T> {
-    constructor(private capacity: number = 1e3) {
-        super();
-    }
+	constructor(private capacity: number = 1e3) {
+		super();
+	}
 
-    enqueue(item: T): void {
-        if (this.isFull()) {
-            throw Error("Queue has reached max capacity, you cannot add more items");
-        }
-        // In the derived class, we can access protected properties of the abstract class
-        this.storage.push(item);
-    }
+	enqueue(item: T): void {
+		if (this.isFull()) {
+			throw Error("Queue has reached max capacity, you cannot add more items");
+		}
+		// In the derived class, we can access protected properties of the abstract class
+		this.storage.push(item);
+	}
 
-    dequeue(): T | undefined {
-        return this.storage.shift();
-    }
+	dequeue(): T | undefined {
+		return this.storage.shift();
+	}
 
-    // Implementation of the abstract method
-    isFull(): boolean {
-        return this.capacity === this.size();
-    }
+	// Implementation of the abstract method
+	isFull(): boolean {
+		return this.capacity === this.size();
+	}
 }
 
 
 let mutex = {
-    locked: false
+	locked: false
 }
 
 
-
 export class CustomSet<T extends Comparable<T>> {
-    private content: Array<T>
+	private content: Array<T>
 
-    constructor(private options?: { data?: Iterable<T>, lock?: boolean }) {
-        this.content = new Array<T>(...(this.options?.data ?? []));
-    }
+	constructor(private options?: { data?: Iterable<T>, lock?: boolean }) {
+		this.content = new Array<T>(...(this.options?.data ?? []));
+	}
 
-    add(obj: T) {
-        if (this.options?.lock) {
-            mutex.locked = true;
-            while (mutex.locked) {
-            }
-        }
+	add(obj: T) {
+		if (this.options?.lock) {
+			mutex.locked = true;
+			while (mutex.locked) {
+			}
+		}
 
-        if (!this.contains(obj)) {
-            this.content.push(obj)
-        }
+		if (!this.contains(obj)) {
+			this.content.push(obj)
+		}
 
-        if (this.options?.lock) {
-            mutex.locked = false;
-        }
-    }
+		if (this.options?.lock) {
+			mutex.locked = false;
+		}
+	}
 
-    contains(obj: T): boolean {
-        if (this.options?.lock) {
-            mutex.locked = true;
-            while (mutex.locked) {
-            }
-        }
+	contains(obj: T): boolean {
+		if (this.options?.lock) {
+			mutex.locked = true;
+			while (mutex.locked) {
+			}
+		}
 
-        const found = this.content.find(x => x.equal(obj)) !== undefined;
+		const found = this.content.find(x => x.equal(obj)) !== undefined;
 
-        if (this.options?.lock) {
-            mutex.locked = false;
-        }
+		if (this.options?.lock) {
+			mutex.locked = false;
+		}
 
-        return found;
-    }
+		return found;
+	}
 
-    toArray() {
-        return [...this.content]
-    }
+	toArray() {
+		return [...this.content]
+	}
 
-    remove(obj: T) {
-        if (this.options?.lock) {
-            mutex.locked = true;
-            while (mutex.locked) {
-            }
-        }
+	remove(obj: T) {
+		if (this.options?.lock) {
+			mutex.locked = true;
+			while (mutex.locked) {
+			}
+		}
 
-        this.content = this.content.filter(f => f.equal(obj));
+		this.content = this.content.filter(f => f.equal(obj));
 
-        if (this.options?.lock) {
-            mutex.locked = false;
-        }
-    }
+		if (this.options?.lock) {
+			mutex.locked = false;
+		}
+	}
 
 
 }

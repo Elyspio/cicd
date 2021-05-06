@@ -1,3 +1,3 @@
-export const authentication_token = "elyspio_authorisation_token";
-export const loginPage = "http://elyspio.fr/authentication"
-export const apiEndpoint = `${loginPage}/core`;
+export const authorization_cookie_token = "authentication_token";
+export const authorization_cookie_login = "authentication_login";
+

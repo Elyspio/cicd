@@ -5,9 +5,9 @@ import {Services} from "../../../core/services";
 
 @Controller("/docker")
 export class DockerController {
-    @Get("/dockerfiles")
-    @Returns(200, String)
-    async get(@QueryParams(GetDockerFileModel) params: GetDockerFileModel) {
-        return Services.docker.getDockerFile(params.preset)
-    }
+	@Get("/dockerfiles")
+	@Returns(200, String)
+	async get(@QueryParams(GetDockerFileModel) params: GetDockerFileModel) {
+		return Services.docker.getDockerFile(params.preset)
+	}
 }

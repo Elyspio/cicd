@@ -7,44 +7,44 @@ import {Deployment, DockerfilesParams} from "./types";
 
 
 const initialState: {
-    config?: ManagerConfigExport,
-    sources: {
-        repository?: string,
-        branch?: string,
-        username?: string
-    }
-    build: DockerfilesParams,
-    deployments: Deployment[]
+	config?: ManagerConfigExport,
+	sources: {
+		repository?: string,
+		branch?: string,
+		username?: string
+	}
+	build: DockerfilesParams,
+	deployments: Deployment[]
 } = {
-    sources: {},
-    build: [],
-    deployments: []
+	sources: {},
+	build: [],
+	deployments: []
 }
 
 type State = typeof initialState
 
 const slice = createSlice({
-    initialState,
-    reducers: {
-        updateConfig: (state, action: PayloadAction<State["config"]>) => {
-            state.config = action.payload
-        },
-        updateSources: ((state, action: PayloadAction<State["sources"]>) => {
-            state.sources = action.payload;
-        }),
-        updateImages: ((state, action: PayloadAction<State["build"]>) => {
-            state.build = action.payload;
-        }),
-    },
-    name: "Automation",
-    extraReducers: builder => {
+	initialState,
+	reducers: {
+		updateConfig: (state, action: PayloadAction<State["config"]>) => {
+			state.config = action.payload
+		},
+		updateSources: ((state, action: PayloadAction<State["sources"]>) => {
+			state.sources = action.payload;
+		}),
+		updateImages: ((state, action: PayloadAction<State["build"]>) => {
+			state.build = action.payload;
+		}),
+	},
+	name: "Automation",
+	extraReducers: builder => {
 
-    }
+	}
 });
 
 export const {reducer: automationReducer, actions: automationActions} = slice;
 
 
 createSocket().on(events.config.update, config => {
-    store.dispatch(automationActions.updateConfig(config));
+	store.dispatch(automationActions.updateConfig(config));
 })

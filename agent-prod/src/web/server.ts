@@ -9,25 +9,25 @@ import * as path from "path";
 $log.name = process.env.APP_NAME ?? "Automatize -- Agent production"
 
 $log.appenders.set("everything", {
-    type: 'file',
-    filename: path.resolve((process.env.LOG_FOLDER ?? `${__dirname}/../../logs`), "app.log"),
-    pattern: '.yyyy-MM-dd',
-    maxLogSize: 10485760,
-    backups: 3,
-    compress: true
+	type: 'file',
+	filename: path.resolve((process.env.LOG_FOLDER ?? `${__dirname}/../../logs`), "app.log"),
+	pattern: '.yyyy-MM-dd',
+	maxLogSize: 10485760,
+	backups: 3,
+	compress: true
 });
 
 @Configuration(webConfig)
 export class Server {
 
-    @Inject()
-    app: PlatformApplication;
+	@Inject()
+	app: PlatformApplication;
 
-    @Configuration()
-    settings: Configuration;
+	@Configuration()
+	settings: Configuration;
 
-    $beforeRoutesInit() {
-        this.app.use(...middlewares)
-        return null;
-    }
+	$beforeRoutesInit() {
+		this.app.use(...middlewares)
+		return null;
+	}
 }

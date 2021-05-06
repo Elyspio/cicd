@@ -4,19 +4,19 @@ import {$log} from "@tsed/common";
 import {FrontAutomateSocket} from "./front.automate.socket";
 
 
-@SocketService("/agent/jobs")
+@SocketService("/ws/agent/jobs")
 export class AgentAutomateSocket {
 
-    @Nsp nsp: SocketIO.Namespace;
+	@Nsp nsp: SocketIO.Namespace;
 
-    constructor(@IO private io: SocketIO.Server, private frontSocket: FrontAutomateSocket) {
-    }
+	constructor(@IO private io: SocketIO.Server, private frontSocket: FrontAutomateSocket) {
+	}
 
-    @Input("jobs-stdout")
-    async myMethod(@Args(0) taskId: number, @Args(1) stdout: string, @Socket socket: Socket) {
-        $log.info("front-jobs-stdout", taskId, stdout)
-        this.frontSocket.nsp.emit("front-jobs-stdout", stdout)
-    }
+	@Input("jobs-stdout")
+	async myMethod(@Args(0) taskId: number, @Args(1) stdout: string, @Socket socket: Socket) {
+		$log.info("front-jobs-stdout", taskId, stdout)
+		this.frontSocket.nsp.emit("front-jobs-stdout", stdout)
+	}
 
 }
 

@@ -5,9 +5,9 @@ import {GitService} from "./agent/git";
 import {DockerService} from "./agent/docker";
 
 export const Services = {
-    agent: new BuilderAgentService(),
-    authentication: new AuthenticationService(),
-    storage: new StorageService(),
-    git: new GitService(),
-    docker: new DockerService()
+	agent: new BuilderAgentService(),
+	authentication: new AuthenticationService(),
+	storage: new StorageService(),
+	git: new GitService(),
+	docker: new DockerService()
 }

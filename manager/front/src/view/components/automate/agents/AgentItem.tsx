@@ -10,34 +10,34 @@ import "./AgentItem.scss"
 import {CustomChip} from "../../utils/CustomChip";
 
 type Props = {
-    data: Agent
-    type: "builder" | "production"
+	data: Agent
+	type: "builder" | "production"
 }
 
 
 type StatusChipProps = ThemeType & {
-    status: Agent["availability"]
+	status: Agent["availability"]
 }
 
 function StatusChip({status, theme}: StatusChipProps) {
 
-    const {palette} = useTheme();
+	const {palette} = useTheme();
 
-    const texts: { [key in typeof status]: { label: string, color: string } } = {
-        down: {label: "Down", color: palette.error[theme]},
-        free: {label: "Available", color: palette.success[theme]},
-        running: {label: "Working", color: palette.primary[theme]},
-    }
+	const texts: { [key in typeof status]: { label: string, color: string } } = {
+		down: {label: "Down", color: palette.error[theme]},
+		free: {label: "Available", color: palette.success[theme]},
+		running: {label: "Working", color: palette.primary[theme]},
+	}
 
-    return <CustomChip
-        label={texts[status].label}
-        color={texts[status].color}
-    />
+	return <CustomChip
+		label={texts[status].label}
+		color={texts[status].color}
+	/>
 
 }
 
 const mapStateToProps = (state: StoreState) => ({
-    theme: state.theme.current
+	theme: state.theme.current
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({})
@@ -47,13 +47,13 @@ export type ThemeType = ConnectedProps<typeof themeConnector>;
 const StatusChipWithStore = themeConnector(StatusChip)
 
 export function AgentItem(props: Props) {
-    return <ListItem className={"AgentItem"}>
-        <ListItemIcon className={"Avatar"}>
-            {props.type === "production" ? <DeployIcon width={48} height={48}/> : <BuildIcon width={48} height={48}/>}
-        </ListItemIcon>
-        <ListItemText
-            primary={props.data.uri}
-            secondary={<Typography>Status: <StatusChipWithStore status={props.data.availability}/></Typography>}
-        />
-    </ListItem>
+	return <ListItem className={"AgentItem"}>
+		<ListItemIcon className={"Avatar"}>
+			{props.type === "production" ? <DeployIcon width={48} height={48}/> : <BuildIcon width={48} height={48}/>}
+		</ListItemIcon>
+		<ListItemText
+			primary={props.data.uri}
+			secondary={<Typography>Status: <StatusChipWithStore status={props.data.availability}/></Typography>}
+		/>
+	</ListItem>
 }

@@ -18,16 +18,16 @@
  * @interface PostLoginModel
  */
 export interface PostLoginModel {
-    /**
-     *
-     * @type {string}
-     * @memberof PostLoginModel
-     */
-    token?: any;
-    /**
-     *
-     * @type {string}
-     * @memberof PostLoginModel
-     */
-    comment?: any;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof PostLoginModel
+	 */
+	token?: any;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof PostLoginModel
+	 */
+	comment?: any;
 }

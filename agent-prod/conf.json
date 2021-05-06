@@ -5,6 +5,8 @@
 	],
 	"uri": "http://localhost:4002",
 	"folders": {
-		"apps": ["./deployed"]
+		"apps": [
+			"./deployed"
+		]
 	}
 }

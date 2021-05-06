@@ -16,131 +16,131 @@ import {AutomateService} from "./automate";
 
 
 export class ManagerService extends EventEmitter {
-    public config: ManagerConfig
+	public config: ManagerConfig
 
-    public agents = {
-        production: new AgentProduction(),
-        builder: new AgentBuilder()
-    }
+	public agents = {
+		production: new AgentProduction(),
+		builder: new AgentBuilder()
+	}
 
-    public queues = {
-        builds: new QueueBuild(),
-        deployments: new QueueDeployment()
-    }
+	public queues = {
+		builds: new QueueBuild(),
+		deployments: new QueueDeployment()
+	}
 
-    public jobs = {
-        builds: new JobBuild(),
-        deployments: new JobDeployment()
-    }
+	public jobs = {
+		builds: new JobBuild(),
+		deployments: new JobDeployment()
+	}
 
-    public automate = new AutomateService()
+	public automate = new AutomateService()
 
-    private mappingNextId = 0;
+	private mappingNextId = 0;
 
-    constructor() {
-        super();
-        let storage = new StorageService();
-        try {
-            this.config = storage.readSync<ManagerConfig>(files.conf)
-            this.config.queues = {
-                deployments: new Queue(),
-                builds: new Queue()
-            }
-            this.config.queues.builds.storage.forEach(value => {
-                this.config.queues.builds.enqueue(value)
-            })
-            this.config.queues.deployments.storage.forEach(value => {
-                this.config.queues.deployments.enqueue(value)
-            })
-        } catch (e) {
-            this.config = {
-                agents: {
-                    builder: [],
-                    production: []
-                },
-                jobs: {
-                    builds: [],
-                    deployments: []
-                },
-                queues: {
-                    builds: new Queue(),
-                    deployments: new Queue()
-                },
-                mappings: []
-            }
-            storage.store(files.conf, this.config, true);
-        }
-        this.watch()
+	constructor() {
+		super();
+		let storage = new StorageService();
+		try {
+			this.config = storage.readSync<ManagerConfig>(files.conf)
+			this.config.queues = {
+				deployments: new Queue(),
+				builds: new Queue()
+			}
+			this.config.queues.builds.storage.forEach(value => {
+				this.config.queues.builds.enqueue(value)
+			})
+			this.config.queues.deployments.storage.forEach(value => {
+				this.config.queues.deployments.enqueue(value)
+			})
+		} catch (e) {
+			this.config = {
+				agents: {
+					builder: [],
+					production: []
+				},
+				jobs: {
+					builds: [],
+					deployments: []
+				},
+				queues: {
+					builds: new Queue(),
+					deployments: new Queue()
+				},
+				mappings: []
+			}
+			storage.store(files.conf, this.config, true);
+		}
+		this.watch()
 
-    }
+	}
 
-    public saveConfig() {
-        this.emit(events.config.update, this.exportConfig())
-        return Services.storage.store(files.conf, this.config);
-    }
+	public saveConfig() {
+		this.emit(events.config.update, this.exportConfig())
+		return Services.storage.store(files.conf, this.config);
+	}
 
-    public watch() {
-        const that = this;
-        setInterval(async () => {
-            this.config.agents.builder.filter(a => a.availability !== "down").forEach((agent) => {
-                if (dayjs(agent.lastUptime).add(10, "second").isBefore(dayjs())) {
-                    console.log(agent, "is not available")
-                    that.agents.builder.update(agent, {availability: "down"})
-                }
-            })
-            this.config.agents.production.filter(a => a.availability !== "down").forEach((agent) => {
-                if (dayjs(agent.lastUptime).add(10, "second").isBefore(dayjs())) {
-                    console.log(agent, "is not available")
-                    that.agents.production.update(agent, {availability: "down"})
-                }
-            })
-
-
-            if (!this.config.queues.builds.isEmpty()) {
-                for (const agent of this.config.agents.builder.filter(a => a.availability === "free")) {
-                    if (this.config.queues.builds.isEmpty()) break;
-                    setImmediate(async () => {
-                        this.agents.builder.update(agent, {availability: "running"})
-                        await this.automate.build(agent, this.config.queues.builds.dequeue()!!)
-                        this.agents.builder.update(agent, {availability: "free"})
-                    })
-                }
-            }
-
-            if (!this.config.queues.deployments.isEmpty()) {
-                for (const agent of this.config.agents.production.filter(a => a.availability === "free")) {
-                    if (this.config.queues.deployments.isEmpty()) break;
-                    setImmediate(async () => {
-                        this.agents.production.update(agent, {availability: "running"})
-                        await this.automate.deploy(agent, this.config.queues.deployments.dequeue()!!)
-                        this.agents.production.update(agent, {availability: "free"})
-                    })
-                }
-            }
+	public watch() {
+		const that = this;
+		setInterval(async () => {
+			this.config.agents.builder.filter(a => a.availability !== "down").forEach((agent) => {
+				if (dayjs(agent.lastUptime).add(10, "second").isBefore(dayjs())) {
+					console.log(agent, "is not available")
+					that.agents.builder.update(agent, {availability: "down"})
+				}
+			})
+			this.config.agents.production.filter(a => a.availability !== "down").forEach((agent) => {
+				if (dayjs(agent.lastUptime).add(10, "second").isBefore(dayjs())) {
+					console.log(agent, "is not available")
+					that.agents.production.update(agent, {availability: "down"})
+				}
+			})
 
 
-        }, 1000)
-    }
+			if (!this.config.queues.builds.isEmpty()) {
+				for (const agent of this.config.agents.builder.filter(a => a.availability === "free")) {
+					if (this.config.queues.builds.isEmpty()) break;
+					setImmediate(async () => {
+						this.agents.builder.update(agent, {availability: "running"})
+						await this.automate.build(agent, this.config.queues.builds.dequeue()!!)
+						this.agents.builder.update(agent, {availability: "free"})
+					})
+				}
+			}
 
-    async registerMapping(mapping: { build: BuildConfig; deploy: DeployConfig }) {
-        if (!this.config.mappings.some(map => Helper.isEqual(mapping, map))) {
-            this.config.mappings.push({...mapping, id: this.mappingNextId++})
-            await this.saveConfig();
-        }
-    }
+			if (!this.config.queues.deployments.isEmpty()) {
+				for (const agent of this.config.agents.production.filter(a => a.availability === "free")) {
+					if (this.config.queues.deployments.isEmpty()) break;
+					setImmediate(async () => {
+						this.agents.production.update(agent, {availability: "running"})
+						await this.automate.deploy(agent, this.config.queues.deployments.dequeue()!!)
+						this.agents.production.update(agent, {availability: "free"})
+					})
+				}
+			}
 
 
-    public exportConfig(): ManagerConfigExport {
-        return {
-            agents: this.config.agents,
-            jobs: this.config.jobs,
-            mappings: this.config.mappings,
-            queues: {
-                builds: this.config.queues.builds.storage,
-                deployments: this.config.queues.deployments.storage,
-            }
-        }
-    }
+		}, 1000)
+	}
+
+	async registerMapping(mapping: { build: BuildConfig; deploy: DeployConfig }) {
+		if (!this.config.mappings.some(map => Helper.isEqual(mapping, map))) {
+			this.config.mappings.push({...mapping, id: this.mappingNextId++})
+			await this.saveConfig();
+		}
+	}
+
+
+	public exportConfig(): ManagerConfigExport {
+		return {
+			agents: this.config.agents,
+			jobs: this.config.jobs,
+			mappings: this.config.mappings,
+			queues: {
+				builds: this.config.queues.builds.storage,
+				deployments: this.config.queues.deployments.storage,
+			}
+		}
+	}
 
 }
 

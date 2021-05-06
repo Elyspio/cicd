@@ -1,11 +1,11 @@
 # Building back
 FROM  --platform=linux/amd64 node:14 as builder-back
 
-COPY agent-builder/package.json /back/package.json
+COPY agent-prod/package.json /back/package.json
 RUN cd /back && npm install
 
-COPY agent-builder/tsconfig.json /back/tsconfig.json
-COPY agent-builder/src /back/src
+COPY agent-prod/tsconfig.json /back/tsconfig.json
+COPY agent-prod/src /back/src
 COPY manager/back/src /manager/back/src
 RUN cd /back && npm run build
 

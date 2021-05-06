@@ -9,15 +9,15 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@octokit/rest": "^18.3.5",
-		"@tsed/common": "^6.32.2",
-		"@tsed/core": "^6.32.2",
-		"@tsed/di": "^6.32.2",
-		"@tsed/socketio": "^6.32.2",
-		"@tsed/platform-express": "^6.32.2",
-		"@tsed/schema": "^6.32.2",
-		"@tsed/swagger": "^6.32.2",
-		"socket.io": "^4.0.0",
+		"@octokit/rest": "^18.5.3",
+		"@tsed/common": "^6.47.4",
+		"@tsed/core": "^6.47.4",
+		"@tsed/di": "^6.47.4",
+		"@tsed/socketio": "^6.47.4",
+		"@tsed/platform-express": "^6.47.4",
+		"@tsed/schema": "^6.47.4",
+		"@tsed/swagger": "^6.47.4",
+		"socket.io": "^4.0.1",
 		"axios": "^0.21.1",
 		"body-parser": "^1.19.0",
 		"compression": "^1.7.4",
@@ -25,19 +25,19 @@
 		"cors": "^2.8.5",
 		"dayjs": "^1.10.4",
 		"method-override": "^3.0.0",
-		"tslib": "^2.1.0",
-		"simple-git": "^2.37.0"
+		"tslib": "^2.2.0",
+		"simple-git": "^2.38.0"
 	},
 	"devDependencies": {
 		"@types/socket.io": "^2.1.13",
 		"@types/cors": "^2.8.10",
 		"@types/express": "^4.17.11",
-		"@types/node": "^14.14.33",
+		"@types/node": "^14.14.44",
 		"nodemon": "latest",
 		"ts-node": "latest",
-		"typescript": "^4.2.3",
-		"@types/jest": "^26.0.20",
+		"typescript": "^4.2.4",
+		"@types/jest": "^26.0.23",
 		"jest": "^26.6.3",
-		"ts-jest": "^26.5.3"
+		"ts-jest": "^26.5.6"
 	}
 }

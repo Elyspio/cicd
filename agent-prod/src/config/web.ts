@@ -9,26 +9,29 @@ let frontPath = process.env.FRONT_PATH ?? path.resolve(rootDir, "..", "..", ".."
 $log.info({frontPath, rootDir});
 
 export const webConfig: Partial<TsED.Configuration> = {
-    rootDir,
-    acceptMimes: ['application/json'],
-    httpPort: process.env.HTTP_PORT || 4002,
-    httpsPort: false, // CHANGE
-    mount: {
-        '/core': [
-            `${rootDir}/web/controllers/**/*.ts`
-        ]
-    },
-    exclude: [
-        '**/*.spec.ts'
-    ],
-    statics: {
-        '/': [
-            {root: frontPath,}
-        ]
-    },
-    swagger: [{
-        path: "/swagger",
-        specVersion: "3.0.1"
-    }]
+	rootDir,
+	acceptMimes: ['application/json'],
+	httpPort: process.env.HTTP_PORT || 4002,
+	httpsPort: false, // CHANGE
+	mount: {
+		'/core': [
+			`${rootDir}/web/controllers/**/*.ts`
+		]
+	},
+	exclude: [
+		'**/*.spec.ts'
+	],
+	statics: {
+		'/': [
+			{root: frontPath,}
+		],
+		'*': [
+			{root: frontPath,}
+		]
+	},
+	swagger: [{
+		path: "/swagger",
+		specVersion: "3.0.1"
+	}]
 
 };

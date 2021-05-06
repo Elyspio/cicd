@@ -3,8 +3,10 @@
 		"core": {
 			"api": "http://localhost:4000",
 			"socket": {
-				"namespace": "/front",
-				"hostname": "localhost:4000"
+				"namespace": "/ws/front",
+				"path": "/socket.io",
+				"hostname": "localhost:4000",
+				"scheme": "http"
 			}
 		}
 	}

@@ -4,12 +4,12 @@ import {ProductionAgent as IProductionAgent} from "../../../../../../back/src/co
 
 
 type Props = {
-    data: IProductionAgent
+	data: IProductionAgent
 }
 
 
 export function ProductionAgent(props: Props) {
-    return <Paper className={"ProductionAgent"}>
+	return <Paper className={"ProductionAgent"}>
 
-    </Paper>
+	</Paper>
 }

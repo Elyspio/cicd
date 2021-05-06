@@ -9,30 +9,30 @@
 		"test": "jest --watch"
 	},
 	"dependencies": {
-		"@tsed/common": "^6.32.2",
-		"@tsed/core": "^6.32.2",
-		"@tsed/di": "^6.32.2",
-		"@tsed/schema": "^6.32.2",
-		"simple-git": "^2.36.1",
-		"@tsed/platform-express": "^6.32.2",
-		"@tsed/swagger": "^6.32.2",
+		"@tsed/common": "^6.47.4",
+		"@tsed/core": "^6.47.4",
+		"@tsed/di": "^6.47.4",
+		"@tsed/platform-express": "^6.47.4",
+		"@tsed/schema": "^6.47.4",
+		"@tsed/swagger": "^6.47.4",
+		"simple-git": "^2.38.0",
 		"body-parser": "^1.19.0",
 		"compression": "^1.7.4",
 		"cookie-parser": "^1.4.5",
 		"cors": "^2.8.5",
 		"method-override": "^3.0.0",
 		"axios": "^0.21.1",
-		"tslib": "^2.1.0"
+		"tslib": "^2.2.0"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.10",
 		"@types/express": "^4.17.11",
-		"@types/node": "^14.14.33",
-		"nodemon": "latest",
-		"ts-node": "latest",
-		"typescript": "latest",
-		"@types/jest": "^26.0.20",
+		"@types/node": "^14.14.44",
+		"nodemon": "^2.0.7",
+		"ts-node": "^9.1.1",
+		"typescript": "^4.2.4",
+		"@types/jest": "^26.0.23",
 		"jest": "^26.6.3",
-		"ts-jest": "^26.5.3"
+		"ts-jest": "^26.5.6"
 	}
 }

@@ -5,6 +5,8 @@
 		"docker-buildx"
 	],
 	"folders": {
-		"apps": ["/apps"]
+		"apps": [
+			"/apps"
+		]
 	}
 }

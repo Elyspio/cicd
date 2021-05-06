@@ -1,23 +1,27 @@
 import {io} from "socket.io-client";
 
 
-const host = clearUrl(process.env.MANAGER_SOCKET_URL ?? "localhost:4000")
-const namespace = clearUrl(process.env.MANAGER_SOCKET_NAMESPACE ?? "/agent/jobs")
+function clearUrl(url: string): string {
+	return url.replace(/\/\//g, "/")
+}
+
 
 export const createSocket = () => {
-    const server = io(`http://${host}${namespace}`, {
-        autoConnect: false
-    });
-    // @ts-ignore
-    // server.nsp = namespace
-    // server.io.opts.path = namespace
-    return server.connect();
+
+	const hostname = clearUrl(process.env.MANAGER_SOCKET_URL ?? "localhost:4000")
+	const namespace = clearUrl(process.env.MANAGER_SOCKET_NAMESPACE ?? "/agent/jobs")
+	const scheme = clearUrl(process.env.MANAGER_SOCKET_SCHEME ?? "http")
+	const path = clearUrl(process.env.MANAGER_SOCKET_PATH ?? "/")
+
+	const socket = io(`${scheme}://${clearUrl(hostname + "/" + namespace)}`, {
+		path
+	});
+
+	console.debug("Create Socket", {namespace, hostname, socket})
+
+	return socket;
 };
 
 export const managerSocket = createSocket();
-
-function clearUrl(url: string): string {
-    return url.replace(/\/\//g, "/")
-}
 
 

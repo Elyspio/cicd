@@ -4,17 +4,17 @@ import {getLoginPage} from "../../config/apis/authentication";
 
 export class AuthenticationService {
 
-    async login() {
-        try {
-            const valid = await Apis.authentication.login.authenticationValidToken()
-            if (!valid) {
-                Api.redirect(getLoginPage())
-            }
+	async login() {
+		try {
+			const valid = await Apis.authentication.login.authenticationValidToken()
+			if (!valid) {
+				Api.redirect(getLoginPage())
+			}
 
-        } catch (e) {
-            Api.redirect(getLoginPage())
-        }
+		} catch (e) {
+			Api.redirect(getLoginPage())
+		}
 
-    }
+	}
 
 }

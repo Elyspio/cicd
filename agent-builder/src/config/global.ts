@@ -1,4 +1,4 @@
 export const globalConf = {
-    exposeEnvironmentVariables: false
+	exposeEnvironmentVariables: false
 }
 

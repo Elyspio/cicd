@@ -1,0 +1,14 @@
+﻿version: "3.5"
+services:
+  manager:
+    image: elyspio/automatize-github-docker:manager
+    restart: unless-stopped
+    ports:
+      - 4008:4000
+    volumes:
+      - ./front.conf.json:/front/build/conf.json
+    environment:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    container_name: cicd-manager
+
+

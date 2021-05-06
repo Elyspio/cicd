@@ -10,7 +10,7 @@
 
 	.info {
 		display: grid;
-		grid-template-columns: 0fr 6rem 6rem 1fr;
+		grid-template-rows: 1fr 1fr;
 		column-gap: 1rem;
 
 		.MuiChip-root {
@@ -27,4 +27,35 @@
 
 	}
 
+
+	.Line {
+		display: grid;
+		grid-template-columns: 5rem 1fr;
+		grid-column-gap: 1rem;
+
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.chips {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+
+			.Chip {
+				margin-bottom: 0.25rem;
+				margin-top: 0.25rem;
+				width: fit-content;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		max-width: 15rem;
+	}
 }
