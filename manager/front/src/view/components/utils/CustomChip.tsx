@@ -6,6 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 
 type Props = ReduxTypes & {
 	label: ReactNode,
+	title?: string
 	color?: string,
 	className?: string
 	fontWeight?: "bold"
@@ -16,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 		"& span": {
 			display: "flex",
 			alignItems: "center",
-			justifyContent: "center",
 			"& svg": {
 				marginRight: "0.5rem"
 			}
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function CustomChip_({label, theme, color, className, fontWeight}: Props) {
+function CustomChip_({label, title, theme, color, className, fontWeight}: Props) {
 
 	const appTheme = useTheme();
 	const classes = useStyles();
@@ -44,6 +44,7 @@ function CustomChip_({label, theme, color, className, fontWeight}: Props) {
 
 	return <Chip
 		component={"span"}
+		title={title}
 		className={`Chip ${className ?? ""} ${classes.chip}`}
 		variant={theme === "dark" ? "outlined" : undefined}
 		label={label}

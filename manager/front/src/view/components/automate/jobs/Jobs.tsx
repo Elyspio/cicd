@@ -89,7 +89,6 @@ export function Jobs(props: ReduxTypes) {
 
 	return <List className={"Agents"}>
 		{data.map(([id, jobs]) => <JobItem
-
 			key={id}
 			data={jobs}
 		/>)}
