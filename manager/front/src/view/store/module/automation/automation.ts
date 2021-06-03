@@ -14,7 +14,7 @@ const initialState: {
 		username?: string
 	}
 	build: DockerfilesParams,
-	deployments: Deployment[]
+	deployments: Deployment[],
 } = {
 	sources: {},
 	build: [],
@@ -47,4 +47,5 @@ export const {reducer: automationReducer, actions: automationActions} = slice;
 
 createSocket().on(events.config.update, config => {
 	store.dispatch(automationActions.updateConfig(config));
-})
+});
+

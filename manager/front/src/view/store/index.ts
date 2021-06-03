@@ -2,10 +2,11 @@ import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/to
 import {reducer as themeReducer} from "./module/theme/reducer";
 import {reducer as environmentReducer} from "./module/environments/reducer";
 import {reducer as configReducer} from "./module/config/reducer";
-import {automationReducer} from "./module/job/jobSplice";
+import {automationReducer} from "./module/automation/automation";
 import {createBrowserHistory} from 'history';
 import {connectRouter, routerMiddleware} from 'connected-react-router'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {mappingReducer} from "./module/mapping/mapping";
 
 
 export const history = createBrowserHistory({basename: process.env.NODE_ENV === "production" ? "/automate/cicd/manager/" : undefined});
@@ -17,6 +18,7 @@ export function configureCustomStore() {
 		theme: themeReducer,
 		environments: environmentReducer,
 		automation: automationReducer,
+		mapping: mappingReducer,
 		config: configReducer
 	};
 

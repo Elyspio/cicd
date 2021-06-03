@@ -1,17 +1,27 @@
 import React from "react";
-import {connect, ConnectedProps} from "react-redux";
-import {Dispatch} from "redux";
-import {StoreState} from "../../../store";
+import {useAppDispatch, useAppSelector} from "../../../store";
 import List from "@material-ui/core/List";
 import {Mapping} from "./Mapping";
+import {initMappingData} from "../../../store/module/mapping/mapping";
+import {useDispatch} from "react-redux";
 
 
-export function Mappings(props: ReduxTypes) {
+export default function Mappings() {
+
+
+	const dispatch = useDispatch()
+
+	React.useEffect(() => {
+		dispatch(initMappingData())
+	}, [])
+
+
+	const storeMappings = useAppSelector(s => s.automation.config?.mappings)
 
 	const mappings = React.useMemo(() => {
-		return [...props.mappings ?? []].sort((a, b) => a.id > b.id ? -1 : 1)
+		return [...storeMappings ?? []].sort((a, b) => a.id > b.id ? -1 : 1)
 
-	}, [props.mappings])
+	}, [storeMappings])
 
 	return <List className={"Mappings"}>
 		{mappings.map((agent, index) => <Mapping key={`M-${agent.id}`} data={agent}/>)}
@@ -19,14 +29,3 @@ export function Mappings(props: ReduxTypes) {
 }
 
 
-const mapStateToProps = (state: StoreState) => ({
-	mappings: state.automation.config?.mappings
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({})
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type ReduxTypes = ConnectedProps<typeof connector>;
-
-
-export default connector(Mappings)

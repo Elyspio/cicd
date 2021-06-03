@@ -1,3 +1,5 @@
+
+
 .JobItem {
 
 	text-transform: unset !important;
@@ -13,24 +15,6 @@
 
 		padding: 0 1rem;
 
-		.Chip {
-			margin-bottom: 0.25rem;
-			margin-top: 0.25rem;
-			width: fit-content;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			max-width: 100%;
-			font-size: 0.75rem !important;
-		}
-
-		.text-smaller {
-			font-size: 0.75rem !important;
-			max-width: 95%;
-			overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-		}
 
 		margin-top: 1rem;
 		margin-bottom: 1rem;

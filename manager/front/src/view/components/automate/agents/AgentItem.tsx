@@ -7,7 +7,7 @@ import {connect, ConnectedProps} from "react-redux";
 import {ReactComponent as BuildIcon} from "../icons/buildJob.svg"
 import {ReactComponent as DeployIcon} from "../icons/deploymentJob.svg"
 import "./AgentItem.scss"
-import {CustomChip} from "../../utils/CustomChip";
+import {CustomChip} from "../../utils/chip/CustomChip";
 
 type Props = {
 	data: Agent

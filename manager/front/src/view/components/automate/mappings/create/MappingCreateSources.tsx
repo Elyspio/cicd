@@ -2,77 +2,42 @@ import React from "react";
 import {Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
-import {Apis} from "../../../../../core/apis";
-import {connect, ConnectedProps} from "react-redux";
-import {Dispatch} from "redux";
-import {StoreState} from "../../../../store";
-import {automationActions} from "../../../../store/module/job/jobSplice";
-import {usePrevious} from "../../../../hooks/usePrevious";
+import {useAppDispatch, useAppSelector} from "../../../../store";
+import {setSelectedBranch, setSelectedRepo} from "../../../../store/module/mapping/mapping";
 
 
-const mapStateToProps = (state: StoreState) => ({})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	updateSources: (conf: StoreState["automation"]["sources"]) => dispatch(automationActions.updateSources(conf))
-})
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type ReduxTypes = ConnectedProps<typeof connector>;
+function MappingCreateSources() {
 
 
-type Props = ReduxTypes & {};
-
-function MappingCreateSources(props: Props) {
-
-
-	const [username, setUsername] = React.useState<string | undefined>()
 	const [branch, setBranch] = React.useState<string | undefined>()
 	const [repository, setRepo] = React.useState<string | undefined>()
-	const [repos, setRepos] = React.useState(Array<string>())
 	const [branches, setBranches] = React.useState(Array<string>())
 
-	// region reflect on store
 
-	const previous = usePrevious(repository);
+	const storeData = useAppSelector(s => s.mapping.repositories)
+	const repos = Object.keys(storeData).sort();
 
 
-	React.useEffect(() => {
-		if (repository !== previous) setBranch(branches[0])
-		props.updateSources({repository, branch, username})
-	}, [repository, repos, username, previous, props.updateSources, branch])
-
+	const dispatch  = useAppDispatch();
 
 	// endregion
 
 	// region fetch
 
 	React.useEffect(() => {
-		(async () => {
-			const {data: username} = await Apis.core.github.githubGetUsernameFromCookies()
-			setUsername(username);
-		})()
-	}, [])
-
+		if (repository) {
+			const branches = Object.keys(storeData[repository])
+			setBranches(branches);
+			setBranch(branches[0])
+			dispatch(setSelectedRepo(repository))
+		}
+	}, [repository])
 
 	React.useEffect(() => {
-		if (username) {
-			(async () => {
-				const {data: repos} = await Apis.core.github.githubGetRepositories(username)
-				setRepos(repos);
-				setRepo(repos[0]);
-			})()
+		if (branch) {
+			dispatch(setSelectedBranch(branch))
 		}
-	}, [username])
-
-	React.useEffect(() => {
-		if (repository && username) {
-			(async () => {
-				const {data: branches} = await Apis.core.github.githubGetBranchesForRepository(username, repository)
-				setBranches(branches);
-				setBranch(branches[0])
-			})()
-		}
-	}, [repository, username])
+	}, [branch])
 
 	// endregion
 
@@ -127,4 +92,4 @@ function MappingCreateSources(props: Props) {
 	</div>
 }
 
-export default connector(MappingCreateSources)
+export default (MappingCreateSources)

@@ -8,7 +8,7 @@ import {Dispatch} from "redux";
 import {StoreState} from "../../../../store";
 import {Apis} from "../../../../../core/apis";
 import {ProductionApplications} from "../../../../../core/apis/back";
-import {Deployment} from "../../../../store/module/job/types";
+import {Deployment} from "../../../../store/module/automation/types";
 import {deepClone} from "../../../../../core/util/data";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
 

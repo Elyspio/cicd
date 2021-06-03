@@ -1,50 +1,32 @@
 import React from "react";
 import {Box, Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography} from "@material-ui/core";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
-import {Apis} from "../../../../../core/apis";
 import {deepClone} from "../../../../../core/util/data";
 import {DockerConfigModelPlatformsEnum} from "../../../../../core/apis/back";
-import {DockerfilesParams} from "../../../../store/module/job/types";
+import {DockerfilesParams} from "../../../../store/module/automation/types";
+import {useAppSelector} from "../../../../store";
 
 
-import {connect, ConnectedProps} from "react-redux";
-import {Dispatch} from "redux";
-import {StoreState} from "../../../../store";
-import {automationActions} from "../../../../store/module/job/jobSplice";
-
-
-const mapStateToProps = (state: StoreState) => ({
-	sources: state.automation.sources
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	updateImages: (conf: StoreState["automation"]["build"]) => dispatch(automationActions.updateImages(conf))
-})
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type ReduxTypes = ConnectedProps<typeof connector>;
-
-
-type Props = ReduxTypes & {};
-
-
-function MappingCreateBuilds({updateImages, sources: {repository, branch, username}}: Props) {
+function MappingCreateBuilds() {
 
 
 	const [conf, setConf] = React.useState<DockerfilesParams>([])
-	const [dockerfiles, setDockerfiles] = React.useState<string[]>([])
+
+
+	const dockerfiles: string[] = useAppSelector(s => {
+		const repo = s.mapping.repositories[s.mapping.selected.repo ?? ""];
+		if (repo && s.mapping.selected.branch) {
+			return repo[s.mapping.selected.branch]
+		}
+		return [];
+	})
+
 	const platforms = React.useMemo(() => [DockerConfigModelPlatformsEnum.Arm64, DockerConfigModelPlatformsEnum.Amd64], []);
 
 
 	React.useEffect(() => {
-		if (username && repository && branch) {
-			(async () => {
-				const {data: dockerfiles} = await Apis.core.github.githubGetDockerfilesForRepository(username, repository, branch)
-				setConf(dockerfiles.map(x => ({platforms: platforms, dockerfile: {path: x.path, tag: "", image: "", wd: "/", use: false}})));
-				setDockerfiles(dockerfiles.map(x => x.path))
-			})()
-		}
-	}, [username, repository, branch, platforms])
+		setConf(dockerfiles.map(x => ({platforms: platforms, dockerfile: {path: x, tag: "", image: "", wd: "/", use: false}})));
+	}, [dockerfiles])
 
 
 	function update(event: React.ChangeEvent<{ value: any }>, key: keyof DockerfilesParams[number]["dockerfile"], index: number) {
@@ -66,16 +48,16 @@ function MappingCreateBuilds({updateImages, sources: {repository, branch, userna
 
 	function syncChanges(configuration: typeof conf) {
 		setConf(configuration)
-		updateImages(configuration.filter(c => c.dockerfile.use).map(c => {
-			return {
-				...c,
-				dockerfile: {
-					...c.dockerfile,
-					tag: c.dockerfile.image.slice(c.dockerfile.image.indexOf(":") + 1),
-					image: c.dockerfile.image.slice(0, c.dockerfile.image.indexOf(":")),
-				},
-			}
-		}))
+		// updateImages(configuration.filter(c => c.dockerfile.use).map(c => {
+		// 	return {
+		// 		...c,
+		// 		dockerfile: {
+		// 			...c.dockerfile,
+		// 			tag: c.dockerfile.image.slice(c.dockerfile.image.indexOf(":") + 1),
+		// 			image: c.dockerfile.image.slice(0, c.dockerfile.image.indexOf(":")),
+		// 		},
+		// 	}
+		// }))
 	}
 
 	const size = 16
@@ -157,4 +139,4 @@ function MappingCreateBuilds({updateImages, sources: {repository, branch, userna
 	</div>
 }
 
-export default connector(MappingCreateBuilds)
+export default (MappingCreateBuilds)

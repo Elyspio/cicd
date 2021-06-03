@@ -6,7 +6,7 @@ import "./Mapping.scss"
 import {ReactComponent as GithubIcon} from "../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../icons/git-branch.svg";
 import {ReactComponent as DockerIcon} from "../icons/docker.svg";
-import {CustomChip} from "../../utils/CustomChip";
+import {CustomChip} from "../../utils/chip/CustomChip";
 
 type Props = {
 	data: ManagerConfigExport["mappings"][number]
@@ -25,9 +25,18 @@ export function Mapping({data: {build, deploy}}: Props) {
 			</ListItemIcon>
 			<ListItemText
 				primary={<div className={"info"}>
-					<CustomChip label={<><GithubIcon height={size} width={size}/> {remote}</>}/>
-					<CustomChip label={<><GitBranchIcon height={size} width={size}/> {build.github.branch}</>}/>
-					<CustomChip label={<><DockerIcon height={size} width={size}/> {deploy.uri}</>}/>
+					<CustomChip
+						icon={<GithubIcon height={size} width={size}/>}
+						label={remote}
+					/>
+					<CustomChip
+						icon={<GitBranchIcon height={size} width={size}/>}
+						label={build.github.branch}
+					/>
+					<CustomChip
+						icon={<DockerIcon height={size} width={size}/>}
+						label={deploy.uri}
+					/>
 				</div>}
 			/>
 		</ListItem>

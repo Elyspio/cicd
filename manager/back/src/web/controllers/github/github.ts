@@ -1,22 +1,32 @@
 import {Controller, Get, PathParams, Req, UseBefore} from "@tsed/common";
 import {Description, Name, Returns} from "@tsed/schema";
-import {Services} from "../../../core/services";
 import * as Express from "express"
 import {RequireLogin} from "../../middleware/authentication";
 import {authorization_cookie_login} from "../../../config/authentication";
-import {FileModel} from "./models";
+import {FileModel, RepoWithBranchModel} from "./models";
+import {GithubService} from "../../../core/services/github/github";
+import {GitService} from "../../../core/services/github/git";
 
 
 @Controller("/github")
 @Name("Github")
 export class Github {
+
+
+	public constructor(
+		private readonly githubService: GithubService,
+		private readonly gitService: GitService) {
+
+	}
+
+
 	@Get("/users/:username")
 	@Returns(200, Array).Of(String)
 	@UseBefore(RequireLogin)
 	async getRepositories(
 		@PathParams("username") username: string
 	) {
-		return Services.github.remote.listRepos(username)
+		return this.githubService.listRepos(username)
 	}
 
 
@@ -26,8 +36,17 @@ export class Github {
 		@PathParams("username") username: string,
 		@PathParams("repository") repo: string
 	) {
-		return Services.github.remote.listBranch(username, repo)
+		return this.githubService.listBranch(username, repo)
 	}
+
+	@Get("/users/:username/repositories/docker")
+	@Returns(200, Array).Of(RepoWithBranchModel)
+	async getDockerRepository(
+		@PathParams("username") username: string,
+	) {
+		return this.githubService.listReposWithDockerfile(username)
+	}
+
 
 	@Get("/users/:username/repositories/:repository/branches/:branch/dockerfiles")
 	@Returns(200, Array).Of(FileModel)
@@ -36,7 +55,7 @@ export class Github {
 		@PathParams("repository") repo: string,
 		@PathParams("branch") branch: string
 	) {
-		return Services.github.local.getDockerfiles(username, repo, branch)
+		return this.gitService.getDockerfiles(username, repo, branch)
 	}
 
 

@@ -1,8 +1,8 @@
 import React from "react";
-import {AppBar, Box, Button, Grid, ListItem, Tab, Typography} from "@material-ui/core";
+import {AppBar, Box, Button, Grid, ListItem, Paper, Tab, Typography} from "@material-ui/core";
 import './JobItem.scss'
 import {BuildJob, DeployJob} from "./Jobs";
-import {CustomChip} from "../../utils/CustomChip";
+import {CustomChip} from "../../utils/chip/CustomChip";
 import {ReactComponent as GithubIcon} from "../icons/github.svg";
 import {ReactComponent as BranchIcon} from "../icons/git-branch.svg";
 import {ReactComponent as DockerIcon} from "../icons/docker.svg";
@@ -47,16 +47,25 @@ function BuildLine({data}: LineProps<BuildJob>) {
 		<Grid container>
 			<Grid container item xs={12}>
 				<Grid item xs={7}>
-					<CustomChip label={<><GithubIcon height={size} width={size}/> {remote}</>}/>
+					<CustomChip
+						icon={<GithubIcon height={size} width={size}/>}
+						title={remote}
+						label={remote}/>
 				</Grid>
 				<Grid item xs={4} style={{marginLeft: "1rem"}}>
-					<CustomChip label={<><BranchIcon height={size} width={size}/> {data.config.github.branch}</>}/>
+					<CustomChip
+						icon={<BranchIcon height={size} width={size}/>}
+						title={data.config.github.branch}
+						label={data.config.github.branch} />
 
 				</Grid>
 			</Grid>
 
 			<Grid item>
-				<CustomChip label={<><DockerIcon height={size} width={size}/> {data.config.docker.dockerfiles.map(x => x.image).join(" ")}</>}/>
+				<CustomChip
+					icon={<DockerIcon height={size} width={size}/>}
+					title={data.config.docker.dockerfiles.map(x => x.image).join(" ")}
+					label={data.config.docker.dockerfiles.map(x => x.image).join(" ")}/>
 			</Grid>
 
 		</Grid>
@@ -70,11 +79,15 @@ function DeployLine({data}: LineProps<DeployJob>) {
 	return <Box className={"Line"}>
 		<Grid container>
 			<Grid container item xs={12}>
-				<CustomChip title={data.config.uri} label={<><DockerIcon height={size} width={size}/> {data.config.uri}</>}/>
+				<CustomChip
+					title={data.config.uri}
+					icon={<DockerIcon height={size} width={size}/>}
+					label={data.config.uri}/>
 			</Grid>
 			<Grid item xs={12}>
 				<CustomChip title={data.config.docker?.compose?.path}
-				            label={<><DockerComposeIcon height={size} width={size}/> <Typography className={"text-smaller"}>{data.config.docker?.compose?.path}</Typography></>}/>
+				            icon={<DockerComposeIcon height={size} width={size}/> }
+				            label={data.config.docker?.compose?.path}/>
 			</Grid>
 		</Grid>
 	</Box>
@@ -86,7 +99,10 @@ function DeployLine({data}: LineProps<DeployJob>) {
 
 
 export type JobItemProps = {
-	data: { build?: BuildJob, deploy?: DeployJob }
+	data: {
+		build?: BuildJob,
+		deploy?: DeployJob
+	}
 }
 
 
@@ -110,7 +126,7 @@ export function JobItem(props: JobItemProps) {
 		setValue(newValue);
 	};
 
-	return <Button className={"JobItem"}>
+	return <Box className={"JobItem"} >
 		<ListItem>
 
 
@@ -124,7 +140,7 @@ export function JobItem(props: JobItemProps) {
 						textColor="secondary"
 						aria-label="icon label tabs example"
 					>
-						<Tab label={props.data.build?.id} title={"hide"} style={{width: "10px"}}/>
+						<Tab label={props.data.build?.id} title={"hide"}  disabled={value === 0}/>
 						<Tab label="BUILD"/>
 						<Tab label="DEPLOY"/>
 					</Tabs>
@@ -144,5 +160,5 @@ export function JobItem(props: JobItemProps) {
 			</div>
 
 		</ListItem>
-	</Button>
+	</Box>
 }

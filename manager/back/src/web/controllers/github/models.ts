@@ -462,3 +462,14 @@ export class FileModel {
 	@Required()
 	size: number
 }
+
+export class RepoWithBranchModel {
+
+	@Property(String)
+	@Required()
+	branch: string
+
+	@Property(String)
+	@Required()
+	repo: string
+}

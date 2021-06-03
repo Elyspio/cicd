@@ -1,0 +1,21 @@
+$font-size: 0.9rem;
+
+.Chip {
+	margin-bottom: 0.25rem;
+	margin-top: 0.25rem;
+	width: fit-content;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+	font-size: $font-size !important;
+
+	.text-smaller {
+		font-size: $font-size !important;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+}
+

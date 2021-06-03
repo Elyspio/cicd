@@ -1,22 +1,33 @@
 import {readdir, rm, stat} from "fs/promises";
 import * as  os from "os";
+import * as fs from "fs/promises"
 import simpleGit, {SimpleGit} from "simple-git/promise";
 import * as nodePath from "path"
 import {Services} from "../index";
+import {log} from "../../utils/decorators/logger";
+import * as path from "path";
+import {Helper} from "../../utils/helper";
+import getFiles = Helper.getFiles;
 
 const git: SimpleGit = simpleGit();
 
 export class GitService {
 
+	@log("service")
 	async getDockerfiles(username: string, repo: string, branch: string) {
+
+		console.time(`getDockerfiles ${repo} ${branch}`)
+
 
 		const remote = (await Services.github.remote.getRepositoryInfo(username, repo)).data.git_url
 
 		const folder = await this.initFolder(remote, branch)
 
-		const files = (await this.list(folder, folder)).filter(p => p.key === "Dockerfile")
+		const files = (await this.list(folder, folder)).filter(p => p.key.toLocaleLowerCase() === "dockerfile")
 
 		await rm(folder, {recursive: true, force: true})
+
+		console.timeEnd(`getDockerfiles ${repo} ${branch}`)
 
 		return files;
 	}
@@ -25,7 +36,7 @@ export class GitService {
 		const files = await readdir(path)
 		const ret: { path: string, key: string, size: number }[] = [];
 
-		for (const file of files) {
+		await Promise.all(files.map(async file => {
 			const filePath = nodePath.join(path, file);
 			const info = await stat(filePath)
 			if (info.isFile()) ret.push({
@@ -33,12 +44,15 @@ export class GitService {
 				key: file,
 				size: info.size
 			})
-			if (info.isDirectory()) ret.push(...await this.list(filePath, origin))
-		}
+			if (info.isDirectory() && !filePath.includes(".git") && !filePath.includes(".idea") ) ret.push(...await this.list(filePath, origin))
+		}))
 
 		return ret;
 	}
 
+
+
+	@log("service")
 	private async initFolder(remote: string, branch: string) {
 		const repoName = remote.slice(remote.lastIndexOf("/") + 1, remote.indexOf(".git"));
 		const tempDir = nodePath.join(os.tmpdir(), "repositories", repoName, branch);

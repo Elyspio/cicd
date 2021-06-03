@@ -4,28 +4,14 @@ import MappingCreateSources from "./MappingCreateSources";
 import "./MappingCreate.scss";
 import MappingCreateImages from "./MappingCreateBuilds";
 import MappingCreateDeployment from "./MappingCreateDeployment";
+import {useAppSelector} from "../../../../store";
+
+function MappingCreate() {
 
 
-import {connect, ConnectedProps} from "react-redux";
-import {Dispatch} from "redux";
-import {StoreState} from "../../../../store";
-
-
-const mapStateToProps = (state: StoreState) => ({
-	...state.automation.sources
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({})
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type ReduxTypes = ConnectedProps<typeof connector>;
-
-
-type Props = ReduxTypes & {};
-
-
-function MappingCreate({branch, username, repository}: Props) {
-
+	const display = useAppSelector(s => ({
+		images: s.mapping.selected.repo && s.mapping.selected.branch
+	}))
 
 	return <div className="MappingCreate">
 
@@ -34,14 +20,12 @@ function MappingCreate({branch, username, repository}: Props) {
 
 		<MappingCreateSources/>
 
-		{username && repository && branch && <MappingCreateImages
-
-        />}
+		{display.images && <MappingCreateImages/>}
 
 		<MappingCreateDeployment/>
 
 	</div>
 }
 
-export default connector(MappingCreate)
+export default MappingCreate
 

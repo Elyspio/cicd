@@ -1,5 +1,6 @@
 import {exec as _exec, ExecException} from "child_process";
-
+const { resolve } = require('path');
+const { readdir } = require('fs').promises;
 export namespace Helper {
 
 	export type ExecReturn = {
@@ -52,6 +53,19 @@ export namespace Helper {
 			return true;
 		} else
 			return false;
+	}
+
+
+	export async function* getFiles(dir) {
+		const dirents = await readdir(dir, { withFileTypes: true });
+		for (const dirent of dirents) {
+			const res = resolve(dir, dirent.name);
+			if (dirent.isDirectory()) {
+				yield* getFiles(res);
+			} else {
+				yield res;
+			}
+		}
 	}
 
 
