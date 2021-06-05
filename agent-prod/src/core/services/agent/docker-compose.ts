@@ -73,7 +73,7 @@ export class DockerComposeService {
 	/**
 	 * List all docker-compose.yml files in folders
 	 * @param folders
-	 * @param req
+	 * @param auth
 	 */
 	async list(folders: string[], auth?: Auth) {
 

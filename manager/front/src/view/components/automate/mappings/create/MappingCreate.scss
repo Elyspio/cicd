@@ -1,4 +1,6 @@
 .MappingCreate {
+
+
 	.FormControl {
 		min-width: 15rem;
 		margin-right: 3rem;
@@ -29,4 +31,10 @@
 	.MuiFormControlLabel-label {
 		transform: scale(0.75);
 	}
+
+	.button-validate-container {
+		margin-top: 4rem;
+	}
+
+	height: 100%;
 }

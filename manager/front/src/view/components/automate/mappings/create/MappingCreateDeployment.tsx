@@ -1,11 +1,7 @@
 import React from "react";
 import {Container, FormControl, IconButton, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
-
-
-import {connect, ConnectedProps} from "react-redux";
-import {Dispatch} from "redux";
-import {StoreState} from "../../../../store";
+import {useAppSelector} from "../../../../store";
 import {Apis} from "../../../../../core/apis";
 import {ProductionApplications} from "../../../../../core/apis/back";
 import {Deployment} from "../../../../store/module/automation/types";
@@ -13,25 +9,13 @@ import {deepClone} from "../../../../../core/util/data";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
 
 
-const mapStateToProps = (state: StoreState) => ({
-	agents: state.automation.config?.agents.production ?? []
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({})
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type ReduxTypes = ConnectedProps<typeof connector>;
-
-
-type Props = ReduxTypes & {};
-
-
-function MappingCreateDeployment(props: Props) {
-
+function MappingCreateDeployment() {
 
 	const [apps, setApps] = React.useState<ProductionApplications[]>([]);
 
 	const [deployments, setDeployments] = React.useState<Partial<Deployment>[]>([])
+
+	const agents = useAppSelector(s => s.automation.config?.agents.production ?? [])
 
 	React.useEffect(() => {
 		(async () => {
@@ -40,16 +24,19 @@ function MappingCreateDeployment(props: Props) {
 		})()
 	}, [])
 
+
+	const sortDeployments = (a: typeof deployments[number], b: typeof deployments[number]) => a.agent?.uri.localeCompare(b.agent?.uri ?? "") ?? -1
+
 	const addDeployment = React.useCallback(() => {
-		setDeployments([...deepClone(deployments), {}])
+		setDeployments([...deepClone(deployments), {}].sort(sortDeployments))
 	}, [deployments])
 
 
 	const onAgentSelection = React.useCallback((e, index) => {
 		const uri = e.target.value;
 		const dep = deployments[index];
-		dep.agent = props.agents.find(app => app.uri === uri)!!
-	}, [props.agents, deployments])
+		dep.agent = agents.find(app => app.uri === uri)!!
+	}, [agents, deployments])
 
 	const onDockerComposeSelection = React.useCallback((e, index) => {
 		const path = e.target.value;
@@ -62,7 +49,9 @@ function MappingCreateDeployment(props: Props) {
 				}
 			}
 		}
-	}, [props.agents, deployments])
+		deployments[index] = dep;
+		setDeployments([...deployments].sort(sortDeployments))
+	}, [deployments])
 
 	const size = 16
 
@@ -114,4 +103,4 @@ function MappingCreateDeployment(props: Props) {
 }
 
 
-export default connector(MappingCreateDeployment)
+export default (MappingCreateDeployment)

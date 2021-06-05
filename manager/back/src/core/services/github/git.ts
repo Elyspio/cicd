@@ -1,13 +1,10 @@
 import {readdir, rm, stat} from "fs/promises";
 import * as  os from "os";
-import * as fs from "fs/promises"
 import simpleGit, {SimpleGit} from "simple-git/promise";
 import * as nodePath from "path"
 import {Services} from "../index";
 import {log} from "../../utils/decorators/logger";
-import * as path from "path";
 import {Helper} from "../../utils/helper";
-import getFiles = Helper.getFiles;
 
 const git: SimpleGit = simpleGit();
 
@@ -44,12 +41,11 @@ export class GitService {
 				key: file,
 				size: info.size
 			})
-			if (info.isDirectory() && !filePath.includes(".git") && !filePath.includes(".idea") ) ret.push(...await this.list(filePath, origin))
+			if (info.isDirectory() && !filePath.includes(".git") && !filePath.includes(".idea")) ret.push(...await this.list(filePath, origin))
 		}))
 
 		return ret;
 	}
-
 
 
 	@log("service")

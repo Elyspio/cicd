@@ -1,5 +1,6 @@
 import {createAction, createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Apis} from "../../../../core/apis";
+import {DockerfilesParams} from "../automation/types";
 
 
 const setDockerFileForRepo = createAction<{ repo: string, branch: string, dockerfiles: string[] }>("mapping/setDockerFileForRepo")
@@ -29,23 +30,29 @@ const initialState: {
 	selected: {
 		repo?: string,
 		branch?: string,
-	}
+		dockerfiles: DockerfilesParams,
+	},
+	loading: boolean
 } = {
 	repositories: {},
-	selected: {}
+	selected: {
+		dockerfiles: [],
+	},
+	loading: false
 }
-
-type State = typeof initialState
 
 const slice = createSlice({
 	initialState,
 	reducers: {
-		setSelectedRepo: ((state, action: PayloadAction<string>) => {
+		setSelectedRepo: (state, action: PayloadAction<string>) => {
 			state.selected.repo = action.payload;
-		}),
-		setSelectedBranch: ((state, action: PayloadAction<string>) => {
+		},
+		setSelectedBranch: (state, action: PayloadAction<string>) => {
 			state.selected.branch = action.payload;
-		})
+		},
+		setDockerfiles: (state, action: PayloadAction<DockerfilesParams>) => {
+			state.selected.dockerfiles = action.payload;
+		}
 	},
 	name: "Mapping",
 	extraReducers: builder => {
@@ -58,11 +65,24 @@ const slice = createSlice({
 				state.repositories[payload.repo][payload.branch] = [];
 			}
 
-			state.repositories[payload.repo][payload.branch] = [... state.repositories[payload.repo][payload.branch], ...payload.dockerfiles];
+			state.repositories[payload.repo][payload.branch] = [...state.repositories[payload.repo][payload.branch], ...payload.dockerfiles];
+		})
+
+
+		builder.addCase(initMappingData.pending, state => {
+			state.loading = true;
+		})
+
+		builder.addCase(initMappingData.fulfilled, state => {
+			state.loading = false;
+		})
+
+		builder.addCase(initMappingData.rejected, state => {
+			state.loading = false;
 		})
 	}
 });
 
-export const {reducer: mappingReducer, actions: {setSelectedRepo, setSelectedBranch}} = slice;
+export const {reducer: mappingReducer, actions: {setSelectedRepo, setSelectedBranch, setDockerfiles}} = slice;
 
 

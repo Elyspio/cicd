@@ -1,7 +1,6 @@
 import {Octokit} from "@octokit/rest";
 import {githubToken} from "../../../config/github";
 import {Service} from "@tsed/di";
-import {GitService} from "./git";
 import {Services} from "../index";
 import {log} from "../../utils/decorators/logger";
 
@@ -29,7 +28,7 @@ export class GithubService {
 			await Promise.all(branches.map(async branch => {
 				const dockerfiles = await Services.github.local.getDockerfiles(username, repo, branch)
 				if (dockerfiles.length > 0) {
-					ret.push({ repo, branch})
+					ret.push({repo, branch})
 				}
 			}))
 		}))

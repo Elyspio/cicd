@@ -1,0 +1,12 @@
+{
+	"abilities": [
+		"docker-compose",
+		"docker"
+	],
+	"uri": "http://192.168.0.50:4009",
+	"folders": {
+		"apps": [
+			"/apps"
+		]
+	}
+}

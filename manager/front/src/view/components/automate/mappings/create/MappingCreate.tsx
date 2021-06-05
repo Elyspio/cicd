@@ -1,5 +1,5 @@
 import React from "react";
-import {Typography} from "@material-ui/core";
+import {Button, Container, Typography} from "@material-ui/core";
 import MappingCreateSources from "./MappingCreateSources";
 import "./MappingCreate.scss";
 import MappingCreateImages from "./MappingCreateBuilds";
@@ -23,6 +23,11 @@ function MappingCreate() {
 		{display.images && <MappingCreateImages/>}
 
 		<MappingCreateDeployment/>
+
+		<Container className={"button-validate-container"}>
+			<Button size={"large"} variant={"outlined"} color={"primary"}>Validate</Button>
+		</Container>
+
 
 	</div>
 }

@@ -52,7 +52,7 @@ export function CustomChip({onClick, icon, label, title, color, className, fontW
 		title={title}
 		className={`Chip ${className ?? ""} ${classes.chip}`}
 		variant={theme === "dark" ? "outlined" : undefined}
-		label={<>{icon} <Typography className={"text-smaller"}>{label}</Typography></>}
+		label={<>{icon} <Typography component={"span"} className={"text-smaller"}>{label}</Typography></>}
 		style={{...style, fontWeight: fontWeight,}}/>
 }
 

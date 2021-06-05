@@ -1,5 +1,5 @@
 import React from "react";
-import {AppBar, Box, Button, Grid, ListItem, Paper, Tab, Typography} from "@material-ui/core";
+import {AppBar, Box, Grid, ListItem, Tab, Typography} from "@material-ui/core";
 import './JobItem.scss'
 import {BuildJob, DeployJob} from "./Jobs";
 import {CustomChip} from "../../utils/chip/CustomChip";
@@ -56,7 +56,7 @@ function BuildLine({data}: LineProps<BuildJob>) {
 					<CustomChip
 						icon={<BranchIcon height={size} width={size}/>}
 						title={data.config.github.branch}
-						label={data.config.github.branch} />
+						label={data.config.github.branch}/>
 
 				</Grid>
 			</Grid>
@@ -86,7 +86,7 @@ function DeployLine({data}: LineProps<DeployJob>) {
 			</Grid>
 			<Grid item xs={12}>
 				<CustomChip title={data.config.docker?.compose?.path}
-				            icon={<DockerComposeIcon height={size} width={size}/> }
+				            icon={<DockerComposeIcon height={size} width={size}/>}
 				            label={data.config.docker?.compose?.path}/>
 			</Grid>
 		</Grid>
@@ -126,7 +126,7 @@ export function JobItem(props: JobItemProps) {
 		setValue(newValue);
 	};
 
-	return <Box className={"JobItem"} >
+	return <Box className={"JobItem"}>
 		<ListItem>
 
 
@@ -140,7 +140,7 @@ export function JobItem(props: JobItemProps) {
 						textColor="secondary"
 						aria-label="icon label tabs example"
 					>
-						<Tab label={props.data.build?.id} title={"hide"}  disabled={value === 0}/>
+						<Tab label={props.data.build?.id} title={"hide"} disabled={value === 0}/>
 						<Tab label="BUILD"/>
 						<Tab label="DEPLOY"/>
 					</Tabs>

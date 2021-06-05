@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
+import {CircularProgress, Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {useAppDispatch, useAppSelector} from "../../../../store";
@@ -18,7 +18,7 @@ function MappingCreateSources() {
 	const repos = Object.keys(storeData).sort();
 
 
-	const dispatch  = useAppDispatch();
+	const dispatch = useAppDispatch();
 
 	// endregion
 
@@ -51,6 +51,8 @@ function MappingCreateSources() {
 		setBranch(e.target.value as string);
 	};
 
+	const loading = useAppSelector(s => s.mapping.loading);
+
 
 	return <div className="MappingCreateSources">
 
@@ -68,6 +70,7 @@ function MappingCreateSources() {
 
 				>
 					{repos.map(repo => <MenuItem key={repo} value={repo}>{repo}</MenuItem>)}
+					{loading && <MenuItem key={"loading"} disabled={true}><CircularProgress size={16}/></MenuItem>}
 				</Select>
 			</FormControl>
 

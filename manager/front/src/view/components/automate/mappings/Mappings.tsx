@@ -1,5 +1,5 @@
 import React from "react";
-import {useAppDispatch, useAppSelector} from "../../../store";
+import {useAppSelector} from "../../../store";
 import List from "@material-ui/core/List";
 import {Mapping} from "./Mapping";
 import {initMappingData} from "../../../store/module/mapping/mapping";
