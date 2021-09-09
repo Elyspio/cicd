@@ -1,0 +1,11 @@
+{
+	"abilities": [
+		"docker-compose",
+		"docker"
+	],
+	"folders": {
+		"apps": [
+			"./deployed"
+		]
+	}
+}

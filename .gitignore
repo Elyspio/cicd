@@ -1,7 +1,8 @@
 node_modules
-*.js
 .idea
-manager/back/conf.json
+hub/back/conf.json
 agent-builder/coverage
 coverage
 logs
+nodes/agent-builder/build
+nodes/agent-prod/build

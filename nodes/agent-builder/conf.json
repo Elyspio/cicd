@@ -1,0 +1,6 @@
+{
+	"abilities": [
+		"docker",
+		"docker-buildx"
+	]
+}

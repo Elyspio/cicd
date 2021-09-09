@@ -1,0 +1,53 @@
+{
+	"name": "front",
+	"version": "0.1.0",
+	"private": true,
+	"homepage": "/automate/cicd/hub/",
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"docker": "cd ../back && npm run docker"
+	},
+	"dependencies": {
+		"@material-ui/core": "4.12.3",
+		"@material-ui/data-grid": "4.0.0-alpha.37",
+		"@material-ui/icons": "4.11.2",
+		"@reduxjs/toolkit": "1.6.1",
+		"axios": "^0.21.4",
+		"connected-react-router": "^6.9.1",
+		"history": "^4",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-redux": "7.2.5",
+		"react-router": "^5.2.1",
+		"redux": "4.1.1",
+		"socket.io-client": "^4.2.0"
+	},
+	"devDependencies": {
+		"@types/node": "^16.7.10",
+		"@types/react": "^17.0.20",
+		"@types/react-dom": "^17.0.9",
+		"@types/react-redux": "^7.1.18",
+		"@types/react-router": "^5.1.16",
+		"sass": "^1.39.0",
+		"react-scripts": "^4.0.3",
+		"typescript": "latest"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
+}

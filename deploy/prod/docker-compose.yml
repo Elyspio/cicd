@@ -1,0 +1,53 @@
+﻿version: "3.5"
+services:
+    hub:
+        hostname: hub
+        image: elyspio/cicd:hub
+        restart: unless-stopped
+        ports:
+            - "5000:4000"
+        volumes:
+            - ./front/conf.json:/front/build/conf.json
+        environment:
+            GITHUB_TOKEN: ${GITHUB_TOKEN}
+        container_name: cicd-hub
+        networks:
+            cicd:
+
+
+    agent-build:
+        image: elyspio/cicd:agent-build
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./agent-build/conf.json:/back/conf.json
+        environment:
+            HTTP_PORT: 4000
+            CONF_PATH: /back/conf.json
+            DOCKER_USER: ${DOCKER_USER}
+            DOCKER_PASSWORD: ${DOCKER_PASSWORD}
+            HUD_SERVER_URL: https://elyspio.fr/automate/cicd/hub
+            HUD_SOCKET_URL: hub:4000
+            HUD_SOCKET_NAMESPACE: ws/agent/jobs
+        networks:
+            cicd:
+
+    agent-prod:
+        image: elyspio/cicd:agent-prod
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./agent-build/conf.json:/back/conf.json
+        environment:
+            HTTP_PORT: 4000
+            CONF_PATH: /back/conf.json
+            DOCKER_USER: ${DOCKER_USER}
+            DOCKER_PASSWORD: ${DOCKER_PASSWORD}
+            HUD_SERVER_URL: https://elyspio.fr/automate/cicd/hub
+            HUD_SOCKET_URL: hub:4000
+            HUD_SOCKET_NAMESPACE: ws/agent/jobs
+        networks:
+            cicd:
+
+networks:
+    cicd:

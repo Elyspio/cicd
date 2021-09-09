@@ -1,0 +1,107 @@
+{
+  "agents": {
+    "builder": [
+      {
+        "abilities": [
+          "docker",
+          "docker-buildx"
+        ],
+        "uri": "http://localhost:4200",
+        "availability": "free",
+        "lastUptime": "2021-09-11T11:05:00.972Z"
+      }
+    ],
+    "production": [
+      {
+        "abilities": [
+          "docker-compose",
+          "docker"
+        ],
+        "folders": {
+          "apps": [
+            "./deployed"
+          ]
+        },
+        "uri": "http://localhost:4100",
+        "availability": "free",
+        "lastUptime": "2021-09-11T11:06:27.376Z"
+      }
+    ]
+  },
+  "jobs": {
+    "builds": [
+      {
+        "config": {
+          "github": {
+            "remote": "https://github.com/Elyspio/automatize-github-docker.git",
+            "branch": "test-unit"
+          },
+          "docker": {
+            "dockerfiles": [
+              {
+                "path": "Dockerfile",
+                "wd": ".",
+                "image": "cicd",
+                "tag": "test"
+              }
+            ],
+            "platforms": [
+              "linux/amd64",
+              "linux/arm64"
+            ],
+            "username": "elyspio"
+          }
+        },
+        "createdAt": "2021-09-11T10:51:54.177Z",
+        "finishedAt": null,
+        "startedAt": "2021-09-11T10:51:54.491Z",
+        "id": 0
+      }
+    ],
+    "deployments": []
+  },
+  "queues": {
+    "deployments": {
+      "storage": [],
+      "capacity": 1000
+    },
+    "builds": {
+      "storage": [],
+      "capacity": 1000
+    }
+  },
+  "mappings": [
+    {
+      "build": {
+        "github": {
+          "remote": "https://github.com/Elyspio/automatize-github-docker.git",
+          "branch": "test-unit"
+        },
+        "docker": {
+          "dockerfiles": [
+            {
+              "path": "Dockerfile",
+              "wd": ".",
+              "image": "cicd",
+              "tag": "test"
+            }
+          ],
+          "platforms": [
+            "linux/amd64",
+            "linux/arm64"
+          ],
+          "username": "elyspio"
+        }
+      },
+      "deploy": {
+        "docker": {
+          "compose": {
+            "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-deploy\\deployed\\test\\docker-compose.yml"
+          }
+        },
+        "uri": "http://localhost:4200"
+      },
+      "id": 0
+    }
+  ]
+}
