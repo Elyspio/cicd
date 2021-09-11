@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
@@ -8,6 +9,8 @@ import {ThemeProvider} from '@material-ui/core';
 import {themes} from "./config/theme";
 import {ConnectedRouter} from "connected-react-router";
 import "./config/window.d.ts"
+import {Provider as DiProvider} from 'inversify-react';
+import {container} from "./core/di";
 
 const mapStateToProps = (state: StoreState) => ({theme: state.theme.current})
 
@@ -20,9 +23,11 @@ class Wrapper extends Component<ReduxTypes> {
 		const theme = this.props.theme === "dark" ? themes.dark : themes.light;
 
 		return (
-			<ThemeProvider theme={theme}>
-				<Application/>
-			</ThemeProvider>
+			<DiProvider container={container}>
+				<ThemeProvider theme={theme}>
+					<Application/>
+				</ThemeProvider>
+			</DiProvider>
 		);
 	}
 }

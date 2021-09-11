@@ -4,7 +4,7 @@ import {Enum, Property, Required} from "@tsed/schema";
 const availabilities: Agent["availability"][] = ["free", "running", "down"]
 
 const buildAbilities: BuildAgent["abilities"] = ["docker", "docker-buildx"]
-const prodAbilities: ProductionAgent["abilities"] = ["docker", "docker-compose"]
+const prodAbilities: ProductionAgent["abilities"][number]["type"][] = ["docker-compose", "docker"]
 
 
 export class AgentSubscribe {
@@ -47,10 +47,33 @@ class FoldersModel {
 	apps: string[]
 }
 
-export class ProductionAgentModelAdd extends AgentSubscribe implements Omit<ProductionAgent, "availability" | "lastUptime"> {
+export class ProductionAgenAbilitytModel {
 	@Required()
 	@Enum(...prodAbilities)
 	abilities: typeof prodAbilities[number][]
+}
+
+
+export class ProductionAgentModelAddAbilitiesDockerCompose {
+	@Required()
+	@Property(Boolean)
+	isDockerComposeIntegratedToCli: boolean;
+}
+
+export class ProductionAgentModelAddAbilities {
+	@Required()
+	@Enum(...prodAbilities)
+	type: "docker" | "docker-compose";
+
+
+	@Property(ProductionAgentModelAddAbilitiesDockerCompose)
+	dockerCompose?: ProductionAgentModelAddAbilitiesDockerCompose;
+}
+
+export class ProductionAgentModelAdd extends AgentSubscribe implements Omit<ProductionAgent, "availability" | "lastUptime"> {
+	@Required()
+	@Property(ProductionAgentModelAddAbilities)
+	abilities: ProductionAgentModelAddAbilities[]
 
 	@Required()
 	@Property(FoldersModel)
@@ -59,8 +82,8 @@ export class ProductionAgentModelAdd extends AgentSubscribe implements Omit<Prod
 
 export class ProductionAgentModel extends AgentModel implements ProductionAgent {
 	@Required()
-	@Enum(...prodAbilities)
-	abilities: typeof prodAbilities[number][]
+	@Property(ProductionAgentModelAddAbilities)
+	abilities: ProductionAgentModelAddAbilities[]
 
 
 	@Required()

@@ -473,10 +473,10 @@ export interface ProductionAgentModel {
 	lastUptime?: string;
 	/**
 	 *
-	 * @type {Array<string>}
+	 * @type {Array<ProductionAgentModelAddAbilities>}
 	 * @memberof ProductionAgentModel
 	 */
-	abilities: Array<ProductionAgentModelAbilitiesEnum>;
+	abilities: Array<ProductionAgentModelAddAbilities>;
 	/**
 	 *
 	 * @type {FoldersModel}
@@ -496,15 +496,6 @@ export enum ProductionAgentModelAvailabilityEnum {
 }
 
 /**
- * @export
- * @enum {string}
- */
-export enum ProductionAgentModelAbilitiesEnum {
-	Docker = 'docker',
-	DockerCompose = 'docker-compose'
-}
-
-/**
  *
  * @export
  * @interface ProductionAgentModelAdd
@@ -518,10 +509,10 @@ export interface ProductionAgentModelAdd {
 	uri: string;
 	/**
 	 *
-	 * @type {Array<string>}
+	 * @type {Array<ProductionAgentModelAddAbilities>}
 	 * @memberof ProductionAgentModelAdd
 	 */
-	abilities: Array<ProductionAgentModelAddAbilitiesEnum>;
+	abilities: Array<ProductionAgentModelAddAbilities>;
 	/**
 	 *
 	 * @type {FoldersModel}
@@ -531,12 +522,46 @@ export interface ProductionAgentModelAdd {
 }
 
 /**
+ *
+ * @export
+ * @interface ProductionAgentModelAddAbilities
+ */
+export interface ProductionAgentModelAddAbilities {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ProductionAgentModelAddAbilities
+	 */
+	type: ProductionAgentModelAddAbilitiesTypeEnum;
+	/**
+	 *
+	 * @type {ProductionAgentModelAddAbilitiesDockerCompose}
+	 * @memberof ProductionAgentModelAddAbilities
+	 */
+	dockerCompose?: ProductionAgentModelAddAbilitiesDockerCompose;
+}
+
+/**
  * @export
  * @enum {string}
  */
-export enum ProductionAgentModelAddAbilitiesEnum {
-	Docker = 'docker',
-	DockerCompose = 'docker-compose'
+export enum ProductionAgentModelAddAbilitiesTypeEnum {
+	DockerCompose = 'docker-compose',
+	Docker = 'docker'
+}
+
+/**
+ *
+ * @export
+ * @interface ProductionAgentModelAddAbilitiesDockerCompose
+ */
+export interface ProductionAgentModelAddAbilitiesDockerCompose {
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof ProductionAgentModelAddAbilitiesDockerCompose
+	 */
+	isDockerComposeIntegratedToCli: boolean;
 }
 
 /**
@@ -1361,7 +1386,7 @@ export const AutomationApiAxiosParamCreator = function (configuration?: Configur
 		 * @throws {RequiredError}
 		 */
 		automationGetProductionApps: async (options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/api/automate/agent/production/apps`;
+			const localVarPath = `/api/automate/agent/production/node`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;

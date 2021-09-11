@@ -112,7 +112,7 @@ export const AutomateApiAxiosParamCreator = function (configuration?: Configurat
 		 * @throws {RequiredError}
 		 */
 		automateGetApps: async (options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/core/automate/apps`;
+			const localVarPath = `/api/automate/node`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -208,7 +208,7 @@ export const ProductionAgentApiAxiosParamCreator = function (configuration?: Con
 		productionAgentBuild: async (deployJobModel: DeployJobModel, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'deployJobModel' is not null or undefined
 			assertParamExists('productionAgentBuild', 'deployJobModel', deployJobModel)
-			const localVarPath = `/core/production-agent/deploy`;
+			const localVarPath = `/api/production-agent/deploy`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;

@@ -1,7 +1,17 @@
 import {IQueue as Queue} from "../../utils/data.types";
 
+
+export interface ProductionAgentModelAddAbilities {
+	type: "docker" | "docker-compose";
+	dockerCompose?: ProductionAgentModelAddAbilitiesDockerCompose;
+}
+
+export interface ProductionAgentModelAddAbilitiesDockerCompose {
+	isDockerComposeIntegratedToCli: boolean;
+}
+
 export interface ProductionAgent extends Agent {
-	abilities: ("docker" | "docker-compose")[]
+	abilities: ProductionAgentModelAddAbilities[]
 	folders: {
 		apps: string[]
 	}

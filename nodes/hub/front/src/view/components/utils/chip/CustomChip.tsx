@@ -1,5 +1,5 @@
 import React, {CSSProperties, ReactNode} from "react"
-import {Chip, Typography, useTheme} from "@material-ui/core";
+import {Grid, Typography, useTheme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import "./Chip.scss"
 import {useAppSelector} from "../../../store";
@@ -46,14 +46,20 @@ export function CustomChip({onClick, icon, label, title, color, className, fontW
 			color: color
 		}
 
-	return <Chip
-		component={"span"}
+	return <Grid
+		container
 		onClick={onClick}
 		title={title}
 		className={`Chip ${className ?? ""} ${classes.chip}`}
-		variant={theme === "dark" ? "outlined" : undefined}
-		label={<>{icon} <Typography component={"span"} className={"text-smaller"}>{label}</Typography></>}
-		style={{...style, fontWeight: fontWeight,}}/>
+		wrap={"nowrap"}
+		style={{...style, fontWeight: fontWeight,}}>
+		<Grid item xs={1}>
+			{icon}
+		</Grid>
+		<Grid item xs={11}>
+			<Typography component={"p"} variant={"subtitle2"}>{label}</Typography>
+		</Grid>
+	</Grid>
 }
 
 

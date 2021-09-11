@@ -14,9 +14,9 @@ export class GithubWebhooks {
 			const branch = event.ref.slice(event.ref.lastIndexOf("/") + 1)
 			const push = Services.hub.config.mappings.find(({build}) => build.github.remote.includes(event.repository.url) && build.github.branch === branch)
 			if (push) {
-				const idBuild = Services.hub.agents.builder.askBuild(push.build);
+				const idBuild = await Services.hub.agents.builder.askBuild(push.build);
 				await Services.hub.agents.builder.waitForJob(idBuild)
-				const idProd = Services.hub.agents.production.askDeploy(push.deploy);
+				const idProd = await Services.hub.agents.production.askDeploy(push.deploy);
 				await Services.hub.agents.production.waitForJob(idProd)
 			}
 		}

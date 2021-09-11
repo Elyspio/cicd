@@ -25,7 +25,7 @@ const buildParam = {
 };
 const deployParam = {
 	docker: {
-		compose: {path: path.resolve(__dirname, "..", "..", "..", "..", "..", "agent-deploy", "deployed", "test", "docker-compose.yml")}
+		compose: {path: path.resolve(__dirname, "..", "..", "..", "..", "..", "agent-prod", "deployed", "test", "docker-compose.yml")}
 	},
 	uri: "http://localhost:4200"
 };

@@ -1,12 +1,12 @@
 import React from "react";
-import {Box, Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography} from "@material-ui/core";
+import {Box, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography} from "@material-ui/core";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
-import {deepClone} from "../../../../../core/util/data";
-import {DockerConfigModelPlatformsEnum} from "../../../../../core/apis/back";
+import {deepClone} from "../../../../../core/utils/data";
 import {DockerfilesParams} from "../../../../store/module/automation/types";
 import {useAppSelector} from "../../../../store";
 import {setDockerfiles} from "../../../../store/module/mapping/mapping";
 import {useDispatch} from "react-redux";
+import {DockerConfigModelPlatformsEnum} from "../../../../../core/apis/backend/generated"
 
 
 function MappingCreateBuilds() {
@@ -34,11 +34,15 @@ function MappingCreateBuilds() {
 	React.useEffect(() => {
 		console.log(dockerfiles, repo)
 		setConf(dockerfiles.map(x => {
-			let tag = x.substring(0, x.indexOf("Dockerfile"))
-				.replaceAll("/", "-")
-				.replaceAll("\\", "-")
+			let tag = "latest";
 
-			if (tag[tag.length - 1] === "-") tag = tag.substr(0, tag.length - 1);
+			if (dockerfiles.length > 1) {
+				tag = x.substring(0, x.toLowerCase().indexOf("dockerfile"))
+					.replaceAll("/", "-")
+					.replaceAll("\\", "-")
+
+				if (tag[tag.length - 1] === "-") tag = tag.substr(0, tag.length - 1);
+			}
 
 			console.log("tag", tag);
 			return ({
@@ -97,7 +101,7 @@ function MappingCreateBuilds() {
 
 	return <div className="MappingCreateImages">
 
-		<Container className={"Container"}>
+		<Box className={"Container"}>
 			<Typography variant={"h6"}>Docker (Images)</Typography>
 			{conf.map((conf, index) => <Box className={"image-container"} key={conf.dockerfile.path}>
 					<FormControl className={"FormControl"}>
@@ -166,7 +170,7 @@ function MappingCreateBuilds() {
 					/>
 				</Box>
 			)}
-		</Container>
+		</Box>
 
 
 	</div>

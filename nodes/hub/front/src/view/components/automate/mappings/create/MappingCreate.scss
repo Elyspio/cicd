@@ -1,5 +1,13 @@
 .MappingCreate {
 
+	.title {
+		margin-top: 1rem;
+		text-align: center;
+
+		span {
+			font-size: large !important;
+		}
+	}
 
 	.FormControl {
 		min-width: 15rem;
@@ -12,6 +20,7 @@
 
 	.Container {
 		margin-top: 4rem;
+		padding: 0 3rem;
 	}
 
 	h6 {
@@ -36,5 +45,8 @@
 		margin-top: 4rem;
 	}
 
-	height: 100%;
+	.Container {
+
+	}
+
 }

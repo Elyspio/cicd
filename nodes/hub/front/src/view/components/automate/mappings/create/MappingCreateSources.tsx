@@ -1,5 +1,5 @@
 import React from "react";
-import {CircularProgress, Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
+import {Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {useAppDispatch, useAppSelector} from "../../../../store";
@@ -56,7 +56,7 @@ function MappingCreateSources() {
 
 	return <div className="MappingCreateSources">
 
-		<Container className={"Container"}>
+		<Box className={"Container"}>
 			<Typography variant={"h6"}>Github (Sources)</Typography>
 			<FormControl className={"FormControl"}>
 				<InputLabel id="mapping-create-repository-label">Repository</InputLabel>
@@ -89,7 +89,7 @@ function MappingCreateSources() {
 			</FormControl>
 
 
-		</Container>
+		</Box>
 
 
 	</div>

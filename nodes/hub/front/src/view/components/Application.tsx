@@ -1,49 +1,42 @@
 import * as React from 'react';
 import {Box} from "@material-ui/core";
 import "./Application.scss"
-import {connect, ConnectedProps} from "react-redux";
-import {Dispatch} from "redux";
-import {toggleTheme} from "../store/module/theme/action";
+import {useDispatch} from "react-redux";
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import {Drawer} from "./utils/drawer/Drawer"
-import {StoreState} from "../store";
 import {Automate} from "./automate/Automate";
 import {AccountCircle} from "@material-ui/icons";
-import {Services} from "../../core/services";
+import {login as loginAction, logout} from '../store/module/authentication/authentication.action';
+import {toggleTheme as toggleThemeAction} from "../store/module/theme/theme.action";
+import {useAppSelector} from "../store";
 
-const mapStateToProps = (state: StoreState) => ({theme: state.theme.current})
+function Application() {
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({toggleTheme: () => dispatch(toggleTheme())})
+	const dispatch = useDispatch();
+	const logged = useAppSelector(s => s.authentication.logged)
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type ReduxTypes = ConnectedProps<typeof connector>;
-
-export interface Props {
-}
-
-
-function Application(props: Props & ReduxTypes) {
+	const login = React.useCallback(() => dispatch(logged ? logout() : loginAction()), [dispatch])
+	const toggleTheme = React.useCallback(() => dispatch(toggleThemeAction()), [dispatch])
 
 	const actions = [{
-		onClick: props.toggleTheme,
+		onClick: toggleTheme,
 		text: "Switch lights",
 		icon: <Brightness5Icon/>
 	}, {
-		onClick: Services.authentication.login,
-		text: "Login",
+		onClick: login,
+		text: logged ? "Logout" : "Login",
+
 		icon: <AccountCircle/>
 	}]
 
-	return (
-		<Box className={"Application"}>
-			<Drawer position={"right"}
-			        actions={actions}>
-				<div className="content">
-					<Automate/>
-				</div>
-			</Drawer>
-		</Box>
-	);
+	return <Box className={"Application"}>
+		<Drawer position={"right"}
+		        actions={actions}>
+			<div className="content">
+				<Automate/>
+			</div>
+		</Drawer>
+	</Box>;
 }
 
-export default connector(Application)
+export default Application

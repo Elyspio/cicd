@@ -1,5 +1,5 @@
 import React from "react";
-import {AppBar, Box, Grid, ListItem, Tab, Typography} from "@material-ui/core";
+import {AppBar, Box, Grid, ListItem, Paper, Tab, Typography} from "@material-ui/core";
 import './JobItem.scss'
 import {BuildJob, DeployJob} from "./Jobs";
 import {CustomChip} from "../../utils/chip/CustomChip";
@@ -19,40 +19,39 @@ const size = 12;
 
 function BuildLine({data}: LineProps<BuildJob>) {
 
+	const remote = React.useMemo(() => {
+		const r = data.config.github.remote;
+		return r.slice("https://github.com/".length, r.length - 4)
+	}, [data.config.github.remote])
 
-	let remote = data.config.github.remote;
-	remote = remote.slice("https://github.com/".length, remote.length - 4)
+	const dockerfiles = React.useMemo(() => data.config.docker.dockerfiles
+		.map(x => `${x.image}:${x.tag ?? "latest"}`)
+		.join(" "), [data.config.docker.dockerfiles]);
 
 
 	return <Box className={"Line"}>
 		<Grid container>
-			<Grid container item xs={12}>
-				<Grid item xs={7}>
-					<CustomChip
-						icon={<GithubIcon height={size} width={size}/>}
-						title={remote}
-						label={remote}/>
-				</Grid>
-				<Grid item xs={4} style={{marginLeft: "1rem"}}>
-					<CustomChip
-						icon={<BranchIcon height={size} width={size}/>}
-						title={data.config.github.branch}
-						label={data.config.github.branch}/>
+			<Grid container item xs={12} spacing={1} direction={"column"}>
+				<CustomChip
+					icon={<GithubIcon height={size} width={size}/>}
+					title={remote}
+					label={remote}/>
+				<CustomChip
+					icon={<BranchIcon height={size} width={size}/>}
+					title={data.config.github.branch}
+					label={data.config.github.branch}/>
 
-				</Grid>
-			</Grid>
 
-			<Grid item>
 				<CustomChip
 					icon={<DockerIcon height={size} width={size}/>}
-					title={data.config.docker.dockerfiles.map(x => x.image).join(" ")}
-					label={data.config.docker.dockerfiles.map(x => x.image).join(" ")}/>
+					title={dockerfiles}
+					label={dockerfiles}/>
 			</Grid>
+
 
 		</Grid>
 	</Box>
 }
-
 
 function DeployLine({data}: LineProps<DeployJob>) {
 
@@ -107,11 +106,18 @@ export function JobItem(props: JobItemProps) {
 		setValue(newValue);
 	};
 
+	const label = React.useMemo(() => {
+		if (!props.data.build) return "";
+		const date = new Date(props.data.build.createdAt);
+		return <Grid container direction={"column"}>
+			<Grid item>{date.toLocaleDateString()}</Grid>
+			<Grid item>{date.toLocaleTimeString()}</Grid>
+		</Grid>;
+	}, [props.data])
+
 	return <Box className={"JobItem"}>
 		<ListItem>
-
-
-			<div className={classes.root}>
+			<Paper elevation={2} className={classes.root}>
 				<AppBar position={"static"} color={"default"}>
 					<Tabs
 						value={value}
@@ -121,7 +127,7 @@ export function JobItem(props: JobItemProps) {
 						textColor="secondary"
 						aria-label="icon label tabs example"
 					>
-						<Tab label={props.data.build?.id} title={"hide"} disabled={value === 0}/>
+						<Tab label={label} title={"hide"} disabled={value === 0}/>
 						<Tab label="BUILD"/>
 						<Tab label="DEPLOY"/>
 					</Tabs>
@@ -138,7 +144,7 @@ export function JobItem(props: JobItemProps) {
 						: <Typography>No deploy information</Typography>
 					}
 				</TabPanel>
-			</div>
+			</Paper>
 
 		</ListItem>
 	</Box>

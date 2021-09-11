@@ -180,7 +180,7 @@ export const BuildAgentApiAxiosParamCreator = function (configuration?: Configur
 		buildAgentBuild: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'buildConfigModel' is not null or undefined
 			assertParamExists('buildAgentBuild', 'buildConfigModel', buildConfigModel)
-			const localVarPath = `/core/build-agent/build`;
+			const localVarPath = `/api/build-agent/build`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;

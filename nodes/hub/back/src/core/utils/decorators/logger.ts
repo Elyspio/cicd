@@ -1,15 +1,30 @@
 import {Logger} from "@tsed/logger";
 import {Helper} from "../helper";
-import * as util from "util";
+import {inspect} from "util";
+
+
+declare global {
+	interface Function {
+		logger: Logger
+	}
+}
+
+
+export type LogOption =
+	{
+		arguments: number[] | boolean,
+		level: "info" | "error" | "fatal" | "warning" | "debug"
+	}
+
 
 /**
  *
  * @param logger
- * @param logArguments false means that no argument is logged, [] means that all arguments are logged, [0] means that only the first argument is logged
  * @param level
+ * @param logArguments false means that no argument is logged, [] means that all arguments are logged, [0] means that only the first argument is logged
  * @constructor
  */
-export const Log = (logger: Logger, logArguments: number[] | boolean = true, level: "debug" | "info" = "info") => (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+export const Log = (logger: Logger, {level, arguments: logArguments}: LogOption = {level: "info", arguments: true}) => (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
 	let originalMethod = descriptor.value
 
 
@@ -21,9 +36,9 @@ export const Log = (logger: Logger, logArguments: number[] | boolean = true, lev
 		if (logArguments !== false) {
 			argsStr = argsName.reduce((previousValue, currentValue, currentIndex) => {
 				if (logArguments !== true) {
-					if (!logArguments.includes(currentIndex)) return previousValue;
+					if (!logArguments?.includes(currentIndex)) return previousValue;
 				}
-				return `${previousValue} ${currentValue}=${util.inspect(args[currentIndex])}`
+				return `${previousValue} ${currentValue}=${inspect(args[currentIndex])}`
 			}, "-");
 		}
 
@@ -37,7 +52,7 @@ export const Log = (logger: Logger, logArguments: number[] | boolean = true, lev
 		};
 
 		if (typeof result === "object" && typeof result.then === "function") {
-			const promise = result.then((ret: any) => {
+			const promise = result.then((ret) => {
 				exitLog();
 				return ret;
 			});
@@ -55,7 +70,5 @@ export const Log = (logger: Logger, logArguments: number[] | boolean = true, lev
 	};
 
 }
-
-Log.service = (logger: Logger, logArguments: number[] | boolean = true,) => Log(logger, logArguments, "debug")
 
 

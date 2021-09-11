@@ -2,6 +2,7 @@ import {Octokit} from "@octokit/rest";
 import {Service} from "@tsed/di";
 import {Log} from "../../utils/decorators/logger";
 import {getLogger} from "../../utils/logger";
+import {githubToken} from "../../../config/github";
 
 
 @Service()
@@ -9,7 +10,9 @@ export class GithubService {
 
 	private static log = getLogger.service(GithubService)
 
-	private client = new Octokit({});
+	private client = new Octokit({
+		auth: githubToken
+	});
 
 
 	@Log(GithubService.log)

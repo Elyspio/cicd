@@ -24,10 +24,10 @@ export class BuilderAgentService {
 	 * At the end of the built image is pushed to repository
 	 */
 	async build(config: BuildConfigModel) {
-		const p = await Services.git.initFolder(config)
-		const strs = await Services.docker.buildAndPush(this.buildNum++, config, p);
+		const folder = await Services.git.initFolder(config)
+		const strs = await Services.docker.buildAndPush(this.buildNum++, config, folder);
 		try {
-			await rm(p, {recursive: true, force: true});
+			await rm(folder, {recursive: true, force: true});
 		} catch (e) {
 
 		}

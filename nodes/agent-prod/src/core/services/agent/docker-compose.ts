@@ -8,6 +8,8 @@ import {Auth} from "../authentication";
 import axios from "axios";
 import {Unauthorized} from "@tsed/exceptions";
 import {authorization_cookie_token} from "../../../config/authentication";
+import {Services} from "../index";
+import {ProductionAgentModelAddAbilitiesTypeEnum} from "../../apis/hub";
 import isDev = Helper.isDev;
 
 export class DockerComposeService {
@@ -15,7 +17,7 @@ export class DockerComposeService {
 
 	async pull({docker}: DeployConfigModel) {
 
-		return new Promise<string>((resolve, reject) => {
+		return new Promise<string>(async (resolve, reject) => {
 
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet")
@@ -24,7 +26,7 @@ export class DockerComposeService {
 
 			const folder = docker.compose.path;
 
-			const completedCommand = `docker-compose pull`;
+			const completedCommand = `${await this.getDockerComposeCommand()} pull`;
 			$log.info("DockerComposeService.pull", {completedCommand, folder})
 			exec(completedCommand, {cwd: path.dirname(folder)}, (error, stdout, stderr) => {
 				$log.info("DockerComposeService.pull", {completedCommand, folder, error, stderr,})
@@ -35,7 +37,7 @@ export class DockerComposeService {
 	}
 
 	async up({docker}: DeployConfigModel, daemon = true) {
-		return new Promise<string>((resolve, reject) => {
+		return new Promise<string>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet")
 				return;
@@ -43,7 +45,7 @@ export class DockerComposeService {
 
 			const folder = docker.compose.path;
 
-			const completedCommand = `docker-compose up --remove-orphans ${daemon ? "-d" : ""}`;
+			const completedCommand = `${await this.getDockerComposeCommand()} up --remove-orphans ${daemon ? "-d" : ""}`;
 			exec(completedCommand, {cwd: path.dirname(folder)}, (error, stdout, stderr) => {
 				$log.info("DockerComposeService.up", {completedCommand, folder, error, stderr,})
 				if (error) reject({error, stderr})
@@ -53,7 +55,7 @@ export class DockerComposeService {
 	}
 
 	async down({docker}: DeployConfigModel) {
-		return new Promise<string>((resolve, reject) => {
+		return new Promise<string>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet")
 				return;
@@ -61,7 +63,7 @@ export class DockerComposeService {
 
 			const folder = docker.compose.path;
 
-			const completedCommand = `docker-compose down`;
+			const completedCommand = `${await this.getDockerComposeCommand()} down`;
 			exec(completedCommand, {cwd: path.dirname(folder)}, (error, stdout, stderr) => {
 				$log.info("DockerComposeService.down", {completedCommand, folder, error, stderr,})
 				if (error) reject({error, stderr})
@@ -76,7 +78,6 @@ export class DockerComposeService {
 	 * @param auth
 	 */
 	async list(folders: string[], auth?: Auth) {
-
 
 		if (!isDev()) {
 			const commandRunnerIp = process.env.RUNNER_HOST
@@ -97,6 +98,15 @@ export class DockerComposeService {
 			const files = await Promise.all(folders.map(Helper.getFiles))
 			return files.flat().filter(f => f.endsWith("docker-compose.yml"));
 		}
+	}
+
+	private async getDockerComposeConfig() {
+		const config = await Services.agent.getConfig();
+		return config.abilities.find(ability => ability.type === ProductionAgentModelAddAbilitiesTypeEnum.DockerCompose)?.dockerCompose!
+	}
+
+	private async getDockerComposeCommand() {
+		return (await this.getDockerComposeConfig()).isDockerComposeIntegratedToCli ? "docker compose" : "docker-compose"
 	}
 
 }

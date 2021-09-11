@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Container, Typography} from "@material-ui/core";
+import {Box, Button, Typography} from "@material-ui/core";
 import MappingCreateSources from "./MappingCreateSources";
 import "./MappingCreate.scss";
 import MappingCreateImages from "./MappingCreateBuilds";
@@ -16,7 +16,9 @@ function MappingCreate() {
 	return <div className="MappingCreate">
 
 
-		<Typography variant={"h4"} align={"center"}>Create a new mapping</Typography>
+		<Box className={"title"}>
+			<Typography variant={"overline"} align={"center"}>Create a new mapping</Typography>
+		</Box>
 
 		<MappingCreateSources/>
 
@@ -24,9 +26,9 @@ function MappingCreate() {
 
 		<MappingCreateDeployment/>
 
-		<Container className={"button-validate-container"}>
+		<Box className={"Container button-validate-container"}>
 			<Button size={"large"} variant={"outlined"} color={"primary"}>Validate</Button>
-		</Container>
+		</Box>
 
 
 	</div>

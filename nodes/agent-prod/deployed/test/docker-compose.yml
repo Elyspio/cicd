@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+    test:
+        image: elyspio/cicd:test
+        restart: unless-stopped
+        volumes:
+            - ./conf.json:/back/conf.json
+        environment:
+            HUD_SERVER_URL: https://elyspio.fr/automate/cicd/hub
+            RUNNER_HOST: https://elyspio.fr/runner/elyspi-4
+            HTTP_PORT: 4000
+            CONF_PATH: /back/conf.json
+        container_name: cicd-test
+
+

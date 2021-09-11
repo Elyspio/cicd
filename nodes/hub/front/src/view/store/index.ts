@@ -1,10 +1,11 @@
 import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
-import {reducer as themeReducer} from "./module/theme/reducer";
+import {themeReducer} from "./module/theme/theme.reducer";
 import {automationReducer} from "./module/automation/automation";
 import {createBrowserHistory} from 'history';
 import {connectRouter, routerMiddleware} from 'connected-react-router'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {mappingReducer} from "./module/mapping/mapping";
+import {authenticationReducer} from "./module/authentication/authentication.reducer";
 
 
 export const history = createBrowserHistory({basename: process.env.NODE_ENV === "production" ? "/automate/cicd/hub/" : undefined});
@@ -16,6 +17,7 @@ export function configureCustomStore() {
 		theme: themeReducer,
 		automation: automationReducer,
 		mapping: mappingReducer,
+		authentication: authenticationReducer,
 	};
 
 	const middleware = [

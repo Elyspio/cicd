@@ -1,27 +1,27 @@
 import {createAction, createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Apis} from "../../../../core/apis";
 import {DockerfilesParams} from "../automation/types";
+import {container} from "../../../../core/di";
+import {DiKeysService} from "../../../../core/di/di.keys.service";
+import {GithubService} from "../../../../core/services/cicd/github.cicd.service";
+import {AuthenticationService} from "../../../../core/services/authentication.service";
 
+const githubService = container.get<GithubService>(DiKeysService.core.github)
+const authenticationService = container.get<AuthenticationService>(DiKeysService.authentication)
 
 const setDockerFileForRepo = createAction<{ repo: string, branch: string, dockerfiles: string[] }>("mapping/setDockerFileForRepo")
 
 export const initMappingData = createAsyncThunk("mapping/init", async (nothing, thunkAPI) => {
+	const username = await authenticationService.getUsername();
 
-	const username = (await Apis.core.github.githubGetUsernameFromCookies()).data
-	const repos = (await Apis.core.github.githubGetRepositories(username)).data
-	await Promise.all(repos.map(async repo => {
-		const branches = (await Apis.core.github.githubGetBranchesForRepository(username, repo)).data
-		await Promise.all(branches.map(async branch => {
-			const dockerfiles = (await Apis.core.github.githubGetDockerfilesForRepository(username, repo, branch)).data
-			if (dockerfiles.length > 0) {
-				thunkAPI.dispatch(setDockerFileForRepo({
-					repo, branch, dockerfiles: dockerfiles.map(x => x.path)
-				}))
-			}
+	const repos = await githubService.getRepositoriesData(username);
 
+	await Promise.all(repos.map(async (repo) => {
+		await thunkAPI.dispatch(setDockerFileForRepo({
+			repo: repo.repo,
+			branch: repo.branch,
+			dockerfiles: repo.dockerfiles
 		}))
 	}))
-
 })
 
 

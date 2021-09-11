@@ -26,10 +26,10 @@ export class AgentBuilder extends Base implements AgentMethods<BuildAgent> {
 		this.update(agent, {availability: "free", lastUptime: new Date()});
 	}
 
-	public askBuild(config: BuildConfig) {
+	public async askBuild(config: BuildConfig) {
 		const id = super.nextId;
 		Services.hub.config.queues.builds.enqueue({config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id})
-		super.save();
+		await super.save();
 		return id;
 	}
 

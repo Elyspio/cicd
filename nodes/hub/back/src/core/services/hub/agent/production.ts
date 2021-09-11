@@ -26,10 +26,10 @@ export class AgentProduction extends Base implements AgentMethods<ProductionAgen
 		this.update(agent, {availability: "free", lastUptime: new Date()});
 	}
 
-	public askDeploy(config: DeployConfig) {
+	public async askDeploy(config: DeployConfig) {
 		const id = super.nextId;
 		Services.hub.config.queues.deployments.enqueue({config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id})
-		Services.hub.saveConfig();
+		await Services.hub.saveConfig();
 		return id;
 	}
 

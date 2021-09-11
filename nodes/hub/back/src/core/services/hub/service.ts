@@ -86,20 +86,7 @@ export class HubService extends EventEmitter {
 
 	@Log(HubService.log)
 	public watch() {
-		const that = this;
 		setInterval(async () => {
-			// this.config.agents.builder.filter(a => a.availability !== "down").forEach((agent) => {
-			// 	if (dayjs(agent.lastUptime).add(10, "second").isBefore(dayjs())) {
-			// 		console.log(agent, "is not available")
-			// 		that.agents.builder.update(agent, {availability: "down"})
-			// 	}
-			// })
-			// this.config.agents.production.filter(a => a.availability !== "down").forEach((agent) => {
-			// 	if (dayjs(agent.lastUptime).add(10, "second").isBefore(dayjs())) {
-			// 		console.log(agent, "is not available")
-			// 		that.agents.production.update(agent, {availability: "down"})
-			// 	}
-			// })
 
 
 			if (!this.config.queues.builds.isEmpty()) {

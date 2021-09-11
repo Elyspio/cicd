@@ -1,7 +1,7 @@
 window.config = {
     endpoints: {
         core: {
-            api: "http://localhost:4000",
+            api: "http://localhost",
             socket: {
                 namespace: "/ws/front",
                 hostname: "localhost:4000",

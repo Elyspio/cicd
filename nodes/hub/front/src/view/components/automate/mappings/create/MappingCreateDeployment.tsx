@@ -1,12 +1,14 @@
 import React from "react";
-import {Container, FormControl, IconButton, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
+import {Box, FormControl, IconButton, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import {useAppSelector} from "../../../../store";
-import {Apis} from "../../../../../core/apis";
-import {ProductionApplications} from "../../../../../core/apis/back";
 import {Deployment} from "../../../../store/module/automation/types";
-import {deepClone} from "../../../../../core/util/data";
+import {deepClone} from "../../../../../core/utils/data";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
+import {useInjection} from "inversify-react";
+import {DiKeysService} from "../../../../../core/di/di.keys.service";
+import {AutomateService} from "../../../../../core/services/cicd/automate.cicd.service";
+import {ProductionApplications} from "../../../../../core/apis/backend/generated";
 
 
 function MappingCreateDeployment() {
@@ -17,12 +19,16 @@ function MappingCreateDeployment() {
 
 	const agents = useAppSelector(s => s.automation.config?.agents.production ?? [])
 
+	const services = {
+		automate: useInjection<AutomateService>(DiKeysService.core.automate)
+	}
+
 	React.useEffect(() => {
 		(async () => {
-			const apps = await Apis.core.automate.automationGetProductionApps().then(x => x.data)
+			const apps = await services.automate.getProductionApps();
 			setApps(apps)
 		})()
-	}, [])
+	}, [services.automate])
 
 
 	const sortDeployments = React.useCallback((a: typeof deployments[number], b: typeof deployments[number]) => a.agent?.uri.localeCompare(b.agent?.uri ?? "") ?? -1, [])
@@ -56,7 +62,7 @@ function MappingCreateDeployment() {
 	const size = 16
 
 	return <div className="MappingCreateDeployment">
-		<Container className={"Container"}>
+		<Box className={"Container"}>
 			<Typography variant={"h6"}>Deployments <IconButton color={"primary"} onClick={addDeployment}><Add/></IconButton></Typography>
 			{deployments.map((dep, index) => <div>
 
@@ -97,7 +103,7 @@ function MappingCreateDeployment() {
 
 			</div>)}
 
-		</Container>
+		</Box>
 
 	</div>
 }

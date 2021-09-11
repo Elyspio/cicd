@@ -40,11 +40,13 @@ export class AutomationController {
 	@Post("/build")
 	@Returns(204)
 	async start(@Required() @BodyParams(BuildConfigModel) config: BuildConfigModel) {
-		Services.hub.agents.builder.askBuild(config);
+		await Services.hub.agents.builder.askBuild(config);
 	}
 
 	@Post("/deployment")
 	@Returns(204)
-	async deploy(@Required() @BodyParams(DeployConfigModel) agent: DeployConfigModel) {
+	async deploy(@Required() @BodyParams(DeployConfigModel) config: DeployConfigModel) {
+		await Services.hub.agents.production.askDeploy(config);
+
 	}
 }

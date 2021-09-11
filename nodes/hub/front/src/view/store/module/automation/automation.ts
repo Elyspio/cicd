@@ -1,9 +1,9 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {HubConfigExport} from "../../../../../../back/src/core/services/hub/types";
-import {createSocket} from "../../../../core/services/socket";
 import {events} from "../../../../config/events";
 import store from "../../index";
 import {Deployment, DockerfilesParams} from "./types";
+import {createSocket} from "../../../../core/services/cicd/cicd.socket";
 
 
 const initialState: {

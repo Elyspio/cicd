@@ -1,37 +1,30 @@
 import React from "react";
 import List from "@material-ui/core/List";
-import {connect, ConnectedProps} from "react-redux";
-import {Dispatch} from "redux";
-import {StoreState} from "../../../store";
+import {useAppSelector} from "../../../store";
 import {BuildConfig, DeployConfig, HubConfigExport, Job,} from "../../../../../../back/src/core/services/hub/types";
 import {JobItem} from "./JobItem";
-import {push} from "connected-react-router";
 
 type Queues = HubConfigExport["queues"];
 type JobsAlias = HubConfigExport["jobs"];
 
-const mapStateToProps = (state: StoreState) => ({
-	queues: state.automation.config?.queues ?? {builds: Array<Queues["builds"][number]>(), deployments: Array<Queues["deployments"][number]>()},
-	jobs: state.automation.config?.jobs ?? {builds: Array<JobsAlias["builds"][number]>(), deployments: Array<JobsAlias["deployments"][number]>()},
-})
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	push: (path: string) => dispatch(push(path))
-})
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type ReduxTypes = ConnectedProps<typeof connector>;
 
 type WithStatus<T> = T & { status: "waiting" | "done" | "working", }
 export type BuildJob = WithStatus<Job<BuildConfig>>
 export type DeployJob = WithStatus<Job<DeployConfig>>
 
-export function Jobs(props: ReduxTypes) {
+export function Jobs() {
+
+	const {jobs, queues} = useAppSelector(state => ({
+			queues: state.automation.config?.queues ?? {builds: Array<Queues["builds"][number]>(), deployments: Array<Queues["deployments"][number]>()},
+			jobs: state.automation.config?.jobs ?? {builds: Array<JobsAlias["builds"][number]>(), deployments: Array<JobsAlias["deployments"][number]>()},
+		})
+	)
 
 	const data = React.useMemo(() => {
 
 		const ret = new Map<Job<any>["id"], { build?: BuildJob; deploy?: DeployJob; }>()
 
-		props.jobs.builds.forEach((job: Job<BuildConfig>) => {
+		jobs.builds.forEach((job: Job<BuildConfig>) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -44,7 +37,7 @@ export function Jobs(props: ReduxTypes) {
 			})
 		})
 
-		props.queues.builds.forEach((job: Job<BuildConfig>) => {
+		queues.builds.forEach((job: Job<BuildConfig>) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -57,7 +50,7 @@ export function Jobs(props: ReduxTypes) {
 			})
 		})
 
-		props.jobs.deployments.forEach((job: Job<DeployConfig>) => {
+		jobs.deployments.forEach((job: Job<DeployConfig>) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -70,7 +63,7 @@ export function Jobs(props: ReduxTypes) {
 			})
 		})
 
-		props.queues.deployments.forEach((job: Job<DeployConfig>) => {
+		queues.deployments.forEach((job: Job<DeployConfig>) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -84,7 +77,7 @@ export function Jobs(props: ReduxTypes) {
 		})
 
 		return [...ret.entries()].sort(([id1], [id2]) => id1 < id2 ? -1 : 1);
-	}, [props.jobs, props.queues])
+	}, [jobs, queues])
 
 
 	return <List className={"Agents"}>
@@ -95,4 +88,4 @@ export function Jobs(props: ReduxTypes) {
 	</List>
 }
 
-export default connector(Jobs)
+export default Jobs

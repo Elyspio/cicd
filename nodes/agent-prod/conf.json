@@ -1,7 +1,14 @@
 {
 	"abilities": [
-		"docker-compose",
-		"docker"
+		{
+			"type": "docker-compose",
+			"dockerCompose": {
+				"isDockerComposeIntegratedToCli": true
+			}
+		},
+		{
+			"type": "docker"
+		}
 	],
 	"folders": {
 		"apps": [

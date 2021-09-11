@@ -1,4 +1,4 @@
-import {AuthenticationService} from "./authentication";
+import {AuthenticationService} from "./authentication.service";
 import {StorageService} from "./storage";
 import {DockerService} from "./docker/docker";
 import {HubService} from "./hub/service";

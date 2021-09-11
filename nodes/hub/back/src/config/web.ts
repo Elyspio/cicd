@@ -1,5 +1,7 @@
 import * as path from "path";
 import {$log} from "@tsed/common";
+import {Helper} from "../core/utils/helper";
+import isDev = Helper.isDev;
 
 
 export const rootDir = path.resolve(__dirname, "..",);
@@ -7,6 +9,10 @@ export const rootDir = path.resolve(__dirname, "..",);
 let frontPath = process.env.FRONT_PATH ?? path.resolve(rootDir, "..", "..", "..", "front", "build")
 
 $log.info({frontPath, rootDir});
+
+
+export const allowedOrigins = isDev() ? ["http://127.0.0.1:3000", "http://localhost:3000", "http://localhost"] : ["https://elyspio.fr"]
+
 
 export const webConfig: Partial<TsED.Configuration> = {
 	rootDir,
@@ -18,6 +24,9 @@ export const webConfig: Partial<TsED.Configuration> = {
 			`${rootDir}/web/controllers/**/*.ts`
 		]
 	},
+	componentsScan: [
+		`${rootDir}/core/**/*.ts`
+	],
 	exclude: [
 		'**/*.spec.ts',
 		"**/*.d.ts"
@@ -29,7 +38,8 @@ export const webConfig: Partial<TsED.Configuration> = {
 	},
 	swagger: [{
 		path: "/swagger",
-		specVersion: "3.0.1"
+		specVersion: "3.0.1",
+		operationIdPattern: "%m"
 	}],
 	socketIO: {
 		cors: {
@@ -39,7 +49,4 @@ export const webConfig: Partial<TsED.Configuration> = {
 
 
 	},
-	componentsScan: [
-		`${rootDir}/core/services/**/**.ts`
-	],
 };
