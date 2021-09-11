@@ -1,3 +1,5 @@
-from alpine
+FROM alpine
+COPY ./a.txt a.txt
+COPY ./b.txt b.txt
 
-CMD ["echo", "OK"]
+CMD ["cat", "a.txt", "b.txt"]
