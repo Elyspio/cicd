@@ -3,7 +3,7 @@ import {Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typogr
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {useAppDispatch, useAppSelector} from "../../../../store";
-import {setSelectedBranch, setSelectedRepo} from "../../../../store/module/mapping/mapping";
+import {setSelectedBranch, setSelectedRepo} from "../../../../store/module/mapping/mapping.reducer";
 
 
 function MappingCreateSources() {

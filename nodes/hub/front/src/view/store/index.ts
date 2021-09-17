@@ -4,7 +4,7 @@ import {automationReducer} from "./module/automation/automation";
 import {createBrowserHistory} from 'history';
 import {connectRouter, routerMiddleware} from 'connected-react-router'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {mappingReducer} from "./module/mapping/mapping";
+import {mappingReducer} from "./module/mapping/mapping.reducer";
 import {authenticationReducer} from "./module/authentication/authentication.reducer";
 
 

@@ -1,10 +1,14 @@
+$header-size: 4rem;
+
 
 .Drawer {
-	width: 100%;
-	height: 100%;
+
+	height: calc(100% - #{$header-size});
+
 
 	main {
 		display: flex;
+		height: 100%;
 	}
 
 	.drawer-btn {
@@ -13,6 +17,35 @@
 
 	.actions {
 		overflow: hidden;
+		user-select: none;
+	}
+
+	.content {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		* > {
+			height: 100%;
+		}
+	}
+
+
+}
+
+.Drawer-hoc {
+	height: 100vh;
+
+	.header {
+		height: $header-size;
+		font-size: large;
+
+		#app-title {
+			&:hover {
+				cursor: pointer;
+			}
+		}
 	}
 
 }

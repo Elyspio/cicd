@@ -4,9 +4,9 @@ import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
 import {deepClone} from "../../../../../core/utils/data";
 import {DockerfilesParams} from "../../../../store/module/automation/types";
 import {useAppSelector} from "../../../../store";
-import {setDockerfiles} from "../../../../store/module/mapping/mapping";
 import {useDispatch} from "react-redux";
 import {DockerConfigModelPlatformsEnum} from "../../../../../core/apis/backend/generated"
+import {setDockerfiles} from "../../../../store/module/mapping/mapping.reducer";
 
 
 function MappingCreateBuilds() {

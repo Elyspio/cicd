@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {Theme,} from '@material-ui/core/styles';
 import MuiDrawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -8,28 +8,28 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import './Drawer.scss'
 import clsx from 'clsx';
+import {makeStyles} from "@material-ui/styles";
 
 export interface Action {
-	text: string,
-	icon: JSX.Element,
-	onClick: Function
+	text: React.ReactNode,
+	icon: React.ReactNode,
+	onClick?: Function
 }
 
 
-interface Props {
+type Props = {
 	children: ReactNode[] | ReactNode,
 	position: "left" | "right",
-	actions?: Action[]
+	actions?: Action[],
+	actionsComponent?: ReactNode
 }
 
-const drawerWidth = 240;
-let baseWidth = 56;
+const drawerWidth = 210;
+let baseWidth = 46;
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
 		drawer: {
 			width: drawerWidth,
 			flexShrink: 0,
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		mainSmaller: {
 			width: `calc(100% - ${drawerWidth}px) !important`,
-			height: "100%",
 			transition: theme.transitions.create('width', {
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.enteringScreen,
@@ -60,14 +59,13 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		main: {
 			width: `calc(100% - ${baseWidth}px)`,
-			height: "100%",
 			transition: theme.transitions.create('width', {
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.enteringScreen,
 			}),
 		}
-	}),
-);
+	}
+))
 
 const getActions = (actions: Action[]) => {
 
@@ -79,9 +77,9 @@ const getActions = (actions: Action[]) => {
 
 	const actionComponents = (comp.length > 0 ? comp : [actions]).map((actions, i) => <List className={"toolbar"}
 	                                                                                        key={i}>
-		{actions.map((action, i) => <ListItem button key={i} onClick={() => action.onClick()}>
+		{actions.map((action, i) => <ListItem button key={i} onClick={() => action.onClick && action.onClick()}>
 			<ListItemIcon>{action.icon}</ListItemIcon>
-			<ListItemText primary={action.text}/>
+			{action.text}
 		</ListItem>)}
 	</List>);
 
@@ -124,12 +122,13 @@ export function Drawer(props: Props) {
 					}),
 				}}>
 				<div onClick={handleDrawerClose} className={"drawer-btn"}>
-					<IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+					<IconButton onClick={open ? handleDrawerClose : handleDrawerOpen} size="medium">
 						{open ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
 					</IconButton>
 				</div>
 				<Divider/>
 				<div className="actions">
+					{props.actionsComponent}
 					{props.actions && getActions(props.actions)}
 				</div>
 			</MuiDrawer>

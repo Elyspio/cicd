@@ -1,4 +1,4 @@
-import {Box, Paper, Typography} from "@material-ui/core";
+import {Box, Grid, Paper, Typography} from "@material-ui/core";
 import React from "react";
 import {SimpleAccordion} from "../utils/SimpleAccordion";
 import Agents from "./agents/Agents";
@@ -11,7 +11,7 @@ import MappingAccordion from "./mappings/MappingAccordion";
 import MappingCreate from "./mappings/create/MappingCreate";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	root: {
 		height: "100%",
 		width: "100%",
@@ -23,13 +23,12 @@ const useStyles = makeStyles((theme) => ({
 		maxHeight: "100vh",
 		overflow: "auto",
 		margin: 20,
+		overflowX: "hidden"
 	},
 	right: {
 		width: '100%',
 		margin: 20
-
 	}
-
 }));
 
 export function Automate() {
@@ -55,7 +54,11 @@ export function Automate() {
 				<Route exact path="/job/build/:id" render={({match: {params: {id}}}) => id && <JobBuildDetail id={Number.parseInt(id)}/>}/>
 				<Route exact path="/job/deploy/:id" render={({match: {params: {id}}}) => id && <JobDeployDetail id={Number.parseInt(id)}/>}/>
 				<Route exact path={"/mapping/add"} component={MappingCreate}/>
-				<Route render={() => <Typography>Please select one item on the left to see its details</Typography>}/>
+				<Route render={() => <Grid container justifyContent={"center"} alignItems={"center"} style={{height: "100%"}}>
+					<Grid item>
+						<Typography variant={"button"}>Please select one item on the left to see its details</Typography>
+					</Grid>
+				</Grid>}/>
 			</Switch>
 		</Paper>
 

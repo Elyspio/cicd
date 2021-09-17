@@ -1,5 +1,8 @@
 .MappingCreate {
 
+	height: 100%;
+	width: 100%;
+
 	.title {
 		margin-top: 1rem;
 		text-align: center;
@@ -47,6 +50,11 @@
 
 	.Container {
 
+	}
+
+	.no-logged {
+		height: 95%;
+		width: 100%;
 	}
 
 }
