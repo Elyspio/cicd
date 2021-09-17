@@ -3,7 +3,6 @@ import {Name, Returns} from "@tsed/schema";
 import * as Express from "express"
 import {FileModel, RepoWithBranchModel} from "./models";
 import {GithubService} from "../../../core/services/github/github";
-import {GitService} from "../../../core/services/github/git";
 import {Protected} from "../../middleware/protected";
 import {Unauthorized} from "@tsed/exceptions";
 
@@ -13,11 +12,7 @@ import {Unauthorized} from "@tsed/exceptions";
 export class Github {
 
 
-	public constructor(
-		private readonly githubService: GithubService,
-		private readonly gitService: GitService
-	) {
-
+	public constructor(private readonly githubService: GithubService) {
 	}
 
 
@@ -30,7 +25,9 @@ export class Github {
 	) {
 		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
 
-		return this.githubService.listRepos(username)
+		const service = await this.githubService.get(username, auth!.token);
+
+		return service.listRepos(username)
 	}
 
 
@@ -45,7 +42,9 @@ export class Github {
 
 		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
 
-		return this.githubService.listBranch(username, repo)
+		const service = await this.githubService.get(username, auth!.token);
+
+		return service.listBranch(username, repo)
 	}
 
 	@Get("/users/:username/repositories/dockerfiles")
@@ -58,7 +57,9 @@ export class Github {
 
 		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
 
-		return this.githubService.listReposWithDockerfile(username)
+		const service = await this.githubService.get(username, auth!.token);
+
+		return service.listReposWithDockerfile(username)
 	}
 
 
@@ -75,6 +76,8 @@ export class Github {
 
 		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
 
-		return this.gitService.getDockerfiles(username, repo, branch)
+		const service = await this.githubService.get(username, auth!.token);
+
+		return service.getDockerfiles(username, repo, branch)
 	}
 }

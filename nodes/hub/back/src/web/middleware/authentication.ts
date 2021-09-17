@@ -52,7 +52,8 @@ export class RequireLogin implements IMiddleware {
 
 			if (await this.authenticationService.isAuthenticated(token)) {
 				req.auth = {
-					username: await this.authenticationService.getUsername(token)
+					username: await this.authenticationService.getUsername(token),
+					token
 				}
 				return true
 			} else throw exception;
@@ -67,7 +68,8 @@ declare global {
 	namespace Express {
 		interface Request {
 			auth?: {
-				username: string
+				username: string,
+				token: string
 			}
 		}
 	}

@@ -2,7 +2,6 @@ import {readdir, rm, stat} from "fs/promises";
 import * as  os from "os";
 import simpleGit, {SimpleGit} from "simple-git/promise";
 import * as nodePath from "path"
-import {Services} from "../index";
 import {getLogger} from "../../utils/logger";
 import {Log} from "../../utils/decorators/logger";
 
@@ -12,20 +11,6 @@ export class GitService {
 
 	private static log = getLogger.service(GitService)
 
-
-	@Log(GitService.log)
-	async getDockerfiles(username: string, repo: string, branch: string) {
-
-		const remote = (await Services.github.remote.getRepositoryInfo(username, repo)).data.git_url
-
-		const folder = await this.initFolder(remote, branch)
-
-		const files = (await this.list(folder, folder)).filter(p => p.key.toLocaleLowerCase() === "dockerfile")
-
-		await rm(folder, {recursive: true, force: true})
-
-		return files;
-	}
 
 	@Log(GitService.log)
 	async list(path: string, origin: string) {

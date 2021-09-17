@@ -25,5 +25,10 @@ export class AuthenticationService {
 		return this.usersApi.client.getUserInfo("username", token, token).then(x => x.data);
 	}
 
+	@Log(AuthenticationService.log, {level: "debug", arguments: true})
+	public async getCredentials(username: string, token: string) {
+		return this.usersApi.client.getUserCredentials(username, token, token).then(x => x.data);
+	}
+
 
 }
