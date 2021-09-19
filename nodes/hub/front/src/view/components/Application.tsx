@@ -35,7 +35,7 @@ function Application() {
 	const actions = [
 		createDrawerAction(theme === "dark" ? "Light Mode" : "Dark Mode", {
 			icon: themeIcon,
-			onClick: () => dispatch(toggleTheme()),
+			onClick: toggleTheme,
 		}),
 	]
 

@@ -10,20 +10,16 @@ const prodAbilities: ProductionAgent["abilities"][number]["type"][] = ["docker-c
 export class AgentSubscribe {
 	@Required()
 	@Property()
-	uri: string;
+	uri!: string;
 }
 
 export class AgentModel extends AgentSubscribe implements Agent {
 	@Required()
-	@Property()
-	uri: string;
-
 	@Enum(...availabilities)
 	availability: "down" | "running" | "free";
 
 	@Property(Date)
 	lastUptime: Date;
-
 }
 
 
@@ -102,3 +98,5 @@ export class ProductionApplications {
 	apps: string[]
 
 }
+
+

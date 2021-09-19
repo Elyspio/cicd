@@ -25,11 +25,12 @@ export class DockerService {
 			docker.dockerfiles.map(df => {
 				const dockerfilePath = path.join(folder, df.path)
 				return new Promise<string>((resolve, reject) => {
-					const completedCommand = `${command.join(" ")} -f ${dockerfilePath} ${df.wd} -t ${docker.username}/${df.image}:${df.tag ?? "latest"} --push`;
+					const dockerFileDir = path.resolve(folder, df.wd);
+					const completedCommand = `${command.join(" ")} -f ${dockerfilePath} ${dockerFileDir} -t ${docker.username}/${df.image}:${df.tag ?? "latest"} --push`;
 					DockerService.log.info(`BuilderAgentService.build.${buildNumber}`, {completedCommand, df})
 					const splited = completedCommand.split(" ").filter(x => x.length > 0)
 					const process = spawn(splited[0], splited.slice(1), {
-						cwd: path.resolve(folder, df.wd)
+						cwd: dockerFileDir
 					});
 					let stderr = "";
 					process.stdout.on('data', (data) => {

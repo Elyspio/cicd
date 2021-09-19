@@ -9,6 +9,7 @@ import JobBuildDetail from "./jobs/detail/JobBuildDetail";
 import JobDeployDetail from "./jobs/detail/JobDeployDetail";
 import MappingAccordion from "./mappings/MappingAccordion";
 import MappingCreate from "./mappings/create/MappingCreate";
+import {MappingDisplay} from "./mappings/detail/MappingDisplay";
 
 
 const useStyles = makeStyles(() => ({
@@ -53,6 +54,7 @@ export function Automate() {
 			<Switch>
 				<Route exact path="/job/build/:id" render={({match: {params: {id}}}) => id && <JobBuildDetail id={Number.parseInt(id)}/>}/>
 				<Route exact path="/job/deploy/:id" render={({match: {params: {id}}}) => id && <JobDeployDetail id={Number.parseInt(id)}/>}/>
+				<Route exact path="/mapping/:id" render={({match: {params: {id}}}) => id && <MappingDisplay id={Number.parseInt(id)}/>}/>
 				<Route exact path={"/mapping/add"} component={MappingCreate}/>
 				<Route render={() => <Grid container justifyContent={"center"} alignItems={"center"} style={{height: "100%"}}>
 					<Grid item>
@@ -65,11 +67,8 @@ export function Automate() {
 	</Box>
 }
 
-export const reactRouterPath = {
-	getBuildPath(id: number) {
-		return `/job/build/${id}`
-	},
-	getDeployPath(id: number) {
-		return `/job/deploy/${id}`
-	}
+export const routes = {
+	getBuildPath: (id: number) => `/job/build/${id}`,
+	getDeployPath: (id: number) => `/job/deploy/${id}`,
+	getMappingPath: (id: number) => `/mapping/${id}`
 }

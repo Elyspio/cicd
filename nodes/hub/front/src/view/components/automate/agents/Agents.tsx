@@ -35,3 +35,4 @@ type ReduxTypes = ConnectedProps<typeof connector>;
 
 
 export default connector(Agents)
+

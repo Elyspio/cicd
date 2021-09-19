@@ -1,7 +1,7 @@
-import {BodyParams, Controller, Post,} from "@tsed/common";
+import {BodyParams, Controller, Get, Post,} from "@tsed/common";
 import {Name, Required, Returns} from "@tsed/schema";
 import {Services} from "../../../core/services";
-import {BuildConfigModel, DeployConfigModel} from "./model";
+import {BuildConfigModel, DeployConfigModel, HubConfig, MappingModel} from "./model";
 
 const examples: { build: BuildConfigModel } = {
 	build: {
@@ -47,6 +47,18 @@ export class AutomationController {
 	@Returns(204)
 	async deploy(@Required() @BodyParams(DeployConfigModel) config: DeployConfigModel) {
 		await Services.hub.agents.production.askDeploy(config);
-
 	}
+
+	@Get("/mappings")
+	@Returns(200, Array).Of(MappingModel)
+	getMappings() {
+		return Services.hub.config.mappings;
+	}
+
+	@Get("/config")
+	@Returns(200, HubConfig)
+	getConfig() {
+		return Services.hub.config;
+	}
+
 }

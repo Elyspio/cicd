@@ -1,0 +1,64 @@
+.MappingDisplay {
+
+	.MuiInputBase-root.Mui-disabled {
+		color: currentColor !important;
+	}
+
+	height: 100%;
+	width: 100%;
+
+	.title {
+		margin-top: 1rem;
+		text-align: center;
+
+		span {
+			font-size: large !important;
+		}
+	}
+
+	.FormControl {
+		min-width: 15rem;
+		margin-right: 3rem;
+	}
+
+	.selectEmpty {
+		margin-top: 2rem;
+	}
+
+	.Container {
+		margin-top: 4rem;
+		padding: 0 3rem;
+	}
+
+	h6 {
+		margin-bottom: 1rem;
+	}
+
+	.MuiFormControl-root {
+		margin-left: 0;
+	}
+
+
+	.image-container {
+		margin-bottom: 1.5rem;
+	}
+
+
+	.MuiFormControlLabel-label {
+		transform: scale(0.75);
+	}
+
+	.button-validate-container {
+		margin-top: 4rem;
+	}
+
+	.Container {
+
+	}
+
+	.no-logged {
+		height: 95%;
+		width: 100%;
+	}
+
+}

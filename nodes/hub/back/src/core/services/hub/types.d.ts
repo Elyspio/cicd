@@ -68,6 +68,12 @@ export type WithId<T> = T & { id: number }
 //export type Job<T extends Config> = ConfigWithId<T> & Timestamp
 export type Job<T extends Config> = WithId<Timestamp> & { config: T }
 
+type Mapping = {
+	build: BuildConfig,
+	deploy: DeployConfig,
+	id: number
+};
+
 export interface HubConfig {
 	// List of known agents
 	agents: {
@@ -85,11 +91,7 @@ export interface HubConfig {
 		deployments: Job<DeployConfig>[]
 	}
 	// Mapping between a build (Github + docker image build) and a deployment
-	mappings: {
-		build: BuildConfig,
-		deploy: DeployConfig,
-		id: number
-	}[]
+	mappings: Mapping[]
 }
 
 type Modify<T, R> = Omit<T, keyof R> & R;

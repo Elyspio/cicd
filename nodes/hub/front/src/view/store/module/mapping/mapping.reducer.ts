@@ -3,7 +3,7 @@ import {DockerfilesParams} from "../automation/types";
 import {initMappingData, setDockerFileForRepo} from "./mapping.action";
 
 
-const initialState: {
+export type MappingState = {
 	repositories: { [key in string]: { [key in string]: string[] } },
 	selected: {
 		repo?: string,
@@ -11,7 +11,8 @@ const initialState: {
 		dockerfiles: DockerfilesParams,
 	},
 	loading: boolean
-} = {
+};
+const initialState: MappingState = {
 	repositories: {},
 	selected: {
 		dockerfiles: [],

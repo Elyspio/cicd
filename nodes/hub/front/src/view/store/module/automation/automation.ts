@@ -1,38 +1,38 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {HubConfigExport} from "../../../../../../back/src/core/services/hub/types";
 import {events} from "../../../../config/events";
 import store from "../../index";
-import {Deployment, DockerfilesParams} from "./types";
+import {DockerfilesParams} from "./types";
 import {createSocket} from "../../../../core/services/cicd/cicd.socket";
+import {HubConfig, MappingModel} from "../../../../core/apis/backend/generated";
 
 
 const initialState: {
-	config?: HubConfigExport,
+	config?: HubConfig,
 	sources: {
 		repository?: string,
 		branch?: string,
 		username?: string
 	}
 	build: DockerfilesParams,
-	deployments: Deployment[],
+	mappings: MappingModel[],
 } = {
 	sources: {},
 	build: [],
-	deployments: []
+	mappings: []
 }
 
-type State = typeof initialState
+export type AutomationState = typeof initialState
 
 const slice = createSlice({
 	initialState,
 	reducers: {
-		updateConfig: (state, action: PayloadAction<State["config"]>) => {
+		updateConfig: (state, action: PayloadAction<AutomationState["config"]>) => {
 			state.config = action.payload
 		},
-		updateSources: ((state, action: PayloadAction<State["sources"]>) => {
+		updateSources: ((state, action: PayloadAction<AutomationState["sources"]>) => {
 			state.sources = action.payload;
 		}),
-		updateImages: ((state, action: PayloadAction<State["build"]>) => {
+		updateImages: ((state, action: PayloadAction<AutomationState["build"]>) => {
 			state.build = action.payload;
 		}),
 	},

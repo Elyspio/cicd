@@ -1,7 +1,6 @@
 import React from "react";
 import {AppBar, Box, Grid, ListItem, Paper, Tab, Typography} from "@material-ui/core";
 import './JobItem.scss'
-import {BuildJob, DeployJob} from "./Jobs";
 import {CustomChip} from "../../utils/chip/CustomChip";
 import {ReactComponent as GithubIcon} from "../icons/github.svg";
 import {ReactComponent as BranchIcon} from "../icons/git-branch.svg";
@@ -10,6 +9,10 @@ import {ReactComponent as DockerComposeIcon} from "../icons/docker-compose.svg";
 import Tabs from "@material-ui/core/Tabs";
 import {TabPanel} from "../../utils/tabs/TabPanel";
 import {makeStyles} from "@material-ui/core/styles";
+import {useAppDispatch} from "../../../store";
+import {push} from "connected-react-router";
+import {routes} from "../Automate";
+import {JobBuildModel, JobDeployModel} from "../../../../core/apis/backend/generated";
 
 type LineProps<Job> = {
 	data: Job
@@ -17,7 +20,7 @@ type LineProps<Job> = {
 
 const size = 12;
 
-function BuildLine({data}: LineProps<BuildJob>) {
+function BuildLine({data}: LineProps<JobBuildModel>) {
 
 	const remote = React.useMemo(() => {
 		const r = data.config.github.remote;
@@ -28,8 +31,10 @@ function BuildLine({data}: LineProps<BuildJob>) {
 		.map(x => `${x.image}:${x.tag ?? "latest"}`)
 		.join(" "), [data.config.docker.dockerfiles]);
 
+	const dispatch = useAppDispatch();
+	const onClick = React.useCallback(() => dispatch(push(routes.getBuildPath(data.id))), [dispatch, data.id])
 
-	return <Box className={"Line"}>
+	return <Box className={"Line"} onClick={onClick}>
 		<Grid container>
 			<Grid container item xs={12} spacing={1} direction={"column"}>
 				<CustomChip
@@ -53,7 +58,7 @@ function BuildLine({data}: LineProps<BuildJob>) {
 	</Box>
 }
 
-function DeployLine({data}: LineProps<DeployJob>) {
+function DeployLine({data}: LineProps<JobDeployModel>) {
 
 
 	return <Box className={"Line"}>
@@ -80,8 +85,8 @@ function DeployLine({data}: LineProps<DeployJob>) {
 
 export type JobItemProps = {
 	data: {
-		build?: BuildJob,
-		deploy?: DeployJob
+		build?: JobBuildModel,
+		deploy?: JobDeployModel
 	}
 }
 
@@ -106,6 +111,8 @@ export function JobItem(props: JobItemProps) {
 		setValue(newValue);
 	};
 
+	const dispatch = useAppDispatch();
+
 	const label = React.useMemo(() => {
 		if (!props.data.build) return "";
 		const date = new Date(props.data.build.createdAt);
@@ -123,13 +130,13 @@ export function JobItem(props: JobItemProps) {
 						value={value}
 						onChange={handleChange}
 						variant="fullWidth"
-						indicatorColor="secondary"
-						textColor="secondary"
+						indicatorColor="primary"
+						textColor="primary"
 						aria-label="icon label tabs example"
 					>
 						<Tab label={label} title={"hide"} disabled={value === 0}/>
-						<Tab label="BUILD"/>
-						<Tab label="DEPLOY"/>
+						<Tab label="BUILD" onClick={() => props.data.build && dispatch(push(routes.getBuildPath(props.data.build.id)))}/>
+						<Tab label="DEPLOY" onClick={() => props.data.deploy && dispatch(push(routes.getDeployPath(props.data.deploy.id)))}/>
 					</Tabs>
 				</AppBar>
 				<TabPanel value={value} index={1}>

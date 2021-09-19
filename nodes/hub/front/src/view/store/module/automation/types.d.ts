@@ -1,4 +1,5 @@
-import {BuildConfig, DeployConfig, ProductionAgent} from "../../../../../../back/src/core/services/hub/types";
+import {BuildConfig} from "../../../../../../back/src/core/services/hub/types";
+import {DeployConfigModel, ProductionAgentModelAdd} from "../../../../core/apis/backend/generated";
 
 export type DockerfilesParams = {
 	dockerfile: BuildConfig["docker"]["dockerfiles"][number] & { use: boolean },
@@ -7,6 +8,6 @@ export type DockerfilesParams = {
 
 
 export type Deployment = {
-	agent: ProductionAgent,
-	config: DeployConfig
+	agent: ProductionAgentModelAdd,
+	config: DeployConfigModel
 }

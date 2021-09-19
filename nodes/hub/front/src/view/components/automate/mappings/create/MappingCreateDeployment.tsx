@@ -2,13 +2,13 @@ import React from "react";
 import {Box, FormControl, IconButton, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import {useAppSelector} from "../../../../store";
-import {Deployment} from "../../../../store/module/automation/types";
 import {deepClone} from "../../../../../core/utils/data";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
 import {useInjection} from "inversify-react";
 import {DiKeysService} from "../../../../../core/di/di.keys.service";
 import {AutomateService} from "../../../../../core/services/cicd/automate.cicd.service";
 import {ProductionApplications} from "../../../../../core/apis/backend/generated";
+import {Deployment} from "../../../../store/module/automation/types";
 
 
 function MappingCreateDeployment() {
@@ -41,7 +41,7 @@ function MappingCreateDeployment() {
 	const onAgentSelection = React.useCallback((e, index) => {
 		const uri = e.target.value;
 		const dep = deployments[index];
-		dep.agent = agents.find(app => app.uri === uri)!!
+		dep.agent = agents.find(app => app.uri === uri)!
 	}, [agents, deployments])
 
 	const onDockerComposeSelection = React.useCallback((e, index) => {

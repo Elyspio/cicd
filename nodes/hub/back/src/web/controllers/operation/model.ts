@@ -1,5 +1,6 @@
 import {Description, Enum, Property, Required} from "@tsed/schema";
-import {BuildConfig, DeployConfig} from "../../../core/services/hub/types";
+import {BuildConfig, DeployConfig, HubConfigExport, Mapping} from "../../../core/services/hub/types";
+import {BuildAgentModelReturn, ProductionAgentModel} from "../automate/models";
 
 class DockerFileConfigModel {
 	@Description("Path to Dockerfile file")
@@ -91,3 +92,100 @@ export class DeployConfigModel implements DeployConfig {
 	@Description("URI of the production agent")
 	uri: string;
 }
+
+
+export class MappingModel implements Mapping {
+
+	@Property(BuildConfigModel)
+	@Required()
+	build: BuildConfig;
+
+	@Property(DeployConfigModel)
+	@Required()
+	deploy: DeployConfig;
+
+	@Property()
+	@Required()
+	id: number;
+
+}
+
+class HubAgentConfig {
+	@Property(ProductionAgentModel)
+	@Required()
+	production: ProductionAgentModel[];
+
+	@Property(BuildAgentModelReturn)
+	@Required()
+	builder: BuildAgentModelReturn[]
+}
+
+class JobBuildModel {
+	@Property()
+	@Required()
+	createdAt: Date
+
+	@Property()
+	startedAt: Date
+
+	@Property()
+	finishedAt: Date
+
+	@Property()
+	@Required()
+	id: number
+
+	@Property("T")
+	@Required()
+	config: BuildConfigModel
+}
+
+class JobDeployModel {
+	@Property()
+	@Required()
+	createdAt: Date
+
+	@Property()
+	startedAt: Date
+
+	@Property()
+	finishedAt: Date
+
+	@Property()
+	@Required()
+	id: number
+
+	@Property("T")
+	@Required()
+	config: DeployConfigModel
+}
+
+class JobsModel {
+	@Property(JobBuildModel)
+	@Required()
+	builds: JobBuildModel[];
+
+	@Property(JobDeployModel)
+	@Required()
+	deployments: JobDeployModel[]
+}
+
+export class HubConfig implements HubConfigExport {
+	@Property(HubAgentConfig)
+	@Required()
+	agents: HubAgentConfig
+
+	@Property(JobsModel)
+	@Required()
+	jobs: JobsModel;
+
+	@Property(MappingModel)
+	@Required()
+	mappings: MappingModel[];
+
+	@Property(JobsModel)
+	@Required()
+	queues: JobsModel
+}
+
+

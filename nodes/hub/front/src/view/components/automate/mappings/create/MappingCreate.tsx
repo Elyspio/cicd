@@ -1,7 +1,7 @@
 import React, {useCallback} from "react";
 import {Box, Button, Grid, Typography} from "@material-ui/core";
-import MappingCreateSources from "./MappingCreateSources";
 import "./MappingCreate.scss";
+import MappingCreateSources from "./MappingCreateSources";
 import MappingCreateImages from "./MappingCreateBuilds";
 import MappingCreateDeployment from "./MappingCreateDeployment";
 import {useAppSelector} from "../../../../store";

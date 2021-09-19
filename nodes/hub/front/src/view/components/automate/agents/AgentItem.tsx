@@ -1,19 +1,19 @@
 import React from "react";
 import {Chip, Grid, ListItem, ListItemIcon, Typography, useTheme} from "@material-ui/core";
-import {Agent} from "../../../../../../back/src/core/services/hub/types";
 import {StoreState, useAppSelector} from "../../../store";
 import {ReactComponent as BuildIcon} from "../icons/buildJob.svg"
 import {ReactComponent as DeployIcon} from "../icons/deploymentJob.svg"
 import "./AgentItem.scss"
+import {BuildAgentModelReturn, ProductionAgentModel} from "../../../../core/apis/backend/generated";
 
 type Props = {
-	data: Agent
+	data: BuildAgentModelReturn | ProductionAgentModel
 	type: "builder" | "production"
 }
 
 
 type StatusChipProps = {
-	status: Agent["availability"]
+	status: (BuildAgentModelReturn | ProductionAgentModel)["availability"]
 }
 
 function StatusChip({status}: StatusChipProps) {

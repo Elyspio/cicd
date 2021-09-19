@@ -1,16 +1,13 @@
 import React from "react";
 import List from "@material-ui/core/List";
 import {useAppSelector} from "../../../store";
-import {BuildConfig, DeployConfig, HubConfigExport, Job,} from "../../../../../../back/src/core/services/hub/types";
 import {JobItem} from "./JobItem";
+import {HubConfig, JobBuildModel, JobDeployModel} from "../../../../core/apis/backend/generated";
 
-type Queues = HubConfigExport["queues"];
-type JobsAlias = HubConfigExport["jobs"];
-
+type Queues = HubConfig["queues"];
+type JobsAlias = HubConfig["jobs"];
 
 type WithStatus<T> = T & { status: "waiting" | "done" | "working", }
-export type BuildJob = WithStatus<Job<BuildConfig>>
-export type DeployJob = WithStatus<Job<DeployConfig>>
 
 export function Jobs() {
 
@@ -22,9 +19,9 @@ export function Jobs() {
 
 	const data = React.useMemo(() => {
 
-		const ret = new Map<Job<any>["id"], { build?: BuildJob; deploy?: DeployJob; }>()
+		const ret = new Map<JobsAlias["builds"][number]["id"], { build?: WithStatus<JobBuildModel>; deploy?: WithStatus<JobDeployModel>; }>()
 
-		jobs.builds.forEach((job: Job<BuildConfig>) => {
+		jobs.builds.forEach((job) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -37,7 +34,7 @@ export function Jobs() {
 			})
 		})
 
-		queues.builds.forEach((job: Job<BuildConfig>) => {
+		queues.builds.forEach((job) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -50,7 +47,7 @@ export function Jobs() {
 			})
 		})
 
-		jobs.deployments.forEach((job: Job<DeployConfig>) => {
+		jobs.deployments.forEach((job) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -63,7 +60,7 @@ export function Jobs() {
 			})
 		})
 
-		queues.deployments.forEach((job: Job<DeployConfig>) => {
+		queues.deployments.forEach((job) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}

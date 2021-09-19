@@ -1,7 +1,7 @@
 import React from 'react';
 import {SimpleAccordion} from "../../utils/SimpleAccordion";
 import Mappings from "./Mappings";
-import {IconButton, Typography} from "@material-ui/core";
+import {Box, IconButton, Typography} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {connect, ConnectedProps} from "react-redux";
@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header = (props: { onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any }) => {
 	const classes = useStyles();
-	return <div className={classes.header}>
+	return <Box className={classes.header}>
 		<Typography>Mapping</Typography>
 		<div className={classes.btns}>
 			<IconButton color={"primary"} onClick={e => props.onClick(e)}><Add/></IconButton>
 		</div>
-	</div>
+	</Box>
 }
 
 

@@ -13,16 +13,10 @@ function MappingCreateSources() {
 	const [repository, setRepo] = React.useState<string | undefined>()
 	const [branches, setBranches] = React.useState(Array<string>())
 
-
 	const storeData = useAppSelector(s => s.mapping.repositories)
 	const repos = Object.keys(storeData).sort();
 
-
 	const dispatch = useAppDispatch();
-
-	// endregion
-
-	// region fetch
 
 	React.useEffect(() => {
 		if (repository) {

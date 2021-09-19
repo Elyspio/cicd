@@ -13,8 +13,9 @@ export default function Mappings() {
 
 	}, [storeMappings])
 
+
 	return <List className={"Mappings"}>
-		{mappings.map((agent, index) => <Mapping key={`M-${agent.id}`} data={agent}/>)}
+		{mappings.map((agent) => <Mapping key={`M-${agent.id}`} data={agent}/>)}
 	</List>
 }
 
