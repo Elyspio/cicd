@@ -41,7 +41,7 @@ RUN mkdir -p $HOME/.docker/cli-plugins && \
     chmod a+x $HOME/.docker/cli-plugins/docker-buildx
 
 
-RUN docker buildx create --use --name build --node build --driver-opt network=host
+RUN docker buildx create --use --name build --node build --driver-opt network=host && docker buildx inspect --bootstrap
 
 ADD ./deploy/build/agent-build/start.sh /start.sh
 
@@ -52,4 +52,4 @@ RUN cd /back && npm i --only=prod
 COPY --from=builder /back/build /back/build
 
 
-ENTRYPOINT ["sh", "/start.sh"]
+CMD ["bash", "/start.sh"]

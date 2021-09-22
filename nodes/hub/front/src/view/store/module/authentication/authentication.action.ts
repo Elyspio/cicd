@@ -45,8 +45,8 @@ function waitForLogin(page: Window) {
 }
 
 export const login = createAsyncThunk("authentication/login", async (_, {getState, dispatch}) => {
-	const {logged, username, credentials, settings} = (getState() as StoreState).authentication
-	if (!logged || username === undefined || credentials === undefined) {
+	const {logged, username, settings} = (getState() as StoreState).authentication
+	if (!logged || username === undefined) {
 		const toastId = toast.info("Connecting", {autoClose: false})
 		const page = authentication.openLoginPage();
 		if (page != null) {
@@ -59,19 +59,19 @@ export const login = createAsyncThunk("authentication/login", async (_, {getStat
 		}
 	} else {
 		console.info("You are already logged");
-		return {username, credentials, settings}
+		return {username, settings}
 	}
 })
 
 export const silentLogin = createAsyncThunk("authentication/silentLogin", async (_, {getState, dispatch}) => {
-	const {logged, username, credentials, settings} = (getState() as StoreState).authentication
-	if (!logged || username === undefined || credentials === undefined) {
+	const {logged, username, settings} = (getState() as StoreState).authentication
+	if (!logged || username === undefined) {
 		if (await authentication.isLogged()) {
 			dispatch(getUserInfos());
 		}
 	} else {
 		console.info("You are already logged");
-		return {username, credentials, settings}
+		return {username, settings}
 	}
 })
 
@@ -79,15 +79,14 @@ export const silentLogin = createAsyncThunk("authentication/silentLogin", async 
 export const getUserInfos = createAsyncThunk("authentication/getUserInfos", async () => {
 	const username = await authentication.getUsername();
 
-	const [settings, credentials] = await Promise.all([
+	const [settings] = await Promise.all([
 		authentication.getSettings(username),
-		authentication.getCredentials(username),
 	]);
 
 	localStorages.settings.store(undefined, settings);
 
 	AuthenticationEvents.emit("login", username);
-	return {settings, credentials, username}
+	return {settings, username}
 })
 
 export const logout = createAsyncThunk("authentication/logout", async () => {

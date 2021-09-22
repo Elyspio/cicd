@@ -43,12 +43,12 @@ function Application() {
 	if (logged) {
 		actions.push(createDrawerAction("Logout", {
 			icon: <Logout fill={"currentColor"}/>,
-			onClick: () => dispatch(logout()),
+			onClick: login,
 		}))
 	} else {
 		actions.push(createDrawerAction("Login", {
 			icon: <Login fill={"currentColor"}/>,
-			onClick: () => dispatch(login()),
+			onClick: login,
 		}))
 	}
 

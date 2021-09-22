@@ -1,14 +1,14 @@
 window.config = {
     endpoints: {
         core: {
-            api: "http://localhost:5000",
+            api: "https://elyspio.fr/cicd",
             socket: {
                 namespace: "/ws/front",
-                hostname: "localhost:5000",
+                hostname: "elyspio.fr",
             }
+        },
+        authentication: {
+            api: "https://elyspio.fr/authentication"
         }
-    },
-    authentication: {
-        api: "https://elyspio.fr/authentication"
     }
 }

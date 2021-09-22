@@ -1,9 +1,5 @@
+#!/usr/bin/env bash
 
-user=`echo $DOCKER_USER`
-password=`echo $DOCKER_PASSWORD`
-
-env
-
-docker login  -u $user -p $password
+docker login  -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
 
 node /back/build/app.js

@@ -8,12 +8,13 @@ import {useAppSelector} from "../../../../store";
 import {login} from "../../../../store/module/authentication/authentication.action";
 import {useDispatch} from "react-redux";
 
-function MappingCreate() {
+export function MappingCreate() {
 
 	const {logged, images} = useAppSelector(s => ({
 		images: s.mapping.selected.repo && s.mapping.selected.branch,
 		logged: s.authentication.logged
 	}))
+
 
 	const dispatch = useDispatch()
 
@@ -48,5 +49,4 @@ function MappingCreate() {
 	</div>
 }
 
-export default MappingCreate
 

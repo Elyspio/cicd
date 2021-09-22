@@ -6,7 +6,7 @@ import isDev = Helper.isDev;
 
 export const rootDir = path.resolve(__dirname, "..",);
 
-let frontPath = process.env.FRONT_PATH ?? path.resolve(rootDir, "..", "..", "..", "front", "build")
+const frontPath = process.env.FRONT_PATH ?? path.resolve(rootDir, "..", "..", "..", "front", "build")
 
 $log.info({frontPath, rootDir});
 
@@ -33,7 +33,7 @@ export const webConfig: Partial<TsED.Configuration> = {
 	],
 	statics: {
 		'/': [
-			{root: frontPath,}
+			{root: frontPath}
 		]
 	},
 	swagger: [{

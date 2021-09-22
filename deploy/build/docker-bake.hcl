@@ -7,36 +7,38 @@ group "default" {
 }
 
 target "hub" {
-	context = "../.."
+	context    = "../.."
 	dockerfile = "./deploy/build/hub/hub.dockerfile"
-	platforms = [
+	platforms  = [
 		"linux/amd64",
 		"linux/arm64"
 	]
-	tags = [
+	tags       = [
 		"elyspio/cicd:hub"
 	]
 }
 
 target "agent-build" {
-	context = "../.."
+	context    = "../.."
 	dockerfile = "./deploy/build/agent-build/agent-build.dockerfile"
-	platforms = [
+	platforms  = [
 		"linux/amd64",
 	]
-	tags = [
+	tags       = [
 		"elyspio/cicd:agent-build"
 	]
 }
 
 target "agent-prod" {
-	context = "../.."
+	context    = "../.."
 	dockerfile = "./deploy/build/agent-prod/agent-prod.dockerfile"
-	platforms = [
+	platforms  = [
 		"linux/amd64",
-		"linux/arm64"
+		"linux/arm64",
+		"linux/arm/v6",
+		"linux/arm/v7"
 	]
-	tags = [
+	tags       = [
 		"elyspio/cicd:agent-prod"
 	]
 }

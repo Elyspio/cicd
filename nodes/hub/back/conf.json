@@ -1,334 +1,334 @@
 {
-  "agents": {
-    "builder": [
-      {
-        "abilities": [
-          "docker",
-          "docker-buildx"
-        ],
-        "uri": "http://localhost:4200",
-        "availability": "free",
-        "lastUptime": "2021-09-19T14:31:59.292Z"
-      }
-    ],
-    "production": [
-      {
-        "abilities": [
-          {
-            "type": "docker-compose",
-            "dockerCompose": {
-              "isDockerComposeIntegratedToCli": true
-            }
-          },
-          {
-            "type": "docker"
-          }
-        ],
-        "folders": {
-          "apps": [
-            "./deployed"
-          ]
-        },
-        "uri": "http://localhost:4100",
-        "availability": "free",
-        "lastUptime": "2021-09-19T14:32:00.988Z"
-      }
-    ]
-  },
-  "jobs": {
-    "builds": [
-      {
-        "config": {
-          "github": {
-            "remote": "https://github.com/Elyspio/automatize-github-docker.git",
-            "branch": "test-unit"
-          },
-          "docker": {
-            "dockerfiles": [
-              {
-                "path": "Dockerfile",
-                "wd": "/",
-                "image": "cicd",
-                "tag": "test"
-              }
-            ],
-            "platforms": [
-              "linux/amd64",
-              "linux/arm64"
-            ],
-            "username": "elyspio"
-          }
-        },
-        "createdAt": "2021-09-11T21:17:34.283Z",
-        "finishedAt": "2021-09-11T21:18:11.173Z",
-        "startedAt": "2021-09-11T21:17:34.713Z",
-        "id": 3
-      },
-      {
-        "config": {
-          "github": {
-            "remote": "https://github.com/Elyspio/automatize-github-docker.git",
-            "branch": "test-unit"
-          },
-          "docker": {
-            "dockerfiles": [
-              {
-                "path": "Dockerfile",
-                "wd": "/",
-                "image": "cicd",
-                "tag": "test"
-              }
-            ],
-            "platforms": [
-              "linux/amd64",
-              "linux/arm64"
-            ],
-            "username": "elyspio"
-          }
-        },
-        "createdAt": "2021-09-11T21:18:25.085Z",
-        "finishedAt": "2021-09-11T21:18:38.364Z",
-        "startedAt": "2021-09-11T21:18:26.048Z",
-        "id": 4
-      },
-      {
-        "config": {
-          "github": {
-            "remote": "https://github.com/Elyspio/automatize-github-docker.git",
-            "branch": "test-unit"
-          },
-          "docker": {
-            "dockerfiles": [
-              {
-                "path": "Dockerfile",
-                "wd": "/",
-                "image": "cicd",
-                "tag": "test"
-              }
-            ],
-            "platforms": [
-              "linux/amd64",
-              "linux/arm64"
-            ],
-            "username": "elyspio"
-          }
-        },
-        "createdAt": "2021-09-11T21:19:36.105Z",
-        "finishedAt": "2021-09-11T21:19:42.182Z",
-        "startedAt": "2021-09-11T21:19:36.491Z",
-        "id": 5
-      },
-      {
-        "config": {
-          "github": {
-            "remote": "https://github.com/Elyspio/automatize-github-docker.git",
-            "branch": "test-unit"
-          },
-          "docker": {
-            "dockerfiles": [
-              {
-                "path": "Dockerfile",
-                "wd": "/",
-                "image": "cicd",
-                "tag": "test"
-              }
-            ],
-            "platforms": [
-              "linux/amd64",
-              "linux/arm64"
-            ],
-            "username": "elyspio"
-          }
-        },
-        "createdAt": "2021-09-11T22:11:27.987Z",
-        "finishedAt": "2021-09-11T22:11:35.423Z",
-        "startedAt": "2021-09-11T22:11:28.275Z",
-        "id": 0
-      },
-      {
-        "config": {
-          "github": {
-            "remote": "https://github.com/Elyspio/automatize-github-docker.git",
-            "branch": "test-unit"
-          },
-          "docker": {
-            "dockerfiles": [
-              {
-                "path": "Dockerfile",
-                "wd": "/",
-                "image": "cicd",
-                "tag": "test"
-              }
-            ],
-            "platforms": [
-              "linux/amd64",
-              "linux/arm64"
-            ],
-            "username": "elyspio"
-          }
-        },
-        "createdAt": "2021-09-11T22:11:59.723Z",
-        "finishedAt": "2021-09-11T22:12:04.060Z",
-        "startedAt": "2021-09-11T22:12:00.491Z",
-        "id": 1
-      },
-      {
-        "config": {
-          "github": {
-            "remote": "https://github.com/Elyspio/automatize-github-docker.git",
-            "branch": "test-unit"
-          },
-          "docker": {
-            "dockerfiles": [
-              {
-                "path": "Dockerfile",
-                "wd": "/",
-                "image": "cicd",
-                "tag": "test"
-              }
-            ],
-            "platforms": [
-              "linux/amd64",
-              "linux/arm64"
-            ],
-            "username": "elyspio"
-          }
-        },
-        "createdAt": "2021-09-11T22:12:07.666Z",
-        "finishedAt": "2021-09-11T22:12:11.691Z",
-        "startedAt": "2021-09-11T22:12:08.551Z",
-        "id": 2
-      }
-    ],
-    "deployments": [
-      {
-        "config": {
-          "docker": {
-            "compose": {
-              "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
-            }
-          },
-          "uri": "http://localhost:4200"
-        },
-        "createdAt": "2021-09-11T21:18:11.179Z",
-        "finishedAt": "2021-09-11T21:18:15.312Z",
-        "startedAt": "2021-09-11T21:18:11.948Z",
-        "id": 3
-      },
-      {
-        "config": {
-          "docker": {
-            "compose": {
-              "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
-            }
-          },
-          "uri": "http://localhost:4200"
-        },
-        "createdAt": "2021-09-11T21:18:38.387Z",
-        "finishedAt": "2021-09-11T21:18:44.360Z",
-        "startedAt": "2021-09-11T21:18:39.144Z",
-        "id": 4
-      },
-      {
-        "config": {
-          "docker": {
-            "compose": {
-              "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
-            }
-          },
-          "uri": "http://localhost:4200"
-        },
-        "createdAt": "2021-09-11T21:19:42.191Z",
-        "finishedAt": "2021-09-11T21:19:47.757Z",
-        "startedAt": "2021-09-11T21:19:42.535Z",
-        "id": 5
-      },
-      {
-        "config": {
-          "docker": {
-            "compose": {
-              "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
-            }
-          },
-          "uri": "http://localhost:4200"
-        },
-        "createdAt": "2021-09-11T22:11:35.432Z",
-        "finishedAt": "2021-09-11T22:11:39.050Z",
-        "startedAt": "2021-09-11T22:11:36.324Z",
-        "id": 0
-      },
-      {
-        "config": {
-          "docker": {
-            "compose": {
-              "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
-            }
-          },
-          "uri": "http://localhost:4200"
-        },
-        "createdAt": "2021-09-11T22:12:04.076Z",
-        "finishedAt": "2021-09-11T22:12:07.484Z",
-        "startedAt": "2021-09-11T22:12:04.533Z",
-        "id": 1
-      },
-      {
-        "config": {
-          "docker": {
-            "compose": {
-              "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
-            }
-          },
-          "uri": "http://localhost:4200"
-        },
-        "createdAt": "2021-09-11T22:12:11.700Z",
-        "finishedAt": "2021-09-11T22:12:15.292Z",
-        "startedAt": "2021-09-11T22:12:12.580Z",
-        "id": 2
-      }
-    ]
-  },
-  "queues": {
-    "deployments": {
-      "storage": [],
-      "capacity": 1000
-    },
-    "builds": {
-      "storage": [],
-      "capacity": 1000
-    }
-  },
-  "mappings": [
-    {
-      "build": {
-        "github": {
-          "remote": "https://github.com/Elyspio/automatize-github-docker.git",
-          "branch": "test-unit"
-        },
-        "docker": {
-          "dockerfiles": [
-            {
-              "path": "Dockerfile",
-              "wd": "/",
-              "image": "cicd",
-              "tag": "test"
-            }
-          ],
-          "platforms": [
-            "linux/amd64",
-            "linux/arm64"
-          ],
-          "username": "elyspio"
-        }
-      },
-      "deploy": {
-        "docker": {
-          "compose": {
-            "path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
-          }
-        },
-        "uri": "http://localhost:4200"
-      },
-      "id": 0
-    }
-  ]
+	"agents": {
+		"builder": [
+			{
+				"abilities": [
+					"docker",
+					"docker-buildx"
+				],
+				"uri": "http://localhost:4200",
+				"availability": "free",
+				"lastUptime": "2021-09-23T22:44:30.751Z"
+			}
+		],
+		"production": [
+			{
+				"abilities": [
+					{
+						"type": "docker-compose",
+						"dockerCompose": {
+							"isDockerComposeIntegratedToCli": true
+						}
+					},
+					{
+						"type": "docker"
+					}
+				],
+				"folders": {
+					"apps": [
+						"./deployed"
+					]
+				},
+				"uri": "http://localhost:4100",
+				"availability": "free",
+				"lastUptime": "2021-09-23T22:44:27.470Z"
+			}
+		]
+	},
+	"jobs": {
+		"builds": [
+			{
+				"config": {
+					"github": {
+						"remote": "https://github.com/Elyspio/automatize-github-docker.git",
+						"branch": "test-unit"
+					},
+					"docker": {
+						"dockerfiles": [
+							{
+								"path": "Dockerfile",
+								"wd": "/",
+								"image": "cicd",
+								"tag": "test"
+							}
+						],
+						"platforms": [
+							"linux/amd64",
+							"linux/arm64"
+						],
+						"username": "elyspio"
+					}
+				},
+				"createdAt": "2021-09-11T21:17:34.283Z",
+				"finishedAt": "2021-09-11T21:18:11.173Z",
+				"startedAt": "2021-09-11T21:17:34.713Z",
+				"id": 3
+			},
+			{
+				"config": {
+					"github": {
+						"remote": "https://github.com/Elyspio/automatize-github-docker.git",
+						"branch": "test-unit"
+					},
+					"docker": {
+						"dockerfiles": [
+							{
+								"path": "Dockerfile",
+								"wd": "/",
+								"image": "cicd",
+								"tag": "test"
+							}
+						],
+						"platforms": [
+							"linux/amd64",
+							"linux/arm64"
+						],
+						"username": "elyspio"
+					}
+				},
+				"createdAt": "2021-09-11T21:18:25.085Z",
+				"finishedAt": "2021-09-11T21:18:38.364Z",
+				"startedAt": "2021-09-11T21:18:26.048Z",
+				"id": 4
+			},
+			{
+				"config": {
+					"github": {
+						"remote": "https://github.com/Elyspio/automatize-github-docker.git",
+						"branch": "test-unit"
+					},
+					"docker": {
+						"dockerfiles": [
+							{
+								"path": "Dockerfile",
+								"wd": "/",
+								"image": "cicd",
+								"tag": "test"
+							}
+						],
+						"platforms": [
+							"linux/amd64",
+							"linux/arm64"
+						],
+						"username": "elyspio"
+					}
+				},
+				"createdAt": "2021-09-11T21:19:36.105Z",
+				"finishedAt": "2021-09-11T21:19:42.182Z",
+				"startedAt": "2021-09-11T21:19:36.491Z",
+				"id": 5
+			},
+			{
+				"config": {
+					"github": {
+						"remote": "https://github.com/Elyspio/automatize-github-docker.git",
+						"branch": "test-unit"
+					},
+					"docker": {
+						"dockerfiles": [
+							{
+								"path": "Dockerfile",
+								"wd": "/",
+								"image": "cicd",
+								"tag": "test"
+							}
+						],
+						"platforms": [
+							"linux/amd64",
+							"linux/arm64"
+						],
+						"username": "elyspio"
+					}
+				},
+				"createdAt": "2021-09-11T22:11:27.987Z",
+				"finishedAt": "2021-09-11T22:11:35.423Z",
+				"startedAt": "2021-09-11T22:11:28.275Z",
+				"id": 0
+			},
+			{
+				"config": {
+					"github": {
+						"remote": "https://github.com/Elyspio/automatize-github-docker.git",
+						"branch": "test-unit"
+					},
+					"docker": {
+						"dockerfiles": [
+							{
+								"path": "Dockerfile",
+								"wd": "/",
+								"image": "cicd",
+								"tag": "test"
+							}
+						],
+						"platforms": [
+							"linux/amd64",
+							"linux/arm64"
+						],
+						"username": "elyspio"
+					}
+				},
+				"createdAt": "2021-09-11T22:11:59.723Z",
+				"finishedAt": "2021-09-11T22:12:04.060Z",
+				"startedAt": "2021-09-11T22:12:00.491Z",
+				"id": 1
+			},
+			{
+				"config": {
+					"github": {
+						"remote": "https://github.com/Elyspio/automatize-github-docker.git",
+						"branch": "test-unit"
+					},
+					"docker": {
+						"dockerfiles": [
+							{
+								"path": "Dockerfile",
+								"wd": "/",
+								"image": "cicd",
+								"tag": "test"
+							}
+						],
+						"platforms": [
+							"linux/amd64",
+							"linux/arm64"
+						],
+						"username": "elyspio"
+					}
+				},
+				"createdAt": "2021-09-11T22:12:07.666Z",
+				"finishedAt": "2021-09-11T22:12:11.691Z",
+				"startedAt": "2021-09-11T22:12:08.551Z",
+				"id": 2
+			}
+		],
+		"deployments": [
+			{
+				"config": {
+					"docker": {
+						"compose": {
+							"path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
+						}
+					},
+					"uri": "http://localhost:4200"
+				},
+				"createdAt": "2021-09-11T21:18:11.179Z",
+				"finishedAt": "2021-09-11T21:18:15.312Z",
+				"startedAt": "2021-09-11T21:18:11.948Z",
+				"id": 3
+			},
+			{
+				"config": {
+					"docker": {
+						"compose": {
+							"path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
+						}
+					},
+					"uri": "http://localhost:4200"
+				},
+				"createdAt": "2021-09-11T21:18:38.387Z",
+				"finishedAt": "2021-09-11T21:18:44.360Z",
+				"startedAt": "2021-09-11T21:18:39.144Z",
+				"id": 4
+			},
+			{
+				"config": {
+					"docker": {
+						"compose": {
+							"path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
+						}
+					},
+					"uri": "http://localhost:4200"
+				},
+				"createdAt": "2021-09-11T21:19:42.191Z",
+				"finishedAt": "2021-09-11T21:19:47.757Z",
+				"startedAt": "2021-09-11T21:19:42.535Z",
+				"id": 5
+			},
+			{
+				"config": {
+					"docker": {
+						"compose": {
+							"path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
+						}
+					},
+					"uri": "http://localhost:4200"
+				},
+				"createdAt": "2021-09-11T22:11:35.432Z",
+				"finishedAt": "2021-09-11T22:11:39.050Z",
+				"startedAt": "2021-09-11T22:11:36.324Z",
+				"id": 0
+			},
+			{
+				"config": {
+					"docker": {
+						"compose": {
+							"path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
+						}
+					},
+					"uri": "http://localhost:4200"
+				},
+				"createdAt": "2021-09-11T22:12:04.076Z",
+				"finishedAt": "2021-09-11T22:12:07.484Z",
+				"startedAt": "2021-09-11T22:12:04.533Z",
+				"id": 1
+			},
+			{
+				"config": {
+					"docker": {
+						"compose": {
+							"path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
+						}
+					},
+					"uri": "http://localhost:4200"
+				},
+				"createdAt": "2021-09-11T22:12:11.700Z",
+				"finishedAt": "2021-09-11T22:12:15.292Z",
+				"startedAt": "2021-09-11T22:12:12.580Z",
+				"id": 2
+			}
+		]
+	},
+	"queues": {
+		"deployments": {
+			"storage": [],
+			"capacity": 1000
+		},
+		"builds": {
+			"storage": [],
+			"capacity": 1000
+		}
+	},
+	"mappings": [
+		{
+			"build": {
+				"github": {
+					"remote": "https://github.com/Elyspio/automatize-github-docker.git",
+					"branch": "test-unit"
+				},
+				"docker": {
+					"dockerfiles": [
+						{
+							"path": "Dockerfile",
+							"wd": "/",
+							"image": "cicd",
+							"tag": "test"
+						}
+					],
+					"platforms": [
+						"linux/amd64",
+						"linux/arm64"
+					],
+					"username": "elyspio"
+				}
+			},
+			"deploy": {
+				"docker": {
+					"compose": {
+						"path": "P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed\\test\\docker-compose.yml"
+					}
+				},
+				"uri": "http://localhost:4200"
+			},
+			"id": 0
+		}
+	]
 }

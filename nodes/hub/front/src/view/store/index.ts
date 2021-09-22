@@ -8,7 +8,7 @@ import {mappingReducer} from "./module/mapping/mapping.reducer";
 import {authenticationReducer} from "./module/authentication/authentication.reducer";
 
 
-export const history = createBrowserHistory({basename: process.env.NODE_ENV === "production" ? "/automate/cicd/hub/" : undefined});
+export const history = createBrowserHistory({basename: process.env.NODE_ENV === "production" ? "/cicd/" : undefined});
 
 
 export function configureCustomStore() {

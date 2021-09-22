@@ -7,3 +7,4 @@ logs
 nodes/agent-builder/build
 nodes/agent-prod/build
 nodes/**/build
+deploy/prod/.env
