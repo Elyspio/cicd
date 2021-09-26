@@ -27,9 +27,9 @@ function BuildLine({data}: LineProps<JobBuildModel>) {
 		return r.slice("https://github.com/".length, r.length - 4)
 	}, [data.config.github.remote])
 
-	const dockerfiles = React.useMemo(() => data.config.docker.dockerfiles
+	const dockerfiles = React.useMemo(() => data.config.dockerfiles?.dockerfiles
 		.map(x => `${x.image}:${x.tag ?? "latest"}`)
-		.join(" "), [data.config.docker.dockerfiles]);
+		.join(" "), [data.config.dockerfiles?.dockerfiles]);
 
 	const dispatch = useAppDispatch();
 	const onClick = React.useCallback(() => dispatch(push(routes.getBuildPath(data.id))), [dispatch, data.id])

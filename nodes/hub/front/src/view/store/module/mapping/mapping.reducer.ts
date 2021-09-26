@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {DockerfilesParams} from "../automation/types";
 import {initMappingData, setDockerFileForRepo} from "./mapping.action";
+import {BakeBuild} from "../../../../../../back/src/core/services/hub/types";
 
 
 export type MappingState = {
@@ -9,6 +10,7 @@ export type MappingState = {
 		repo?: string,
 		branch?: string,
 		dockerfiles: DockerfilesParams,
+		bake?: BakeBuild
 	},
 	loading: boolean
 };
@@ -31,6 +33,9 @@ const slice = createSlice({
 		},
 		setDockerfiles: (state, action: PayloadAction<DockerfilesParams>) => {
 			state.selected.dockerfiles = action.payload;
+		},
+		setBake: (state, action: PayloadAction<MappingState["selected"]["bake"]>) => {
+			state.selected.bake = action.payload;
 		}
 	},
 	name: "Mapping",
@@ -47,7 +52,6 @@ const slice = createSlice({
 			state.repositories[payload.repo][payload.branch] = [...state.repositories[payload.repo][payload.branch], ...payload.dockerfiles];
 		})
 
-
 		builder.addCase(initMappingData.pending, state => {
 			state.loading = true;
 		})
@@ -63,5 +67,5 @@ const slice = createSlice({
 });
 
 
-export const {reducer: mappingReducer, actions: {setSelectedRepo, setSelectedBranch, setDockerfiles}} = slice;
+export const {reducer: mappingReducer, actions: {setSelectedRepo, setSelectedBranch, setDockerfiles, setBake}} = slice;
 

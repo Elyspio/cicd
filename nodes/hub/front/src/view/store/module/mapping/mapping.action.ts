@@ -10,7 +10,7 @@ const authenticationService = container.get<AuthenticationService>(DiKeysService
 
 export const setDockerFileForRepo = createAction<{ repo: string, branch: string, dockerfiles: string[] }>("mapping/setDockerFileForRepo")
 
-export const initMappingData = createAsyncThunk("mapping/init", async (nothing, thunkAPI) => {
+export const initMappingData = createAsyncThunk("mapping/init", async (_, thunkAPI) => {
 	const username = await authenticationService.getUsername();
 
 	const repos = await githubService.getRepositoriesData(username);

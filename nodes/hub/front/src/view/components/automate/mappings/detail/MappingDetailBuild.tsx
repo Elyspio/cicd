@@ -5,13 +5,17 @@ import {MappingModel} from "../../../../../core/apis/backend/generated";
 
 
 type MappingDisplaySourceProps = {
-	data: MappingModel["build"]["docker"]
+	data: MappingModel["build"]["dockerfiles"]
 }
 
 const size = 16
 
 
-export function MappingDisplayBuild({data: {dockerfiles, platforms}}: MappingDisplaySourceProps) {
+export function MappingDisplayBuild({data}: MappingDisplaySourceProps) {
+
+	if (!data) return null;
+
+	const {dockerfiles, platforms} = data!
 
 	return <div className="MappingCreateImages">
 

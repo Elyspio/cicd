@@ -12,8 +12,17 @@
 		}
 	}
 
+
 	.FormControl {
 		min-width: 15rem;
+	}
+
+	.FormControl-NoMargin {
+		margin-right: 0 !important;
+	}
+
+	.FormControl-Margin,
+	.FormControl {
 		margin-right: 3rem;
 	}
 
@@ -55,6 +64,10 @@
 	.no-logged {
 		height: 95%;
 		width: 100%;
+	}
+
+	.tabs {
+		margin: 1rem;
 	}
 
 }

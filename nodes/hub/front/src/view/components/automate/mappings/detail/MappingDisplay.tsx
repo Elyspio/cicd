@@ -35,7 +35,7 @@ export function MappingDisplay({id}: MappingDisplayProps) {
 				<Typography variant={"overline"} align={"center"}>Mapping <Typography color={"secondary"} component={"span"}>{data.id}</Typography></Typography>
 			</Box>
 			<MappingDisplaySource data={data.build.github}/>
-			<MappingDisplayBuild data={data.build.docker}/>
+			<MappingDisplayBuild data={data.build.dockerfiles}/>
 			<MappingDisplayDeployment data={data.deploy}/>
 		</> : <>
 			<Grid container className={"no-logged"} justifyContent={"center"} alignItems={"center"} direction={"column"} spacing={4}>
