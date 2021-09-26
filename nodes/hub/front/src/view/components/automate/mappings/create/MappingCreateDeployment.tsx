@@ -1,6 +1,6 @@
 import React from "react";
-import {Box, FormControl, IconButton, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
-import {Add} from "@material-ui/icons";
+import {Box, FormControl, IconButton, InputLabel, MenuItem, Select, Typography} from "@mui/material";
+import {Add} from "@mui/icons-material";
 import {useAppSelector} from "../../../../store";
 import {deepClone} from "../../../../../core/utils/data";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
@@ -61,51 +61,53 @@ function MappingCreateDeployment() {
 
 	const size = 16
 
-	return <div className="MappingCreateDeployment">
-		<Box className={"Container"}>
-			<Typography variant={"h6"}>Deployments <IconButton color={"primary"} onClick={addDeployment}><Add/></IconButton></Typography>
-			{deployments.map((dep, index) => <div>
+	return (
+		<div className="MappingCreateDeployment">
+			<Box className={"Container"}>
+				<Typography variant={"h6"}>Deployments <IconButton color={"primary"} onClick={addDeployment} size="large"><Add/></IconButton></Typography>
+				{deployments.map((dep, index) => <div>
 
-				<FormControl className={"FormControl"}>
-					<InputLabel id={`mapping-create-image-platform-label-${index}`}>Agent</InputLabel>
-					<Select
-						labelId={`mapping-create-deployment-agent-label-${index}`}
-						id={`mapping-create-deployment-agent-input-${index}`}
-						value={dep.agent?.uri ?? ""}
-						onChange={(e) => onAgentSelection(e, index)}
-						renderValue={(value) => <div><DockerIcon width={size} height={size}/> {value}</div>}
-						required
-					>
-						{apps.map(app => <MenuItem
-							value={app.agent.uri}
-							key={app.agent.uri}>
-							{app.agent.uri}
-						</MenuItem>)}
-					</Select>
-				</FormControl>
+					<FormControl className={"FormControl"}>
+						<InputLabel id={`mapping-create-image-platform-label-${index}`}>Agent</InputLabel>
+						<Select
+							labelId={`mapping-create-deployment-agent-label-${index}`}
+							id={`mapping-create-deployment-agent-input-${index}`}
+							value={dep.agent?.uri ?? ""}
+							onChange={(e) => onAgentSelection(e, index)}
+							renderValue={(value) => <div><DockerIcon width={size} height={size}/> {value}</div>}
+							required
+						>
+							{apps.map(app => <MenuItem
+								value={app.agent.uri}
+								key={app.agent.uri}>
+								{app.agent.uri}
+							</MenuItem>)}
+						</Select>
+					</FormControl>
 
-				{dep.agent && <FormControl className={"FormControl"}>
-                    <InputLabel id={`mapping-create-image-platform-label-${index}`}>docker-compose.yml path</InputLabel>
-                    <Select
-                        labelId={`mapping-create-deployment-app-label-${index}`}
-                        id={`mapping-create-deployment-app-input-${index}`}
-                        value={dep.config?.docker?.compose?.path ?? ""}
-                        onChange={(e) => onDockerComposeSelection(e, index)}
-                        required
-                    >
-						{apps.find(app => dep.agent?.uri === app.agent.uri)?.apps?.map(app => <MenuItem
-							value={app}
-							key={app}>
-							{app}
-						</MenuItem>)}
-                    </Select>
-                </FormControl>}
+					{dep.agent && <FormControl className={"FormControl"}>
+                        <InputLabel id={`mapping-create-image-platform-label-${index}`}>docker-compose.yml path</InputLabel>
+                        <Select
+                            labelId={`mapping-create-deployment-app-label-${index}`}
+                            id={`mapping-create-deployment-app-input-${index}`}
+                            value={dep.config?.docker?.compose?.path ?? ""}
+                            onChange={(e) => onDockerComposeSelection(e, index)}
+                            required
+                        >
+							{apps.find(app => dep.agent?.uri === app.agent.uri)?.apps?.map(app => <MenuItem
+								value={app}
+								key={app}>
+								{app}
+							</MenuItem>)}
+                        </Select>
+                    </FormControl>}
 
-			</div>)}
+				</div>)}
 
-		</Box>
+			</Box>
 
-	</div>
+		</div>
+	);
 }
 
 

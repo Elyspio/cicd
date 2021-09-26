@@ -6,7 +6,7 @@ import {BuildConfigModel, DeployConfigModel, HubConfig, MappingModel} from "./mo
 const examples: { build: BuildConfigModel } = {
 	build: {
 		dockerfiles: {
-			dockerfiles: [{
+			files: [{
 				path: "Dockerfile",
 				wd: ".",
 				image: "automatize-github-docker",

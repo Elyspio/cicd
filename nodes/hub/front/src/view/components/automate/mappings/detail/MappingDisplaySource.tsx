@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, FormControl, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
+import {Box, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material";
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {MappingModel} from "../../../../../core/apis/backend/generated";

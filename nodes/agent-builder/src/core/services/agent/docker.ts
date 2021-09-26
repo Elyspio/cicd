@@ -12,7 +12,7 @@ export class DockerService {
 	@Log(DockerService.log)
 	async buildDockerfiles(buildNumber: number, {config: {dockerfiles: conf}, id}: BuildConfigModel, folder: string) {
 
-		const {dockerfiles, platforms, username} = conf!;
+		const {files, platforms, username} = conf!;
 
 		let command = ["docker"];
 		if (platforms.length > 0) {
@@ -23,7 +23,7 @@ export class DockerService {
 			command.push(` --platform ${platforms.join(",")}`)
 		}
 
-		return await Promise.all(dockerfiles.map(df => {
+		return await Promise.all(files.map(df => {
 			const dockerfilePath = path.join(folder, df.path)
 			return new Promise<string>((resolve, reject) => {
 				const dockerFileDir = path.resolve(folder, df.wd);

@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import {Box, Button, Grid, Typography} from "@material-ui/core";
+import {Box, Button, Grid, Typography} from "@mui/material";
 import "./MappingDisplay.scss";
 import {MappingDisplaySource} from "./MappingDisplaySource";
 import {MappingDisplayDeployment} from "./MappingDisplayDeployment";

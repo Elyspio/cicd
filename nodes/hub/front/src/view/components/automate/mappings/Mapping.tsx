@@ -1,6 +1,5 @@
 import React from "react";
-import {Button, ListItem, ListItemIcon, ListItemText, Paper} from "@material-ui/core";
-import {ReactComponent as LinkIcon} from "../icons/link.svg"
+import {Box, ListItem, ListItemText} from "@mui/material";
 import "./Mapping.scss"
 import {ReactComponent as GithubIcon} from "../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../icons/git-branch.svg";
@@ -15,41 +14,36 @@ type Props = {
 	data: HubConfig["mappings"][number]
 }
 
-const size = 16;
+const size = 20;
 
 export function Mapping({data: {build, deploy, id}}: Props) {
 
 	const remote = build.github.remote.slice(build.github.remote.lastIndexOf("/") + 1, build.github.remote.lastIndexOf(".git"))
 
 	const dispatch = useAppDispatch();
-
 	const changeUri = React.useCallback(() => dispatch(push(routes.getMappingPath(id))), [dispatch, id])
 
-	return <Button className={"Mapping"} onClick={changeUri} variant={"text"}>
-		<Paper elevation={2} className={"full-w MuiAppBar-colorDefault"}>
-			<ListItem>
-				<ListItemIcon className={"Avatar"}>
-					<LinkIcon width={size * 3} height={size * 3}/>
-				</ListItemIcon>
-				<ListItemText
-					primary={<div className={"info"}>
-						<CustomChip
-							icon={<GithubIcon height={size} width={size}/>}
-							label={remote}
-						/>
-						<CustomChip
-							icon={<GitBranchIcon height={size} width={size}/>}
-							label={build.github.branch}
-						/>
-						<CustomChip
-							icon={<DockerIcon height={size} width={size}/>}
-							label={deploy.uri}
-						/>
-					</div>}
-				/>
-			</ListItem>
-		</Paper>
-
-	</Button>
-
+	return <Box onClick={changeUri} className={"Mapping full-w MuiAppBar-colorDefault"}>
+		<ListItem>
+			<ListItemText
+				primary={<div className={"info"}>
+					<CustomChip
+						icon={<GithubIcon height={size} width={size}/>}
+						label={remote}
+						title={remote}
+					/>
+					<CustomChip
+						icon={<GitBranchIcon height={size} width={size}/>}
+						label={build.github.branch}
+						title={build.github.branch}
+					/>
+					<CustomChip
+						icon={<DockerIcon height={size} width={size}/>}
+						title={deploy.uri}
+						label={deploy.uri}
+					/>
+				</div>}
+			/>
+		</ListItem>
+	</Box>
 }

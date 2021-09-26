@@ -22,11 +22,17 @@ export class AutomateService {
 		job.startedAt = new Date();
 		Services.hub.jobs.builds.add(job);
 
+
+		const dockerfiles = job.config.dockerfiles ? {
+			username: job.config.dockerfiles.username,
+			dockerfiles: job.config.dockerfiles.files.map(df => ({image: df.image, path: df.path, tag: df.tag, wd: df.wd})),
+			platforms
+		} : undefined;
+
 		const {data: stdouts} = await new BuildAgentApi(undefined, agent.uri).buildAgentBuild({
 			config: {
-				...job.config, dockerfiles: job.config.dockerfiles ? {
-					...job.config.dockerfiles, platforms
-				} : undefined
+				...job.config,
+				dockerfiles
 			}, id: job.id
 
 		});

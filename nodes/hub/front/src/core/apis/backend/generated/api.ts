@@ -197,7 +197,7 @@ export interface DockerConfigModel {
 	 * @type {Array<DockerFileConfigModel>}
 	 * @memberof DockerConfigModel
 	 */
-	dockerfiles: Array<DockerFileConfigModel>;
+	files: Array<DockerFileConfigModel>;
 	/**
 	 * Platforms available for the future image
 	 * @type {Array<string>}

@@ -5,12 +5,20 @@ import './index.scss';
 import {connect, ConnectedProps, Provider} from "react-redux";
 import {history, store, StoreState} from "./view/store";
 import Application from "./view/components/Application";
-import {ThemeProvider} from '@material-ui/core';
+import {StyledEngineProvider, Theme, ThemeProvider} from '@mui/material';
 import {themes} from "./config/theme";
 import {ConnectedRouter} from "connected-react-router";
 import "./config/window.d.ts"
 import {Provider as DiProvider} from 'inversify-react';
 import {container} from "./core/di";
+
+
+declare module '@mui/styles/defaultTheme' {
+	// eslint-disable-next-line @typescript-eslint/no-empty-interface
+	interface DefaultTheme extends Theme {
+	}
+}
+
 
 const mapStateToProps = (state: StoreState) => ({theme: state.theme.current})
 
@@ -24,9 +32,11 @@ class Wrapper extends Component<ReduxTypes> {
 
 		return (
 			<DiProvider container={container}>
-				<ThemeProvider theme={theme}>
-					<Application/>
-				</ThemeProvider>
+				<StyledEngineProvider injectFirst>
+					<ThemeProvider theme={theme}>
+						<Application/>
+					</ThemeProvider>
+				</StyledEngineProvider>
 			</DiProvider>
 		);
 	}

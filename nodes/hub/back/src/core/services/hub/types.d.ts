@@ -34,7 +34,7 @@ interface Config {
 
 
 export type Dockerfiles = {
-	dockerfiles: {
+	files: {
 		path: string,
 		wd: string
 		image: string

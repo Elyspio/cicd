@@ -13,7 +13,7 @@ export const createSocket = () => {
 };
 
 function clearUrl(url: string): string {
-	return url.replace(/\/\//g, "/")
+	return url.replace(/\/\//g, "/");
 }
 
 

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography} from "@material-ui/core";
+import {Box, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography} from "@mui/material";
 import {deepClone} from "../../../../../core/utils/data";
 import {DockerfilesParams} from "../../../../store/module/automation/types";
 import {useAppSelector} from "../../../../store";
@@ -120,7 +120,7 @@ function MappingCreateBuildDockerfiles() {
 		syncChanges(clone)
 	}
 
-	function updatePlatform(event: React.ChangeEvent<{ value: any }>, index: number) {
+	function updatePlatform(event, index: number) {
 		const clone = deepClone(conf);
 		clone[index].platforms = event.target.value
 		syncChanges(clone)

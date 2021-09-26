@@ -33,7 +33,7 @@ export class DockerfilesConfigModel implements Dockerfiles {
 	@Description("Dockerfiles to build")
 	@Property(DockerFileConfigModel)
 	@Required()
-	dockerfiles: DockerFileConfigModel[]
+	files: DockerFileConfigModel[]
 
 	@Description("Platforms available for the future image")
 	@Required()
@@ -75,11 +75,11 @@ class GithubDockerModel implements BuildConfig {
 	@Required()
 	github: GithubConfigModel
 
-	@Description("Docker configuration")
+	@Description("Docker bake configuration")
 	@Property(DockerBakeModel)
 	bake?: DockerBakeModel
 
-	@Description("Docker configuration")
+	@Description("Dockerfiles configuration")
 	@Property(DockerfilesConfigModel)
 	dockerfiles?: DockerfilesConfigModel
 

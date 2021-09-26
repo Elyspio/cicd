@@ -1,5 +1,5 @@
 import React from "react";
-import {Chip, Grid, ListItem, ListItemIcon, Typography, useTheme} from "@material-ui/core";
+import {Chip, Grid, ListItem, ListItemIcon, Typography, useTheme} from "@mui/material";
 import {StoreState, useAppSelector} from "../../../store";
 import {ReactComponent as BuildIcon} from "../icons/buildJob.svg"
 import {ReactComponent as DeployIcon} from "../icons/deploymentJob.svg"

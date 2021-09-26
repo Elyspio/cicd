@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@material-ui/core";
+import {Box, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {ReactComponent as DockerIcon} from "../../icons/docker.svg";
 import {MappingModel} from "../../../../../core/apis/backend/generated";
 
@@ -15,13 +15,13 @@ export function MappingDisplayBuild({data}: MappingDisplaySourceProps) {
 
 	if (!data) return null;
 
-	const {dockerfiles, platforms} = data!
+	const {files, platforms} = data!
 
 	return <div className="MappingCreateImages">
 
 		<Box className={"Container"}>
 			<Typography variant={"h6"}>Docker (Images)</Typography>
-			{dockerfiles.map((dockerfile, index) => <Box className={"image-container"} key={dockerfile.path}>
+			{files.map((dockerfile, index) => <Box className={"image-container"} key={dockerfile.path}>
 					<FormControl className={"FormControl"}>
 						<InputLabel id={`mapping-create-image-dockerfile-label-${index}`}>Dockerfile</InputLabel>
 						<Select

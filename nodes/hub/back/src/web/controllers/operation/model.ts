@@ -27,7 +27,7 @@ class DockerConfigModel {
 	@Description("Dockerfiles to build")
 	@Property(DockerFileConfigModel)
 	@Required()
-	dockerfiles: DockerFileConfigModel[]
+	files: DockerFileConfigModel[]
 
 
 	@Description("Platforms available for the future image")
