@@ -20,17 +20,15 @@ export class GithubWrapper {
 	}
 
 	@Log(GithubWrapper.log)
-	async listReposWithDockerfile(username: string) {
+	async listReposWithAllData(username: string) {
 		const repos = await this.listRepos(username);
-		const ret = Array<{ repo: string, branch: string, dockerfiles: string[] }>();
+		const ret = Array<{ repo: string, branch: string } & GithubParseRepoTree>();
 
 		await Promise.all(repos.map(async (repo) => {
 			const branches = await this.listBranch(username, repo);
 			await Promise.all(branches.map(async branch => {
-				const dockerfiles = await this.getDockerfiles(username, repo, branch)
-				if (dockerfiles.length > 0) {
-					ret.push({repo, branch, dockerfiles})
-				}
+				const data = await this.parseRepoTree(username, repo, branch)
+				ret.push({repo, branch, ...data})
 			}))
 		}))
 
@@ -41,8 +39,7 @@ export class GithubWrapper {
 	@Log(GithubWrapper.log)
 	async listBranch(username: string, repo: string) {
 		const branches = await this.client.repos.listBranches({
-			owner: username,
-			repo
+			owner: username, repo
 		})
 		return branches.data.map(x => x.name)
 	}
@@ -53,23 +50,48 @@ export class GithubWrapper {
 	}
 
 	@Log(GithubWrapper.log)
-	async getDockerfiles(owner: string, repo: string, branch) {
+	async parseRepoTree(owner: string, repo: string, branch): Promise<GithubParseRepoTree> {
 
 		const parent = await this.client.git.getRef({
-			repo,
-			owner,
-			ref: `heads/${branch}`
+			repo, owner, ref: `heads/${branch}`
 		});
 		const latestCommit = await this.client.git.getCommit({owner, repo, commit_sha: parent.data.object.sha});
 		const {data: tree} = await this.client.git.getTree({
-			repo,
-			tree_sha: latestCommit.data.tree.sha,
-			owner,
-			recursive: "true",
+			repo, tree_sha: latestCommit.data.tree.sha, owner, recursive: "true",
 
 		});
 
-		return tree.tree.filter(node => node.path && node.path.toLowerCase().includes("dockerfile")).map(node => node.path!)
+		const bake = tree.tree.find(node => node.path && node.path.toLowerCase().includes("docker-bake.hcl"))?.path;
+		const dockerfiles = tree.tree.filter(node => node.path && node.path.toLowerCase().includes("dockerfile")).map(node => node.path!);
+		const nodes = tree.tree.filter(node => node.path).map(node => {
+			let type: NodeType | "unknown" = "unknown";
+			switch (node.type) {
+				case "tree":
+					type = "folder"
+					break;
+				case "blob":
+					type = "file";
+					break;
+			}
+
+			return ({
+				type: type as NodeType,
+				path: node.path!
+			});
+		});
+		// const directories = new Set<string>();
+		// [...nodes].forEach(node => directories.add(path.basename(node.path)))
+		// nodes.push(...[...directories].map(folder => ({type: "folder" as NodeType, path: folder})));
+
+		return {
+			dockerfiles, bake, nodes
+		}
 
 	}
+}
+
+export type NodeType = "folder" | "file"
+
+type GithubParseRepoTree = {
+	dockerfiles: string[], bake?: string, nodes: { type: NodeType, path: string }[]
 }

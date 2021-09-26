@@ -1,5 +1,5 @@
 import {BuildAgent, BuildConfig, DeployConfig, Job, ProductionAgent} from "./types";
-import {BuildAgentApi, DockerConfigModelPlatformsEnum} from "../../apis/agent-build";
+import {BuildAgentApi, DockerfilesConfigModelPlatformsEnum} from "../../apis/agent-build";
 import {Services} from "../index";
 import {DeployJobModel, ProductionAgentApi} from "../../apis/agent-prod";
 import {Log} from "../../utils/decorators/logger";
@@ -11,10 +11,10 @@ export class AutomateService {
 	@Log(AutomateService.log)
 	public async build(agent: BuildAgent, job: Job<BuildConfig>) {
 
-		const platforms = Array<DockerConfigModelPlatformsEnum>();
-		for (const key in DockerConfigModelPlatformsEnum) {
-			if (job.config.docker.platforms.some(p => p === DockerConfigModelPlatformsEnum[key])) {
-				platforms.push(DockerConfigModelPlatformsEnum[key])
+		const platforms = Array<DockerfilesConfigModelPlatformsEnum>();
+		for (const key in DockerfilesConfigModelPlatformsEnum) {
+			if (job.config.dockerfiles?.platforms.some(p => p === DockerfilesConfigModelPlatformsEnum[key])) {
+				platforms.push(DockerfilesConfigModelPlatformsEnum[key])
 			}
 		}
 
@@ -24,13 +24,10 @@ export class AutomateService {
 
 		const {data: stdouts} = await new BuildAgentApi(undefined, agent.uri).buildAgentBuild({
 			config: {
-				...job.config,
-				docker: {
-					...job.config.docker,
-					platforms
-				}
-			},
-			id: job.id
+				...job.config, dockerfiles: job.config.dockerfiles ? {
+					...job.config.dockerfiles, platforms
+				} : undefined
+			}, id: job.id
 
 		});
 

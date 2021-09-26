@@ -1,5 +1,5 @@
 import {Description, Enum, Property, Required} from "@tsed/schema";
-import {BuildConfig, DeployConfig, HubConfigExport, Mapping} from "../../../core/services/hub/types";
+import {BakeBuild, BuildConfig, DeployConfig, HubConfigExport, Mapping} from "../../../core/services/hub/types";
 import {BuildAgentModelReturn, ProductionAgentModel} from "../automate/models";
 
 class DockerFileConfigModel {
@@ -41,6 +41,14 @@ class DockerConfigModel {
 
 }
 
+
+export class DockerBakeModel implements BakeBuild {
+	@Required()
+	@Property()
+	bakeFilePath: string
+}
+
+
 class GithubConfigModel {
 	@Description("Url of the repo")
 	@Required()
@@ -63,10 +71,15 @@ export class BuildConfigModel implements BuildConfig {
 	@Required()
 	github: GithubConfigModel
 
-	@Description("Docker configuration")
-	@Required()
+	@Description("dockerfiles to build")
 	@Property(DockerConfigModel)
-	docker: DockerConfigModel
+	dockerfiles?: DockerConfigModel
+
+	@Description("bake file to use")
+	@Property(DockerBakeModel)
+	bake?: DockerBakeModel
+
+
 }
 
 

@@ -129,7 +129,13 @@ export interface BuildConfigModel {
 	 * @type {DockerConfigModel}
 	 * @memberof BuildConfigModel
 	 */
-	docker: DockerConfigModel;
+	dockerfiles?: DockerConfigModel;
+	/**
+	 *
+	 * @type {DockerBakeModel}
+	 * @memberof BuildConfigModel
+	 */
+	bake?: DockerBakeModel;
 }
 
 /**
@@ -150,6 +156,20 @@ export interface DeployConfigModel {
 	 * @memberof DeployConfigModel
 	 */
 	uri: string;
+}
+
+/**
+ *
+ * @export
+ * @interface DockerBakeModel
+ */
+export interface DockerBakeModel {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof DockerBakeModel
+	 */
+	bakeFilePath: string;
 }
 
 /**
@@ -285,44 +305,6 @@ export interface FoldersModel {
 	 * @memberof FoldersModel
 	 */
 	apps: Array<string>;
-}
-
-/**
- *
- * @export
- * @interface Forbidden
- */
-export interface Forbidden {
-	/**
-	 * The error name
-	 * @type {string}
-	 * @memberof Forbidden
-	 */
-	name: string;
-	/**
-	 * An error message
-	 * @type {string}
-	 * @memberof Forbidden
-	 */
-	message: string;
-	/**
-	 * The status code of the exception
-	 * @type {number}
-	 * @memberof Forbidden
-	 */
-	status: number;
-	/**
-	 * A list of related errors
-	 * @type {Array<GenericError>}
-	 * @memberof Forbidden
-	 */
-	errors?: Array<GenericError>;
-	/**
-	 * The stack trace (only in development mode)
-	 * @type {string}
-	 * @memberof Forbidden
-	 */
-	stack?: string;
 }
 
 /**
@@ -841,6 +823,35 @@ export interface Pusher {
 /**
  *
  * @export
+ * @interface RepoNodeModel
+ */
+export interface RepoNodeModel {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof RepoNodeModel
+	 */
+	path: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof RepoNodeModel
+	 */
+	type: RepoNodeModelTypeEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RepoNodeModelTypeEnum {
+	Folder = 'folder',
+	File = 'file'
+}
+
+/**
+ *
+ * @export
  * @interface RepoWithBranchModel
  */
 export interface RepoWithBranchModel {
@@ -862,6 +873,18 @@ export interface RepoWithBranchModel {
 	 * @memberof RepoWithBranchModel
 	 */
 	dockerfiles: Array<string>;
+	/**
+	 *
+	 * @type {Array<RepoNodeModel>}
+	 * @memberof RepoWithBranchModel
+	 */
+	nodes: Array<RepoNodeModel>;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof RepoWithBranchModel
+	 */
+	bake?: string;
 }
 
 /**

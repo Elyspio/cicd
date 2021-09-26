@@ -55,36 +55,15 @@ export interface BuildConfigModel {
 /**
  *
  * @export
- * @interface DockerConfigModel
+ * @interface DockerBakeModel
  */
-export interface DockerConfigModel {
-	/**
-	 * Dockerfiles to build
-	 * @type {Array<DockerFileConfigModel>}
-	 * @memberof DockerConfigModel
-	 */
-	dockerfiles: Array<DockerFileConfigModel>;
-	/**
-	 * Platforms available for the future image
-	 * @type {Array<string>}
-	 * @memberof DockerConfigModel
-	 */
-	platforms: Array<DockerConfigModelPlatformsEnum>;
+export interface DockerBakeModel {
 	/**
 	 *
 	 * @type {string}
-	 * @memberof DockerConfigModel
+	 * @memberof DockerBakeModel
 	 */
-	username: string;
-}
-
-/**
- * @export
- * @enum {string}
- */
-export enum DockerConfigModelPlatformsEnum {
-	Arm64 = 'linux/arm64',
-	Amd64 = 'linux/amd64'
+	bakeFilePath: string;
 }
 
 /**
@@ -117,6 +96,41 @@ export interface DockerFileConfigModel {
 	 * @memberof DockerFileConfigModel
 	 */
 	tag?: string;
+}
+
+/**
+ *
+ * @export
+ * @interface DockerfilesConfigModel
+ */
+export interface DockerfilesConfigModel {
+	/**
+	 * Dockerfiles to build
+	 * @type {Array<DockerFileConfigModel>}
+	 * @memberof DockerfilesConfigModel
+	 */
+	dockerfiles: Array<DockerFileConfigModel>;
+	/**
+	 * Platforms available for the future image
+	 * @type {Array<string>}
+	 * @memberof DockerfilesConfigModel
+	 */
+	platforms: Array<DockerfilesConfigModelPlatformsEnum>;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof DockerfilesConfigModel
+	 */
+	username: string;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum DockerfilesConfigModelPlatformsEnum {
+	Arm64 = 'linux/arm64',
+	Amd64 = 'linux/amd64'
 }
 
 /**
@@ -159,10 +173,16 @@ export interface GithubDockerModel {
 	github: GithubConfigModel;
 	/**
 	 *
-	 * @type {DockerConfigModel}
+	 * @type {DockerBakeModel}
 	 * @memberof GithubDockerModel
 	 */
-	docker: DockerConfigModel;
+	bake?: DockerBakeModel;
+	/**
+	 *
+	 * @type {DockerfilesConfigModel}
+	 * @memberof GithubDockerModel
+	 */
+	dockerfiles?: DockerfilesConfigModel;
 }
 
 /**

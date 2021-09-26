@@ -1,8 +1,5 @@
 import {Description, Enum, Property, Required} from "@tsed/schema";
-import {BuildConfig, Job, Timestamp} from "../../../../../hub/back/src/core/services/hub/types";
-
-
-type Docker = BuildConfig["docker"]
+import {BakeBuild, BuildConfig, Dockerfiles, Job, Timestamp} from "../../../../../hub/back/src/core/services/hub/types";
 
 
 class JobModel {
@@ -32,7 +29,7 @@ class DockerFileConfigModel {
 	tag: string
 }
 
-class DockerConfigModel implements Docker {
+export class DockerfilesConfigModel implements Dockerfiles {
 	@Description("Dockerfiles to build")
 	@Property(DockerFileConfigModel)
 	@Required()
@@ -47,6 +44,13 @@ class DockerConfigModel implements Docker {
 	@Property()
 	username: string
 }
+
+export class DockerBakeModel implements BakeBuild {
+	@Required()
+	@Property()
+	bakeFilePath: string
+}
+
 
 class GithubConfigModel {
 	@Description("Url of the repo")
@@ -72,9 +76,13 @@ class GithubDockerModel implements BuildConfig {
 	github: GithubConfigModel
 
 	@Description("Docker configuration")
-	@Required()
-	@Property(DockerConfigModel)
-	docker: DockerConfigModel
+	@Property(DockerBakeModel)
+	bake?: DockerBakeModel
+
+	@Description("Docker configuration")
+	@Property(DockerfilesConfigModel)
+	dockerfiles?: DockerfilesConfigModel
+
 
 }
 

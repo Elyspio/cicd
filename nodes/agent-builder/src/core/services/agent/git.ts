@@ -19,11 +19,7 @@ export class GitService {
 		} catch (e) {
 		}
 
-
 		await git.clone(remote, localPath, ["-b", branch])
-		// if(commit) {
-		//     await git.checkout(commit)
-		// }
 		hudSocket.emit("jobs-stdout", id, `Repository ${remote} cloned at ${localPath}`)
 		return localPath;
 	}

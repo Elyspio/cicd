@@ -33,22 +33,29 @@ interface Config {
 }
 
 
+export type Dockerfiles = {
+	dockerfiles: {
+		path: string,
+		wd: string
+		image: string
+		tag?: string
+	}[],
+	username: string,
+	platforms: string[]
+};
+
+export type BakeBuild = {
+	bakeFilePath: string
+};
+
 export interface BuildConfig extends Config {
 	github: {
 		remote: string,
 		branch: string,
 		commit?: string
 	},
-	docker: {
-		dockerfiles: {
-			path: string,
-			wd: string
-			image: string
-			tag?: string
-		}[],
-		username: string,
-		platforms: string[]
-	}
+	dockerfiles?: Dockerfiles,
+	bake?: BakeBuild
 }
 
 export interface DeployConfig extends Config, Pick<ProductionAgent, "uri"> {

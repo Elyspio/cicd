@@ -49,6 +49,7 @@ export class Github {
 
 	@Get("/users/:username/repositories/dockerfiles")
 	@Returns(200, Array).Of(RepoWithBranchModel)
+	@Returns(Unauthorized.STATUS, Unauthorized).Description("if usernames in cookies and in uri do not match")
 	@Protected()
 	async getDockerRepository(
 		@PathParams("username") username: string,
@@ -59,7 +60,7 @@ export class Github {
 
 		const service = await this.githubService.get(username, auth!.token);
 
-		return service.listReposWithDockerfile(username)
+		return service.listReposWithAllData(username)
 	}
 
 
@@ -78,6 +79,6 @@ export class Github {
 
 		const service = await this.githubService.get(username, auth!.token);
 
-		return service.getDockerfiles(username, repo, branch)
+		return service.parseRepoTree(username, repo, branch)
 	}
 }
