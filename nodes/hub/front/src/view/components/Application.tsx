@@ -59,7 +59,7 @@ function Application() {
 	})
 
 
-	return <Box className={"Application"} bgcolor={"background.default"}>
+	return <Box className={`Application ${theme}`} bgcolor={"background.default"}>
 		{drawer}
 	</Box>;
 }

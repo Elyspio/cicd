@@ -5,6 +5,8 @@ import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {useAppDispatch, useAppSelector} from "../../../../store";
 import {setSelectedBranch, setSelectedRepo} from "../../../../store/module/mapping/mapping.reducer";
 
+const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+
 
 function MappingCreateSources() {
 
@@ -14,7 +16,28 @@ function MappingCreateSources() {
 	const [branches, setBranches] = React.useState(Array<string>())
 
 	const storeData = useAppSelector(s => s.mapping.repositories)
-	const repos = Object.keys(storeData).sort();
+	const repos = React.useMemo(() => {
+		const keys = Object.keys(storeData).sort();
+		const letterDones = Array<string>();
+		const components = Array<{ value: string, disabled: boolean }>();
+
+		keys.forEach(k => {
+			const firstLetter = k[0];
+			if (!letterDones.includes(firstLetter)) {
+				letterDones.push(firstLetter);
+				components.push({value: firstLetter, disabled: true})
+			}
+			components.push({value: k, disabled: false});
+		})
+
+
+		return components.sort((a, b) => {
+			const ka = camelToSnakeCase(a.value);
+			const kb = camelToSnakeCase(b.value);
+			return ka.localeCompare(kb);
+		});
+
+	}, [storeData])
 
 	const dispatch = useAppDispatch();
 
@@ -63,7 +86,7 @@ function MappingCreateSources() {
 					renderValue={(value) => <div><GithubIcon width={size} height={size}/> {value}</div>}
 
 				>
-					{repos.map(repo => <MenuItem key={repo} value={repo}>{repo}</MenuItem>)}
+					{repos.map(repo => <MenuItem disabled={repo.disabled} key={repo.value} value={repo.value}>{repo.disabled ? repo.value.toUpperCase() : repo.value}</MenuItem>)}
 					{loading && <MenuItem key={"loading"} disabled={true}><CircularProgress size={16}/></MenuItem>}
 				</Select>
 			</FormControl>

@@ -16,7 +16,7 @@ export class GithubWrapper {
 	@Log(GithubWrapper.log)
 	async listRepos(username: string) {
 		const repos = await this.client.repos.listForUser({username})
-		return repos.data.map(x => x.name);
+		return repos.data.filter(repo => !repo.archived && !repo.disabled).map(x => x.name);
 	}
 
 	@Log(GithubWrapper.log)

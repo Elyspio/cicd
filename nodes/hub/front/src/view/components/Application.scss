@@ -7,10 +7,6 @@
 	overflow-x: hidden;
 
 
-	.content {
-	}
-
-
 	.Drawer {
 		height: 100%;
 	}
@@ -23,6 +19,27 @@
 		height: 100%;
 	}
 
+	&.light::-webkit-scrollbar {
+		width: 12px;
+		background-color: #efefef;
+	}
+
+	::-webkit-scrollbar-thumb {
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+		background-color: #e6e6e6;
+	}
+
+	&.dark {
+		::-webkit-scrollbar {
+			width: 12px;
+			background-color: #151515;
+		}
+
+		::-webkit-scrollbar-thumb {
+			-webkit-box-shadow: inset 0 0 3px rgb(0, 0, 0);
+			background-color: #232323;
+		}
+	}
 }
 
 
