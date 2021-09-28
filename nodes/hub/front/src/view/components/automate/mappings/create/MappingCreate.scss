@@ -2,6 +2,8 @@
 
 	height: 100%;
 	width: 100%;
+	max-height: 100%;
+	overflow-y: auto;
 
 	.title {
 		margin-top: 1rem;
@@ -46,6 +48,31 @@
 
 	.image-container {
 		margin-bottom: 1.5rem;
+		margin-top: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		margin-left: -1.5rem;
+		padding-left: 1.5rem;
+
+		width: 100%;
+
+		&.selected {
+			background-color: rgba(255, 255, 255, .05);
+		}
+
+		.tuple {
+			display: grid;
+			grid-template-columns: 5fr 4fr;
+			background-color: rgba(255, 255, 255, 0);
+
+		}
+
+		.triple {
+			display: grid;
+			grid-template-columns: 3fr 2fr 1fr 2fr;
+			background-color: rgba(255, 255, 255, 0);
+		}
+
 	}
 
 
@@ -54,7 +81,8 @@
 	}
 
 	.button-validate-container {
-		margin-top: 4rem;
+		margin-top: 3rem;
+		padding-bottom: 1rem;
 	}
 
 	.Container {
@@ -68,6 +96,10 @@
 
 	.tabs {
 		margin: 1rem;
+	}
+
+	.MappingCreateBuildBake {
+		width: 33.8rem;
 	}
 
 }

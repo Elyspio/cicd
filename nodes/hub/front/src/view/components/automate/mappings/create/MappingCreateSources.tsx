@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material";
+import {Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography} from "@mui/material";
 import {ReactComponent as GithubIcon} from "../../icons/github.svg";
 import {ReactComponent as GitBranchIcon} from "../../icons/git-branch.svg";
 import {useAppDispatch, useAppSelector} from "../../../../store";
@@ -60,12 +60,12 @@ function MappingCreateSources() {
 
 	const size = 16
 
-	const onRepoChange = (e) => {
-		setRepo(e.target.value as string);
+	const onRepoChange = (e: SelectChangeEvent) => {
+		setRepo(e.target.value);
 	};
 
-	const onBranchChange = (e) => {
-		setBranch(e.target.value as string);
+	const onBranchChange = (e: SelectChangeEvent) => {
+		setBranch(e.target.value);
 	};
 
 	const loading = useAppSelector(s => s.mapping.loading);
@@ -82,6 +82,7 @@ function MappingCreateSources() {
 					id="mapping-create-repository-input"
 					value={repository ?? ""}
 					required
+					label={"Repository"}
 					onChange={onRepoChange}
 					renderValue={(value) => <div><GithubIcon width={size} height={size}/> {value}</div>}
 
@@ -94,6 +95,7 @@ function MappingCreateSources() {
 			<FormControl className={"FormControl"}>
 				<InputLabel id="mapping-create-branch-label">Branch</InputLabel>
 				<Select
+					label={"Branch"}
 					labelId="mapping-create-branch-label"
 					id="mapping-create-branch-input"
 					value={branch ?? ""}

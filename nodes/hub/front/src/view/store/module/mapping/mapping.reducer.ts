@@ -1,16 +1,17 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {DockerfilesParams} from "../automation/types";
 import {initMappingData, setDockerFileForRepo} from "./mapping.action";
-import {BakeBuild} from "../../../../../../back/src/core/services/hub/types";
+import {DockerBakeModel, RepoWithBranchModel} from "../../../../core/apis/backend/generated";
 
 
 export type MappingState = {
-	repositories: { [key in string]: { [key in string]: string[] } },
+	repositories: Record<RepoWithBranchModel["repo"], Record<RepoWithBranchModel["branch"], Omit<RepoWithBranchModel, "branch" | "repo">>>,
 	selected: {
 		repo?: string,
 		branch?: string,
 		dockerfiles: DockerfilesParams,
-		bake?: BakeBuild
+		bake?: DockerBakeModel,
+		type: "bake" | "dockerfiles"
 	},
 	loading: boolean
 };
@@ -18,6 +19,7 @@ const initialState: MappingState = {
 	repositories: {},
 	selected: {
 		dockerfiles: [],
+		type: "dockerfiles"
 	},
 	loading: false
 }
@@ -25,6 +27,9 @@ const initialState: MappingState = {
 const slice = createSlice({
 	initialState,
 	reducers: {
+		setSelectedType: (state, action: PayloadAction<MappingState["selected"]["type"]>) => {
+			state.selected.type = action.payload
+		},
 		setSelectedRepo: (state, action: PayloadAction<string>) => {
 			state.selected.repo = action.payload;
 		},
@@ -45,11 +50,11 @@ const slice = createSlice({
 				state.repositories[payload.repo] = {};
 			}
 
-			if (state.repositories[payload.repo][payload.branch] === undefined) {
-				state.repositories[payload.repo][payload.branch] = [];
+			state.repositories[payload.repo][payload.branch] = {
+				nodes: payload.nodes,
+				dockerfiles: payload.dockerfiles,
+				bake: payload.bake
 			}
-
-			state.repositories[payload.repo][payload.branch] = [...state.repositories[payload.repo][payload.branch], ...payload.dockerfiles];
 		})
 
 		builder.addCase(initMappingData.pending, state => {
@@ -67,5 +72,5 @@ const slice = createSlice({
 });
 
 
-export const {reducer: mappingReducer, actions: {setSelectedRepo, setSelectedBranch, setDockerfiles, setBake}} = slice;
+export const {reducer: mappingReducer, actions: {setSelectedRepo, setSelectedBranch, setDockerfiles, setBake, setSelectedType}} = slice;
 

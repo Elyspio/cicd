@@ -12,7 +12,7 @@ export function ToastOn(on: ToastOnParam, config?: { concatArgs?: boolean | stri
 			const originalMethod = descriptor.value;
 
 			// Redefine the method value with our own
-			descriptor.value = function (...args) {
+			descriptor.value = function (...args: any[]) {
 				// Execute the method with its initial context and arguments
 				// Return value is stored into a variable instead of being passed to the execution stack
 				function handleError(err: Error) {
@@ -48,7 +48,7 @@ export function ToastOn(on: ToastOnParam, config?: { concatArgs?: boolean | stri
 					let result = originalMethod.apply(this, args);
 
 					if (typeof result === "object" && typeof result.then === "function") {
-						const promise = result.then((ret) => {
+						const promise = result.then((ret: any) => {
 							handleSuccess()
 							return ret;
 						});

@@ -22,7 +22,8 @@ export function MappingDisplayDeployment({data: {uri, docker}}: MappingDisplayDe
 					id={`mapping-create-deployment-agent-input-${uri}-${docker.compose?.path}`}
 					value={uri}
 					renderValue={(value) => <div><DockerIcon width={size} height={size}/> {value}</div>}
-					disabled
+					label={"Agent"}
+					inputProps={{readOnly: true}}
 				>
 					<MenuItem
 						value={uri}
@@ -38,7 +39,8 @@ export function MappingDisplayDeployment({data: {uri, docker}}: MappingDisplayDe
                     labelId={`mapping-create-deployment-app-label-${uri}-${docker.compose?.path}`}
                     id={`mapping-create-deployment-app-input-${uri}-${docker.compose?.path}`}
                     value={docker.compose.path}
-                    disabled
+                    label={"docker-compose.yml path"}
+                    inputProps={{readOnly: true}}
                 >
                     <MenuItem
                         value={docker.compose.path}

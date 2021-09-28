@@ -13,5 +13,5 @@ export function deepClone<T extends object>(obj: T, hash = new WeakMap()): T {
 						: Object.create(null);
 	hash.set(obj, result);
 	return Object.assign(result, ...Object.keys(obj).map(
-		key => ({[key]: deepClone(obj[key], hash)})));
+		key => ({[key]: deepClone((obj as any)[key], hash)})));
 }

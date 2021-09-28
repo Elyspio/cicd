@@ -8,7 +8,7 @@
 				],
 				"uri": "http://localhost:4200",
 				"availability": "free",
-				"lastUptime": "2021-09-27T21:36:12.768Z"
+				"lastUptime": "2021-09-28T19:38:44.048Z"
 			}
 		],
 		"production": [
@@ -31,7 +31,7 @@
 				},
 				"uri": "http://localhost:4100",
 				"availability": "free",
-				"lastUptime": "2021-09-27T21:36:13.237Z"
+				"lastUptime": "2021-09-28T19:38:41.165Z"
 			}
 		]
 	},

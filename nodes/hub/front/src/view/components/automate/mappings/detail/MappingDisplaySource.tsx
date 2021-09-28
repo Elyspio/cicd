@@ -27,7 +27,8 @@ export function MappingDisplaySource({data: {branch, remote}}: MappingDisplaySou
 					id="mapping-create-repository-input"
 					value={repo}
 					renderValue={(value) => <div><GithubIcon width={size} height={size}/> {value}</div>}
-					disabled
+					inputProps={{readOnly: true}}
+					label={"Repository"}
 				>
 					{<MenuItem key={repo} value={repo}>{repo}</MenuItem>}
 				</Select>
@@ -40,7 +41,8 @@ export function MappingDisplaySource({data: {branch, remote}}: MappingDisplaySou
 					id="mapping-create-branch-input"
 					value={branch}
 					renderValue={(value) => <div><GitBranchIcon width={size} height={size}/> {value}</div>}
-					disabled
+					inputProps={{readOnly: true}}
+					label={"Branch"}
 				>
 					<MenuItem key={branch} value={branch}>{branch}</MenuItem>
 				</Select>

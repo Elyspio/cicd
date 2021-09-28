@@ -29,7 +29,8 @@ export function MappingDisplayBuild({data}: MappingDisplaySourceProps) {
 							id={`mapping-create-image-dockerfile-input-${index}`}
 							value={dockerfile.path}
 							renderValue={(value) => <div><DockerIcon width={size} height={size}/> {value}</div>}
-							disabled
+							label={"Docker (Images)"}
+							inputProps={{readOnly: true}}
 						>
 							<MenuItem key={dockerfile.path} value={dockerfile.path}>{dockerfile.path}</MenuItem>
 						</Select>
@@ -40,7 +41,8 @@ export function MappingDisplayBuild({data}: MappingDisplaySourceProps) {
 						id={`mapping-create-image-dockerfile-input-${index}`}
 						label="Working directory"
 						value={dockerfile.wd}
-						disabled
+						inputProps={{readOnly: true}}
+
 					/>
 
 
@@ -49,7 +51,8 @@ export function MappingDisplayBuild({data}: MappingDisplaySourceProps) {
 						id={`mapping-create-image-input-${index}`}
 						label="Image name"
 						value={`${dockerfile.image}:${dockerfile.tag}`}
-						disabled
+						inputProps={{readOnly: true}}
+
 					/>
 
 					<FormControl className={"FormControl"}>
@@ -59,7 +62,8 @@ export function MappingDisplayBuild({data}: MappingDisplaySourceProps) {
 							id={`mapping-create-image-platform-input-${index}`}
 							value={platforms}
 							multiple
-							disabled
+							label={"Platforms"}
+							inputProps={{readOnly: true}}
 						>
 							{platforms.map(repo => <MenuItem key={repo} value={repo}>{repo}</MenuItem>)}
 						</Select>

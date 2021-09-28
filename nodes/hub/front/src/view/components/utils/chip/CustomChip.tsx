@@ -32,12 +32,11 @@ type Props = {
 export function CustomChip({onClick, icon, label, title, color, className, fontWeight, item}: Props) {
 
 	const appTheme = useTheme();
+	const theme = useAppSelector(s => s.theme.current)
 
-
-	const theme = useAppSelector(s => s.theme.current);
 
 	if (!color) {
-		color = appTheme.palette.grey[theme]
+		color = appTheme.palette.grey["400"] as string
 	}
 
 	const style: CSSProperties = theme === "light" ? {

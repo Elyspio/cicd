@@ -122,7 +122,7 @@ export function JobItem(props: JobItemProps) {
 
 	const [value, setValue] = React.useState(0);
 
-	const handleChange = (event, newValue) => {
+	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		event.preventDefault();
 		event.stopPropagation();
 		setValue(newValue);
