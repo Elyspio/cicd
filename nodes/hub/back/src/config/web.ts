@@ -38,8 +38,19 @@ export const webConfig: Partial<TsED.Configuration> = {
 	},
 	swagger: [{
 		path: "/swagger",
+		options: {
+			urls: [
+				{name: process.env.NODE_ENV?.toString() ?? "development", url:  isDev() ? "http://localhost:4000/swagger/swagger.json":  "https://elyspio.fr/cicd/swagger/swagger.json"},
+			]
+		},
+		spec: {
+		    servers: [
+			    {description: process.env.NODE_ENV?.toString() ?? "development", url: isDev() ? "http://localhost:4000": "https://elyspio.fr/cicd"},
+		    ]
+		},
 		specVersion: "3.0.1",
-		operationIdPattern: "%m"
+		operationIdPattern: "%m",
+
 	}],
 	socketIO: {
 		cors: {

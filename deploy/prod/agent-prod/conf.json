@@ -1,11 +1,18 @@
 {
 	"abilities": [
-		"docker-compose",
-		"docker"
+		{
+			"type": "docker-compose",
+			"dockerCompose": {
+				"isDockerComposeIntegratedToCli": false
+			}
+		},
+		{
+			"type": "docker"
+		}
 	],
 	"folders": {
 		"apps": [
-			"./deployed"
+			"/apps"
 		]
 	}
 }

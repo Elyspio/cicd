@@ -18,6 +18,8 @@ export const webConfig: Partial<TsED.Configuration> = {
 	],
 	swagger: [{
 		path: "/swagger",
-		specVersion: "3.0.1"
+		specVersion: "3.0.1",
+		operationIdPattern: "%m",
+
 	}]
 };

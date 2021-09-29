@@ -16,7 +16,6 @@ export class AutomationController {
 	@Returns(200, Array).Of(String)
 	async getApps(@Req() request: Request) {
 		const {cookies, headers} = request;
-		$log.info(request);
 		const conf = await Services.storage.read<ProductionAgentModelAdd>(files.conf)
 
 		const cookieAuth = cookies[authorization_cookie_token]

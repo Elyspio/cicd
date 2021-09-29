@@ -15,14 +15,13 @@ services:
             - "traefik.docker.network=external"
             - "traefik.http.middlewares.cicd-hud-prefix.stripprefix.prefixes=/cicd"
             - "traefik.http.routers.cicd-hud.middlewares=cicd-hud-prefix@docker"
-            - "traefik.http.routers.cicd-hud.rule=PathPrefix(`/cicd`)"
+            - "traefik.http.routers.cicd-hud.rule=PathPrefix(`/cicd/`)"
             - "traefik.http.services.cicd-hud.loadbalancer.server.port=4000"
             - "traefik.http.routers.cicd-hud.entrypoints=external"
         networks:
             cicd:
             external:
             authentication:
-
 
     agent-build:
         image: elyspio/cicd:agent-build
@@ -48,8 +47,9 @@ services:
         image: elyspio/cicd:agent-prod
         restart: unless-stopped
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-            - ./agent-build/conf.json:/back/conf.json
+            - "/var/run/docker.sock:/var/run/docker.sock"
+            - "./agent-prod/conf.json:/back/conf.json"
+            - "/apps/own:/apps"
         environment:
             HTTP_PORT: 4000
             CONF_PATH: /back/conf.json
