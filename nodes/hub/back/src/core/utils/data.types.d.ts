@@ -1,12 +1,12 @@
 export interface ICollection<T> {
-	storage: T[]
+	storage: T[];
 
 	size(): number;
 }
 
 
 export interface IQueue<T> extends ICollection<T> {
-	storage: T[]
+	storage: T[];
 
 	enqueue(item: T): void;
 
@@ -14,7 +14,7 @@ export interface IQueue<T> extends ICollection<T> {
 
 	size(): number;
 
-	isEmpty(): boolean
+	isEmpty(): boolean;
 }
 
 export interface IStack<T> extends ICollection<T> {
@@ -28,5 +28,5 @@ export interface IStack<T> extends ICollection<T> {
 }
 
 export interface Comparable<T> {
-	equal(obj: T): boolean
+	equal(obj: T): boolean;
 }

@@ -1,8 +1,8 @@
 export const events = {
 	job: {
-		new: "JOB_NEW"
+		new: "JOB_NEW",
 	},
 	config: {
-		update: "CONFIG_UPDATE"
-	}
-}
+		update: "CONFIG_UPDATE",
+	},
+};

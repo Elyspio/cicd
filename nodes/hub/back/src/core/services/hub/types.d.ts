@@ -1,4 +1,4 @@
-import {IQueue as Queue} from "../../utils/data.types";
+import { IQueue as Queue } from "../../utils/data.types";
 
 
 export interface ProductionAgentModelAddAbilities {
@@ -11,15 +11,15 @@ export interface ProductionAgentModelAddAbilitiesDockerCompose {
 }
 
 export interface ProductionAgent extends Agent {
-	abilities: ProductionAgentModelAddAbilities[]
+	abilities: ProductionAgentModelAddAbilities[];
 	folders: {
 		apps: string[]
-	}
+	};
 }
 
 
 export interface BuildAgent extends Agent {
-	abilities: ("docker" | "docker-buildx")[]
+	abilities: ("docker" | "docker-buildx")[];
 }
 
 export interface Agent {
@@ -63,7 +63,7 @@ export interface DeployConfig extends Config, Pick<ProductionAgent, "uri"> {
 		compose?: {
 			path: string
 		}
-	}
+	};
 }
 
 export type Timestamp = {

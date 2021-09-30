@@ -1,9 +1,9 @@
-import {getLogger} from "../../utils/logger";
-import {Octokit} from "@octokit/rest";
-import {Log} from "../../utils/decorators/logger";
+import { getLogger } from "../../utils/logger";
+import { Octokit } from "@octokit/rest";
+import { Log } from "../../utils/decorators/logger";
 
 export class GithubWrapper {
-	private static log = getLogger.service(GithubWrapper)
+	private static log = getLogger.service(GithubWrapper);
 
 	private client: Octokit;
 
@@ -15,7 +15,7 @@ export class GithubWrapper {
 
 	@Log(GithubWrapper.log)
 	async listRepos(username: string) {
-		const repos = await this.client.repos.listForUser({username})
+		const repos = await this.client.repos.listForUser({ username });
 		return repos.data.filter(repo => !repo.archived && !repo.disabled).map(x => x.name);
 	}
 
@@ -27,10 +27,10 @@ export class GithubWrapper {
 		await Promise.all(repos.map(async (repo) => {
 			const branches = await this.listBranch(username, repo);
 			await Promise.all(branches.map(async branch => {
-				const data = await this.parseRepoTree(username, repo, branch)
-				ret.push({repo, branch, ...data})
-			}))
-		}))
+				const data = await this.parseRepoTree(username, repo, branch);
+				ret.push({ repo, branch, ...data });
+			}));
+		}));
 
 		return ret;
 
@@ -39,24 +39,24 @@ export class GithubWrapper {
 	@Log(GithubWrapper.log)
 	async listBranch(username: string, repo: string) {
 		const branches = await this.client.repos.listBranches({
-			owner: username, repo
-		})
-		return branches.data.map(x => x.name)
+			owner: username, repo,
+		});
+		return branches.data.map(x => x.name);
 	}
 
 	@Log(GithubWrapper.log)
 	async getRepositoryInfo(username: string, repo: string) {
-		return this.client.repos.get({repo, owner: username})
+		return this.client.repos.get({ repo, owner: username });
 	}
 
 	@Log(GithubWrapper.log)
 	async parseRepoTree(owner: string, repo: string, branch): Promise<GithubParseRepoTree> {
 
 		const parent = await this.client.git.getRef({
-			repo, owner, ref: `heads/${branch}`
+			repo, owner, ref: `heads/${branch}`,
 		});
-		const latestCommit = await this.client.git.getCommit({owner, repo, commit_sha: parent.data.object.sha});
-		const {data: tree} = await this.client.git.getTree({
+		const latestCommit = await this.client.git.getCommit({ owner, repo, commit_sha: parent.data.object.sha });
+		const { data: tree } = await this.client.git.getTree({
 			repo, tree_sha: latestCommit.data.tree.sha, owner, recursive: "true",
 
 		});
@@ -67,7 +67,7 @@ export class GithubWrapper {
 			let type: NodeType | "unknown" = "unknown";
 			switch (node.type) {
 				case "tree":
-					type = "folder"
+					type = "folder";
 					break;
 				case "blob":
 					type = "file";
@@ -76,7 +76,7 @@ export class GithubWrapper {
 
 			return ({
 				type: type as NodeType,
-				path: node.path!
+				path: node.path!,
 			});
 		});
 		// const directories = new Set<string>();
@@ -84,8 +84,8 @@ export class GithubWrapper {
 		// nodes.push(...[...directories].map(folder => ({type: "folder" as NodeType, path: folder})));
 
 		return {
-			dockerfiles, bake, nodes
-		}
+			dockerfiles, bake, nodes,
+		};
 
 	}
 }

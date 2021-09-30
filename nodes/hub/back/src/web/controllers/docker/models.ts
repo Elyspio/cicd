@@ -1,4 +1,4 @@
-import {Enum} from "@tsed/schema";
+import { Enum } from "@tsed/schema";
 
 export enum Preset {
 	webFront = "web-front",
@@ -7,6 +7,6 @@ export enum Preset {
 
 export class GetDockerFileModel {
 	@Enum(Preset)
-	preset: Preset[]
+	preset: Preset[];
 }
 

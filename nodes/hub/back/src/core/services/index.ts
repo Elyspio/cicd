@@ -1,8 +1,8 @@
-import {AuthenticationService} from "./authentication.service";
-import {StorageService} from "./storage";
-import {DockerService} from "./docker/docker";
-import {HubService} from "./hub/service";
-import {GitService} from "./github/git";
+import { AuthenticationService } from "./authentication.service";
+import { StorageService } from "./storage";
+import { DockerService } from "./docker/docker";
+import { HubService } from "./hub/service";
+import { GitService } from "./github/git";
 
 export const Services = {
 	authentication: new AuthenticationService(),
@@ -10,6 +10,6 @@ export const Services = {
 	hub: new HubService(),
 	docker: new DockerService(),
 	github: {
-		local: new GitService()
-	}
-}
+		local: new GitService(),
+	},
+};

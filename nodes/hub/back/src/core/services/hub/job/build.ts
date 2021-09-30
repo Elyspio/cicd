@@ -1,5 +1,5 @@
-import {BuildConfig, Job} from "../types";
-import {JobBase, JobIdentifier, JobMethods} from "./base";
+import { BuildConfig, Job } from "../types";
+import { JobBase, JobIdentifier, JobMethods } from "./base";
 
 
 type BuildJob = Job<BuildConfig>;
@@ -14,7 +14,7 @@ export class JobBuild extends JobBase implements JobMethods<BuildJob> {
 		return super.baseUpdate<BuildJob>(agent, newAgent, "builds");
 	}
 
-	public delete(agent: JobIdentifier<BuildJob>,) {
+	public delete(agent: JobIdentifier<BuildJob>) {
 		super.baseDelete<BuildJob>(agent, "builds");
 	}
 

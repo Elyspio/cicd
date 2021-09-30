@@ -1,6 +1,6 @@
-import {BuildAgent, BuildConfig} from "../types";
-import {AgentIdentifier, AgentMethods, Base} from "./base";
-import {Services} from "../../index";
+import { BuildAgent, BuildConfig } from "../types";
+import { AgentIdentifier, AgentMethods, Base } from "./base";
+import { Services } from "../../index";
 
 
 export class AgentBuilder extends Base implements AgentMethods<BuildAgent> {
@@ -14,7 +14,7 @@ export class AgentBuilder extends Base implements AgentMethods<BuildAgent> {
 		return super.baseUpdate<BuildAgent>(agent, newAgent, "builder");
 	}
 
-	public delete(agent: AgentIdentifier<BuildAgent>,) {
+	public delete(agent: AgentIdentifier<BuildAgent>) {
 		super.baseDelete<BuildAgent>(agent, "builder");
 	}
 
@@ -23,18 +23,18 @@ export class AgentBuilder extends Base implements AgentMethods<BuildAgent> {
 	}
 
 	public keepAlive(agent: AgentIdentifier<BuildAgent>): void {
-		this.update(agent, {availability: "free", lastUptime: new Date()});
+		this.update(agent, { availability: "free", lastUptime: new Date() });
 	}
 
 	public async askBuild(config: BuildConfig) {
 		const id = super.nextId;
-		Services.hub.config.queues.builds.enqueue({config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id})
+		Services.hub.config.queues.builds.enqueue({ config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id });
 		await super.save();
 		return id;
 	}
 
 	public get(uri: AgentIdentifier<BuildAgent>) {
-		return Services.hub.config.agents.builder.find(a => a.uri === uri)
+		return Services.hub.config.agents.builder.find(a => a.uri === uri);
 	}
 
 

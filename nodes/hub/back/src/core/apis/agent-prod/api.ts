@@ -13,8 +13,8 @@
  */
 
 
-import {Configuration} from './configuration';
-import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
+import { Configuration } from "./configuration";
+import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import {
@@ -27,10 +27,10 @@ import {
 	setBearerAuthToObject,
 	setOAuthToObject,
 	setSearchParams,
-	toPathString
-} from './common';
+	toPathString,
+} from "./common";
 // @ts-ignore
-import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from './base';
+import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
 /**
  *
@@ -104,7 +104,7 @@ export interface DockerField {
  * AutomateApi - axios parameter creator
  * @export
  */
-export const AutomateApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AutomateApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 * Fetch the list of docker-compose.yml files
@@ -120,29 +120,29 @@ export const AutomateApiAxiosParamCreator = function (configuration?: Configurat
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
 				options: localVarRequestOptions,
 			};
 		},
-	}
+	};
 };
 
 /**
  * AutomateApi - functional programming interface
  * @export
  */
-export const AutomateApiFp = function (configuration?: Configuration) {
-	const localVarAxiosParamCreator = AutomateApiAxiosParamCreator(configuration)
+export const AutomateApiFp = function(configuration?: Configuration) {
+	const localVarAxiosParamCreator = AutomateApiAxiosParamCreator(configuration);
 	return {
 		/**
 		 * Fetch the list of docker-compose.yml files
@@ -153,15 +153,15 @@ export const AutomateApiFp = function (configuration?: Configuration) {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.automateGetApps(options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
-	}
+	};
 };
 
 /**
  * AutomateApi - factory interface
  * @export
  */
-export const AutomateApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-	const localVarFp = AutomateApiFp(configuration)
+export const AutomateApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+	const localVarFp = AutomateApiFp(configuration);
 	return {
 		/**
 		 * Fetch the list of docker-compose.yml files
@@ -197,7 +197,7 @@ export class AutomateApi extends BaseAPI {
  * ProductionAgentApi - axios parameter creator
  * @export
  */
-export const ProductionAgentApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ProductionAgentApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 * Deploy a project following a configuration
@@ -207,7 +207,7 @@ export const ProductionAgentApiAxiosParamCreator = function (configuration?: Con
 		 */
 		productionAgentBuild: async (deployJobModel: DeployJobModel, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'deployJobModel' is not null or undefined
-			assertParamExists('productionAgentBuild', 'deployJobModel', deployJobModel)
+			assertParamExists("productionAgentBuild", "deployJobModel", deployJobModel);
 			const localVarPath = `/api/production-agent/deploy`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -216,32 +216,32 @@ export const ProductionAgentApiAxiosParamCreator = function (configuration?: Con
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 
-			localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-			localVarRequestOptions.data = serializeDataIfNeeded(deployJobModel, localVarRequestOptions, configuration)
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(deployJobModel, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
 				options: localVarRequestOptions,
 			};
 		},
-	}
+	};
 };
 
 /**
  * ProductionAgentApi - functional programming interface
  * @export
  */
-export const ProductionAgentApiFp = function (configuration?: Configuration) {
-	const localVarAxiosParamCreator = ProductionAgentApiAxiosParamCreator(configuration)
+export const ProductionAgentApiFp = function(configuration?: Configuration) {
+	const localVarAxiosParamCreator = ProductionAgentApiAxiosParamCreator(configuration);
 	return {
 		/**
 		 * Deploy a project following a configuration
@@ -253,15 +253,15 @@ export const ProductionAgentApiFp = function (configuration?: Configuration) {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.productionAgentBuild(deployJobModel, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
-	}
+	};
 };
 
 /**
  * ProductionAgentApi - factory interface
  * @export
  */
-export const ProductionAgentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-	const localVarFp = ProductionAgentApiFp(configuration)
+export const ProductionAgentApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+	const localVarFp = ProductionAgentApiFp(configuration);
 	return {
 		/**
 		 * Deploy a project following a configuration

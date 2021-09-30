@@ -1,4 +1,4 @@
-const port = 4000
+const port = 4000;
 describe("Rest", () => {
 
 	beforeAll(async () => {

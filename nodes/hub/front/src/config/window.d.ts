@@ -4,18 +4,17 @@ declare global {
 	}
 }
 
-
 export type Config = {
 	endpoints: {
 		core: {
-			api: string,
+			api: string;
 			socket: {
-				namespace: string,
-				hostname: string,
-			}
-		},
+				namespace: string;
+				hostname: string;
+			};
+		};
 		authentication: {
-			api: string
-		}
-	}
-}
+			api: string;
+		};
+	};
+};

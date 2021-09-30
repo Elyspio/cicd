@@ -8,3 +8,8 @@ nodes/agent-builder/build
 nodes/agent-prod/build
 nodes/**/build
 deploy/prod/.env
+*.js
+
+!**/conf.js
+nodes/agent-builder/builds
+deploy/dev/data

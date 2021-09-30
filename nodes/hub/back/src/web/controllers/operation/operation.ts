@@ -1,7 +1,7 @@
-import {BodyParams, Controller, Get, Post,} from "@tsed/common";
-import {Name, Required, Returns} from "@tsed/schema";
-import {Services} from "../../../core/services";
-import {BuildConfigModel, DeployConfigModel, HubConfig, MappingModel} from "./model";
+import { BodyParams, Controller, Get, Post } from "@tsed/common";
+import { Name, Required, Returns } from "@tsed/schema";
+import { Services } from "../../../core/services";
+import { BuildConfigModel, DeployConfigModel, HubConfig, MappingModel } from "./model";
 
 const examples: { build: BuildConfigModel } = {
 	build: {
@@ -10,17 +10,17 @@ const examples: { build: BuildConfigModel } = {
 				path: "Dockerfile",
 				wd: ".",
 				image: "automatize-github-docker",
-				tag: "test"
+				tag: "test",
 			}],
 			platforms: ["linux/amd64", "linux/arm64"],
-			username: "elyspio"
+			username: "elyspio",
 		},
 		github: {
 			remote: "https://github.com/Elyspio/test.git",
-			branch: "master"
-		}
-	}
-}
+			branch: "master",
+		},
+	},
+};
 
 
 @Controller("/automate/operation")
@@ -31,9 +31,9 @@ export class AutomationController {
 	@Post("/register")
 	async register(
 		@Required() @BodyParams("build", BuildConfigModel) build: BuildConfigModel,
-		@Required() @BodyParams("deploy", DeployConfigModel) deploy: DeployConfigModel
+		@Required() @BodyParams("deploy", DeployConfigModel) deploy: DeployConfigModel,
 	) {
-		await Services.hub.registerMapping({build, deploy})
+		await Services.hub.registerMapping({ build, deploy });
 	}
 
 

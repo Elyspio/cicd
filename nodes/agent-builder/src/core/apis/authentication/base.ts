@@ -11,10 +11,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {Configuration} from "./configuration";
+import { Configuration } from "./configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
+import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 
 export const BASE_PATH = "/".replace(/\/+$/, "");
 

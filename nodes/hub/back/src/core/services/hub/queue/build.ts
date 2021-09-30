@@ -1,5 +1,5 @@
-import {BuildConfig, Job} from "../types";
-import {QueueBase, QueueIdentifier, QueueMethod} from "./base";
+import { BuildConfig, Job } from "../types";
+import { QueueBase, QueueIdentifier, QueueMethod } from "./base";
 
 
 type BuildJob = Job<BuildConfig>;
@@ -14,7 +14,7 @@ export class QueueBuild extends QueueBase implements QueueMethod<BuildJob> {
 		return super.baseUpdate<BuildJob>(agent, newAgent, "builds");
 	}
 
-	public delete(agent: QueueIdentifier<BuildJob>,) {
+	public delete(agent: QueueIdentifier<BuildJob>) {
 		super.baseDelete<BuildJob>(agent, "builds");
 	}
 

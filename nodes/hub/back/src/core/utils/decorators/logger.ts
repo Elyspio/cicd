@@ -1,11 +1,11 @@
-import {Logger} from "@tsed/logger";
-import {Helper} from "../helper";
-import {inspect} from "util";
+import { Logger } from "@tsed/logger";
+import { Helper } from "../helper";
+import { inspect } from "util";
 
 
 declare global {
 	interface Function {
-		logger: Logger
+		logger: Logger;
 	}
 }
 
@@ -24,21 +24,21 @@ export type LogOption =
  * @param logArguments false means that no argument is logged, [] means that all arguments are logged, [0] means that only the first argument is logged
  * @constructor
  */
-export const Log = (logger: Logger, {level, arguments: logArguments}: LogOption = {level: "info", arguments: true}) => (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-	let originalMethod = descriptor.value
+export const Log = (logger: Logger, { level, arguments: logArguments }: LogOption = { level: "info", arguments: true }) => (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+	let originalMethod = descriptor.value;
 
 
 	const argsName = Helper.getFunctionArgs(originalMethod);
 
-	descriptor.value = function (...args: any[]) {
-		let argsStr = ""
+	descriptor.value = function(...args: any[]) {
+		let argsStr = "";
 
 		if (logArguments !== false) {
 			argsStr = argsName.reduce((previousValue, currentValue, currentIndex) => {
 				if (logArguments !== true) {
 					if (!logArguments?.includes(currentIndex)) return previousValue;
 				}
-				return `${previousValue} ${currentValue}=${inspect(args[currentIndex])}`
+				return `${previousValue} ${currentValue}=${inspect(args[currentIndex])}`;
 			}, "-");
 		}
 
@@ -58,8 +58,8 @@ export const Log = (logger: Logger, {level, arguments: logArguments}: LogOption 
 			});
 			if (typeof promise.catch === "function") {
 				promise.catch((e: Error) => {
-					logger.error(`${propertyKey} - Error ${e}`, {stack: e.stack})
-					return e
+					logger.error(`${propertyKey} - Error ${e}`, { stack: e.stack });
+					return e;
 				});
 			}
 		} else {
@@ -69,6 +69,6 @@ export const Log = (logger: Logger, {level, arguments: logArguments}: LogOption 
 		return result;
 	};
 
-}
+};
 
 

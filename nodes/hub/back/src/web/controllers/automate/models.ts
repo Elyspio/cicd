@@ -1,10 +1,10 @@
-import {Agent, BuildAgent, ProductionAgent} from "../../../core/services/hub/types"
-import {Enum, Property, Required} from "@tsed/schema";
+import { Agent, BuildAgent, ProductionAgent } from "../../../core/services/hub/types";
+import { Enum, Property, Required } from "@tsed/schema";
 
-const availabilities: Agent["availability"][] = ["free", "running", "down"]
+const availabilities: Agent["availability"][] = ["free", "running", "down"];
 
-const buildAbilities: BuildAgent["abilities"] = ["docker", "docker-buildx"]
-const prodAbilities: ProductionAgent["abilities"][number]["type"][] = ["docker-compose", "docker"]
+const buildAbilities: BuildAgent["abilities"] = ["docker", "docker-buildx"];
+const prodAbilities: ProductionAgent["abilities"][number]["type"][] = ["docker-compose", "docker"];
 
 
 export class AgentSubscribe {
@@ -26,27 +26,27 @@ export class AgentModel extends AgentSubscribe implements Agent {
 export class BuildAgentModelReturn extends AgentModel implements BuildAgent {
 	@Required()
 	@Enum(...buildAbilities)
-	abilities: typeof buildAbilities[number][]
+	abilities: typeof buildAbilities[number][];
 }
 
 
 export class BuildAgentModelAdd extends AgentSubscribe implements Omit<BuildAgent, "availability" | "lastUptime"> {
 	@Required()
 	@Enum(...buildAbilities)
-	abilities: typeof buildAbilities[number][]
+	abilities: typeof buildAbilities[number][];
 }
 
 
 class FoldersModel {
 	@Required()
 	@Property(String)
-	apps: string[]
+	apps: string[];
 }
 
 export class ProductionAgenAbilitytModel {
 	@Required()
 	@Enum(...prodAbilities)
-	abilities: typeof prodAbilities[number][]
+	abilities: typeof prodAbilities[number][];
 }
 
 
@@ -69,33 +69,33 @@ export class ProductionAgentModelAddAbilities {
 export class ProductionAgentModelAdd extends AgentSubscribe implements Omit<ProductionAgent, "availability" | "lastUptime"> {
 	@Required()
 	@Property(ProductionAgentModelAddAbilities)
-	abilities: ProductionAgentModelAddAbilities[]
+	abilities: ProductionAgentModelAddAbilities[];
 
 	@Required()
 	@Property(FoldersModel)
-	folders: FoldersModel
+	folders: FoldersModel;
 }
 
 export class ProductionAgentModel extends AgentModel implements ProductionAgent {
 	@Required()
 	@Property(ProductionAgentModelAddAbilities)
-	abilities: ProductionAgentModelAddAbilities[]
+	abilities: ProductionAgentModelAddAbilities[];
 
 
 	@Required()
 	@Property(FoldersModel)
-	folders: FoldersModel
+	folders: FoldersModel;
 }
 
 
 export class ProductionApplications {
 	@Required()
 	@Property(ProductionAgentModel)
-	agent: ProductionAgent
+	agent: ProductionAgent;
 
 	@Required()
 	@Property(String)
-	apps: string[]
+	apps: string[];
 
 }
 

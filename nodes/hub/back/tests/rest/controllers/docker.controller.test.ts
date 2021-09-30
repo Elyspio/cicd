@@ -1,6 +1,6 @@
 import * as Apis from "../api";
 
-const port = 4000
+const port = 4000;
 describe("Rest", () => {
 
 	beforeAll(async () => {
@@ -10,7 +10,7 @@ describe("Rest", () => {
 
 
 	describe("GET /core/docker/dockerfiles", () => {
-		let ret
+		let ret;
 		it("web-back & web-front", async () => {
 			ret = await new Apis.DockerControllerApi(undefined, "http://localhost:" + port).dockerControllerGet(["web-back", "web-front"]);
 			expect(ret.status).toEqual(200);

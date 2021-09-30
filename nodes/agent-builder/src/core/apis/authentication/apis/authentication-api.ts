@@ -11,12 +11,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
-import {Configuration} from '../configuration';
+import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
+import { Configuration } from "../configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from '../base';
-import {PostLoginInitRequest, PostLoginModel, PostLoginModelWithSalt, PostLoginRequest} from '../models';
+import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "../base";
+import { PostLoginInitRequest, PostLoginModel, PostLoginModelWithSalt, PostLoginRequest } from "../models";
 
 /**
  * AuthenticationApi - axios parameter creator
@@ -33,16 +33,20 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 		authenticationDeleteToken: async (body?: any, options: any = {}): Promise<RequestArgs> => {
 			const localVarPath = `/core/authentication/valid`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+			const localVarUrlObj = new URL(localVarPath, "https://example.com");
 			let baseOptions;
 			if (configuration) {
 				baseOptions = configuration.baseOptions;
 			}
-			const localVarRequestOptions = {method: 'DELETE', ...baseOptions, ...options};
+			const localVarRequestOptions = {
+				method: "DELETE",
+				...baseOptions,
+				...options,
+			};
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			const query = new URLSearchParams(localVarUrlObj.search);
 			for (const key in localVarQueryParameter) {
@@ -51,11 +55,15 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 			for (const key in options.query) {
 				query.set(key, options.query[key]);
 			}
-			localVarUrlObj.search = (new URLSearchParams(query)).toString();
+			localVarUrlObj.search = new URLSearchParams(query).toString();
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-			const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers,
+			};
+			const needsSerialization = typeof body !== "string" || localVarRequestOptions.headers["Content-Type"] === "application/json";
+			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : body || "";
 
 			return {
 				url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -70,12 +78,16 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 		authenticationGet: async (options: any = {}): Promise<RequestArgs> => {
 			const localVarPath = `/core/authentication`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+			const localVarUrlObj = new URL(localVarPath, "https://example.com");
 			let baseOptions;
 			if (configuration) {
 				baseOptions = configuration.baseOptions;
 			}
-			const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+			const localVarRequestOptions = {
+				method: "GET",
+				...baseOptions,
+				...options,
+			};
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
@@ -86,9 +98,13 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 			for (const key in options.query) {
 				query.set(key, options.query[key]);
 			}
-			localVarUrlObj.search = (new URLSearchParams(query)).toString();
+			localVarUrlObj.search = new URLSearchParams(query).toString();
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers,
+			};
 
 			return {
 				url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -104,16 +120,20 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 		authenticationLogin: async (body?: PostLoginRequest, options: any = {}): Promise<RequestArgs> => {
 			const localVarPath = `/core/authentication/login`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+			const localVarUrlObj = new URL(localVarPath, "https://example.com");
 			let baseOptions;
 			if (configuration) {
 				baseOptions = configuration.baseOptions;
 			}
-			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarRequestOptions = {
+				method: "POST",
+				...baseOptions,
+				...options,
+			};
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			const query = new URLSearchParams(localVarUrlObj.search);
 			for (const key in localVarQueryParameter) {
@@ -122,11 +142,15 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 			for (const key in options.query) {
 				query.set(key, options.query[key]);
 			}
-			localVarUrlObj.search = (new URLSearchParams(query)).toString();
+			localVarUrlObj.search = new URLSearchParams(query).toString();
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-			const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers,
+			};
+			const needsSerialization = typeof body !== "string" || localVarRequestOptions.headers["Content-Type"] === "application/json";
+			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : body || "";
 
 			return {
 				url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -142,16 +166,20 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 		authenticationLoginInit: async (body?: PostLoginInitRequest, options: any = {}): Promise<RequestArgs> => {
 			const localVarPath = `/core/authentication/login/init`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+			const localVarUrlObj = new URL(localVarPath, "https://example.com");
 			let baseOptions;
 			if (configuration) {
 				baseOptions = configuration.baseOptions;
 			}
-			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarRequestOptions = {
+				method: "POST",
+				...baseOptions,
+				...options,
+			};
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			const query = new URLSearchParams(localVarUrlObj.search);
 			for (const key in localVarQueryParameter) {
@@ -160,11 +188,15 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 			for (const key in options.query) {
 				query.set(key, options.query[key]);
 			}
-			localVarUrlObj.search = (new URLSearchParams(query)).toString();
+			localVarUrlObj.search = new URLSearchParams(query).toString();
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-			const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers,
+			};
+			const needsSerialization = typeof body !== "string" || localVarRequestOptions.headers["Content-Type"] === "application/json";
+			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : body || "";
 
 			return {
 				url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -180,16 +212,20 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 		authenticationValidToken: async (body?: any, options: any = {}): Promise<RequestArgs> => {
 			const localVarPath = `/core/authentication/valid`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+			const localVarUrlObj = new URL(localVarPath, "https://example.com");
 			let baseOptions;
 			if (configuration) {
 				baseOptions = configuration.baseOptions;
 			}
-			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarRequestOptions = {
+				method: "POST",
+				...baseOptions,
+				...options,
+			};
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			const query = new URLSearchParams(localVarUrlObj.search);
 			for (const key in localVarQueryParameter) {
@@ -198,18 +234,22 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
 			for (const key in options.query) {
 				query.set(key, options.query[key]);
 			}
-			localVarUrlObj.search = (new URLSearchParams(query)).toString();
+			localVarUrlObj.search = new URLSearchParams(query).toString();
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-			const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers,
+			};
+			const needsSerialization = typeof body !== "string" || localVarRequestOptions.headers["Content-Type"] === "application/json";
+			localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : body || "";
 
 			return {
 				url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
 				options: localVarRequestOptions,
 			};
 		},
-	}
+	};
 };
 
 /**
@@ -227,7 +267,10 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
 		async authenticationDeleteToken(body?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
 			const localVarAxiosArgs = await AuthenticationApiAxiosParamCreator(configuration).authenticationDeleteToken(body, options);
 			return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-				const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+				const axiosRequestArgs = {
+					...localVarAxiosArgs.options,
+					url: basePath + localVarAxiosArgs.url,
+				};
 				return axios.request(axiosRequestArgs);
 			};
 		},
@@ -239,7 +282,10 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
 		async authenticationGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
 			const localVarAxiosArgs = await AuthenticationApiAxiosParamCreator(configuration).authenticationGet(options);
 			return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-				const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+				const axiosRequestArgs = {
+					...localVarAxiosArgs.options,
+					url: basePath + localVarAxiosArgs.url,
+				};
 				return axios.request(axiosRequestArgs);
 			};
 		},
@@ -252,7 +298,10 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
 		async authenticationLogin(body?: PostLoginRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostLoginModel>> {
 			const localVarAxiosArgs = await AuthenticationApiAxiosParamCreator(configuration).authenticationLogin(body, options);
 			return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-				const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+				const axiosRequestArgs = {
+					...localVarAxiosArgs.options,
+					url: basePath + localVarAxiosArgs.url,
+				};
 				return axios.request(axiosRequestArgs);
 			};
 		},
@@ -262,10 +311,16 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async authenticationLoginInit(body?: PostLoginInitRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostLoginModelWithSalt>> {
+		async authenticationLoginInit(
+			body?: PostLoginInitRequest,
+			options?: any
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostLoginModelWithSalt>> {
 			const localVarAxiosArgs = await AuthenticationApiAxiosParamCreator(configuration).authenticationLoginInit(body, options);
 			return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-				const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+				const axiosRequestArgs = {
+					...localVarAxiosArgs.options,
+					url: basePath + localVarAxiosArgs.url,
+				};
 				return axios.request(axiosRequestArgs);
 			};
 		},
@@ -278,11 +333,14 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
 		async authenticationValidToken(body?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
 			const localVarAxiosArgs = await AuthenticationApiAxiosParamCreator(configuration).authenticationValidToken(body, options);
 			return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-				const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+				const axiosRequestArgs = {
+					...localVarAxiosArgs.options,
+					url: basePath + localVarAxiosArgs.url,
+				};
 				return axios.request(axiosRequestArgs);
 			};
 		},
-	}
+	};
 };
 
 /**
@@ -298,7 +356,9 @@ export const AuthenticationApiFactory = function (configuration?: Configuration,
 		 * @throws {RequiredError}
 		 */
 		authenticationDeleteToken(body?: any, options?: any): AxiosPromise<any> {
-			return AuthenticationApiFp(configuration).authenticationDeleteToken(body, options).then((request) => request(axios, basePath));
+			return AuthenticationApiFp(configuration)
+				.authenticationDeleteToken(body, options)
+				.then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -306,7 +366,9 @@ export const AuthenticationApiFactory = function (configuration?: Configuration,
 		 * @throws {RequiredError}
 		 */
 		authenticationGet(options?: any): AxiosPromise<void> {
-			return AuthenticationApiFp(configuration).authenticationGet(options).then((request) => request(axios, basePath));
+			return AuthenticationApiFp(configuration)
+				.authenticationGet(options)
+				.then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -315,7 +377,9 @@ export const AuthenticationApiFactory = function (configuration?: Configuration,
 		 * @throws {RequiredError}
 		 */
 		authenticationLogin(body?: PostLoginRequest, options?: any): AxiosPromise<PostLoginModel> {
-			return AuthenticationApiFp(configuration).authenticationLogin(body, options).then((request) => request(axios, basePath));
+			return AuthenticationApiFp(configuration)
+				.authenticationLogin(body, options)
+				.then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -324,7 +388,9 @@ export const AuthenticationApiFactory = function (configuration?: Configuration,
 		 * @throws {RequiredError}
 		 */
 		authenticationLoginInit(body?: PostLoginInitRequest, options?: any): AxiosPromise<PostLoginModelWithSalt> {
-			return AuthenticationApiFp(configuration).authenticationLoginInit(body, options).then((request) => request(axios, basePath));
+			return AuthenticationApiFp(configuration)
+				.authenticationLoginInit(body, options)
+				.then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -333,7 +399,9 @@ export const AuthenticationApiFactory = function (configuration?: Configuration,
 		 * @throws {RequiredError}
 		 */
 		authenticationValidToken(body?: any, options?: any): AxiosPromise<any> {
-			return AuthenticationApiFp(configuration).authenticationValidToken(body, options).then((request) => request(axios, basePath));
+			return AuthenticationApiFp(configuration)
+				.authenticationValidToken(body, options)
+				.then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -353,7 +421,9 @@ export class AuthenticationApi extends BaseAPI {
 	 * @memberof AuthenticationApi
 	 */
 	public authenticationDeleteToken(body?: any, options?: any) {
-		return AuthenticationApiFp(this.configuration).authenticationDeleteToken(body, options).then((request) => request(this.axios, this.basePath));
+		return AuthenticationApiFp(this.configuration)
+			.authenticationDeleteToken(body, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -363,7 +433,9 @@ export class AuthenticationApi extends BaseAPI {
 	 * @memberof AuthenticationApi
 	 */
 	public authenticationGet(options?: any) {
-		return AuthenticationApiFp(this.configuration).authenticationGet(options).then((request) => request(this.axios, this.basePath));
+		return AuthenticationApiFp(this.configuration)
+			.authenticationGet(options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -374,7 +446,9 @@ export class AuthenticationApi extends BaseAPI {
 	 * @memberof AuthenticationApi
 	 */
 	public authenticationLogin(body?: PostLoginRequest, options?: any) {
-		return AuthenticationApiFp(this.configuration).authenticationLogin(body, options).then((request) => request(this.axios, this.basePath));
+		return AuthenticationApiFp(this.configuration)
+			.authenticationLogin(body, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -385,7 +459,9 @@ export class AuthenticationApi extends BaseAPI {
 	 * @memberof AuthenticationApi
 	 */
 	public authenticationLoginInit(body?: PostLoginInitRequest, options?: any) {
-		return AuthenticationApiFp(this.configuration).authenticationLoginInit(body, options).then((request) => request(this.axios, this.basePath));
+		return AuthenticationApiFp(this.configuration)
+			.authenticationLoginInit(body, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -396,6 +472,8 @@ export class AuthenticationApi extends BaseAPI {
 	 * @memberof AuthenticationApi
 	 */
 	public authenticationValidToken(body?: any, options?: any) {
-		return AuthenticationApiFp(this.configuration).authenticationValidToken(body, options).then((request) => request(this.axios, this.basePath));
+		return AuthenticationApiFp(this.configuration)
+			.authenticationValidToken(body, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }

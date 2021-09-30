@@ -1,4 +1,4 @@
-import {Comparable, IQueue, IStack} from "./data.types";
+import { Comparable, IQueue, IStack } from "./data.types";
 
 abstract class Collection<T> {
 	public storage: T[] = [];
@@ -66,12 +66,12 @@ export class Queue<T> extends Collection<T> implements IQueue<T> {
 
 
 let mutex = {
-	locked: false
-}
+	locked: false,
+};
 
 
 export class CustomSet<T extends Comparable<T>> {
-	private content: Array<T>
+	private content: Array<T>;
 
 	constructor(private options?: { data?: Iterable<T>, lock?: boolean }) {
 		this.content = new Array<T>(...(this.options?.data ?? []));
@@ -85,7 +85,7 @@ export class CustomSet<T extends Comparable<T>> {
 		}
 
 		if (!this.contains(obj)) {
-			this.content.push(obj)
+			this.content.push(obj);
 		}
 
 		if (this.options?.lock) {
@@ -110,7 +110,7 @@ export class CustomSet<T extends Comparable<T>> {
 	}
 
 	toArray() {
-		return [...this.content]
+		return [...this.content];
 	}
 
 	remove(obj: T) {

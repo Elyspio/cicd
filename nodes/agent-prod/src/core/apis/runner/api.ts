@@ -12,9 +12,8 @@
  * Do not edit the class manually.
  */
 
-
-import {Configuration} from './configuration';
-import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
+import { Configuration } from "./configuration";
+import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import {
@@ -27,10 +26,10 @@ import {
 	setBearerAuthToObject,
 	setOAuthToObject,
 	setSearchParams,
-	toPathString
-} from './common';
+	toPathString,
+} from "./common";
 // @ts-ignore
-import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from './base';
+import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
 /**
  *
@@ -175,24 +174,31 @@ export const RunnerApiAxiosParamCreator = function (configuration?: Configuratio
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarRequestOptions = {
+				method: "POST",
+				...baseOptions,
+				...options,
+			};
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
-			localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers,
+			};
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
 				options: localVarRequestOptions,
 			};
 		},
-	}
+	};
 };
 
 /**
@@ -200,7 +206,7 @@ export const RunnerApiAxiosParamCreator = function (configuration?: Configuratio
  * @export
  */
 export const RunnerApiFp = function (configuration?: Configuration) {
-	const localVarAxiosParamCreator = RunnerApiAxiosParamCreator(configuration)
+	const localVarAxiosParamCreator = RunnerApiAxiosParamCreator(configuration);
 	return {
 		/**
 		 *
@@ -212,7 +218,7 @@ export const RunnerApiFp = function (configuration?: Configuration) {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.runnerRun(inlineObject, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
-	}
+	};
 };
 
 /**
@@ -220,7 +226,7 @@ export const RunnerApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const RunnerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-	const localVarFp = RunnerApiFp(configuration)
+	const localVarFp = RunnerApiFp(configuration);
 	return {
 		/**
 		 *
@@ -249,8 +255,8 @@ export class RunnerApi extends BaseAPI {
 	 * @memberof RunnerApi
 	 */
 	public runnerRun(inlineObject?: InlineObject, options?: any) {
-		return RunnerApiFp(this.configuration).runnerRun(inlineObject, options).then((request) => request(this.axios, this.basePath));
+		return RunnerApiFp(this.configuration)
+			.runnerRun(inlineObject, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
-

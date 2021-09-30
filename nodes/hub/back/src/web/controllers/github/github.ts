@@ -1,10 +1,10 @@
-import {Controller, Get, PathParams, Req} from "@tsed/common";
-import {Name, Returns} from "@tsed/schema";
-import * as Express from "express"
-import {FileModel, RepoWithBranchModel} from "./models";
-import {GithubService} from "../../../core/services/github/github";
-import {Protected} from "../../middleware/protected";
-import {Unauthorized} from "@tsed/exceptions";
+import { Controller, Get, PathParams, Req } from "@tsed/common";
+import { Name, Returns } from "@tsed/schema";
+import * as Express from "express";
+import { FileModel, RepoWithBranchModel } from "./models";
+import { GithubService } from "../../../core/services/github/github";
+import { Protected } from "../../middleware/protected";
+import { Unauthorized } from "@tsed/exceptions";
 
 
 @Controller("/github")
@@ -21,13 +21,13 @@ export class Github {
 	@Protected()
 	async getRepositories(
 		@PathParams("username") username: string,
-		@Req() {auth}: Express.Request
+		@Req() { auth }: Express.Request,
 	) {
-		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
+		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`);
 
 		const service = await this.githubService.get(username, auth!.token);
 
-		return service.listRepos(username)
+		return service.listRepos(username);
 	}
 
 
@@ -37,14 +37,14 @@ export class Github {
 	async getBranchesForRepository(
 		@PathParams("username") username: string,
 		@PathParams("repository") repo: string,
-		@Req() {auth}: Express.Request
+		@Req() { auth }: Express.Request,
 	) {
 
-		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
+		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`);
 
 		const service = await this.githubService.get(username, auth!.token);
 
-		return service.listBranch(username, repo)
+		return service.listBranch(username, repo);
 	}
 
 	@Get("/users/:username/repositories/dockerfiles")
@@ -53,14 +53,14 @@ export class Github {
 	@Protected()
 	async getDockerRepository(
 		@PathParams("username") username: string,
-		@Req() {auth}: Express.Request
+		@Req() { auth }: Express.Request,
 	) {
 
-		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
+		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`);
 
 		const service = await this.githubService.get(username, auth!.token);
 
-		return service.listReposWithAllData(username)
+		return service.listReposWithAllData(username);
 	}
 
 
@@ -72,13 +72,13 @@ export class Github {
 		@PathParams("username") username: string,
 		@PathParams("repository") repo: string,
 		@PathParams("branch") branch: string,
-		@Req() {auth}: Express.Request
+		@Req() { auth }: Express.Request,
 	) {
 
-		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`)
+		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`);
 
 		const service = await this.githubService.get(username, auth!.token);
 
-		return service.parseRepoTree(username, repo, branch)
+		return service.parseRepoTree(username, repo, branch);
 	}
 }

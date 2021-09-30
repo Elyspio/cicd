@@ -1,39 +1,7 @@
 {
 	"agents": {
-		"builder": [
-			{
-				"abilities": [
-					"docker",
-					"docker-buildx"
-				],
-				"uri": "http://localhost:4200",
-				"availability": "free",
-				"lastUptime": "2021-09-28T19:38:44.048Z"
-			}
-		],
-		"production": [
-			{
-				"abilities": [
-					{
-						"type": "docker-compose",
-						"dockerCompose": {
-							"isDockerComposeIntegratedToCli": true
-						}
-					},
-					{
-						"type": "docker"
-					}
-				],
-				"folders": {
-					"apps": [
-						"./deployed"
-					]
-				},
-				"uri": "http://localhost:4100",
-				"availability": "free",
-				"lastUptime": "2021-09-28T19:38:41.165Z"
-			}
-		]
+		"builder": [],
+		"production": []
 	},
 	"jobs": {
 		"builds": [

@@ -1,8 +1,8 @@
-import {DeployConfig, ProductionAgent} from "../types";
-import {AgentIdentifier, AgentMethods, Base} from "./base";
-import {Services} from "../../index";
-import {AutomateApi} from "../../../apis/agent-prod";
-import {ProductionApplications} from "../../../../web/controllers/automate/models";
+import { DeployConfig, ProductionAgent } from "../types";
+import { AgentIdentifier, AgentMethods, Base } from "./base";
+import { Services } from "../../index";
+import { AutomateApi } from "../../../apis/agent-prod";
+import { ProductionApplications } from "../../../../web/controllers/automate/models";
 
 export class AgentProduction extends Base implements AgentMethods<ProductionAgent> {
 
@@ -14,7 +14,7 @@ export class AgentProduction extends Base implements AgentMethods<ProductionAgen
 		return super.baseUpdate<ProductionAgent>(agent, newAgent, "production");
 	}
 
-	public delete(agent: AgentIdentifier<ProductionAgent>,) {
+	public delete(agent: AgentIdentifier<ProductionAgent>) {
 		super.baseDelete<ProductionAgent>(agent, "production");
 	}
 
@@ -23,18 +23,18 @@ export class AgentProduction extends Base implements AgentMethods<ProductionAgen
 	}
 
 	public keepAlive(agent: AgentIdentifier<ProductionAgent>): void {
-		this.update(agent, {availability: "free", lastUptime: new Date()});
+		this.update(agent, { availability: "free", lastUptime: new Date() });
 	}
 
 	public async askDeploy(config: DeployConfig) {
 		const id = super.nextId;
-		Services.hub.config.queues.deployments.enqueue({config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id})
+		Services.hub.config.queues.deployments.enqueue({ config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id });
 		await Services.hub.saveConfig();
 		return id;
 	}
 
 	public get(agent: AgentIdentifier<ProductionAgent>) {
-		return Services.hub.config.agents.production.find(a => a.uri === agent)
+		return Services.hub.config.agents.production.find(a => a.uri === agent);
 	}
 
 	public async getApps(): Promise<ProductionApplications[]> {
@@ -43,7 +43,7 @@ export class AgentProduction extends Base implements AgentMethods<ProductionAgen
 			.automateGetApps()
 			.then(x => ({
 				apps: x.data,
-				agent
+				agent,
 			}))));
 	}
 

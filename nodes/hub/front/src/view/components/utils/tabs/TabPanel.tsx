@@ -1,8 +1,12 @@
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 
-export function TabPanel(props: { children: React.ReactChild, index: number, value: number }) {
-	const {children, value, index, ...other} = props;
+export function TabPanel(props: {
+	children: React.ReactChild;
+	index: number;
+	value: number;
+}) {
+	const { children, value, index, ...other } = props;
 
 	return (
 		<div
@@ -12,11 +16,7 @@ export function TabPanel(props: { children: React.ReactChild, index: number, val
 			aria-labelledby={`scrollable-auto-tab-${index}`}
 			{...other}
 		>
-			{value === index && (
-				<Box>
-					{children}
-				</Box>
-			)}
+			{value === index && <Box>{children}</Box>}
 		</div>
 	);
 }

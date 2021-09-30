@@ -1,6 +1,6 @@
-import {Container} from "inversify";
+import { Container } from "inversify";
 
-export const container = new Container({defaultScope: "Singleton"})
+export const container = new Container({ defaultScope: "Singleton" });
 
-require("./di.api")
-require("./di.service")
+require("./di.api");
+require("./di.service");

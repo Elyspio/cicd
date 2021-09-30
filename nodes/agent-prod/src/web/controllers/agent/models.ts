@@ -1,13 +1,11 @@
-import {Description, Property, Required} from "@tsed/schema";
-import {DeployConfig, Job, Timestamp} from "../../../../../hub/back/src/core/services/hub/types";
-
+import { Description, Property, Required } from "@tsed/schema";
+import { DeployConfig, Job, Timestamp } from "../../../../../hub/back/src/core/services/hub/types";
 
 class JobModel {
 	@Required()
 	@Description("Job id")
-	id: number
+	id: number;
 }
-
 
 export class DockerComposeField {
 	@Property()
@@ -17,14 +15,14 @@ export class DockerComposeField {
 
 export class DockerField {
 	@Property(DockerComposeField)
-	compose?: DockerComposeField
+	compose?: DockerComposeField;
 }
 
 export class DeployConfigModel {
 	@Property(DockerField)
 	@Description("Docker/Docker-Compose configuration")
 	@Required()
-	docker: DockerField
+	docker: DockerField;
 
 	@Property()
 	@Required()
@@ -34,8 +32,5 @@ export class DeployConfigModel {
 
 export class DeployJobModel extends JobModel implements Omit<Job<DeployConfig>, keyof Timestamp> {
 	@Property(DeployConfigModel)
-	config: DeployConfigModel
+	config: DeployConfigModel;
 }
-
-
-

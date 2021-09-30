@@ -2,12 +2,12 @@ import "reflect-metadata";
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/socketio"; // import socket.io Ts.ED module
 import "@tsed/swagger";
-import {PlatformExpress} from "@tsed/platform-express";
-import {Server} from "./web/server";
-import {$log} from "@tsed/common";
+import { PlatformExpress } from "@tsed/platform-express";
+import { Server } from "./web/server";
+import { $log } from "@tsed/common";
 
 if (require.main === module) {
-	bootstrap()
+	bootstrap();
 }
 
 

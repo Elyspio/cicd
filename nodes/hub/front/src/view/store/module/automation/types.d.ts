@@ -1,13 +1,12 @@
-import {BuildConfig} from "../../../../../../back/src/core/services/hub/types";
-import {DeployConfigModel, ProductionAgentModelAdd} from "../../../../core/apis/backend/generated";
+import { BuildConfigModel, DeployConfigModel, ProductionAgentModelAdd } from "../../../../core/apis/backend/generated";
 
+type Dockerfiles = NonNullable<BuildConfigModel["dockerfiles"]>;
 export type DockerfilesParams = {
-	dockerfile: BuildConfig["dockerfiles"]["dockerfiles"][number] & { use: boolean },
-	platforms: BuildConfig["dockerfiles"]["platforms"],
+	dockerfile: Dockerfiles["files"][number] & { use: boolean };
+	platforms: Dockerfiles["platforms"];
 }[];
 
-
 export type Deployment = {
-	agent: ProductionAgentModelAdd,
-	config: DeployConfigModel
-}
+	agent: ProductionAgentModelAdd;
+	config: DeployConfigModel;
+};

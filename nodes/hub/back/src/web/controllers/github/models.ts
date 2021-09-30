@@ -1,5 +1,5 @@
-import {Enum, Nullable, Property, Required} from "@tsed/schema";
-import {NodeType} from "../../../core/services/github/wrapper";
+import { Enum, Nullable, Property, Required } from "@tsed/schema";
+import { NodeType } from "../../../core/services/github/wrapper";
 
 export class Pusher {
 	@Property()
@@ -453,46 +453,46 @@ export class FileModel {
 
 	@Property(String)
 	@Required()
-	path: string
+	path: string;
 
 	@Property(String)
 	@Required()
-	key: string
+	key: string;
 
 	@Property(Number)
 	@Required()
-	size: number
+	size: number;
 }
 
 class RepoNodeModel {
 	@Property(String)
 	@Required()
-	path: string
+	path: string;
 
 	@Enum("folder", "file")
 	@Required()
-	type: NodeType
+	type: NodeType;
 }
 
 export class RepoWithBranchModel {
 
 	@Property(String)
 	@Required()
-	branch: string
+	branch: string;
 
 	@Property(String)
 	@Required()
-	repo: string
+	repo: string;
 
 	@Property(String)
 	@Required()
-	dockerfiles: string[]
+	dockerfiles: string[];
 
 	@Property(RepoNodeModel)
 	@Required()
-	nodes: RepoNodeModel[]
+	nodes: RepoNodeModel[];
 
 	@Property(String)
-	bake?: string
+	bake?: string;
 
 }

@@ -1,14 +1,14 @@
-import {Services} from "../../index";
-import {Config, HubConfig, Job} from "../types";
+import { Services } from "../../index";
+import { Config, HubConfig, Job } from "../types";
 
 export type QueueIdentifier<T extends Job<Config>> = T["id"] | T
 
 
 export interface QueueMethod<T extends Job<Config>> {
-	add: (job: Omit<T, "lastUptime" | "availability">) => void
-	delete: (job: T | T["id"]) => void
-	update: (job: T | T["id"], data: Partial<T>) => T
-	list: () => T[]
+	add: (job: Omit<T, "lastUptime" | "availability">) => void;
+	delete: (job: T | T["id"]) => void;
+	update: (job: T | T["id"], data: Partial<T>) => T;
+	list: () => T[];
 }
 
 
@@ -23,7 +23,7 @@ export class QueueBase {
 		let existAgent = Services.hub.config.queues[kind].storage.find(x => x.id === job.id);
 		if (existAgent) {
 			// @ts-ignore
-			Services.hub.config.queues[kind].storage = Services.hub.config.queues[kind].storage.filter(ag => ag.id !== job.id)
+			Services.hub.config.queues[kind].storage = Services.hub.config.queues[kind].storage.filter(ag => ag.id !== job.id);
 		}
 		// @ts-ignore
 		Services.hub.config.queues[kind].enqueue(job);
@@ -32,11 +32,11 @@ export class QueueBase {
 
 	protected baseUpdate<T extends Job<Config>>(job: T | T["id"], newAgent: Partial<T>, kind: keyof HubConfig["queues"]) {
 		const obj = this.getAgent(job, kind) as T;
-		const updated = {...obj, ...newAgent,};
+		const updated = { ...obj, ...newAgent };
 		// @ts-ignore
 		Services.hub.config.queues[kind].storage = [...(Services.hub.config.queues[kind].storage as T[]).filter(a => a.id !== (obj as T).id), updated];
 		this.save();
-		return updated as T
+		return updated as T;
 
 	}
 
@@ -49,7 +49,7 @@ export class QueueBase {
 
 	protected baseList<T extends Job<Config>>(job: keyof HubConfig["queues"]) {
 		// @ts-ignore
-		return Services.hub.config.queues[job].storage as T[]
+		return Services.hub.config.queues[job].storage as T[];
 	}
 
 	private getAgent<T extends Job<Config>>(job: T | T["id"], kind: keyof HubConfig["queues"]) {

@@ -1,33 +1,33 @@
-import {Description, Enum, Property, Required} from "@tsed/schema";
-import {BakeBuild, BuildConfig, DeployConfig, HubConfigExport, Mapping} from "../../../core/services/hub/types";
-import {BuildAgentModelReturn, ProductionAgentModel} from "../automate/models";
+import { Description, Enum, Property, Required } from "@tsed/schema";
+import { BakeBuild, BuildConfig, DeployConfig, HubConfigExport, Mapping } from "../../../core/services/hub/types";
+import { BuildAgentModelReturn, ProductionAgentModel } from "../automate/models";
 
 class DockerFileConfigModel {
 	@Description("Path to Dockerfile file")
 	@Property()
 	@Required()
-	path: string
+	path: string;
 
 	@Description("Working directory from origin")
 	@Property()
 	@Required()
-	wd: string
+	wd: string;
 
 	@Description("Name for the image")
 	@Property()
 	@Required()
-	image: string
+	image: string;
 
 	@Description("Tag for the image")
 	@Property()
-	tag: string
+	tag: string;
 }
 
 class DockerConfigModel {
 	@Description("Dockerfiles to build")
 	@Property(DockerFileConfigModel)
 	@Required()
-	files: DockerFileConfigModel[]
+	files: DockerFileConfigModel[];
 
 
 	@Description("Platforms available for the future image")
@@ -37,7 +37,7 @@ class DockerConfigModel {
 
 	@Required()
 	@Property()
-	username: string
+	username: string;
 
 }
 
@@ -45,7 +45,7 @@ class DockerConfigModel {
 export class DockerBakeModel implements BakeBuild {
 	@Required()
 	@Property()
-	bakeFilePath: string
+	bakeFilePath: string;
 }
 
 
@@ -53,31 +53,31 @@ class GithubConfigModel {
 	@Description("Url of the repo")
 	@Required()
 	@Property()
-	remote: string
+	remote: string;
 
 	@Property()
 	@Description("Branch on the repo")
 	@Required()
-	branch: string
+	branch: string;
 
 	@Property()
 	@Description("Commit Sha")
-	commit?: string
+	commit?: string;
 }
 
 export class BuildConfigModel implements BuildConfig {
 	@Description("Github configuration")
 	@Property(GithubConfigModel)
 	@Required()
-	github: GithubConfigModel
+	github: GithubConfigModel;
 
 	@Description("dockerfiles to build")
 	@Property(DockerConfigModel)
-	dockerfiles?: DockerConfigModel
+	dockerfiles?: DockerConfigModel;
 
 	@Description("bake file to use")
 	@Property(DockerBakeModel)
-	bake?: DockerBakeModel
+	bake?: DockerBakeModel;
 
 
 }
@@ -91,14 +91,14 @@ export class DockerComposeField {
 
 export class DockerField {
 	@Property(DockerComposeField)
-	compose?: DockerComposeField
+	compose?: DockerComposeField;
 }
 
 export class DeployConfigModel implements DeployConfig {
 	@Property(DockerField)
 	@Description("Docker/Docker-Compose configuration")
 	@Required()
-	docker: DockerField
+	docker: DockerField;
 
 	@Property()
 	@Required()
@@ -130,47 +130,47 @@ class HubAgentConfig {
 
 	@Property(BuildAgentModelReturn)
 	@Required()
-	builder: BuildAgentModelReturn[]
+	builder: BuildAgentModelReturn[];
 }
 
 class JobBuildModel {
 	@Property()
 	@Required()
-	createdAt: Date
+	createdAt: Date;
 
 	@Property()
-	startedAt: Date
+	startedAt: Date;
 
 	@Property()
-	finishedAt: Date
+	finishedAt: Date;
 
 	@Property()
 	@Required()
-	id: number
+	id: number;
 
 	@Property("T")
 	@Required()
-	config: BuildConfigModel
+	config: BuildConfigModel;
 }
 
 class JobDeployModel {
 	@Property()
 	@Required()
-	createdAt: Date
+	createdAt: Date;
 
 	@Property()
-	startedAt: Date
+	startedAt: Date;
 
 	@Property()
-	finishedAt: Date
+	finishedAt: Date;
 
 	@Property()
 	@Required()
-	id: number
+	id: number;
 
 	@Property("T")
 	@Required()
-	config: DeployConfigModel
+	config: DeployConfigModel;
 }
 
 class JobsModel {
@@ -180,13 +180,13 @@ class JobsModel {
 
 	@Property(JobDeployModel)
 	@Required()
-	deployments: JobDeployModel[]
+	deployments: JobDeployModel[];
 }
 
 export class HubConfig implements HubConfigExport {
 	@Property(HubAgentConfig)
 	@Required()
-	agents: HubAgentConfig
+	agents: HubAgentConfig;
 
 	@Property(JobsModel)
 	@Required()
@@ -198,7 +198,7 @@ export class HubConfig implements HubConfigExport {
 
 	@Property(JobsModel)
 	@Required()
-	queues: JobsModel
+	queues: JobsModel;
 }
 
 

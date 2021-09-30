@@ -12,9 +12,8 @@
  * Do not edit the class manually.
  */
 
-
-import {Configuration} from './configuration';
-import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
+import { Configuration } from "./configuration";
+import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import {
@@ -27,10 +26,10 @@ import {
 	setBearerAuthToObject,
 	setOAuthToObject,
 	setSearchParams,
-	toPathString
-} from './common';
+	toPathString,
+} from "./common";
 // @ts-ignore
-import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from './base';
+import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
 /**
  *
@@ -83,8 +82,8 @@ export interface DockerConfigModel {
  * @enum {string}
  */
 export enum DockerConfigModelPlatformsEnum {
-	Arm64 = 'linux/arm64',
-	Amd64 = 'linux/amd64'
+	Arm64 = "linux/arm64",
+	Amd64 = "linux/amd64",
 }
 
 /**
@@ -159,7 +158,7 @@ export const BuildAgentApiAxiosParamCreator = function (configuration?: Configur
 		 */
 		buildAgentBuild: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'buildConfigModel' is not null or undefined
-			assertParamExists('buildAgentBuild', 'buildConfigModel', buildConfigModel)
+			assertParamExists("buildAgentBuild", "buildConfigModel", buildConfigModel);
 			const localVarPath = `/core/build-agent/build`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -168,24 +167,23 @@ export const BuildAgentApiAxiosParamCreator = function (configuration?: Configur
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
-			localVarHeaderParameter['Content-Type'] = 'application/json';
+			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-			localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration)
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
 				options: localVarRequestOptions,
 			};
 		},
-	}
+	};
 };
 
 /**
@@ -193,7 +191,7 @@ export const BuildAgentApiAxiosParamCreator = function (configuration?: Configur
  * @export
  */
 export const BuildAgentApiFp = function (configuration?: Configuration) {
-	const localVarAxiosParamCreator = BuildAgentApiAxiosParamCreator(configuration)
+	const localVarAxiosParamCreator = BuildAgentApiAxiosParamCreator(configuration);
 	return {
 		/**
 		 * Build and push a project following a configuration
@@ -201,11 +199,14 @@ export const BuildAgentApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+		async buildAgentBuild(
+			buildConfigModel: BuildConfigModel,
+			options?: any
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.buildAgentBuild(buildConfigModel, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
-	}
+	};
 };
 
 /**
@@ -213,7 +214,7 @@ export const BuildAgentApiFp = function (configuration?: Configuration) {
  * @export
  */
 export const BuildAgentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-	const localVarFp = BuildAgentApiFp(configuration)
+	const localVarFp = BuildAgentApiFp(configuration);
 	return {
 		/**
 		 * Build and push a project following a configuration
@@ -242,8 +243,8 @@ export class BuildAgentApi extends BaseAPI {
 	 * @memberof BuildAgentApi
 	 */
 	public buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any) {
-		return BuildAgentApiFp(this.configuration).buildAgentBuild(buildConfigModel, options).then((request) => request(this.axios, this.basePath));
+		return BuildAgentApiFp(this.configuration)
+			.buildAgentBuild(buildConfigModel, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
-

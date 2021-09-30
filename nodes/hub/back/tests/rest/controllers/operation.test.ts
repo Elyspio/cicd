@@ -1,8 +1,8 @@
 import * as Apis from "../api";
-import {DockerConfigModelPlatformsEnum} from "../api";
+import { DockerConfigModelPlatformsEnum } from "../api";
 import * as path from "path";
 
-const port = 4000
+const port = 4000;
 
 const buildParam = {
 	docker: {
@@ -10,24 +10,24 @@ const buildParam = {
 			path: "Dockerfile",
 			wd: ".",
 			image: "cicd",
-			tag: "test"
+			tag: "test",
 		}],
 		platforms: [
 			DockerConfigModelPlatformsEnum.Amd64,
-			DockerConfigModelPlatformsEnum.Arm64
+			DockerConfigModelPlatformsEnum.Arm64,
 		],
-		username: "elyspio"
+		username: "elyspio",
 	},
 	github: {
 		remote: "https://github.com/Elyspio/automatize-github-docker.git",
-		branch: "test-unit"
-	}
+		branch: "test-unit",
+	},
 };
 const deployParam = {
 	docker: {
-		compose: {path: path.resolve(__dirname, "..", "..", "..", "..", "..", "agent-prod", "deployed", "test", "docker-compose.yml")}
+		compose: { path: path.resolve(__dirname, "..", "..", "..", "..", "..", "agent-prod", "deployed", "test", "docker-compose.yml") },
 	},
-	uri: "http://localhost:4200"
+	uri: "http://localhost:4200",
 };
 
 describe("Rest", () => {
@@ -41,7 +41,7 @@ describe("Rest", () => {
 	describe("POST /core/automate/operation/deployment", () => {
 
 		it("No Content", async () => {
-			const data: Apis.DeployConfigModel = deployParam
+			const data: Apis.DeployConfigModel = deployParam;
 			const ret = await new Apis.OperationApi(undefined, "http://localhost:" + port).operationDeploy(data);
 			expect(ret.status).toEqual(204);
 		});
@@ -51,7 +51,7 @@ describe("Rest", () => {
 	describe("POST /core/automate/operation/build", () => {
 
 		it("No Content", async () => {
-			const data: Apis.BuildConfigModel = buildParam
+			const data: Apis.BuildConfigModel = buildParam;
 			const ret = await new Apis.OperationApi(undefined, "http://localhost:" + port).operationStart(data);
 			expect(ret.status).toEqual(204);
 		});
@@ -64,7 +64,7 @@ describe("Rest", () => {
 
 			const data: Apis.InlineObject2 = {
 				build: buildParam,
-				deploy: deployParam
+				deploy: deployParam,
 			};
 			const ret = await new Apis.OperationApi(undefined, "http://localhost:" + port).operationRegister(data);
 			expect(ret.status).toEqual(200);

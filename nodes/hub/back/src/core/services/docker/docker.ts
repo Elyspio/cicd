@@ -1,6 +1,6 @@
-import {Preset} from "../../../web/controllers/docker/models";
+import { Preset } from "../../../web/controllers/docker/models";
 import * as  path from "path";
-import {readFile} from "fs-extra"
+import { readFile } from "fs-extra";
 
 export class DockerService {
 	public async getDockerFile(features: Preset[]) {
@@ -20,6 +20,6 @@ export class DockerService {
 
 		let p = path.resolve(__dirname, "dockerfiles", file);
 
-		return await readFile(p).then(p => p.toString("utf-8"))
+		return await readFile(p).then(p => p.toString("utf-8"));
 	}
 }

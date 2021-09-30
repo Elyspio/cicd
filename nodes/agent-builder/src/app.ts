@@ -1,11 +1,10 @@
-import {$log} from "@tsed/common";
-import {PlatformExpress} from "@tsed/platform-express";
-import {Server} from "./web/server";
+import { $log } from "@tsed/common";
+import { PlatformExpress } from "@tsed/platform-express";
+import { Server } from "./web/server";
 
 if (require.main === module) {
-	bootstrap()
+	bootstrap();
 }
-
 
 async function bootstrap() {
 	try {

@@ -1,4 +1,4 @@
 export const globalConf = {
 	exposeEnvironmentVariables: false,
-	appName: "Ci-Cd:hub"
-}
+	appName: "Ci-Cd:hub",
+};

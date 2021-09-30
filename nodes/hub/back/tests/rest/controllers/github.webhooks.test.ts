@@ -1,7 +1,7 @@
 import * as Apis from "../api";
-import {GithubPushWebhook} from "../api";
+import { GithubPushWebhook } from "../api";
 
-const port = 4000
+const port = 4000;
 describe("Rest", () => {
 
 	beforeAll(async () => {
@@ -23,7 +23,7 @@ describe("Rest", () => {
 				"base_ref": "",
 				"compare": "https://github.com/Elyspio/automatize-github-docker/compare/aa912d52b1d6...9f50882ddc9a",
 				"commits": [
-					"[object Object]"
+					"[object Object]",
 				],
 				"head_commit": "[object Object]",
 				"repository": {
@@ -52,7 +52,7 @@ describe("Rest", () => {
 						"events_url": "https://api.github.com/users/Elyspio/events{/privacy}",
 						"received_events_url": "https://api.github.com/users/Elyspio/received_events",
 						"type": "User",
-						"site_admin": false
+						"site_admin": false,
 					},
 					"html_url": "https://github.com/Elyspio/automatize-github-docker",
 					"description": "A tool which help use of webhook on github and dockerhub platforms",
@@ -122,11 +122,11 @@ describe("Rest", () => {
 					"watchers": 0,
 					"default_branch": "master",
 					"stargazers": 0,
-					"master_branch": "master"
+					"master_branch": "master",
 				},
 				"pusher": {
 					"name": "Elyspio",
-					"email": "jona.guich69@gmail.com"
+					"email": "jona.guich69@gmail.com",
 				},
 				"sender": {
 					"name": "Elyspio",
@@ -148,8 +148,8 @@ describe("Rest", () => {
 					"events_url": "https://api.github.com/users/Elyspio/events{/privacy}",
 					"received_events_url": "https://api.github.com/users/Elyspio/received_events",
 					"type": "User",
-					"site_admin": false
-				}
+					"site_admin": false,
+				},
 			};
 			const ret = await new Apis.GithubWebhooksApi(undefined, "http://localhost:" + port).githubWebhooksPush(data);
 			expect(ret.status).toEqual(204);

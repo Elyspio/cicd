@@ -1,27 +1,23 @@
 import "reflect-metadata";
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import './index.scss';
-import {connect, ConnectedProps, Provider} from "react-redux";
-import {history, store, StoreState} from "./view/store";
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import "./index.scss";
+import { connect, ConnectedProps, Provider } from "react-redux";
+import { history, store, StoreState } from "./view/store";
 import Application from "./view/components/Application";
-import {StyledEngineProvider, Theme, ThemeProvider} from '@mui/material';
-import {themes} from "./config/theme";
-import {ConnectedRouter} from "connected-react-router";
-import "./config/window.d.ts"
-import {Provider as DiProvider} from 'inversify-react';
-import {container} from "./core/di";
+import { StyledEngineProvider, Theme, ThemeProvider } from "@mui/material";
+import { themes } from "./config/theme";
+import { ConnectedRouter } from "connected-react-router";
+import "./config/window.d.ts";
+import { Provider as DiProvider } from "inversify-react";
+import { container } from "./core/di";
 
-
-declare module '@mui/styles/defaultTheme' {
+declare module "@mui/styles/defaultTheme" {
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface
-	interface DefaultTheme extends Theme {
-	}
+	interface DefaultTheme extends Theme {}
 }
 
-
-const mapStateToProps = (state: StoreState) => ({theme: state.theme.current})
-
+const mapStateToProps = (state: StoreState) => ({ theme: state.theme.current });
 
 const connector = connect(mapStateToProps);
 type ReduxTypes = ConnectedProps<typeof connector>;
@@ -34,7 +30,7 @@ class Wrapper extends Component<ReduxTypes> {
 			<DiProvider container={container}>
 				<StyledEngineProvider injectFirst>
 					<ThemeProvider theme={theme}>
-						<Application/>
+						<Application />
 					</ThemeProvider>
 				</StyledEngineProvider>
 			</DiProvider>
@@ -46,11 +42,13 @@ const ConnectedWrapper = connector(Wrapper) as any;
 
 ReactDOM.render(
 	<Provider store={store}>
-		<ConnectedRouter history={history}> { /* place ConnectedRouter under Provider */}
-			<ConnectedWrapper/>
+		<ConnectedRouter history={history}>
+			{" "}
+			{/* place ConnectedRouter under Provider */}
+			<ConnectedWrapper />
 		</ConnectedRouter>
 	</Provider>,
-	document.getElementById('root')
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

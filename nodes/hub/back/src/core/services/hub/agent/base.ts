@@ -1,6 +1,6 @@
-import {Services} from "../../index";
-import {Agent, HubConfig} from "../types";
-import {EventEmitter} from "events";
+import { Services } from "../../index";
+import { Agent, HubConfig } from "../types";
+import { EventEmitter } from "events";
 
 export type AgentIdentifier<T extends Agent> = T["uri"] | T
 
@@ -8,8 +8,8 @@ export type AgentIdentifier<T extends Agent> = T["uri"] | T
 export class Base extends EventEmitter {
 
 	private EVENT = {
-		jobFinished: "JOB_FINISHED"
-	}
+		jobFinished: "JOB_FINISHED",
+	};
 	private currentId = 0;
 
 	protected get nextId() {
@@ -19,23 +19,23 @@ export class Base extends EventEmitter {
 	public async waitForJob(id: number) {
 		return new Promise<void>(resolve => {
 			super.on(this.getJobKey(id), () => {
-				resolve()
-			})
-		})
+				resolve();
+			});
+		});
 
 	}
 
 	save() {
 		Services.hub.config.agents.production = Services.hub.config.agents.production
-			.filter(a => a.uri)
-			.sort((a, b) => new Date(a.lastUptime).getTime() > new Date(b.lastUptime).getTime() ? -1 : 1)
-			.filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
+		                                                .filter(a => a.uri)
+		                                                .sort((a, b) => new Date(a.lastUptime).getTime() > new Date(b.lastUptime).getTime() ? -1 : 1)
+		                                                .filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
 
 
 		Services.hub.config.agents.builder = Services.hub.config.agents.builder
-			.filter(a => a.uri)
-			.sort((a, b) => new Date(a.lastUptime).getTime() > new Date(b.lastUptime).getTime() ? -1 : 1)
-			.filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
+		                                             .filter(a => a.uri)
+		                                             .sort((a, b) => new Date(a.lastUptime).getTime() > new Date(b.lastUptime).getTime() ? -1 : 1)
+		                                             .filter((agent, index, array) => array.findIndex(t => (t.uri === agent.uri)) === index);
 
 		return Services.hub.saveConfig();
 	}
@@ -48,20 +48,20 @@ export class Base extends EventEmitter {
 		let existAgent = Services.hub.config.agents.builder.find(x => x.uri === agent.uri);
 		if (existAgent) {
 			// @ts-ignore
-			Services.hub.config.agents[kind] = Services.hub.config.agents[kind].filter(ag => ag.uri !== agent.uri)
+			Services.hub.config.agents[kind] = Services.hub.config.agents[kind].filter(ag => ag.uri !== agent.uri);
 		}
 		// @ts-ignore
-		Services.hub.config.agents[kind].push({...agent, availability: "free", lastUptime: new Date()});
+		Services.hub.config.agents[kind].push({ ...agent, availability: "free", lastUptime: new Date() });
 		this.save();
 	}
 
 	protected baseUpdate<T extends Agent>(agent: T | T["uri"], newAgent: Partial<T>, kind: keyof HubConfig["agents"]) {
 		const obj = this.getAgent(agent, kind) as T;
-		const updated = {...obj, ...newAgent,};
+		const updated = { ...obj, ...newAgent };
 		// @ts-ignore
 		Services.hub.config.agents[kind] = [...(Services.hub.config.agents[kind] as T[]).filter(a => a.uri !== (obj as T).uri), updated];
 		this.save();
-		return updated as T
+		return updated as T;
 
 	}
 
@@ -74,11 +74,11 @@ export class Base extends EventEmitter {
 
 	protected baseList<T extends Agent>(kind: keyof HubConfig["agents"]) {
 		// @ts-ignore
-		return Services.hub.config.agents[kind] as T[]
+		return Services.hub.config.agents[kind] as T[];
 	}
 
 	private getJobKey(id) {
-		return `${this.EVENT.jobFinished}-${id}`
+		return `${this.EVENT.jobFinished}-${id}`;
 	}
 
 	private getAgent<T extends Agent>(agent: T | T["uri"], kind: keyof HubConfig["agents"]) {
@@ -93,10 +93,10 @@ export class Base extends EventEmitter {
 }
 
 export interface AgentMethods<T extends Agent> {
-	add: (agent: Omit<T, "lastUptime" | "availability">) => void
-	delete: (agent: T | T["uri"]) => void
-	update: (agent: T | T["uri"], data: Partial<T>) => T
-	keepAlive: (agent: T | T["uri"]) => void
-	get: (agent: T["uri"]) => T | undefined
-	list: () => T[]
+	add: (agent: Omit<T, "lastUptime" | "availability">) => void;
+	delete: (agent: T | T["uri"]) => void;
+	update: (agent: T | T["uri"], data: Partial<T>) => T;
+	keepAlive: (agent: T | T["uri"]) => void;
+	get: (agent: T["uri"]) => T | undefined;
+	list: () => T[];
 }
