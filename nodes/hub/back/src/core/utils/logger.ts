@@ -3,7 +3,6 @@ import * as gelfLog from "gelf-pro";
 import { globalConf } from "../../config/global";
 import { graylogConfig } from "../../config/logger";
 
-
 const level = levels();
 
 const levelMapping = {
@@ -16,32 +15,23 @@ const levelMapping = {
 
 gelfLog.setConfig(graylogConfig);
 
-
 @Appender({ name: "graylog" })
 export class ConsoleAppender extends BaseAppender {
-
 	write(data: LogEvent) {
-
 		const lvl = levelMapping[data.level.levelStr];
 
 		const msg = data.data;
 
 		let isFirstObject = typeof msg[0] === "object";
-		const message = `${globalConf.appName} - ${data.categoryName} - ` + (isFirstObject
-			? `Complex data`
-			: msg[0]);
-
+		const message = `${globalConf.appName} - ${data.categoryName} - ` + (isFirstObject ? `Complex data` : msg[0]);
 
 		gelfLog.message(message, lvl, isFirstObject ? msg[0] : { ...msg[1], app: globalConf.appName, node: data.categoryName });
 	}
-
 }
 
 type LoggerName = string | Function | { constructor: { name: string } };
 
 export function getLogger(name: LoggerName, type?: "Middleware" | "Service" | "Controller" | "Repository", autoMapping = false) {
-
-
 	const nameType = typeof name;
 	if (nameType === "object" && name.constructor?.name) {
 		name = name.constructor.name;
@@ -51,12 +41,12 @@ export function getLogger(name: LoggerName, type?: "Middleware" | "Service" | "C
 
 	const log = new Logger(`${type ? `${type} - ` : ""}${name}`);
 	log.appenders
-	   .set("console", {
-		   type: "console",
-	   })
-	   .set("std-log", {
-		   type: "graylog",
-	   });
+		.set("console", {
+			type: "console",
+		})
+		.set("std-log", {
+			type: "graylog",
+		});
 
 	return log;
 }

@@ -25,28 +25,18 @@ export type AutomationState = typeof initialState;
 const slice = createSlice({
 	initialState,
 	reducers: {
-		updateConfig: (
-			state,
-			action: PayloadAction<AutomationState["config"]>,
-		) => {
+		updateConfig: (state, action: PayloadAction<AutomationState["config"]>) => {
 			state.config = action.payload;
 		},
-		updateSources: (
-			state,
-			action: PayloadAction<AutomationState["sources"]>,
-		) => {
+		updateSources: (state, action: PayloadAction<AutomationState["sources"]>) => {
 			state.sources = action.payload;
 		},
-		updateImages: (
-			state,
-			action: PayloadAction<AutomationState["build"]>,
-		) => {
+		updateImages: (state, action: PayloadAction<AutomationState["build"]>) => {
 			state.build = action.payload;
 		},
 	},
 	name: "Automation",
-	extraReducers: (builder) => {
-	},
+	extraReducers: (builder) => {},
 });
 
 export const { reducer: automationReducer, actions: automationActions } = slice;

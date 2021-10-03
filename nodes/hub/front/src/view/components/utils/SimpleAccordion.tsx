@@ -7,15 +7,7 @@ import MuiAccordionSummary, { AccordionSummaryProps } from "@mui/material/Accord
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 
-const Accordion = styled((props: AccordionProps) => (
-	<MuiAccordion
-		disableGutters
-		elevation={0}
-		square
-		{...props}
-		children={props.children}
-	/>
-))(({ theme }) => ({
+const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} children={props.children} />)(({ theme }) => ({
 	border: `1px solid ${theme.palette.divider}`,
 	"&:not(:last-child)": {
 		borderBottom: 0,
@@ -26,17 +18,11 @@ const Accordion = styled((props: AccordionProps) => (
 }));
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
-	<MuiAccordionSummary
-		expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-		{...props}
-	/>
+	<MuiAccordionSummary expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />} {...props} />
 ))(({ theme }) => ({
 	height: 60,
 	width: "100%",
-	backgroundColor:
-		theme.palette.mode === "dark"
-			? "rgba(255, 255, 255, .05)"
-			: "rgba(0, 0, 0, .03)",
+	backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
 	flexDirection: "row-reverse",
 	"& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
 		transform: "rotate(90deg)",
@@ -59,22 +45,13 @@ type Props = {
 export function SimpleAccordion({ children, label }: Props) {
 	const [expanded, setExpanded] = React.useState<string | false>("panel1");
 
-	const handleChange =
-		(panel: string) =>
-			(event: React.SyntheticEvent, newExpanded: boolean) => {
-				setExpanded(newExpanded ? panel : false);
-			};
+	const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+		setExpanded(newExpanded ? panel : false);
+	};
 
 	return (
-		<Accordion
-			expanded={expanded === "panel1"}
-			onChange={handleChange("panel1")}
-		>
-			<AccordionSummary
-				aria-controls="panel1d-content"
-				id="panel1d-header"
-				className={"full-w"}
-			>
+		<Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
+			<AccordionSummary aria-controls="panel1d-content" id="panel1d-header" className={"full-w"}>
 				<Typography component={"div"} className={"full-w"}>
 					{label}
 				</Typography>

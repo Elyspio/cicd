@@ -5,4 +5,4 @@ export const events = {
 	config: {
 		update: "CONFIG_UPDATE",
 	},
-};
+} as const;

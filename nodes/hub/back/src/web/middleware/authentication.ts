@@ -18,25 +18,20 @@ export class UnauthorizedModel {
 	status: 401;
 }
 
-
 @Middleware()
 export class RequireLogin implements IMiddleware {
-
-
 	private static log = getLogger.middleware(RequireLogin);
 
 	@Inject()
 	authenticationService!: AuthenticationService;
 
 	public async use(@Req() req: Request, @QueryParams("token") token?: string) {
-
 		const exception = new Unauthorized("You must be logged to access to this resource see https://elyspio.fr/authentication/");
 
 		// Sanitize token param
 		if (token === "") token = undefined;
 
 		try {
-
 			const cookieAuth = req.cookies[authorization_cookie_token];
 			const headerToken = req.headers[authorization_header_token];
 
@@ -47,8 +42,7 @@ export class RequireLogin implements IMiddleware {
 			});
 
 			token = token ?? cookieAuth;
-			token = token ?? headerToken as string;
-
+			token = token ?? (headerToken as string);
 
 			if (await this.authenticationService.isAuthenticated(token)) {
 				req.auth = {
@@ -61,17 +55,15 @@ export class RequireLogin implements IMiddleware {
 			throw exception;
 		}
 	}
-
 }
 
 declare global {
 	namespace Express {
 		interface Request {
 			auth?: {
-				username: string,
-				token: string
+				username: string;
+				token: string;
 			};
 		}
 	}
 }
-

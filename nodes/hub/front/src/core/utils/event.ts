@@ -11,10 +11,7 @@ export class EventManager<T extends Event = {}> {
 		this.base.on(evt as string, callback);
 	}
 
-	public emit<event extends keyof T>(
-		evt: event,
-		...params: Parameters<T[event]>
-	) {
+	public emit<event extends keyof T>(evt: event, ...params: Parameters<T[event]>) {
 		this.base.emit(evt as string, params);
 	}
 }

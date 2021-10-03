@@ -17,7 +17,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 
-export const BASE_PATH = "http://localhost".replace(/\/+$/, "");
+export const BASE_PATH = "http://localhost:4000".replace(/\/+$/, "");
 
 /**
  *
@@ -48,11 +48,7 @@ export interface RequestArgs {
 export class BaseAPI {
 	protected configuration: Configuration | undefined;
 
-	constructor(
-		configuration?: Configuration,
-		protected basePath: string = BASE_PATH,
-		protected axios: AxiosInstance = globalAxios,
-	) {
+	constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected axios: AxiosInstance = globalAxios) {
 		if (configuration) {
 			this.configuration = configuration;
 			this.basePath = configuration.basePath || this.basePath;

@@ -67,49 +67,35 @@ export function Automate() {
 						exact
 						path="/job/build/:id"
 						render={({
-							         match: {
-								         params: { id },
-							         },
-						         }) => id && <JobBuildDetail id={Number.parseInt(id)} />}
+							match: {
+								params: { id },
+							},
+						}) => id && <JobBuildDetail id={Number.parseInt(id)} />}
 					/>
 					<Route
 						exact
 						path="/job/deploy/:id"
 						render={({
-							         match: {
-								         params: { id },
-							         },
-						         }) =>
-							id && <JobDeployDetail id={Number.parseInt(id)} />
-						}
+							match: {
+								params: { id },
+							},
+						}) => id && <JobDeployDetail id={Number.parseInt(id)} />}
 					/>
-					<Route
-						exact
-						path={"/mapping/add"}
-						render={() => <MappingCreate />}
-					/>
+					<Route exact path={"/mapping/add"} render={() => <MappingCreate />} />
 					<Route
 						exact
 						path="/mapping/:id"
 						render={({
-							         match: {
-								         params: { id },
-							         },
-						         }) => id && <MappingDisplay id={Number.parseInt(id)} />}
+							match: {
+								params: { id },
+							},
+						}) => id && <MappingDisplay id={Number.parseInt(id)} />}
 					/>
 					<Route
 						render={() => (
-							<Grid
-								container
-								justifyContent={"center"}
-								alignItems={"center"}
-								style={{ height: "100%" }}
-							>
+							<Grid container justifyContent={"center"} alignItems={"center"} style={{ height: "100%" }}>
 								<Grid item>
-									<Typography variant={"button"}>
-										Please select one item on the left to
-										see its details
-									</Typography>
+									<Typography variant={"button"}>Please select one item on the left to see its details</Typography>
 								</Grid>
 							</Grid>
 						)}

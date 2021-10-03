@@ -8,10 +8,7 @@ type Props = {
 
 function TextOverflow(props: Props & TypographyProps) {
 	return (
-		<Typography
-			{...props}
-			className={"TextOverflow " + (props.className ?? "")}
-		>
+		<Typography {...props} className={"TextOverflow " + (props.className ?? "")}>
 			<Typography component={"span"}>{props.text}</Typography>
 		</Typography>
 	);

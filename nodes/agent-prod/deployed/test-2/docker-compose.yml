@@ -1,0 +1,70 @@
+﻿version: "3.5"
+services:
+    hub:
+        hostname: hub
+        image: elyspio/cicd:hub
+        restart: unless-stopped
+        volumes:
+            - ./front/conf.js:/front/build/conf.js
+        environment:
+            GITHUB_TOKEN: ${GITHUB_TOKEN}
+            AUTHENTICATION_SERVER_URI: http://authentication-server:4000
+        container_name: cicd-hub
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=external"
+            - "traefik.http.middlewares.cicd-hud-prefix.stripprefix.prefixes=/cicd"
+            - "traefik.http.routers.cicd-hud.middlewares=cicd-hud-prefix@docker"
+            - "traefik.http.routers.cicd-hud.rule=PathPrefix(`/cicd/`)"
+            - "traefik.http.services.cicd-hud.loadbalancer.server.port=4000"
+            - "traefik.http.routers.cicd-hud.entrypoints=external"
+        networks:
+            cicd:
+            external:
+            authentication:
+
+    agent-build:
+        image: elyspio/cicd:agent-build
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./agent-build/conf.json:/back/conf.json
+        environment:
+            HTTP_PORT: 4000
+            CONF_PATH: /back/conf.json
+            DOCKER_USER: ${DOCKER_USER}
+            DOCKER_PASSWORD: ${DOCKER_PASSWORD}
+            HUD_SERVER_URL: https://elyspio.fr/cicd
+            HUD_SOCKET_URL: hub:4000
+            HUD_SOCKET_NAMESPACE: ws/agent/jobs
+            OWN_PROTOCOL: http
+        scale: 10
+        networks:
+            cicd:
+
+
+
+    agent-prod:
+        image: elyspio/cicd:agent-prod
+        restart: unless-stopped
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+            - "./agent-prod/conf.json:/back/conf.json"
+            - "/apps/own:/apps"
+        environment:
+            HTTP_PORT: 4000
+            CONF_PATH: /back/conf.json
+            DOCKER_USER: ${DOCKER_USER}
+            DOCKER_PASSWORD: ${DOCKER_PASSWORD}
+            HUD_SERVER_URL: https://elyspio.fr/cicd
+            HUD_SOCKET_URL: hub:4000
+            HUD_SOCKET_NAMESPACE: ws/agent/jobs
+            OWN_PROTOCOL: http
+        networks:
+            cicd:
+
+networks:
+    cicd:
+    external:
+        external: true
+    authentication:
+        external: true

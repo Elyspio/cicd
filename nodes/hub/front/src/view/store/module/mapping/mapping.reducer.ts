@@ -4,9 +4,7 @@ import { initMappingData, setDockerFileForRepo } from "./mapping.action";
 import { DockerBakeModel, RepoWithBranchModel } from "../../../../core/apis/backend/generated";
 
 export type MappingState = {
-	repositories: Record<RepoWithBranchModel["repo"],
-		Record<RepoWithBranchModel["branch"],
-			Omit<RepoWithBranchModel, "branch" | "repo">>>;
+	repositories: Record<RepoWithBranchModel["repo"], Record<RepoWithBranchModel["branch"], Omit<RepoWithBranchModel, "branch" | "repo">>>;
 	selected: {
 		source: {
 			repo?: string;
@@ -40,10 +38,7 @@ const initialState: MappingState = {
 const slice = createSlice({
 	initialState,
 	reducers: {
-		setSelectedType: (
-			state,
-			action: PayloadAction<MappingState["selected"]["build"]["type"]>,
-		) => {
+		setSelectedType: (state, action: PayloadAction<MappingState["selected"]["build"]["type"]>) => {
 			state.selected.build.type = action.payload;
 		},
 		setSelectedRepo: (state, action: PayloadAction<string>) => {
@@ -55,11 +50,11 @@ const slice = createSlice({
 		setDockerfiles: (state, action: PayloadAction<DockerfilesParams>) => {
 			state.selected.build.dockerfiles = action.payload;
 		},
-		setBake: (
-			state,
-			action: PayloadAction<MappingState["selected"]["build"]["bake"]>,
-		) => {
+		setBake: (state, action: PayloadAction<MappingState["selected"]["build"]["bake"]>) => {
 			state.selected.build.bake = action.payload;
+		},
+		setSelectedDeploy: (state, action: PayloadAction<MappingState["selected"]["deploy"]>) => {
+			state.selected.deploy = action.payload;
 		},
 	},
 	name: "Mapping",
@@ -92,11 +87,5 @@ const slice = createSlice({
 
 export const {
 	reducer: mappingReducer,
-	actions: {
-		setSelectedRepo,
-		setSelectedBranch,
-		setDockerfiles,
-		setBake,
-		setSelectedType,
-	},
+	actions: { setSelectedRepo, setSelectedBranch, setDockerfiles, setBake, setSelectedType, setSelectedDeploy },
 } = slice;

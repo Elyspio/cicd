@@ -1,42 +1,56 @@
 import { BuildAgent, BuildConfig } from "../types";
-import { AgentIdentifier, AgentMethods, Base } from "./base";
-import { Services } from "../../index";
+import { AgentIdentifier } from "./types";
+import { OnReady, Service } from "@tsed/common";
+import { AgentRepository } from "../../../database/repositories/agent.repository";
+import { QueueRepository } from "../../../database/repositories/queue.repository";
+import { AgentBase } from "./base";
+import { JobRepository } from "../../../database/repositories/job.repository";
 
+@Service()
+export class AgentBuild extends AgentBase implements OnReady {
+	private repositories: { agent: AgentRepository; queue: QueueRepository; job: JobRepository };
+	private id: number;
 
-export class AgentBuilder extends Base implements AgentMethods<BuildAgent> {
-
-
-	public add(agent: Omit<BuildAgent, "lastUptime" | "availability">) {
-		return super.baseAdd<BuildAgent>(agent, "builder");
+	constructor(agentRepository: AgentRepository, queueRepository: QueueRepository, jobRepository: JobRepository) {
+		super();
+		this.repositories = {
+			agent: agentRepository,
+			queue: queueRepository,
+			job: jobRepository,
+		};
 	}
 
-	public update(agent: AgentIdentifier<BuildAgent>, newAgent: Partial<BuildAgent>) {
-		return super.baseUpdate<BuildAgent>(agent, newAgent, "builder");
+	public async $onReady() {
+		const jobs = await this.repositories.job.list("builds");
+		this.id = jobs.reduce((acc, val) => {
+			if (val.id > acc) return val.id;
+			return acc;
+		}, 0);
 	}
 
-	public delete(agent: AgentIdentifier<BuildAgent>) {
-		super.baseDelete<BuildAgent>(agent, "builder");
+	public async add(agent: Omit<BuildAgent, "lastUptime" | "availability">) {
+		await this.repositories.agent.add("builds", agent);
 	}
 
-	public list(): BuildAgent[] {
-		return this.baseList<BuildAgent>("builder");
+	public update(uri: AgentIdentifier<BuildAgent>, data: Partial<BuildAgent>) {
+		return this.repositories.agent.update("builds", { ...data, uri });
 	}
 
-	public keepAlive(agent: AgentIdentifier<BuildAgent>): void {
-		this.update(agent, { availability: "free", lastUptime: new Date() });
+	public async delete(uri: AgentIdentifier<BuildAgent>) {
+		await this.repositories.agent.delete("builds", uri);
+	}
+
+	public list(): Promise<BuildAgent[]> {
+		return this.repositories.agent.list("builds");
 	}
 
 	public async askBuild(config: BuildConfig) {
-		const id = super.nextId;
-		Services.hub.config.queues.builds.enqueue({ config: config, createdAt: new Date(), finishedAt: null, startedAt: null, id });
-		await super.save();
+		const id = this.id++;
+		await this.repositories.queue.enqueue("builds", { id, config });
 		return id;
 	}
 
-	public get(uri: AgentIdentifier<BuildAgent>) {
-		return Services.hub.config.agents.builder.find(a => a.uri === uri);
+	public async get(uri: AgentIdentifier<BuildAgent>) {
+		return (await this.list()).find((a) => a.uri === uri);
 	}
-
-
 }
-

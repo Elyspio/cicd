@@ -21,12 +21,11 @@ function StatusChip({ status }: StatusChipProps) {
 		theme: state.theme.current,
 	}));
 
-	const texts: { [key in typeof status]: { label: string; color: string } } =
-		{
-			down: { label: "Down", color: palette.error[theme] },
-			free: { label: "Available", color: palette.success[theme] },
-			running: { label: "Working", color: palette.primary[theme] },
-		};
+	const texts: { [key in typeof status]: { label: string; color: string } } = {
+		down: { label: "Down", color: palette.error[theme] },
+		free: { label: "Available", color: palette.success[theme] },
+		running: { label: "Working", color: palette.primary[theme] },
+	};
 
 	return (
 		<Chip
@@ -44,11 +43,7 @@ export function AgentItem(props: Props) {
 	return (
 		<ListItem className={"AgentItem"}>
 			<ListItemIcon className={"Avatar"}>
-				{props.type === "production" ? (
-					<DeployIcon width={48} height={48} />
-				) : (
-					<BuildIcon width={48} height={48} />
-				)}
+				{props.type === "production" ? <DeployIcon width={48} height={48} /> : <BuildIcon width={48} height={48} />}
 			</ListItemIcon>
 			<Grid container direction={"column"}>
 				<Grid item>

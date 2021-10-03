@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-
 import { Configuration } from "./configuration";
 import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
@@ -109,7 +108,7 @@ export interface DockerfilesConfigModel {
 	 * @type {Array<DockerFileConfigModel>}
 	 * @memberof DockerfilesConfigModel
 	 */
-	dockerfiles: Array<DockerFileConfigModel>;
+	files: Array<DockerFileConfigModel>;
 	/**
 	 * Platforms available for the future image
 	 * @type {Array<string>}
@@ -130,7 +129,7 @@ export interface DockerfilesConfigModel {
  */
 export enum DockerfilesConfigModelPlatformsEnum {
 	Arm64 = "linux/arm64",
-	Amd64 = "linux/amd64"
+	Amd64 = "linux/amd64",
 }
 
 /**
@@ -189,7 +188,7 @@ export interface GithubDockerModel {
  * BuildAgentApi - axios parameter creator
  * @export
  */
-export const BuildAgentApiAxiosParamCreator = function(configuration?: Configuration) {
+export const BuildAgentApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 * Build and push a project following a configuration
@@ -197,9 +196,9 @@ export const BuildAgentApiAxiosParamCreator = function(configuration?: Configura
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		buildAgentBuild: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
+		build: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'buildConfigModel' is not null or undefined
-			assertParamExists("buildAgentBuild", "buildConfigModel", buildConfigModel);
+			assertParamExists("build", "buildConfigModel", buildConfigModel);
 			const localVarPath = `/api/build-agent/build`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -208,16 +207,23 @@ export const BuildAgentApiAxiosParamCreator = function(configuration?: Configura
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+			const localVarRequestOptions = {
+				method: "POST",
+				...baseOptions,
+				...options,
+			};
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
-
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers,
+			};
 			localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration);
 
 			return {
@@ -232,7 +238,7 @@ export const BuildAgentApiAxiosParamCreator = function(configuration?: Configura
  * BuildAgentApi - functional programming interface
  * @export
  */
-export const BuildAgentApiFp = function(configuration?: Configuration) {
+export const BuildAgentApiFp = function (configuration?: Configuration) {
 	const localVarAxiosParamCreator = BuildAgentApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -241,8 +247,8 @@ export const BuildAgentApiFp = function(configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.buildAgentBuild(buildConfigModel, options);
+		async build(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.build(buildConfigModel, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
@@ -252,7 +258,7 @@ export const BuildAgentApiFp = function(configuration?: Configuration) {
  * BuildAgentApi - factory interface
  * @export
  */
-export const BuildAgentApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const BuildAgentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = BuildAgentApiFp(configuration);
 	return {
 		/**
@@ -261,8 +267,8 @@ export const BuildAgentApiFactory = function(configuration?: Configuration, base
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<Array<string>> {
-			return localVarFp.buildAgentBuild(buildConfigModel, options).then((request) => request(axios, basePath));
+		build(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<Array<string>> {
+			return localVarFp.build(buildConfigModel, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -281,9 +287,9 @@ export class BuildAgentApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof BuildAgentApi
 	 */
-	public buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any) {
-		return BuildAgentApiFp(this.configuration).buildAgentBuild(buildConfigModel, options).then((request) => request(this.axios, this.basePath));
+	public build(buildConfigModel: BuildConfigModel, options?: any) {
+		return BuildAgentApiFp(this.configuration)
+			.build(buildConfigModel, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
-

@@ -19,40 +19,28 @@ export class AuthenticationService {
 	}
 
 	public getUsername() {
-		return this.authenticationApi.clients.user
-		           .getUserInfo("username")
-		           .then((x) => x.data);
+		return this.authenticationApi.clients.user.getUserInfo("username").then((x) => x.data);
 	}
 
 	public getToken() {
-		return this.authenticationApi.clients.user
-		           .getUserInfo("token")
-		           .then((x) => x.data);
+		return this.authenticationApi.clients.user.getUserInfo("token").then((x) => x.data);
 	}
 
 	public getCredentials(username: string) {
-		return this.authenticationApi.clients.user
-		           .getUserCredentials(username)
-		           .then((x) => x.data);
+		return this.authenticationApi.clients.user.getUserCredentials(username).then((x) => x.data);
 	}
 
 	public getSettings(username: string) {
-		return this.authenticationApi.clients.user
-		           .getUserSettings(username)
-		           .then((x) => x.data);
+		return this.authenticationApi.clients.user.getUserSettings(username).then((x) => x.data);
 	}
 
 	public async getUserTheme(username: string) {
 		let theme = await this.themeService.getThemeFromSystem();
-		return this.authenticationApi.clients.user
-		           .getUserTheme(username, theme)
-		           .then((x) => x.data.theme);
+		return this.authenticationApi.clients.user.getUserTheme(username, theme).then((x) => x.data.theme);
 	}
 
 	public isLogged() {
-		return this.authenticationApi.clients.login
-		           .validToken()
-		           .then((x) => x.data);
+		return this.authenticationApi.clients.login.validToken().then((x) => x.data);
 	}
 
 	public async logout() {

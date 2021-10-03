@@ -6,16 +6,15 @@ const port = 4000;
 
 const buildParam = {
 	docker: {
-		dockerfiles: [{
-			path: "Dockerfile",
-			wd: ".",
-			image: "cicd",
-			tag: "test",
-		}],
-		platforms: [
-			DockerConfigModelPlatformsEnum.Amd64,
-			DockerConfigModelPlatformsEnum.Arm64,
+		dockerfiles: [
+			{
+				path: "Dockerfile",
+				wd: ".",
+				image: "cicd",
+				tag: "test",
+			},
 		],
+		platforms: [DockerConfigModelPlatformsEnum.Amd64, DockerConfigModelPlatformsEnum.Arm64],
 		username: "elyspio",
 	},
 	github: {
@@ -31,15 +30,12 @@ const deployParam = {
 };
 
 describe("Rest", () => {
-
 	beforeAll(async () => {
 		// const platform = await PlatformExpress.bootstrap(Server, {httpPort: port, port});
 		// await platform.listen();
 	});
 
-
 	describe("POST /core/automate/operation/deployment", () => {
-
 		it("No Content", async () => {
 			const data: Apis.DeployConfigModel = deployParam;
 			const ret = await new Apis.OperationApi(undefined, "http://localhost:" + port).operationDeploy(data);
@@ -47,9 +43,7 @@ describe("Rest", () => {
 		});
 	});
 
-
 	describe("POST /core/automate/operation/build", () => {
-
 		it("No Content", async () => {
 			const data: Apis.BuildConfigModel = buildParam;
 			const ret = await new Apis.OperationApi(undefined, "http://localhost:" + port).operationStart(data);
@@ -57,11 +51,8 @@ describe("Rest", () => {
 		});
 	});
 
-
 	describe("POST /core/automate/operation/register", () => {
-
 		it("Success", async () => {
-
 			const data: Apis.InlineObject2 = {
 				build: buildParam,
 				deploy: deployParam,
@@ -70,5 +61,4 @@ describe("Rest", () => {
 			expect(ret.status).toEqual(200);
 		});
 	});
-
 });

@@ -1,6 +1,7 @@
 import { promises, readFileSync, writeFileSync } from "fs";
 import * as path from "path";
 import * as os from "os";
+import { Service } from "@tsed/common";
 
 const { writeFile, readFile } = promises;
 
@@ -8,8 +9,8 @@ export const files = {
 	conf: process.env.CONF_PATH ?? path.resolve(__dirname, "../../..", "conf.json"),
 } as const;
 
+@Service()
 export class StorageService {
-
 	store(name: string, data: string | object, sync: boolean = false) {
 		if (typeof data === "object") data = JSON.stringify(data, null, 2);
 
@@ -21,7 +22,7 @@ export class StorageService {
 	}
 
 	async read<T = undefined>(name: string) {
-		return await readFile(name).then(x => JSON.parse(x.toString()));
+		return await readFile(name).then((x) => JSON.parse(x.toString()));
 	}
 
 	readSync<T>(name: string) {

@@ -4,15 +4,14 @@ import { Response } from "express";
 import { middlewares } from "./middleware/common/raw";
 import { rootDir, webConfig } from "../config/web";
 import * as path from "path";
+import { databaseConfig } from "../config/db";
 
 const frontPath = process.env.FRONT_PATH ?? path.resolve(rootDir, "..", "..", "..", "front", "build");
 
-
 $log.name = process.env.APP_NAME ?? "Automatize -- hub";
 
-@Configuration(webConfig)
+@Configuration({ ...webConfig, typeorm: databaseConfig })
 export class Server implements BeforeRoutesInit, AfterRoutesInit {
-
 	@Inject()
 	app: PlatformApplication;
 

@@ -5,24 +5,22 @@ export function deepClone<T extends object>(obj: T, hash = new WeakMap()): T {
 		obj instanceof Set
 			? new Set(obj) // See note about this!
 			: obj instanceof Map
-				? new Map(
-					Array.from(obj, ([key, val]) => [key, deepClone(val, hash)]),
-				)
-				: obj instanceof Date
-					? new Date(obj)
-					: obj instanceof RegExp
-						? new RegExp(obj.source, obj.flags)
-						: // ... add here any specific treatment for other classes ...
-						// and finally a catch-all:
-						// @ts-ignore
-						obj.constructor
-							? obj.constructor()
-							: Object.create(null);
+			? new Map(Array.from(obj, ([key, val]) => [key, deepClone(val, hash)]))
+			: obj instanceof Date
+			? new Date(obj)
+			: obj instanceof RegExp
+			? new RegExp(obj.source, obj.flags)
+			: // ... add here any specific treatment for other classes ...
+			// and finally a catch-all:
+			// @ts-ignore
+			obj.constructor
+			? obj.constructor()
+			: Object.create(null);
 	hash.set(obj, result);
 	return Object.assign(
 		result,
 		...Object.keys(obj).map((key) => ({
 			[key]: deepClone((obj as any)[key], hash),
-		})),
+		}))
 	);
 }

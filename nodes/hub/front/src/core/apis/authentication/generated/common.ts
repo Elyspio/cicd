@@ -27,16 +27,9 @@ export const DUMMY_BASE_URL = "https://example.com";
  * @throws {RequiredError}
  * @export
  */
-export const assertParamExists = function(
-	functionName: string,
-	paramName: string,
-	paramValue: unknown,
-) {
+export const assertParamExists = function (functionName: string, paramName: string, paramValue: unknown) {
 	if (paramValue === null || paramValue === undefined) {
-		throw new RequiredError(
-			paramName,
-			`Required parameter ${paramName} was null or undefined when calling ${functionName}.`,
-		);
+		throw new RequiredError(paramName, `Required parameter ${paramName} was null or undefined when calling ${functionName}.`);
 	}
 };
 
@@ -44,16 +37,9 @@ export const assertParamExists = function(
  *
  * @export
  */
-export const setApiKeyToObject = async function(
-	object: any,
-	keyParamName: string,
-	configuration?: Configuration,
-) {
+export const setApiKeyToObject = async function (object: any, keyParamName: string, configuration?: Configuration) {
 	if (configuration && configuration.apiKey) {
-		const localVarApiKeyValue =
-			typeof configuration.apiKey === "function"
-				? await configuration.apiKey(keyParamName)
-				: await configuration.apiKey;
+		const localVarApiKeyValue = typeof configuration.apiKey === "function" ? await configuration.apiKey(keyParamName) : await configuration.apiKey;
 		object[keyParamName] = localVarApiKeyValue;
 	}
 };
@@ -62,10 +48,7 @@ export const setApiKeyToObject = async function(
  *
  * @export
  */
-export const setBasicAuthToObject = function(
-	object: any,
-	configuration?: Configuration,
-) {
+export const setBasicAuthToObject = function (object: any, configuration?: Configuration) {
 	if (configuration && (configuration.username || configuration.password)) {
 		object["auth"] = {
 			username: configuration.username,
@@ -78,15 +61,9 @@ export const setBasicAuthToObject = function(
  *
  * @export
  */
-export const setBearerAuthToObject = async function(
-	object: any,
-	configuration?: Configuration,
-) {
+export const setBearerAuthToObject = async function (object: any, configuration?: Configuration) {
 	if (configuration && configuration.accessToken) {
-		const accessToken =
-			typeof configuration.accessToken === "function"
-				? await configuration.accessToken()
-				: await configuration.accessToken;
+		const accessToken = typeof configuration.accessToken === "function" ? await configuration.accessToken() : await configuration.accessToken;
 		object["Authorization"] = "Bearer " + accessToken;
 	}
 };
@@ -95,17 +72,10 @@ export const setBearerAuthToObject = async function(
  *
  * @export
  */
-export const setOAuthToObject = async function(
-	object: any,
-	name: string,
-	scopes: string[],
-	configuration?: Configuration,
-) {
+export const setOAuthToObject = async function (object: any, name: string, scopes: string[], configuration?: Configuration) {
 	if (configuration && configuration.accessToken) {
 		const localVarAccessTokenValue =
-			typeof configuration.accessToken === "function"
-				? await configuration.accessToken(name, scopes)
-				: await configuration.accessToken;
+			typeof configuration.accessToken === "function" ? await configuration.accessToken(name, scopes) : await configuration.accessToken;
 		object["Authorization"] = "Bearer " + localVarAccessTokenValue;
 	}
 };
@@ -114,7 +84,7 @@ export const setOAuthToObject = async function(
  *
  * @export
  */
-export const setSearchParams = function(url: URL, ...objects: any[]) {
+export const setSearchParams = function (url: URL, ...objects: any[]) {
 	const searchParams = new URLSearchParams(url.search);
 	for (const object of objects) {
 		for (const key in object) {
@@ -128,26 +98,18 @@ export const setSearchParams = function(url: URL, ...objects: any[]) {
  *
  * @export
  */
-export const serializeDataIfNeeded = function(
-	value: any,
-	requestOptions: any,
-	configuration?: Configuration,
-) {
+export const serializeDataIfNeeded = function (value: any, requestOptions: any, configuration?: Configuration) {
 	const nonString = typeof value !== "string";
 	const needsSerialization =
-		nonString && configuration && configuration.isJsonMime
-			? configuration.isJsonMime(requestOptions.headers["Content-Type"])
-			: nonString;
-	return needsSerialization
-		? JSON.stringify(value !== undefined ? value : {})
-		: value || "";
+		nonString && configuration && configuration.isJsonMime ? configuration.isJsonMime(requestOptions.headers["Content-Type"]) : nonString;
+	return needsSerialization ? JSON.stringify(value !== undefined ? value : {}) : value || "";
 };
 
 /**
  *
  * @export
  */
-export const toPathString = function(url: URL) {
+export const toPathString = function (url: URL) {
 	return url.pathname + url.search + url.hash;
 };
 
@@ -155,16 +117,8 @@ export const toPathString = function(url: URL) {
  *
  * @export
  */
-export const createRequestFunction = function(
-	axiosArgs: RequestArgs,
-	globalAxios: AxiosInstance,
-	BASE_PATH: string,
-	configuration?: Configuration,
-) {
-	return (
-		axios: AxiosInstance = globalAxios,
-		basePath: string = BASE_PATH,
-	) => {
+export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxios: AxiosInstance, BASE_PATH: string, configuration?: Configuration) {
+	return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
 		const axiosRequestArgs = {
 			...axiosArgs.options,
 			url: (configuration?.basePath || basePath) + axiosArgs.url,

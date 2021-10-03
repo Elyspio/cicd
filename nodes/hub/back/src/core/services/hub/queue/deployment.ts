@@ -1,25 +1,41 @@
 import { DeployConfig, Job } from "../types";
-import { QueueBase, QueueIdentifier, QueueMethod } from "./base";
+import { QueueIdentifier } from "./types";
+import { Service } from "@tsed/common";
+import { QueueRepository } from "../../../database/repositories/queue.repository";
 
+type DeployJob = Job<DeployConfig>;
 
-type DeployJob = Job<DeployConfig>
+@Service()
+export class QueueProduction {
+	private repositories: { queues: QueueRepository };
 
-export class QueueDeployment extends QueueBase implements QueueMethod<DeployJob> {
-
-	public add(agent: Omit<DeployJob, "lastUptime" | "availability">) {
-		return super.baseAdd<DeployJob>(agent, "deployments");
+	constructor(queues: QueueRepository) {
+		this.repositories = {
+			queues,
+		};
 	}
 
-	public update(agent: QueueIdentifier<DeployJob>, newAgent: Partial<DeployJob>) {
-		return super.baseUpdate<DeployJob>(agent, newAgent, "deployments");
+	public enqueue(agent: Omit<DeployJob, "lastUptime" | "availability">) {
+		return this.repositories.queues.enqueue("deployments", agent);
+	}
+
+	public update(id: QueueIdentifier<DeployJob>, newAgent: Partial<DeployJob>) {
+		return this.repositories.queues.update("deployments", { ...newAgent, id });
 	}
 
 	public delete(agent: QueueIdentifier<DeployJob>) {
-		super.baseDelete<DeployJob>(agent, "deployments");
+		return this.repositories.queues.delete("deployments", agent);
 	}
 
-	public list(): DeployJob[] {
-		return this.baseList<DeployJob>("deployments");
+	public list(): Promise<DeployJob[]> {
+		return this.repositories.queues.list("deployments");
+	}
+
+	public async dequeue(): Promise<DeployJob | null> {
+		const data = await this.list();
+		const last = data.shift();
+		if (!last) return null;
+		await this.delete(last.id);
+		return last;
 	}
 }
-

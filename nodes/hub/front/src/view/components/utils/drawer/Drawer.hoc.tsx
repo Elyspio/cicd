@@ -17,10 +17,7 @@ function Actions(props: { elements: WithDrawerProps["actions"] }) {
 	return (
 		<Box className={"Actions"}>
 			{props.elements.map((action) => (
-				<ActionComponent
-					key={action.description.children?.toString()}
-					{...action.component}
-				>
+				<ActionComponent key={action.description.children?.toString()} {...action.component}>
 					<ActionDescription children={action.description.children} />
 				</ActionComponent>
 			))}
@@ -31,20 +28,14 @@ function Actions(props: { elements: WithDrawerProps["actions"] }) {
 export function withDrawer({ component, title, actions }: WithDrawerProps) {
 	return (
 		<Box className={"Drawer-hoc"}>
-			<Drawer
-				position={"right"}
-				actionsComponent={<Actions elements={actions} />}
-			>
+			<Drawer position={"right"} actionsComponent={<Actions elements={actions} />}>
 				<div className="content">{component}</div>
 			</Drawer>
 		</Box>
 	);
 }
 
-export function createDrawerAction(
-	name: string,
-	config: ActionComponentProps,
-): WithDrawerProps["actions"][number] {
+export function createDrawerAction(name: string, config: ActionComponentProps): WithDrawerProps["actions"][number] {
 	return {
 		description: { children: name },
 		component: config,

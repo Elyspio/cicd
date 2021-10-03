@@ -7,7 +7,6 @@ const instance = axios.create({
 	withCredentials: true,
 });
 
-
 @Service()
 export class AuthenticationApiClient {
 	public readonly client: IAuthenticationApi;
@@ -16,7 +15,6 @@ export class AuthenticationApiClient {
 		this.client = new IAuthenticationApi(undefined, authorization_server_url, instance);
 	}
 }
-
 
 @Service()
 export class UsersApiClient {

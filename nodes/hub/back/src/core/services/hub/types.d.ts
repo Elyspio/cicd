@@ -1,6 +1,5 @@
 import { IQueue as Queue } from "../../utils/data.types";
 
-
 export interface ProductionAgentModelAddAbilities {
 	type: "docker" | "docker-compose";
 	dockerCompose?: ProductionAgentModelAddAbilitiesDockerCompose;
@@ -10,104 +9,101 @@ export interface ProductionAgentModelAddAbilitiesDockerCompose {
 	isDockerComposeIntegratedToCli: boolean;
 }
 
-export interface ProductionAgent extends Agent {
+export interface DeployAgent extends Agent {
 	abilities: ProductionAgentModelAddAbilities[];
 	folders: {
-		apps: string[]
+		apps: string[];
 	};
 }
-
 
 export interface BuildAgent extends Agent {
 	abilities: ("docker" | "docker-buildx")[];
 }
 
 export interface Agent {
-	uri: string,
-	availability: "down" | "running" | "free",
-	lastUptime: Date
+	uri: string;
+	availability: "down" | "running" | "free";
+	lastUptime: Date;
 }
 
-interface Config {
-
-}
-
+interface Config {}
 
 export type Dockerfiles = {
 	files: {
-		path: string,
-		wd: string
-		image: string
-		tag?: string
-	}[],
-	username: string,
-	platforms: string[]
+		path: string;
+		wd: string;
+		image: string;
+		tag?: string;
+	}[];
+	username: string;
+	platforms: string[];
 };
 
 export type BakeBuild = {
-	bakeFilePath: string
+	bakeFilePath: string;
 };
 
 export interface BuildConfig extends Config {
 	github: {
-		remote: string,
-		branch: string,
-		commit?: string
-	},
-	dockerfiles?: Dockerfiles,
-	bake?: BakeBuild
+		remote: string;
+		branch: string;
+		commit?: string;
+	};
+	dockerfiles?: Dockerfiles;
+	bake?: BakeBuild;
 }
 
-export interface DeployConfig extends Config, Pick<ProductionAgent, "uri"> {
+export interface DeployConfig extends Config, Pick<DeployAgent, "uri"> {
 	docker?: {
 		compose?: {
-			path: string
-		}
+			path: string;
+		};
 	};
 }
 
 export type Timestamp = {
-	createdAt: Date,
-	startedAt: Date | null,
-	finishedAt: Date | null
-}
-export type WithId<T> = T & { id: number }
+	createdAt: Date;
+	startedAt: Date | null;
+	finishedAt: Date | null;
+};
+export type WithId<T> = T & { id: number };
 //export type Job<T extends Config> = ConfigWithId<T> & Timestamp
-export type Job<T extends Config> = WithId<Timestamp> & { config: T }
+export type Job<T extends Config = {}> = WithId<Timestamp> & { config: T };
 
 type Mapping = {
-	build: BuildConfig,
-	deploy: DeployConfig,
-	id: number
+	build: BuildConfig;
+	deploy: DeployConfig;
+	id: number;
 };
 
 export interface HubConfig {
 	// List of known agents
 	agents: {
-		production: ProductionAgent[],
-		builder: BuildAgent[]
-	},
+		deployments: DeployAgent[];
+		builds: BuildAgent[];
+	};
 	// Lists of jobs that will get processed once a agent is available
 	queues: {
-		builds: Queue<Job<BuildConfig>>
-		deployments: Queue<Job<DeployConfig>>
-	},
+		builds: Queue<Job<BuildConfig>>;
+		deployments: Queue<Job<DeployConfig>>;
+	};
 	// Running and finished jobs
 	jobs: {
-		builds: Job<BuildConfig>[],
-		deployments: Job<DeployConfig>[]
-	}
+		builds: Job<BuildConfig>[];
+		deployments: Job<DeployConfig>[];
+	};
 	// Mapping between a build (Github + docker image build) and a deployment
-	mappings: Mapping[]
+	mappings: Mapping[];
 }
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
-
-export type HubConfigExport = Modify<HubConfig, {
-	queues: {
-		builds: Array<Job<BuildConfig>>
-		deployments: Array<Job<DeployConfig>>
-	},
-}>
-
+export type HubConfigExport = Modify<
+	HubConfig,
+	{
+		queues: {
+			builds: Array<Job<BuildConfig>>;
+			deployments: Array<Job<DeployConfig>>;
+		};
+	}
+>;

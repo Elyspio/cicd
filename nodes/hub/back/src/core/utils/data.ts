@@ -42,7 +42,7 @@ export class Stack<T> extends Collection<T> implements IStack<T> {
 }
 
 export class Queue<T> extends Collection<T> implements IQueue<T> {
-	constructor(private capacity: number = 1e3) {
+	constructor(private capacity: number = 1e3, { onD }) {
 		super();
 	}
 
@@ -64,24 +64,21 @@ export class Queue<T> extends Collection<T> implements IQueue<T> {
 	}
 }
 
-
 let mutex = {
 	locked: false,
 };
 
-
 export class CustomSet<T extends Comparable<T>> {
 	private content: Array<T>;
 
-	constructor(private options?: { data?: Iterable<T>, lock?: boolean }) {
+	constructor(private options?: { data?: Iterable<T>; lock?: boolean }) {
 		this.content = new Array<T>(...(this.options?.data ?? []));
 	}
 
 	add(obj: T) {
 		if (this.options?.lock) {
 			mutex.locked = true;
-			while (mutex.locked) {
-			}
+			while (mutex.locked) {}
 		}
 
 		if (!this.contains(obj)) {
@@ -96,11 +93,10 @@ export class CustomSet<T extends Comparable<T>> {
 	contains(obj: T): boolean {
 		if (this.options?.lock) {
 			mutex.locked = true;
-			while (mutex.locked) {
-			}
+			while (mutex.locked) {}
 		}
 
-		const found = this.content.find(x => x.equal(obj)) !== undefined;
+		const found = this.content.find((x) => x.equal(obj)) !== undefined;
 
 		if (this.options?.lock) {
 			mutex.locked = false;
@@ -116,16 +112,13 @@ export class CustomSet<T extends Comparable<T>> {
 	remove(obj: T) {
 		if (this.options?.lock) {
 			mutex.locked = true;
-			while (mutex.locked) {
-			}
+			while (mutex.locked) {}
 		}
 
-		this.content = this.content.filter(f => f.equal(obj));
+		this.content = this.content.filter((f) => f.equal(obj));
 
 		if (this.options?.lock) {
 			mutex.locked = false;
 		}
 	}
-
-
 }

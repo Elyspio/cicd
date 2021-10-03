@@ -4,7 +4,6 @@ export interface ICollection<T> {
 	size(): number;
 }
 
-
 export interface IQueue<T> extends ICollection<T> {
 	storage: T[];
 

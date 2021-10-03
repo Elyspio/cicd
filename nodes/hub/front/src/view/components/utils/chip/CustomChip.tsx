@@ -33,16 +33,7 @@ type Props = {
 	item?: boolean;
 };
 
-export function CustomChip({
-	                           onClick,
-	                           icon,
-	                           label,
-	                           title,
-	                           color,
-	                           className,
-	                           fontWeight,
-	                           item,
-                           }: Props) {
+export function CustomChip({ onClick, icon, label, title, color, className, fontWeight, item }: Props) {
 	const appTheme = useTheme();
 	const theme = useAppSelector((s) => s.theme.current);
 
@@ -53,11 +44,11 @@ export function CustomChip({
 	const style: CSSProperties =
 		theme === "light"
 			? {
-				backgroundColor: color,
-			}
+					backgroundColor: color,
+			  }
 			: {
-				color: color,
-			};
+					color: color,
+			  };
 
 	return (
 		<StyledGrid

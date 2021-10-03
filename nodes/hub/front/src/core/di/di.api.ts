@@ -5,6 +5,4 @@ import { container } from "./index";
 
 container.bind<CicdApi>(DiKeysApi.cicd).to(CicdApi);
 
-container
-	.bind<AuthenticationApi>(DiKeysApi.authentication)
-	.to(AuthenticationApi);
+container.bind<AuthenticationApi>(DiKeysApi.authentication).to(AuthenticationApi);

@@ -18,22 +18,11 @@ function Application() {
 	const { logged, theme, themeIcon } = useAppSelector((s) => ({
 		logged: s.authentication.logged,
 		theme: s.theme.current,
-		themeIcon:
-			s.theme.current === "dark" ? (
-				<Brightness5Icon />
-			) : (
-				<Brightness3Icon />
-			),
+		themeIcon: s.theme.current === "dark" ? <Brightness5Icon /> : <Brightness3Icon />,
 	}));
 
-	const login = React.useCallback(
-		() => dispatch(logged ? logout() : loginAction()),
-		[logged, dispatch],
-	);
-	const toggleTheme = React.useCallback(
-		() => dispatch(toggleThemeAction()),
-		[dispatch],
-	);
+	const login = React.useCallback(() => dispatch(logged ? logout() : loginAction()), [logged, dispatch]);
+	const toggleTheme = React.useCallback(() => dispatch(toggleThemeAction()), [dispatch]);
 
 	React.useEffect(() => updateToastTheme(theme), [theme]);
 
@@ -53,14 +42,14 @@ function Application() {
 			createDrawerAction("Logout", {
 				icon: <Logout fill={"currentColor"} />,
 				onClick: login,
-			}),
+			})
 		);
 	} else {
 		actions.push(
 			createDrawerAction("Login", {
 				icon: <Login fill={"currentColor"} />,
 				onClick: login,
-			}),
+			})
 		);
 	}
 

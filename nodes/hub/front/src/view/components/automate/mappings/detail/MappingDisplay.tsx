@@ -15,9 +15,7 @@ type MappingDisplayProps = {
 
 export function MappingDisplay({ id }: MappingDisplayProps) {
 	const { data, logged } = useAppSelector((s) => ({
-		data: s.automation.config?.mappings.find(
-			(mapping) => mapping.id === id,
-		),
+		data: s.automation.config?.mappings.find((mapping) => mapping.id === id),
 		logged: s.authentication.logged,
 	}));
 
@@ -43,26 +41,12 @@ export function MappingDisplay({ id }: MappingDisplayProps) {
 				</>
 			) : (
 				<>
-					<Grid
-						container
-						className={"no-logged"}
-						justifyContent={"center"}
-						alignItems={"center"}
-						direction={"column"}
-						spacing={4}
-					>
+					<Grid container className={"no-logged"} justifyContent={"center"} alignItems={"center"} direction={"column"} spacing={4}>
 						<Grid item>
-							<Typography>
-								You must be logged to see your mappings
-							</Typography>
+							<Typography>You must be logged to see your mappings</Typography>
 						</Grid>
 						<Grid item>
-							<Button
-								size={"large"}
-								color={"primary"}
-								variant={"outlined"}
-								onClick={log}
-							>
+							<Button size={"large"} color={"primary"} variant={"outlined"} onClick={log}>
 								Login
 							</Button>
 						</Grid>

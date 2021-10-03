@@ -5,20 +5,13 @@ type ToastOnTypes = "error" | "success" | "pending";
 
 type ToastOnParam = { [key in ToastOnTypes]?: string };
 
-export function ToastOn(
-	on: ToastOnParam,
-	config?: { concatArgs?: boolean | string[] },
-) {
-	return function(
-		target: any,
-		prop: string,
-		descriptor?: PropertyDescriptor,
-	) {
+export function ToastOn(on: ToastOnParam, config?: { concatArgs?: boolean | string[] }) {
+	return function (target: any, prop: string, descriptor?: PropertyDescriptor) {
 		if (descriptor?.value) {
 			const originalMethod = descriptor.value;
 
 			// Redefine the method value with our own
-			descriptor.value = function(...args: any[]) {
+			descriptor.value = function (...args: any[]) {
 				// Execute the method with its initial context and arguments
 				// Return value is stored into a variable instead of being passed to the execution stack
 				function handleError(err: Error) {
@@ -28,10 +21,7 @@ export function ToastOn(
 						if (process.env.NODE_ENV === "development") {
 							msg += `: ${prop}`;
 							if (config?.concatArgs && args.length > 0) {
-								msg += `\nArguments: ${getArgsStr(
-									originalMethod,
-									args,
-								)}`;
+								msg += `\nArguments: ${getArgsStr(originalMethod, args)}`;
 							}
 							msg += `\n${err.name}: ${err.message}`;
 						}
@@ -46,10 +36,7 @@ export function ToastOn(
 						if (process.env.NODE_ENV === "development") {
 							msg += `: ${prop}`;
 							if (config?.concatArgs && args.length > 0) {
-								msg += `\nArguments: ${getArgsStr(
-									originalMethod,
-									args,
-								)}`;
+								msg += `\nArguments: ${getArgsStr(originalMethod, args)}`;
 							}
 						}
 						toast.success(msg);
@@ -59,10 +46,7 @@ export function ToastOn(
 				try {
 					let result = originalMethod.apply(this, args);
 
-					if (
-						typeof result === "object" &&
-						typeof result.then === "function"
-					) {
+					if (typeof result === "object" && typeof result.then === "function") {
 						const promise = result.then((ret: any) => {
 							handleSuccess();
 							return ret;

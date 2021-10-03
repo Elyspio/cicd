@@ -1,64 +1,68 @@
-import { BodyParams, Controller, Get, Post } from "@tsed/common";
+import { BodyParams, Controller, Delete, Get, PathParams, Post } from "@tsed/common";
 import { Name, Required, Returns } from "@tsed/schema";
-import { Services } from "../../../core/services";
 import { BuildConfigModel, DeployConfigModel, HubConfig, MappingModel } from "./model";
 
-const examples: { build: BuildConfigModel } = {
-	build: {
-		dockerfiles: {
-			files: [{
-				path: "Dockerfile",
-				wd: ".",
-				image: "automatize-github-docker",
-				tag: "test",
-			}],
-			platforms: ["linux/amd64", "linux/arm64"],
-			username: "elyspio",
-		},
-		github: {
-			remote: "https://github.com/Elyspio/test.git",
-			branch: "master",
-		},
-	},
-};
-
+import { AgentBuild } from "../../../core/services/hub/agent/builder";
+import { AgentProduction } from "../../../core/services/hub/agent/production";
+import { Mappings } from "../../../core/services/hub/mapping/mappings";
+import { ConfigService } from "../../../core/services/hub/config.service";
 
 @Controller("/automate/operation")
 @Name("Operation")
 export class AutomationController {
+	private services: {
+		mappings: Mappings;
+		builds: AgentBuild;
+		deployments: AgentProduction;
+		config: ConfigService;
+	};
 
-
-	@Post("/register")
-	async register(
-		@Required() @BodyParams("build", BuildConfigModel) build: BuildConfigModel,
-		@Required() @BodyParams("deploy", DeployConfigModel) deploy: DeployConfigModel,
-	) {
-		await Services.hub.registerMapping({ build, deploy });
+	constructor(agentBuild: AgentBuild, agentProduction: AgentProduction, mappings: Mappings, config: ConfigService) {
+		this.services = {
+			builds: agentBuild,
+			deployments: agentProduction,
+			mappings,
+			config,
+		};
 	}
-
 
 	@Post("/build")
 	@Returns(204)
 	async start(@Required() @BodyParams(BuildConfigModel) config: BuildConfigModel) {
-		await Services.hub.agents.builder.askBuild(config);
+		await this.services.builds.askBuild(config);
 	}
 
 	@Post("/deployment")
 	@Returns(204)
 	async deploy(@Required() @BodyParams(DeployConfigModel) config: DeployConfigModel) {
-		await Services.hub.agents.production.askDeploy(config);
+		await this.services.deployments.askDeploy(config);
+	}
+
+	@Post("/mappings")
+	async addMapping(
+		@Required() @BodyParams("build", BuildConfigModel) build: BuildConfigModel,
+		@Required()
+		@BodyParams("deploy", DeployConfigModel)
+		deploy: DeployConfigModel
+	) {
+		await this.services.mappings.add({ build, deploy });
 	}
 
 	@Get("/mappings")
-	@Returns(200, Array).Of(MappingModel)
+	@(Returns(200, Array).Of(MappingModel))
 	getMappings() {
-		return Services.hub.config.mappings;
+		return this.services.mappings.list();
+	}
+
+	@Delete("/mappings/:id")
+	@Returns(204)
+	deleteMappings(@PathParams("id", Number) id: MappingModel["id"]) {
+		return this.services.mappings.delete(id);
 	}
 
 	@Get("/config")
 	@Returns(200, HubConfig)
 	getConfig() {
-		return Services.hub.config;
+		return this.services.config.export();
 	}
-
 }

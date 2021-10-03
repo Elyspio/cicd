@@ -451,13 +451,13 @@ export interface HubAgentConfig {
 	 * @type {Array<ProductionAgentModel>}
 	 * @memberof HubAgentConfig
 	 */
-	production: Array<ProductionAgentModel>;
+	deployments: Array<ProductionAgentModel>;
 	/**
 	 *
 	 * @type {Array<BuildAgentModelReturn>}
 	 * @memberof HubAgentConfig
 	 */
-	builder: Array<BuildAgentModelReturn>;
+	builds: Array<BuildAgentModelReturn>;
 }
 
 /**
@@ -500,42 +500,14 @@ export interface HubConfig {
 export interface InlineObject {
 	/**
 	 *
-	 * @type {string}
-	 * @memberof InlineObject
-	 */
-	url: string;
-}
-
-/**
- *
- * @export
- * @interface InlineObject1
- */
-export interface InlineObject1 {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof InlineObject1
-	 */
-	url: string;
-}
-
-/**
- *
- * @export
- * @interface InlineObject2
- */
-export interface InlineObject2 {
-	/**
-	 *
 	 * @type {BuildConfigModel}
-	 * @memberof InlineObject2
+	 * @memberof InlineObject
 	 */
 	build: BuildConfigModel;
 	/**
 	 *
 	 * @type {DeployConfigModel}
-	 * @memberof InlineObject2
+	 * @memberof InlineObject
 	 */
 	deploy: DeployConfigModel;
 }
@@ -1514,9 +1486,7 @@ export interface User {
  * AutomationApi - axios parameter creator
  * @export
  */
-export const AutomationApiAxiosParamCreator = function(
-	configuration?: Configuration,
-) {
+export const AutomationApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -1524,16 +1494,9 @@ export const AutomationApiAxiosParamCreator = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		addBuildAgent: async (
-			buildAgentModelAdd: BuildAgentModelAdd,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		addBuildAgent: async (buildAgentModelAdd: BuildAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'buildAgentModelAdd' is not null or undefined
-			assertParamExists(
-				"addBuildAgent",
-				"buildAgentModelAdd",
-				buildAgentModelAdd,
-			);
+			assertParamExists("addBuildAgent", "buildAgentModelAdd", buildAgentModelAdd);
 			const localVarPath = `/api/automate/agent/build`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1542,33 +1505,16 @@ export const AutomationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				buildAgentModelAdd,
-				localVarRequestOptions,
-				configuration,
-			);
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(buildAgentModelAdd, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -1581,16 +1527,9 @@ export const AutomationApiAxiosParamCreator = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		addProductionAgent: async (
-			productionAgentModelAdd: ProductionAgentModelAdd,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		addProductionAgent: async (productionAgentModelAdd: ProductionAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'productionAgentModelAdd' is not null or undefined
-			assertParamExists(
-				"addProductionAgent",
-				"productionAgentModelAdd",
-				productionAgentModelAdd,
-			);
+			assertParamExists("addProductionAgent", "productionAgentModelAdd", productionAgentModelAdd);
 			const localVarPath = `/api/automate/agent/production`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1599,90 +1538,16 @@ export const AutomationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				productionAgentModelAdd,
-				localVarRequestOptions,
-				configuration,
-			);
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
-		/**
-		 *
-		 * @param {InlineObject} inlineObject
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		builderAgentKeepAlive: async (
-			inlineObject: InlineObject,
-			options: any = {},
-		): Promise<RequestArgs> => {
-			// verify required parameter 'inlineObject' is not null or undefined
-			assertParamExists(
-				"builderAgentKeepAlive",
-				"inlineObject",
-				inlineObject,
-			);
-			const localVarPath = `/api/automate/agent/build/keep-alive`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			localVarHeaderParameter["Content-Type"] = "application/json";
-
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				inlineObject,
-				localVarRequestOptions,
-				configuration,
-			);
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(productionAgentModelAdd, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -1703,26 +1568,13 @@ export const AutomationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -1743,26 +1595,13 @@ export const AutomationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -1783,83 +1622,13 @@ export const AutomationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
-		/**
-		 *
-		 * @param {InlineObject1} inlineObject1
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		productionAgentKeepAlive: async (
-			inlineObject1: InlineObject1,
-			options: any = {},
-		): Promise<RequestArgs> => {
-			// verify required parameter 'inlineObject1' is not null or undefined
-			assertParamExists(
-				"productionAgentKeepAlive",
-				"inlineObject1",
-				inlineObject1,
-			);
-			const localVarPath = `/api/automate/agent/production/keep-alive`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			localVarHeaderParameter["Content-Type"] = "application/json";
-
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				inlineObject1,
-				localVarRequestOptions,
-				configuration,
-			);
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -1873,9 +1642,8 @@ export const AutomationApiAxiosParamCreator = function(
  * AutomationApi - functional programming interface
  * @export
  */
-export const AutomationApiFp = function(configuration?: Configuration) {
-	const localVarAxiosParamCreator =
-		AutomationApiAxiosParamCreator(configuration);
+export const AutomationApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration);
 	return {
 		/**
 		 *
@@ -1883,21 +1651,9 @@ export const AutomationApiFp = function(configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async addBuildAgent(
-			buildAgentModelAdd: BuildAgentModelAdd,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.addBuildAgent(
-					buildAgentModelAdd,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async addBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.addBuildAgent(buildAgentModelAdd, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
@@ -1907,123 +1663,37 @@ export const AutomationApiFp = function(configuration?: Configuration) {
 		 */
 		async addProductionAgent(
 			productionAgentModelAdd: ProductionAgentModelAdd,
-			options?: any,
+			options?: any
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.addProductionAgent(
-					productionAgentModelAdd,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
-		},
-		/**
-		 *
-		 * @param {InlineObject} inlineObject
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async builderAgentKeepAlive(
-			inlineObject: InlineObject,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.builderAgentKeepAlive(
-					inlineObject,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+			const localVarAxiosArgs = await localVarAxiosParamCreator.addProductionAgent(productionAgentModelAdd, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async getBuilderAgent(
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<BuildAgentModelReturn>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getBuilderAgent(options);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async getBuilderAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BuildAgentModelReturn>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getBuilderAgent(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async getProductionAgent(
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<ProductionAgentModel>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getProductionAgent(options);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async getProductionAgent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductionAgentModel>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getProductionAgent(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async getProductionApps(
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<ProductionApplications>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getProductionApps(options);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
-		},
-		/**
-		 *
-		 * @param {InlineObject1} inlineObject1
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async productionAgentKeepAlive(
-			inlineObject1: InlineObject1,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.productionAgentKeepAlive(
-					inlineObject1,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async getProductionApps(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductionApplications>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getProductionApps(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
 };
@@ -2032,11 +1702,7 @@ export const AutomationApiFp = function(configuration?: Configuration) {
  * AutomationApi - factory interface
  * @export
  */
-export const AutomationApiFactory = function(
-	configuration?: Configuration,
-	basePath?: string,
-	axios?: AxiosInstance,
-) {
+export const AutomationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = AutomationApiFp(configuration);
 	return {
 		/**
@@ -2045,13 +1711,8 @@ export const AutomationApiFactory = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		addBuildAgent(
-			buildAgentModelAdd: BuildAgentModelAdd,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.addBuildAgent(buildAgentModelAdd, options)
-				.then((request) => request(axios, basePath));
+		addBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): AxiosPromise<void> {
+			return localVarFp.addBuildAgent(buildAgentModelAdd, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -2059,77 +1720,32 @@ export const AutomationApiFactory = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		addProductionAgent(
-			productionAgentModelAdd: ProductionAgentModelAdd,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.addProductionAgent(productionAgentModelAdd, options)
-				.then((request) => request(axios, basePath));
-		},
-		/**
-		 *
-		 * @param {InlineObject} inlineObject
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		builderAgentKeepAlive(
-			inlineObject: InlineObject,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.builderAgentKeepAlive(inlineObject, options)
-				.then((request) => request(axios, basePath));
+		addProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any): AxiosPromise<void> {
+			return localVarFp.addProductionAgent(productionAgentModelAdd, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getBuilderAgent(
-			options?: any,
-		): AxiosPromise<Array<BuildAgentModelReturn>> {
-			return localVarFp
-				.getBuilderAgent(options)
-				.then((request) => request(axios, basePath));
+		getBuilderAgent(options?: any): AxiosPromise<Array<BuildAgentModelReturn>> {
+			return localVarFp.getBuilderAgent(options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getProductionAgent(
-			options?: any,
-		): AxiosPromise<Array<ProductionAgentModel>> {
-			return localVarFp
-				.getProductionAgent(options)
-				.then((request) => request(axios, basePath));
+		getProductionAgent(options?: any): AxiosPromise<Array<ProductionAgentModel>> {
+			return localVarFp.getProductionAgent(options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getProductionApps(
-			options?: any,
-		): AxiosPromise<Array<ProductionApplications>> {
-			return localVarFp
-				.getProductionApps(options)
-				.then((request) => request(axios, basePath));
-		},
-		/**
-		 *
-		 * @param {InlineObject1} inlineObject1
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		productionAgentKeepAlive(
-			inlineObject1: InlineObject1,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.productionAgentKeepAlive(inlineObject1, options)
-				.then((request) => request(axios, basePath));
+		getProductionApps(options?: any): AxiosPromise<Array<ProductionApplications>> {
+			return localVarFp.getProductionApps(options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -2148,10 +1764,7 @@ export class AutomationApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof AutomationApi
 	 */
-	public addBuildAgent(
-		buildAgentModelAdd: BuildAgentModelAdd,
-		options?: any,
-	) {
+	public addBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any) {
 		return AutomationApiFp(this.configuration)
 			.addBuildAgent(buildAgentModelAdd, options)
 			.then((request) => request(this.axios, this.basePath));
@@ -2164,25 +1777,9 @@ export class AutomationApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof AutomationApi
 	 */
-	public addProductionAgent(
-		productionAgentModelAdd: ProductionAgentModelAdd,
-		options?: any,
-	) {
+	public addProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any) {
 		return AutomationApiFp(this.configuration)
 			.addProductionAgent(productionAgentModelAdd, options)
-			.then((request) => request(this.axios, this.basePath));
-	}
-
-	/**
-	 *
-	 * @param {InlineObject} inlineObject
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof AutomationApi
-	 */
-	public builderAgentKeepAlive(inlineObject: InlineObject, options?: any) {
-		return AutomationApiFp(this.configuration)
-			.builderAgentKeepAlive(inlineObject, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 
@@ -2221,31 +1818,13 @@ export class AutomationApi extends BaseAPI {
 			.getProductionApps(options)
 			.then((request) => request(this.axios, this.basePath));
 	}
-
-	/**
-	 *
-	 * @param {InlineObject1} inlineObject1
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof AutomationApi
-	 */
-	public productionAgentKeepAlive(
-		inlineObject1: InlineObject1,
-		options?: any,
-	) {
-		return AutomationApiFp(this.configuration)
-			.productionAgentKeepAlive(inlineObject1, options)
-			.then((request) => request(this.axios, this.basePath));
-	}
 }
 
 /**
  * DockerControllerApi - axios parameter creator
  * @export
  */
-export const DockerControllerApiAxiosParamCreator = function(
-	configuration?: Configuration,
-) {
+export const DockerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -2253,10 +1832,7 @@ export const DockerControllerApiAxiosParamCreator = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		get: async (
-			preset?: Array<"web-front" | "web-back">,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		get: async (preset?: Array<"web-front" | "web-back">, options: any = {}): Promise<RequestArgs> => {
 			const localVarPath = `/api/docker/dockerfiles`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2265,11 +1841,7 @@ export const DockerControllerApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
@@ -2277,18 +1849,9 @@ export const DockerControllerApiAxiosParamCreator = function(
 				localVarQueryParameter["preset"] = preset;
 			}
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -2302,9 +1865,8 @@ export const DockerControllerApiAxiosParamCreator = function(
  * DockerControllerApi - functional programming interface
  * @export
  */
-export const DockerControllerApiFp = function(configuration?: Configuration) {
-	const localVarAxiosParamCreator =
-		DockerControllerApiAxiosParamCreator(configuration);
+export const DockerControllerApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = DockerControllerApiAxiosParamCreator(configuration);
 	return {
 		/**
 		 *
@@ -2312,20 +1874,9 @@ export const DockerControllerApiFp = function(configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async get(
-			preset?: Array<"web-front" | "web-back">,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.get(
-				preset,
-				options,
-			);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async get(preset?: Array<"web-front" | "web-back">, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.get(preset, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
 };
@@ -2334,11 +1885,7 @@ export const DockerControllerApiFp = function(configuration?: Configuration) {
  * DockerControllerApi - factory interface
  * @export
  */
-export const DockerControllerApiFactory = function(
-	configuration?: Configuration,
-	basePath?: string,
-	axios?: AxiosInstance,
-) {
+export const DockerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = DockerControllerApiFp(configuration);
 	return {
 		/**
@@ -2347,13 +1894,8 @@ export const DockerControllerApiFactory = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		get(
-			preset?: Array<"web-front" | "web-back">,
-			options?: any,
-		): AxiosPromise<string> {
-			return localVarFp
-				.get(preset, options)
-				.then((request) => request(axios, basePath));
+		get(preset?: Array<"web-front" | "web-back">, options?: any): AxiosPromise<string> {
+			return localVarFp.get(preset, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -2383,9 +1925,7 @@ export class DockerControllerApi extends BaseAPI {
  * GithubApi - axios parameter creator
  * @export
  */
-export const GithubApiAxiosParamCreator = function(
-	configuration?: Configuration,
-) {
+export const GithubApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -2401,26 +1941,15 @@ export const GithubApiAxiosParamCreator = function(
 			repository: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options: any = {},
+			options: any = {}
 		): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("getBranchesForRepository", "username", username);
 			// verify required parameter 'repository' is not null or undefined
-			assertParamExists(
-				"getBranchesForRepository",
-				"repository",
-				repository,
-			);
-			const localVarPath =
-				`/api/github/users/{username}/repositories/{repository}/branches`
-					.replace(
-						`{${"username"}}`,
-						encodeURIComponent(String(username)),
-					)
-					.replace(
-						`{${"repository"}}`,
-						encodeURIComponent(String(repository)),
-					);
+			assertParamExists("getBranchesForRepository", "repository", repository);
+			const localVarPath = `/api/github/users/{username}/repositories/{repository}/branches`
+				.replace(`{${"username"}}`, encodeURIComponent(String(username)))
+				.replace(`{${"repository"}}`, encodeURIComponent(String(repository)));
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -2428,34 +1957,17 @@ export const GithubApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			if (
-				authenticationToken !== undefined &&
-				authenticationToken !== null
-			) {
-				localVarHeaderParameter["authentication-token"] =
-					String(authenticationToken);
+			if (authenticationToken !== undefined && authenticationToken !== null) {
+				localVarHeaderParameter["authentication-token"] = String(authenticationToken);
 			}
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -2470,19 +1982,10 @@ export const GithubApiAxiosParamCreator = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getDockerRepository: async (
-			username: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		getDockerRepository: async (username: string, authenticationToken?: string, authenticationToken2?: string, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("getDockerRepository", "username", username);
-			const localVarPath =
-				`/api/github/users/{username}/repositories/dockerfiles`.replace(
-					`{${"username"}}`,
-					encodeURIComponent(String(username)),
-				);
+			const localVarPath = `/api/github/users/{username}/repositories/dockerfiles`.replace(`{${"username"}}`, encodeURIComponent(String(username)));
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -2490,34 +1993,17 @@ export const GithubApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			if (
-				authenticationToken !== undefined &&
-				authenticationToken !== null
-			) {
-				localVarHeaderParameter["authentication-token"] =
-					String(authenticationToken);
+			if (authenticationToken !== undefined && authenticationToken !== null) {
+				localVarHeaderParameter["authentication-token"] = String(authenticationToken);
 			}
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -2540,36 +2026,18 @@ export const GithubApiAxiosParamCreator = function(
 			branch: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options: any = {},
+			options: any = {}
 		): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
-			assertParamExists(
-				"getDockerfilesForRepository",
-				"username",
-				username,
-			);
+			assertParamExists("getDockerfilesForRepository", "username", username);
 			// verify required parameter 'repository' is not null or undefined
-			assertParamExists(
-				"getDockerfilesForRepository",
-				"repository",
-				repository,
-			);
+			assertParamExists("getDockerfilesForRepository", "repository", repository);
 			// verify required parameter 'branch' is not null or undefined
 			assertParamExists("getDockerfilesForRepository", "branch", branch);
-			const localVarPath =
-				`/api/github/users/{username}/repositories/{repository}/branches/{branch}/dockerfiles`
-					.replace(
-						`{${"username"}}`,
-						encodeURIComponent(String(username)),
-					)
-					.replace(
-						`{${"repository"}}`,
-						encodeURIComponent(String(repository)),
-					)
-					.replace(
-						`{${"branch"}}`,
-						encodeURIComponent(String(branch)),
-					);
+			const localVarPath = `/api/github/users/{username}/repositories/{repository}/branches/{branch}/dockerfiles`
+				.replace(`{${"username"}}`, encodeURIComponent(String(username)))
+				.replace(`{${"repository"}}`, encodeURIComponent(String(repository)))
+				.replace(`{${"branch"}}`, encodeURIComponent(String(branch)));
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -2577,34 +2045,17 @@ export const GithubApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			if (
-				authenticationToken !== undefined &&
-				authenticationToken !== null
-			) {
-				localVarHeaderParameter["authentication-token"] =
-					String(authenticationToken);
+			if (authenticationToken !== undefined && authenticationToken !== null) {
+				localVarHeaderParameter["authentication-token"] = String(authenticationToken);
 			}
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -2619,18 +2070,10 @@ export const GithubApiAxiosParamCreator = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getRepositories: async (
-			username: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		getRepositories: async (username: string, authenticationToken?: string, authenticationToken2?: string, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("getRepositories", "username", username);
-			const localVarPath = `/api/github/users/{username}`.replace(
-				`{${"username"}}`,
-				encodeURIComponent(String(username)),
-			);
+			const localVarPath = `/api/github/users/{username}`.replace(`{${"username"}}`, encodeURIComponent(String(username)));
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -2638,34 +2081,17 @@ export const GithubApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			if (
-				authenticationToken !== undefined &&
-				authenticationToken !== null
-			) {
-				localVarHeaderParameter["authentication-token"] =
-					String(authenticationToken);
+			if (authenticationToken !== undefined && authenticationToken !== null) {
+				localVarHeaderParameter["authentication-token"] = String(authenticationToken);
 			}
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -2679,7 +2105,7 @@ export const GithubApiAxiosParamCreator = function(
  * GithubApi - functional programming interface
  * @export
  */
-export const GithubApiFp = function(configuration?: Configuration) {
+export const GithubApiFp = function (configuration?: Configuration) {
 	const localVarAxiosParamCreator = GithubApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -2696,25 +2122,16 @@ export const GithubApiFp = function(configuration?: Configuration) {
 			repository: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<string>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getBranchesForRepository(
-					username,
-					repository,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
+			options?: any
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getBranchesForRepository(
+				username,
+				repository,
+				authenticationToken,
+				authenticationToken2,
+				options
 			);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
@@ -2728,24 +2145,10 @@ export const GithubApiFp = function(configuration?: Configuration) {
 			username: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<RepoWithBranchModel>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getDockerRepository(
-					username,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+			options?: any
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RepoWithBranchModel>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getDockerRepository(username, authenticationToken, authenticationToken2, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
@@ -2763,26 +2166,17 @@ export const GithubApiFp = function(configuration?: Configuration) {
 			branch: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<FileModel>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getDockerfilesForRepository(
-					username,
-					repository,
-					branch,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
+			options?: any
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FileModel>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getDockerfilesForRepository(
+				username,
+				repository,
+				branch,
+				authenticationToken,
+				authenticationToken2,
+				options
 			);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
@@ -2796,24 +2190,10 @@ export const GithubApiFp = function(configuration?: Configuration) {
 			username: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<string>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getRepositories(
-					username,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+			options?: any
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getRepositories(username, authenticationToken, authenticationToken2, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
 };
@@ -2822,11 +2202,7 @@ export const GithubApiFp = function(configuration?: Configuration) {
  * GithubApi - factory interface
  * @export
  */
-export const GithubApiFactory = function(
-	configuration?: Configuration,
-	basePath?: string,
-	axios?: AxiosInstance,
-) {
+export const GithubApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = GithubApiFp(configuration);
 	return {
 		/**
@@ -2843,16 +2219,10 @@ export const GithubApiFactory = function(
 			repository: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any,
+			options?: any
 		): AxiosPromise<Array<string>> {
 			return localVarFp
-				.getBranchesForRepository(
-					username,
-					repository,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				)
+				.getBranchesForRepository(username, repository, authenticationToken, authenticationToken2, options)
 				.then((request) => request(axios, basePath));
 		},
 		/**
@@ -2867,16 +2237,9 @@ export const GithubApiFactory = function(
 			username: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any,
+			options?: any
 		): AxiosPromise<Array<RepoWithBranchModel>> {
-			return localVarFp
-				.getDockerRepository(
-					username,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				)
-				.then((request) => request(axios, basePath));
+			return localVarFp.getDockerRepository(username, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -2894,17 +2257,10 @@ export const GithubApiFactory = function(
 			branch: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any,
+			options?: any
 		): AxiosPromise<Array<FileModel>> {
 			return localVarFp
-				.getDockerfilesForRepository(
-					username,
-					repository,
-					branch,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				)
+				.getDockerfilesForRepository(username, repository, branch, authenticationToken, authenticationToken2, options)
 				.then((request) => request(axios, basePath));
 		},
 		/**
@@ -2915,20 +2271,8 @@ export const GithubApiFactory = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getRepositories(
-			username: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options?: any,
-		): AxiosPromise<Array<string>> {
-			return localVarFp
-				.getRepositories(
-					username,
-					authenticationToken,
-					authenticationToken2,
-					options,
-				)
-				.then((request) => request(axios, basePath));
+		getRepositories(username: string, authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<Array<string>> {
+			return localVarFp.getRepositories(username, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -2950,21 +2294,9 @@ export class GithubApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof GithubApi
 	 */
-	public getBranchesForRepository(
-		username: string,
-		repository: string,
-		authenticationToken?: string,
-		authenticationToken2?: string,
-		options?: any,
-	) {
+	public getBranchesForRepository(username: string, repository: string, authenticationToken?: string, authenticationToken2?: string, options?: any) {
 		return GithubApiFp(this.configuration)
-			.getBranchesForRepository(
-				username,
-				repository,
-				authenticationToken,
-				authenticationToken2,
-				options,
-			)
+			.getBranchesForRepository(username, repository, authenticationToken, authenticationToken2, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 
@@ -2977,19 +2309,9 @@ export class GithubApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof GithubApi
 	 */
-	public getDockerRepository(
-		username: string,
-		authenticationToken?: string,
-		authenticationToken2?: string,
-		options?: any,
-	) {
+	public getDockerRepository(username: string, authenticationToken?: string, authenticationToken2?: string, options?: any) {
 		return GithubApiFp(this.configuration)
-			.getDockerRepository(
-				username,
-				authenticationToken,
-				authenticationToken2,
-				options,
-			)
+			.getDockerRepository(username, authenticationToken, authenticationToken2, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 
@@ -3010,17 +2332,10 @@ export class GithubApi extends BaseAPI {
 		branch: string,
 		authenticationToken?: string,
 		authenticationToken2?: string,
-		options?: any,
+		options?: any
 	) {
 		return GithubApiFp(this.configuration)
-			.getDockerfilesForRepository(
-				username,
-				repository,
-				branch,
-				authenticationToken,
-				authenticationToken2,
-				options,
-			)
+			.getDockerfilesForRepository(username, repository, branch, authenticationToken, authenticationToken2, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 
@@ -3033,19 +2348,9 @@ export class GithubApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof GithubApi
 	 */
-	public getRepositories(
-		username: string,
-		authenticationToken?: string,
-		authenticationToken2?: string,
-		options?: any,
-	) {
+	public getRepositories(username: string, authenticationToken?: string, authenticationToken2?: string, options?: any) {
 		return GithubApiFp(this.configuration)
-			.getRepositories(
-				username,
-				authenticationToken,
-				authenticationToken2,
-				options,
-			)
+			.getRepositories(username, authenticationToken, authenticationToken2, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 }
@@ -3054,9 +2359,7 @@ export class GithubApi extends BaseAPI {
  * GithubWebhooksApi - axios parameter creator
  * @export
  */
-export const GithubWebhooksApiAxiosParamCreator = function(
-	configuration?: Configuration,
-) {
+export const GithubWebhooksApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -3064,10 +2367,7 @@ export const GithubWebhooksApiAxiosParamCreator = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		push: async (
-			githubPushWebhook: GithubPushWebhook,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		push: async (githubPushWebhook: GithubPushWebhook, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'githubPushWebhook' is not null or undefined
 			assertParamExists("push", "githubPushWebhook", githubPushWebhook);
 			const localVarPath = `/api/github/webhook/push`;
@@ -3078,33 +2378,16 @@ export const GithubWebhooksApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				githubPushWebhook,
-				localVarRequestOptions,
-				configuration,
-			);
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(githubPushWebhook, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -3118,9 +2401,8 @@ export const GithubWebhooksApiAxiosParamCreator = function(
  * GithubWebhooksApi - functional programming interface
  * @export
  */
-export const GithubWebhooksApiFp = function(configuration?: Configuration) {
-	const localVarAxiosParamCreator =
-		GithubWebhooksApiAxiosParamCreator(configuration);
+export const GithubWebhooksApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = GithubWebhooksApiAxiosParamCreator(configuration);
 	return {
 		/**
 		 *
@@ -3128,20 +2410,9 @@ export const GithubWebhooksApiFp = function(configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async push(
-			githubPushWebhook: GithubPushWebhook,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.push(
-				githubPushWebhook,
-				options,
-			);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async push(githubPushWebhook: GithubPushWebhook, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.push(githubPushWebhook, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
 };
@@ -3150,11 +2421,7 @@ export const GithubWebhooksApiFp = function(configuration?: Configuration) {
  * GithubWebhooksApi - factory interface
  * @export
  */
-export const GithubWebhooksApiFactory = function(
-	configuration?: Configuration,
-	basePath?: string,
-	axios?: AxiosInstance,
-) {
+export const GithubWebhooksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = GithubWebhooksApiFp(configuration);
 	return {
 		/**
@@ -3163,13 +2430,8 @@ export const GithubWebhooksApiFactory = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		push(
-			githubPushWebhook: GithubPushWebhook,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.push(githubPushWebhook, options)
-				.then((request) => request(axios, basePath));
+		push(githubPushWebhook: GithubPushWebhook, options?: any): AxiosPromise<void> {
+			return localVarFp.push(githubPushWebhook, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -3199,20 +2461,78 @@ export class GithubWebhooksApi extends BaseAPI {
  * OperationApi - axios parameter creator
  * @export
  */
-export const OperationApiAxiosParamCreator = function(
-	configuration?: Configuration,
-) {
+export const OperationApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		addMapping: async (inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'inlineObject' is not null or undefined
+			assertParamExists("addMapping", "inlineObject", inlineObject);
+			const localVarPath = `/api/automate/operation/mappings`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			localVarHeaderParameter["Content-Type"] = "application/json";
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration);
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {number} id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		deleteMappings: async (id: number, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'id' is not null or undefined
+			assertParamExists("deleteMappings", "id", id);
+			const localVarPath = `/api/automate/operation/mappings/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
 		/**
 		 *
 		 * @param {DeployConfigModel} deployConfigModel
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		deploy: async (
-			deployConfigModel: DeployConfigModel,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		deploy: async (deployConfigModel: DeployConfigModel, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'deployConfigModel' is not null or undefined
 			assertParamExists("deploy", "deployConfigModel", deployConfigModel);
 			const localVarPath = `/api/automate/operation/deployment`;
@@ -3223,33 +2543,16 @@ export const OperationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				deployConfigModel,
-				localVarRequestOptions,
-				configuration,
-			);
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(deployConfigModel, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -3270,26 +2573,13 @@ export const OperationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -3310,79 +2600,13 @@ export const OperationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
-		/**
-		 *
-		 * @param {InlineObject2} inlineObject2
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		register: async (
-			inlineObject2: InlineObject2,
-			options: any = {},
-		): Promise<RequestArgs> => {
-			// verify required parameter 'inlineObject2' is not null or undefined
-			assertParamExists("register", "inlineObject2", inlineObject2);
-			const localVarPath = `/api/automate/operation/register`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			localVarHeaderParameter["Content-Type"] = "application/json";
-
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				inlineObject2,
-				localVarRequestOptions,
-				configuration,
-			);
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -3395,10 +2619,7 @@ export const OperationApiAxiosParamCreator = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		start: async (
-			buildConfigModel: BuildConfigModel,
-			options: any = {},
-		): Promise<RequestArgs> => {
+		start: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'buildConfigModel' is not null or undefined
 			assertParamExists("start", "buildConfigModel", buildConfigModel);
 			const localVarPath = `/api/automate/operation/build`;
@@ -3409,33 +2630,16 @@ export const OperationApiAxiosParamCreator = function(
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
-			setSearchParams(
-				localVarUrlObj,
-				localVarQueryParameter,
-				options.query,
-			);
-			let headersFromBaseOptions =
-				baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(
-				buildConfigModel,
-				localVarRequestOptions,
-				configuration,
-			);
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -3449,92 +2653,56 @@ export const OperationApiAxiosParamCreator = function(
  * OperationApi - functional programming interface
  * @export
  */
-export const OperationApiFp = function(configuration?: Configuration) {
-	const localVarAxiosParamCreator =
-		OperationApiAxiosParamCreator(configuration);
+export const OperationApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = OperationApiAxiosParamCreator(configuration);
 	return {
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async addMapping(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.addMapping(inlineObject, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {number} id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async deleteMappings(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMappings(id, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
 		/**
 		 *
 		 * @param {DeployConfigModel} deployConfigModel
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async deploy(
-			deployConfigModel: DeployConfigModel,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.deploy(
-				deployConfigModel,
-				options,
-			);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async deploy(deployConfigModel: DeployConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.deploy(deployConfigModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async getConfig(
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<HubConfig>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.getConfig(
-				options,
-			);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async getConfig(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HubConfig>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getConfig(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async getMappings(
-			options?: any,
-		): Promise<(
-			axios?: AxiosInstance,
-			basePath?: string,
-		) => AxiosPromise<Array<MappingModel>>> {
-			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.getMappings(options);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
-		},
-		/**
-		 *
-		 * @param {InlineObject2} inlineObject2
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async register(
-			inlineObject2: InlineObject2,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.register(
-				inlineObject2,
-				options,
-			);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async getMappings(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MappingModel>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getMappings(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
 		 *
@@ -3542,20 +2710,9 @@ export const OperationApiFp = function(configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async start(
-			buildConfigModel: BuildConfigModel,
-			options?: any,
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.start(
-				buildConfigModel,
-				options,
-			);
-			return createRequestFunction(
-				localVarAxiosArgs,
-				globalAxios,
-				BASE_PATH,
-				configuration,
-			);
+		async start(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.start(buildConfigModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
 };
@@ -3564,26 +2721,35 @@ export const OperationApiFp = function(configuration?: Configuration) {
  * OperationApi - factory interface
  * @export
  */
-export const OperationApiFactory = function(
-	configuration?: Configuration,
-	basePath?: string,
-	axios?: AxiosInstance,
-) {
+export const OperationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = OperationApiFp(configuration);
 	return {
+		/**
+		 *
+		 * @param {InlineObject} inlineObject
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		addMapping(inlineObject: InlineObject, options?: any): AxiosPromise<void> {
+			return localVarFp.addMapping(inlineObject, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {number} id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		deleteMappings(id: number, options?: any): AxiosPromise<void> {
+			return localVarFp.deleteMappings(id, options).then((request) => request(axios, basePath));
+		},
 		/**
 		 *
 		 * @param {DeployConfigModel} deployConfigModel
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		deploy(
-			deployConfigModel: DeployConfigModel,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.deploy(deployConfigModel, options)
-				.then((request) => request(axios, basePath));
+		deploy(deployConfigModel: DeployConfigModel, options?: any): AxiosPromise<void> {
+			return localVarFp.deploy(deployConfigModel, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -3591,9 +2757,7 @@ export const OperationApiFactory = function(
 		 * @throws {RequiredError}
 		 */
 		getConfig(options?: any): AxiosPromise<HubConfig> {
-			return localVarFp
-				.getConfig(options)
-				.then((request) => request(axios, basePath));
+			return localVarFp.getConfig(options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -3601,23 +2765,7 @@ export const OperationApiFactory = function(
 		 * @throws {RequiredError}
 		 */
 		getMappings(options?: any): AxiosPromise<Array<MappingModel>> {
-			return localVarFp
-				.getMappings(options)
-				.then((request) => request(axios, basePath));
-		},
-		/**
-		 *
-		 * @param {InlineObject2} inlineObject2
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		register(
-			inlineObject2: InlineObject2,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.register(inlineObject2, options)
-				.then((request) => request(axios, basePath));
+			return localVarFp.getMappings(options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -3625,13 +2773,8 @@ export const OperationApiFactory = function(
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		start(
-			buildConfigModel: BuildConfigModel,
-			options?: any,
-		): AxiosPromise<void> {
-			return localVarFp
-				.start(buildConfigModel, options)
-				.then((request) => request(axios, basePath));
+		start(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<void> {
+			return localVarFp.start(buildConfigModel, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -3643,6 +2786,32 @@ export const OperationApiFactory = function(
  * @extends {BaseAPI}
  */
 export class OperationApi extends BaseAPI {
+	/**
+	 *
+	 * @param {InlineObject} inlineObject
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof OperationApi
+	 */
+	public addMapping(inlineObject: InlineObject, options?: any) {
+		return OperationApiFp(this.configuration)
+			.addMapping(inlineObject, options)
+			.then((request) => request(this.axios, this.basePath));
+	}
+
+	/**
+	 *
+	 * @param {number} id
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof OperationApi
+	 */
+	public deleteMappings(id: number, options?: any) {
+		return OperationApiFp(this.configuration)
+			.deleteMappings(id, options)
+			.then((request) => request(this.axios, this.basePath));
+	}
+
 	/**
 	 *
 	 * @param {DeployConfigModel} deployConfigModel
@@ -3677,19 +2846,6 @@ export class OperationApi extends BaseAPI {
 	public getMappings(options?: any) {
 		return OperationApiFp(this.configuration)
 			.getMappings(options)
-			.then((request) => request(this.axios, this.basePath));
-	}
-
-	/**
-	 *
-	 * @param {InlineObject2} inlineObject2
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof OperationApi
-	 */
-	public register(inlineObject2: InlineObject2, options?: any) {
-		return OperationApiFp(this.configuration)
-			.register(inlineObject2, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 

@@ -2,21 +2,22 @@ import { Args, Input, IO, Nsp, Socket, SocketService, SocketSession } from "@tse
 import * as SocketIO from "socket.io";
 import { $log } from "@tsed/common";
 import { events } from "../../../../config/events";
-import { Config } from "../../../../core/services/hub/types";
-import { Services } from "../../../../core/services";
+import { ConfigService } from "../../../../core/services/hub/config.service";
 
 @SocketService("/ws/front")
 export class FrontAutomateSocket {
-
 	@Nsp nsp: SocketIO.Namespace;
+	private services: { config: ConfigService };
 
+	constructor(@IO private io: SocketIO.Server, config: ConfigService) {
+		this.services = {
+			config: config,
+		};
 
-	constructor(@IO private io: SocketIO.Server) {
-		Services.hub.on(events.config.update, (conf: Config) => {
+		this.services.config.on("update", (conf) => {
 			this.nsp.emit(events.config.update, conf);
 		});
 	}
-
 
 	@Input("jobs-stdout")
 	async onAgentStdout(@Args(0) taskId: number, @Args(1) stdout: string, @Socket socket: Socket) {
@@ -27,16 +28,14 @@ export class FrontAutomateSocket {
 	/**
 	 * Triggered the namespace is created
 	 */
-	$onNamespaceInit(nsp: SocketIO.Namespace) {
-
-	}
+	$onNamespaceInit(nsp: SocketIO.Namespace) {}
 
 	/**
 	 * Triggered when a new client connects to the Namespace.
 	 */
-	$onConnection(@Socket socket: SocketIO.Socket, @SocketSession session: SocketSession) {
+	async $onConnection(@Socket socket: SocketIO.Socket, @SocketSession session: SocketSession) {
 		$log.info("A new client is born");
-		this.nsp.emit(events.config.update, Services.hub.exportConfig());
+		this.nsp.emit(events.config.update, await this.services.config.export());
 	}
 
 	/**

@@ -29,7 +29,6 @@ class DockerConfigModel {
 	@Required()
 	files: DockerFileConfigModel[];
 
-
 	@Description("Platforms available for the future image")
 	@Required()
 	@Enum("linux/arm64", "linux/amd64")
@@ -38,16 +37,13 @@ class DockerConfigModel {
 	@Required()
 	@Property()
 	username: string;
-
 }
-
 
 export class DockerBakeModel implements BakeBuild {
 	@Required()
 	@Property()
 	bakeFilePath: string;
 }
-
 
 class GithubConfigModel {
 	@Description("Url of the repo")
@@ -78,10 +74,7 @@ export class BuildConfigModel implements BuildConfig {
 	@Description("bake file to use")
 	@Property(DockerBakeModel)
 	bake?: DockerBakeModel;
-
-
 }
-
 
 export class DockerComposeField {
 	@Property()
@@ -106,9 +99,7 @@ export class DeployConfigModel implements DeployConfig {
 	uri: string;
 }
 
-
 export class MappingModel implements Mapping {
-
 	@Property(BuildConfigModel)
 	@Required()
 	build: BuildConfig;
@@ -120,17 +111,16 @@ export class MappingModel implements Mapping {
 	@Property()
 	@Required()
 	id: number;
-
 }
 
 class HubAgentConfig {
 	@Property(ProductionAgentModel)
 	@Required()
-	production: ProductionAgentModel[];
+	deployments: ProductionAgentModel[];
 
 	@Property(BuildAgentModelReturn)
 	@Required()
-	builder: BuildAgentModelReturn[];
+	builds: BuildAgentModelReturn[];
 }
 
 class JobBuildModel {
@@ -200,5 +190,3 @@ export class HubConfig implements HubConfigExport {
 	@Required()
 	queues: JobsModel;
 }
-
-

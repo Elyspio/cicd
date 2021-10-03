@@ -5,8 +5,7 @@ import { ReactComponent as GitBranchIcon } from "../../icons/git-branch.svg";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import { setSelectedBranch, setSelectedRepo } from "../../../../store/module/mapping/mapping.reducer";
 
-const camelToSnakeCase = (str: string) =>
-	str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 
 function MappingCreateSources() {
 	const [branch, setBranch] = React.useState<string | undefined>();
@@ -71,9 +70,7 @@ function MappingCreateSources() {
 			<Box className={"Container"}>
 				<Typography variant={"h6"}>Github (Sources)</Typography>
 				<FormControl className={"FormControl"}>
-					<InputLabel id="mapping-create-repository-label">
-						Repository
-					</InputLabel>
+					<InputLabel id="mapping-create-repository-label">Repository</InputLabel>
 					<Select
 						labelId="mapping-create-repository-label"
 						id="mapping-create-repository-input"
@@ -83,20 +80,13 @@ function MappingCreateSources() {
 						onChange={onRepoChange}
 						renderValue={(value) => (
 							<div>
-								<GithubIcon width={size} height={size} />{" "}
-								{value}
+								<GithubIcon width={size} height={size} /> {value}
 							</div>
 						)}
 					>
 						{repos.map((repo) => (
-							<MenuItem
-								disabled={repo.disabled}
-								key={repo.value}
-								value={repo.value}
-							>
-								{repo.disabled
-									? repo.value.toUpperCase()
-									: repo.value}
+							<MenuItem disabled={repo.disabled} key={repo.value} value={repo.value}>
+								{repo.disabled ? repo.value.toUpperCase() : repo.value}
 							</MenuItem>
 						))}
 						{loading && (
@@ -108,9 +98,7 @@ function MappingCreateSources() {
 				</FormControl>
 
 				<FormControl className={"FormControl"}>
-					<InputLabel id="mapping-create-branch-label">
-						Branch
-					</InputLabel>
+					<InputLabel id="mapping-create-branch-label">Branch</InputLabel>
 					<Select
 						label={"Branch"}
 						labelId="mapping-create-branch-label"
@@ -120,8 +108,7 @@ function MappingCreateSources() {
 						onChange={onBranchChange}
 						renderValue={(value) => (
 							<div>
-								<GitBranchIcon width={size} height={size} />{" "}
-								{value}
+								<GitBranchIcon width={size} height={size} /> {value}
 							</div>
 						)}
 					>

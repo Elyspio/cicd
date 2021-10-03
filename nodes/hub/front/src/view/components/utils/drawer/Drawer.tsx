@@ -79,30 +79,20 @@ const drawerWidth = 210;
 let baseWidth = 46;
 
 const getActions = (actions: Action[]) => {
-	const separatorIndexes = actions
-		.map((action, index) => (action.text === null ? index : null))
-		.filter((index) => index !== null) as number[];
+	const separatorIndexes = actions.map((action, index) => (action.text === null ? index : null)).filter((index) => index !== null) as number[];
 
-	const comp = separatorIndexes.map((value, index, array) =>
-		actions.slice(value, array[index + 1]),
-	);
+	const comp = separatorIndexes.map((value, index, array) => actions.slice(value, array[index + 1]));
 
-	const actionComponents = (comp.length > 0 ? comp : [actions]).map(
-		(actions, i) => (
-			<List className={"toolbar"} key={i}>
-				{actions.map((action, i) => (
-					<ListItem
-						button
-						key={i}
-						onClick={() => action.onClick && action.onClick()}
-					>
-						<ListItemIcon>{action.icon}</ListItemIcon>
-						{action.text}
-					</ListItem>
-				))}
-			</List>
-		),
-	);
+	const actionComponents = (comp.length > 0 ? comp : [actions]).map((actions, i) => (
+		<List className={"toolbar"} key={i}>
+			{actions.map((action, i) => (
+				<ListItem button key={i} onClick={() => action.onClick && action.onClick()}>
+					<ListItemIcon>{action.icon}</ListItemIcon>
+					{action.text}
+				</ListItem>
+			))}
+		</List>
+	));
 
 	return (
 		<>
@@ -146,10 +136,7 @@ export function Drawer(props: Props) {
 				}}
 			>
 				<div onClick={handleDrawerClose} className={"drawer-btn"}>
-					<IconButton
-						onClick={open ? handleDrawerClose : handleDrawerOpen}
-						size="medium"
-					>
+					<IconButton onClick={open ? handleDrawerClose : handleDrawerOpen} size="medium">
 						{open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
 					</IconButton>
 				</div>

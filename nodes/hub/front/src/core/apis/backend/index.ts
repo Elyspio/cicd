@@ -8,24 +8,8 @@ const instance = axios.create({
 
 @injectable()
 export class CicdApi {
-	public readonly automation = new AutomationApi(
-		undefined,
-		window.config.endpoints.core.api,
-		instance,
-	);
-	public readonly docker = new DockerControllerApi(
-		undefined,
-		window.config.endpoints.core.api,
-		instance,
-	);
-	public readonly github = new GithubApi(
-		undefined,
-		window.config.endpoints.core.api,
-		instance,
-	);
-	public readonly operation = new OperationApi(
-		undefined,
-		window.config.endpoints.core.api,
-		instance,
-	);
+	public readonly automation = new AutomationApi(undefined, window.config.endpoints.core.api, instance);
+	public readonly docker = new DockerControllerApi(undefined, window.config.endpoints.core.api, instance);
+	public readonly github = new GithubApi(undefined, window.config.endpoints.core.api, instance);
+	public readonly operation = new OperationApi(undefined, window.config.endpoints.core.api, instance);
 }

@@ -6,7 +6,6 @@ import { getLogger } from "../../utils/logger";
 
 @Service()
 export class GithubService {
-
 	static errors = {
 		noGithubToken: new Error("The authenticated user does not have a github entry in its credentials"),
 	};
@@ -18,7 +17,6 @@ export class GithubService {
 	@Inject()
 	private authenticationService: AuthenticationService;
 
-
 	@Log(GithubService.log, { level: "debug", arguments: true })
 	async get(username: string, authToken: string) {
 		if (!this.cache.has(username)) {
@@ -28,5 +26,4 @@ export class GithubService {
 		}
 		return this.cache.get(username)!;
 	}
-
 }

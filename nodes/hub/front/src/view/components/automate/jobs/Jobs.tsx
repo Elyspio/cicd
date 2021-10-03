@@ -22,11 +22,13 @@ export function Jobs() {
 	}));
 
 	const data = React.useMemo(() => {
-		const ret = new Map<JobsAlias["builds"][number]["id"],
+		const ret = new Map<
+			JobsAlias["builds"][number]["id"],
 			{
 				build?: WithStatus<JobBuildModel>;
 				deploy?: WithStatus<JobDeployModel>;
-			}>();
+			}
+		>();
 
 		jobs.builds.forEach((job) => {
 			if (!ret.has(job.id)) {

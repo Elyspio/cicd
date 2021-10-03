@@ -41,42 +41,21 @@ function BuildLine({ data }: LineProps<JobBuildModel>) {
 	}, [data.config.github.remote]);
 
 	const dockerfiles = React.useMemo(
-		() =>
-			data.config.dockerfiles?.files
-			    .map((x) => `${x.image}:${x.tag ?? "latest"}`)
-			    .join(" "),
-		[data.config.dockerfiles?.files],
+		() => data.config.dockerfiles?.files.map((x) => `${x.image}:${x.tag ?? "latest"}`).join(" "),
+		[data.config.dockerfiles?.files]
 	);
 
 	const dispatch = useAppDispatch();
-	const onClick = React.useCallback(
-		() => dispatch(push(routes.getBuildPath(data.id))),
-		[dispatch, data.id],
-	);
+	const onClick = React.useCallback(() => dispatch(push(routes.getBuildPath(data.id))), [dispatch, data.id]);
 
 	return (
 		<StyledBox className={"Line"} onClick={onClick}>
 			<Grid container>
 				<Grid container item xs={12} spacing={1} direction={"column"}>
-					<CustomChip
-						item
-						icon={<GithubIcon height={size} width={size} />}
-						title={remote}
-						label={remote}
-					/>
-					<CustomChip
-						item
-						icon={<BranchIcon height={size} width={size} />}
-						title={data.config.github.branch}
-						label={data.config.github.branch}
-					/>
+					<CustomChip item icon={<GithubIcon height={size} width={size} />} title={remote} label={remote} />
+					<CustomChip item icon={<BranchIcon height={size} width={size} />} title={data.config.github.branch} label={data.config.github.branch} />
 
-					<CustomChip
-						item
-						icon={<DockerIcon height={size} width={size} />}
-						title={dockerfiles}
-						label={dockerfiles}
-					/>
+					<CustomChip item icon={<DockerIcon height={size} width={size} />} title={dockerfiles} label={dockerfiles} />
 				</Grid>
 			</Grid>
 		</StyledBox>
@@ -88,12 +67,7 @@ function DeployLine({ data }: LineProps<JobDeployModel>) {
 		<Box className={"Line"}>
 			<Grid container>
 				<Grid container item xs={12}>
-					<CustomChip
-						item
-						title={data.config.uri}
-						icon={<DockerIcon height={size} width={size} />}
-						label={data.config.uri}
-					/>
+					<CustomChip item title={data.config.uri} icon={<DockerIcon height={size} width={size} />} label={data.config.uri} />
 				</Grid>
 				<Grid item container xs={12}>
 					<CustomChip
@@ -151,50 +125,16 @@ export function JobItem(props: JobItemProps) {
 						textColor="primary"
 						aria-label="icon label tabs example"
 					>
-						<Tab
-							label={label}
-							title={"hide"}
-							disabled={value === 0}
-						/>
-						<Tab
-							label="BUILD"
-							onClick={() =>
-								props.data.build &&
-								dispatch(
-									push(
-										routes.getBuildPath(props.data.build.id),
-									),
-								)
-							}
-						/>
-						<Tab
-							label="DEPLOY"
-							onClick={() =>
-								props.data.deploy &&
-								dispatch(
-									push(
-										routes.getDeployPath(
-											props.data.deploy.id,
-										),
-									),
-								)
-							}
-						/>
+						<Tab label={label} title={"hide"} disabled={value === 0} />
+						<Tab label="BUILD" onClick={() => props.data.build && dispatch(push(routes.getBuildPath(props.data.build.id)))} />
+						<Tab label="DEPLOY" onClick={() => props.data.deploy && dispatch(push(routes.getDeployPath(props.data.deploy.id)))} />
 					</Tabs>
 				</AppBar>
 				<TabPanel value={value} index={1}>
-					{props.data.build ? (
-						<BuildLine data={props.data.build} />
-					) : (
-						<Typography>No build information</Typography>
-					)}
+					{props.data.build ? <BuildLine data={props.data.build} /> : <Typography>No build information</Typography>}
 				</TabPanel>
 				<TabPanel value={value} index={2}>
-					{props.data.deploy ? (
-						<DeployLine data={props.data.deploy} />
-					) : (
-						<Typography>No deploy information</Typography>
-					)}
+					{props.data.deploy ? <DeployLine data={props.data.deploy} /> : <Typography>No deploy information</Typography>}
 				</TabPanel>
 			</Paper>
 		</Box>

@@ -9,4 +9,3 @@ export class GetDockerFileModel {
 	@Enum(Preset)
 	preset: Preset[];
 }
-

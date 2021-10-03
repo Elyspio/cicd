@@ -6,7 +6,6 @@ import { Service } from "@tsed/common";
 
 @Service()
 export class AuthenticationService {
-
 	private static log = getLogger.service(AuthenticationService);
 
 	@Inject()
@@ -17,18 +16,16 @@ export class AuthenticationService {
 
 	@Log(AuthenticationService.log, { level: "debug", arguments: true })
 	public async isAuthenticated(token: string) {
-		return this.authenticationApi.client.validToken(token).then(x => x.data);
+		return this.authenticationApi.client.validToken(token).then((x) => x.data);
 	}
 
 	@Log(AuthenticationService.log, { level: "debug", arguments: true })
 	public async getUsername(token: string) {
-		return this.usersApi.client.getUserInfo("username", token, token).then(x => x.data);
+		return this.usersApi.client.getUserInfo("username", token, token).then((x) => x.data);
 	}
 
 	@Log(AuthenticationService.log, { level: "debug", arguments: true })
 	public async getCredentials(username: string, token: string) {
-		return this.usersApi.client.getUserCredentials(username, token, token).then(x => x.data);
+		return this.usersApi.client.getUserCredentials(username, token, token).then((x) => x.data);
 	}
-
-
 }

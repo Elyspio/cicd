@@ -22,9 +22,9 @@ export class AutomateService {
 			github: { repo: string; branch: string };
 			build: { dockerfiles?: DockerConfigModel; bake?: string };
 		},
-		deploy: { agentUri: string; dockerComposeFile: string },
+		deploy: { agentUri: string; dockerComposeFile: string }
 	) {
-		await this.client.operation.register({
+		await this.client.operation.addMapping({
 			build: {
 				github: {
 					branch: params.github.branch,
@@ -33,8 +33,8 @@ export class AutomateService {
 				dockerfiles: params.build.dockerfiles,
 				bake: params.build.bake
 					? {
-						bakeFilePath: params.build.bake,
-					}
+							bakeFilePath: params.build.bake,
+					  }
 					: undefined,
 			},
 			deploy: {

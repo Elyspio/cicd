@@ -4,9 +4,7 @@ import { StoreState } from "../../../../store";
 import React from "react";
 
 const mapStateToProps = (state: StoreState, props: OwnProps) => ({
-	job: state.automation.config?.jobs.deployments.find(
-		(b) => b.id === props.id,
-	),
+	job: state.automation.config?.jobs.deployments.find((b) => b.id === props.id),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({});

@@ -17,43 +17,20 @@ type Props = {
 const size = 20;
 
 export function Mapping({ data: { build, deploy, id } }: Props) {
-	const remote = build.github.remote.slice(
-		build.github.remote.lastIndexOf("/") + 1,
-		build.github.remote.lastIndexOf(".git"),
-	);
+	const remote = build.github.remote.slice(build.github.remote.lastIndexOf("/") + 1, build.github.remote.lastIndexOf(".git"));
 
 	const dispatch = useAppDispatch();
-	const changeUri = React.useCallback(
-		() => dispatch(push(routes.getMappingPath(id))),
-		[dispatch, id],
-	);
+	const changeUri = React.useCallback(() => dispatch(push(routes.getMappingPath(id))), [dispatch, id]);
 
 	return (
-		<Box
-			onClick={changeUri}
-			className={"Mapping full-w MuiAppBar-colorDefault"}
-		>
+		<Box onClick={changeUri} className={"Mapping full-w MuiAppBar-colorDefault"}>
 			<ListItem>
 				<ListItemText
 					primary={
 						<div className={"info"}>
-							<CustomChip
-								icon={<GithubIcon height={size} width={size} />}
-								label={remote}
-								title={remote}
-							/>
-							<CustomChip
-								icon={
-									<GitBranchIcon height={size} width={size} />
-								}
-								label={build.github.branch}
-								title={build.github.branch}
-							/>
-							<CustomChip
-								icon={<DockerIcon height={size} width={size} />}
-								title={deploy.uri}
-								label={deploy.uri}
-							/>
+							<CustomChip icon={<GithubIcon height={size} width={size} />} label={remote} title={remote} />
+							<CustomChip icon={<GitBranchIcon height={size} width={size} />} label={build.github.branch} title={build.github.branch} />
+							<CustomChip icon={<DockerIcon height={size} width={size} />} title={deploy.uri} label={deploy.uri} />
 						</div>
 					}
 				/>

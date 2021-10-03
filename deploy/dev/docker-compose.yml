@@ -1,0 +1,13 @@
+version: "3"
+services:
+    cicd-db:
+        image: mongo:latest
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+        volumes:
+            - ./data:/data/db
+        ports:
+            - "6003:27017"
+

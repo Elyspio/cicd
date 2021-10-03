@@ -12,25 +12,16 @@ export class GithubService {
 	 * @param {string} username
 	 * @param {string} repository
 	 */
-	async getBranches(
-		username: string,
-		repository: string,
-	): Promise<Array<string>> {
-		return this.client.github
-		           .getBranchesForRepository(username, repository)
-		           .then((x) => x.data);
+	async getBranches(username: string, repository: string): Promise<Array<string>> {
+		return this.client.github.getBranchesForRepository(username, repository).then((x) => x.data);
 	}
 
 	/**
 	 *
 	 * @param {string} username
 	 */
-	async getRepositoriesData(
-		username: string,
-	): Promise<RepoWithBranchModel[]> {
-		return this.client.github
-		           .getDockerRepository(username)
-		           .then((x) => x.data);
+	async getRepositoriesData(username: string): Promise<RepoWithBranchModel[]> {
+		return this.client.github.getDockerRepository(username).then((x) => x.data);
 	}
 
 	/**
@@ -39,14 +30,8 @@ export class GithubService {
 	 * @param {string} repository
 	 * @param {string} branch
 	 */
-	async getDockerfiles(
-		username: string,
-		repository: string,
-		branch: string,
-	): Promise<Array<FileModel>> {
-		return this.client.github
-		           .getDockerfilesForRepository(username, repository, branch)
-		           .then((x) => x.data);
+	async getDockerfiles(username: string, repository: string, branch: string): Promise<Array<FileModel>> {
+		return this.client.github.getDockerfilesForRepository(username, repository, branch).then((x) => x.data);
 	}
 
 	/**

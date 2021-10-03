@@ -8,9 +8,7 @@ export default function Mappings() {
 	const storeMappings = useAppSelector((s) => s.automation.config?.mappings);
 
 	const mappings = React.useMemo(() => {
-		return [...(storeMappings ?? [])].sort((a, b) =>
-			a.id > b.id ? -1 : 1,
-		);
+		return [...(storeMappings ?? [])].sort((a, b) => (a.id > b.id ? -1 : 1));
 	}, [storeMappings]);
 
 	const count = mappings.length;
@@ -20,9 +18,7 @@ export default function Mappings() {
 			{[...mappings].map((map, i) => (
 				<div key={`D-${map.id}`}>
 					<Mapping key={`M-${map.id}`} data={map} />
-					{count > 1 && i < count - 1 && (
-						<Divider key={`K-${map.id}-${i}`} />
-					)}
+					{count > 1 && i < count - 1 && <Divider key={`K-${map.id}-${i}`} />}
 				</div>
 			))}
 		</List>

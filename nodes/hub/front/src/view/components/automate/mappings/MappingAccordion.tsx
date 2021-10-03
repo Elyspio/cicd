@@ -22,22 +22,16 @@ const useStyles = makeStyles(() =>
 			display: "flex",
 			alignItems: "center",
 		},
-	}),
+	})
 );
 
-const Header = (props: {
-	onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
-}) => {
+const Header = (props: { onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any }) => {
 	const classes = useStyles();
 	return (
 		<Box className={classes.header}>
 			<Typography>Mapping</Typography>
 			<div className={classes.btns}>
-				<IconButton
-					color={"primary"}
-					onClick={(e) => props.onClick(e)}
-					size="medium"
-				>
+				<IconButton color={"primary"} onClick={(e) => props.onClick(e)} size="medium">
 					<Add />
 				</IconButton>
 			</div>

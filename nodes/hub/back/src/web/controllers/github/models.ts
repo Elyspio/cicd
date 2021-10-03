@@ -268,7 +268,6 @@ export class Repository {
 	@Property()
 	labels_url: string;
 	@Required()
-
 	@Property()
 	@Required()
 	releases_url: string;
@@ -393,9 +392,7 @@ export class Repository {
 	master_branch: string;
 }
 
-
 export class GithubPushWebhook {
-
 	@Property()
 	@Required()
 	ref: string;
@@ -448,9 +445,7 @@ export class GithubPushWebhook {
 	sender: User;
 }
 
-
 export class FileModel {
-
 	@Property(String)
 	@Required()
 	path: string;
@@ -475,7 +470,6 @@ class RepoNodeModel {
 }
 
 export class RepoWithBranchModel {
-
 	@Property(String)
 	@Required()
 	branch: string;
@@ -494,5 +488,4 @@ export class RepoWithBranchModel {
 
 	@Property(String)
 	bake?: string;
-
 }

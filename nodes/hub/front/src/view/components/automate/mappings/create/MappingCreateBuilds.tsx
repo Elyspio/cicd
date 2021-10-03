@@ -5,7 +5,7 @@ import { DockerfilesParams } from "../../../../store/module/automation/types";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import { useDispatch } from "react-redux";
 import { DockerBakeModel, DockerConfigModelPlatformsEnum } from "../../../../../core/apis/backend/generated";
-import { setDockerfiles, setSelectedType } from "../../../../store/module/mapping/mapping.reducer";
+import { setBake, setDockerfiles, setSelectedType } from "../../../../store/module/mapping/mapping.reducer";
 import { ReactComponent as DockerIcon } from "../../icons/docker.svg";
 import { iconSize } from "../../../../../config/icons";
 import * as path from "path";
@@ -23,7 +23,7 @@ function MappingCreateBuilds() {
 			setValue(val);
 			dispatch(setSelectedType(val));
 		},
-		[dispatch],
+		[dispatch]
 	);
 
 	return (
@@ -31,10 +31,7 @@ function MappingCreateBuilds() {
 			<Typography variant={"h6"}>Docker (Images)</Typography>
 
 			<FormControl className={"FormControl"} color={"primary"}>
-				<InputLabel
-					id={`mapping-create-image-type-label`}
-					color={"primary"}
-				>
+				<InputLabel id={`mapping-create-image-type-label`} color={"primary"}>
 					Type
 				</InputLabel>
 				<Select
@@ -65,40 +62,42 @@ function MappingCreateBuilds() {
 
 function MappingCreateBuildBake() {
 	const bake = useAppSelector((s) => {
-		if (
-			s.mapping.selected.source.repo &&
-			s.mapping.selected.source.branch
-		) {
+		if (s.mapping.selected.source.repo && s.mapping.selected.source.branch) {
 			const repo = s.mapping.repositories[s.mapping.selected.source.repo];
 			return repo[s.mapping.selected.source.branch]?.bake;
 		}
 	});
+	const dispatch = useAppDispatch();
+
+	const setConfig = React.useCallback(
+		(data: typeof conf) => {
+			dispatch(setBake(data));
+			setConf(data);
+		},
+		[dispatch]
+	);
 
 	const [conf, setConf] = React.useState<DockerBakeModel>({
 		bakeFilePath: bake ?? "/",
 	});
 	React.useEffect(() => {
-		bake && setConf({ bakeFilePath: bake });
-	}, [bake]);
+		bake && setConfig({ bakeFilePath: bake });
+	}, [bake, setConfig]);
 
 	return (
 		<Box className="MappingCreateBuildBake">
 			<FormControl className={"FormControl"} fullWidth>
-				<InputLabel id={`mapping-create-image-bake-label`}>
-					Bake file path
-				</InputLabel>
+				<InputLabel id={`mapping-create-image-bake-label`}>Bake file path</InputLabel>
 				<Select
 					labelId={`mapping-create-image-bake-label`}
 					id={`mapping-create-image-bake-input`}
 					value={conf.bakeFilePath}
 					title={conf.bakeFilePath}
-					onChange={(e) => setConf({ bakeFilePath: e.target.value })}
+					onChange={(e) => setConfig({ bakeFilePath: e.target.value })}
 					label={"Bake file path"}
 					required
 				>
-					<MenuItem value={conf.bakeFilePath}>
-						{conf.bakeFilePath}
-					</MenuItem>
+					<MenuItem value={conf.bakeFilePath}>{conf.bakeFilePath}</MenuItem>
 				</Select>
 			</FormControl>
 		</Box>
@@ -112,20 +111,12 @@ function MappingCreateBuildDockerfiles() {
 
 	const dockerfiles: string[] = useAppSelector((s) => {
 		if (repo && s.mapping.selected.source.branch) {
-			return s.mapping.repositories[repo][
-				s.mapping.selected.source.branch
-				].dockerfiles;
+			return s.mapping.repositories[repo][s.mapping.selected.source.branch].dockerfiles;
 		}
 		return [];
 	});
 
-	const platforms = React.useMemo(
-		() => [
-			DockerConfigModelPlatformsEnum.Arm64,
-			DockerConfigModelPlatformsEnum.Amd64,
-		],
-		[],
-	);
+	const platforms = React.useMemo(() => [DockerConfigModelPlatformsEnum.Arm64, DockerConfigModelPlatformsEnum.Amd64], []);
 
 	React.useEffect(() => {
 		setConf(
@@ -133,13 +124,9 @@ function MappingCreateBuildDockerfiles() {
 				let tag = "latest";
 
 				if (dockerfiles.length > 1) {
-					tag = x
-						.substring(0, x.toLowerCase().indexOf("dockerfile"))
-						.replaceAll("/", "-")
-						.replaceAll("\\", "-");
+					tag = x.substring(0, x.toLowerCase().indexOf("dockerfile")).replaceAll("/", "-").replaceAll("\\", "-");
 
-					if (tag[tag.length - 1] === "-")
-						tag = tag.substr(0, tag.length - 1);
+					if (tag[tag.length - 1] === "-") tag = tag.substr(0, tag.length - 1);
 				}
 
 				console.log("tag", tag);
@@ -153,15 +140,11 @@ function MappingCreateBuildDockerfiles() {
 						use: false,
 					},
 				};
-			}),
+			})
 		);
 	}, [dockerfiles, repo, platforms]);
 
-	function update(
-		event: BaseSyntheticEvent,
-		key: keyof DockerfilesParams[number]["dockerfile"],
-		index: number,
-	) {
+	function update(event: BaseSyntheticEvent, key: keyof DockerfilesParams[number]["dockerfile"], index: number) {
 		event.preventDefault();
 		event.stopPropagation();
 		const clone = deepClone(conf);
@@ -186,13 +169,9 @@ function MappingCreateBuildDockerfiles() {
 		syncChanges(clone);
 	}
 
-	function updatePlatform(
-		event: SelectChangeEvent<DockerConfigModelPlatformsEnum[]>,
-		index: number,
-	) {
+	function updatePlatform(event: SelectChangeEvent<DockerConfigModelPlatformsEnum[]>, index: number) {
 		const clone = deepClone(conf);
-		clone[index].platforms = event.target
-			.value as DockerConfigModelPlatformsEnum[];
+		clone[index].platforms = event.target.value as DockerConfigModelPlatformsEnum[];
 		syncChanges(clone);
 	}
 
@@ -200,9 +179,7 @@ function MappingCreateBuildDockerfiles() {
 
 	function syncChanges(configuration: typeof conf) {
 		setConf(configuration);
-		const dockerfiles = configuration.filter(
-			(conf) => conf.dockerfile.use && conf.dockerfile.wd.length > 0,
-		);
+		const dockerfiles = configuration.filter((conf) => conf.dockerfile.use && conf.dockerfile.wd.length > 0);
 		console.log("sync", dockerfiles);
 		dispatch(setDockerfiles(dockerfiles));
 	}
@@ -212,37 +189,23 @@ function MappingCreateBuildDockerfiles() {
 			{conf.map((conf, index) => (
 				<Paper
 					variant={"outlined"}
-					className={`image-container ${
-						conf.dockerfile.use ? "selected" : ""
-					}`}
+					className={`image-container ${conf.dockerfile.use ? "selected" : ""}`}
 					key={conf.dockerfile.path}
-					onClick={(e) =>
-						e.target === e.currentTarget && update(e, "use", index)
-					}
+					onClick={(e) => e.target === e.currentTarget && update(e, "use", index)}
 				>
 					<Box className="image-container tuple">
 						<FormControl className={"FormControl"}>
-							<InputLabel
-								id={`mapping-create-image-dockerfile-label-${index}`}
-							>
-								Dockerfile
-							</InputLabel>
+							<InputLabel id={`mapping-create-image-dockerfile-label-${index}`}>Dockerfile</InputLabel>
 							<Select
 								labelId={`mapping-create-image-dockerfile-label-${index}`}
 								id={`mapping-create-image-dockerfile-input-${index}`}
 								label={"Dockerfile"}
 								value={conf.dockerfile.path}
 								title={conf.dockerfile.path}
-								onChange={(e) =>
-									update(e as any, "path", index)
-								}
+								onChange={(e) => update(e as any, "path", index)}
 								renderValue={(value) => (
 									<div>
-										<DockerIcon
-											width={iconSize}
-											height={iconSize}
-										/>{" "}
-										{value}
+										<DockerIcon width={iconSize} height={iconSize} /> {value}
 									</div>
 								)}
 								required
@@ -263,10 +226,7 @@ function MappingCreateBuildDockerfiles() {
 							title={conf.dockerfile.wd}
 							disabled={!conf.dockerfile.use}
 							required
-							error={
-								conf.dockerfile.use &&
-								conf.dockerfile.wd.length === 0
-							}
+							error={conf.dockerfile.use && conf.dockerfile.wd.length === 0}
 							onChange={(e) => update(e, "wd", index)}
 						/>
 					</Box>
@@ -277,10 +237,7 @@ function MappingCreateBuildDockerfiles() {
 							label="Image name"
 							value={`${conf.dockerfile.image}:${conf.dockerfile.tag}`}
 							title={`${conf.dockerfile.image}:${conf.dockerfile.tag}`}
-							error={
-								conf.dockerfile.use &&
-								conf.dockerfile.image.length === 0
-							}
+							error={conf.dockerfile.use && conf.dockerfile.image.length === 0}
 							required
 							disabled={!conf.dockerfile.use}
 							autoComplete="off"
@@ -290,11 +247,7 @@ function MappingCreateBuildDockerfiles() {
 						/>
 
 						<FormControl className={"FormControl"}>
-							<InputLabel
-								id={`mapping-create-image-platform-label-${index}`}
-							>
-								Platforms
-							</InputLabel>
+							<InputLabel id={`mapping-create-image-platform-label-${index}`}>Platforms</InputLabel>
 							<Select
 								labelId={`mapping-create-image-platform-label-${index}`}
 								id={`mapping-create-image-platform-input-${index}`}

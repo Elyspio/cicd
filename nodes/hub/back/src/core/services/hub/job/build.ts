@@ -1,25 +1,33 @@
 import { BuildConfig, Job } from "../types";
-import { JobBase, JobIdentifier, JobMethods } from "./base";
-
+import { Service } from "@tsed/common";
+import { JobRepository } from "../../../database/repositories/job.repository";
+import { JobIdentifier } from "./types";
 
 type BuildJob = Job<BuildConfig>;
 
-export class JobBuild extends JobBase implements JobMethods<BuildJob> {
+@Service()
+export class JobBuild {
+	private repositories: { jobs: JobRepository };
 
-	public add(agent: Omit<BuildJob, "lastUptime" | "availability">) {
-		return super.baseAdd<BuildJob>(agent, "builds");
+	constructor(jobs: JobRepository) {
+		this.repositories = {
+			jobs,
+		};
 	}
 
-	public update(agent: JobIdentifier<BuildJob>, newAgent: Partial<BuildJob>) {
-		return super.baseUpdate<BuildJob>(agent, newAgent, "builds");
+	public async add(job: Omit<BuildJob, "lastUptime" | "availability">) {
+		await this.repositories.jobs.add("builds", job);
 	}
 
-	public delete(agent: JobIdentifier<BuildJob>) {
-		super.baseDelete<BuildJob>(agent, "builds");
+	public update(id: JobIdentifier<BuildJob>, data: Partial<BuildJob>) {
+		return this.repositories.jobs.update("builds", { ...data, id });
 	}
 
-	public list(): BuildJob[] {
-		return this.baseList<BuildJob>("builds");
+	public async delete(id: JobIdentifier<BuildJob>) {
+		await this.repositories.jobs.delete("builds", id);
+	}
+
+	public list(): Promise<BuildJob[]> {
+		return this.repositories.jobs.list("builds");
 	}
 }
-

@@ -65,8 +65,6 @@ export const themes = {
 };
 
 export type Themes = "dark" | "light";
-export const getUrlTheme = (): Themes =>
-	new URL(window.location.toString()).searchParams.get("theme") ||
-	("dark" as any);
+export const getUrlTheme = (): Themes => new URL(window.location.toString()).searchParams.get("theme") || ("dark" as any);
 
 export const getCurrentTheme = (theme: Themes): Theme => themes[theme];

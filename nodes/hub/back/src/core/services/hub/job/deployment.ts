@@ -1,25 +1,33 @@
 import { DeployConfig, Job } from "../types";
-import { JobBase, JobIdentifier, JobMethods } from "./base";
+import { Service } from "@tsed/common";
+import { JobRepository } from "../../../database/repositories/job.repository";
+import { JobIdentifier } from "./types";
 
+type DeployJob = Job<DeployConfig>;
 
-type DeployJob = Job<DeployConfig>
+@Service()
+export class JobProduction {
+	private repositories: { jobs: JobRepository };
 
-export class JobDeployment extends JobBase implements JobMethods<DeployJob> {
-
-	public add(agent: Omit<DeployJob, "lastUptime" | "availability">) {
-		return super.baseAdd<DeployJob>(agent, "deployments");
+	constructor(jobs: JobRepository) {
+		this.repositories = {
+			jobs,
+		};
 	}
 
-	public update(agent: JobIdentifier<DeployJob>, newAgent: Partial<DeployJob>) {
-		return super.baseUpdate<DeployJob>(agent, newAgent, "deployments");
+	public async add(job: Omit<DeployJob, "lastUptime" | "availability">) {
+		await this.repositories.jobs.add("deployments", job);
 	}
 
-	public delete(agent: JobIdentifier<DeployJob>) {
-		super.baseDelete<DeployJob>(agent, "deployments");
+	public update(id: JobIdentifier<DeployJob>, data: Partial<DeployJob>) {
+		return this.repositories.jobs.update("deployments", { ...data, id });
 	}
 
-	public list(): DeployJob[] {
-		return this.baseList<DeployJob>("deployments");
+	public async delete(id: JobIdentifier<DeployJob>) {
+		await this.repositories.jobs.delete("deployments", id);
+	}
+
+	public list(): Promise<DeployJob[]> {
+		return this.repositories.jobs.list("deployments");
 	}
 }
-

@@ -1,36 +1,47 @@
-import { BodyParams, Controller, Get, Post } from "@tsed/common";
+import { BodyParams, Controller, Get, OnReady, Post } from "@tsed/common";
 import { Name, Required, Returns } from "@tsed/schema";
-import { Services } from "../../../core/services";
 import { BuildAgentModelAdd, BuildAgentModelReturn, ProductionAgentModel, ProductionAgentModelAdd, ProductionApplications } from "./models";
 import { AgentAutomateSocket } from "./socket/agent.automate.socket";
+import { AgentBuild } from "../../../core/services/hub/agent/builder";
+import { AgentProduction } from "../../../core/services/hub/agent/production";
+import { EngineService } from "../../../core/services/hub/engine.service";
 
 @Controller("/automate")
 @Name("Automation")
-export class AutomationController {
-
+export class AutomationController implements OnReady {
 	private static socket: AgentAutomateSocket;
+	private services: { build: AgentBuild; deployments: AgentProduction; engine: EngineService };
 
-	constructor(socket: AgentAutomateSocket) {
+	constructor(socket: AgentAutomateSocket, agentBuild: AgentBuild, agentProduction: AgentProduction, engine: EngineService) {
 		AutomationController.socket = socket;
+		this.services = {
+			build: agentBuild,
+			deployments: agentProduction,
+			engine,
+		};
+	}
+
+	$onReady(): void | Promise<any> {
+		this.services.engine.watch();
 	}
 
 	// region get
 	@Get("/agent/build")
-	@Returns(200, Array).Of(BuildAgentModelReturn)
+	@(Returns(200, Array).Of(BuildAgentModelReturn))
 	async getBuilderAgent() {
-		return Services.hub.agents.builder.list();
+		return this.services.build.list();
 	}
 
 	@Get("/agent/production")
-	@Returns(200, Array).Of(ProductionAgentModel)
+	@(Returns(200, Array).Of(ProductionAgentModel))
 	async getProductionAgent() {
-		return Services.hub.agents.production.list();
+		return this.services.deployments.list();
 	}
 
 	@Get("/agent/production/node")
-	@Returns(200, Array).Of(ProductionApplications)
+	@(Returns(200, Array).Of(ProductionApplications))
 	async getProductionApps() {
-		return Services.hub.agents.production.getApps();
+		return this.services.deployments.getApps();
 	}
 
 	// endregion
@@ -39,32 +50,19 @@ export class AutomationController {
 
 	@Post("/agent/production")
 	@Returns(204)
-	async addProductionAgent(@Required() @BodyParams(ProductionAgentModelAdd) agent: ProductionAgentModelAdd) {
-		Services.hub.agents.production.add(agent);
+	async addProductionAgent(
+		@Required()
+		@BodyParams(ProductionAgentModelAdd)
+		agent: ProductionAgentModelAdd
+	) {
+		await this.services.deployments.add(agent);
 	}
 
 	@Post("/agent/build")
 	@Returns(204)
 	async addBuildAgent(@Required() @BodyParams(BuildAgentModelAdd) agent: BuildAgentModelAdd) {
-		Services.hub.agents.builder.add(agent);
+		await this.services.build.add(agent);
 	}
 
 	// endregion
-
-	// region keep-alive
-
-	@Post("/agent/build/keep-alive")
-	@Returns(204)
-	async builderAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
-		Services.hub.agents.builder.keepAlive(url);
-	}
-
-	@Post("/agent/production/keep-alive")
-	@Returns(204)
-	async productionAgentKeepAlive(@Required() @BodyParams("url", String) url: string) {
-		Services.hub.agents.production.keepAlive(url);
-	}
-
-	// endregion
-
 }

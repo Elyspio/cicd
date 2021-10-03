@@ -13,3 +13,4 @@ deploy/prod/.env
 !**/conf.js
 nodes/agent-builder/builds
 deploy/dev/data
+nodes/agent-prod/deployed/test-2/.env

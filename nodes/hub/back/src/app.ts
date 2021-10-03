@@ -10,7 +10,6 @@ if (require.main === module) {
 	bootstrap();
 }
 
-
 async function bootstrap() {
 	try {
 		$log.debug("Start server...");
