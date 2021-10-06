@@ -6,7 +6,7 @@ import { AgentProduction } from "./agent/production";
 import { QueueBuild } from "./queue/build";
 import { JobBuild } from "./job/build";
 import { QueueProduction } from "./queue/deployment";
-import { JobProduction } from "./job/deployment";
+import { JobDeployment } from "./job/deployment";
 import { Mappings } from "./mapping/mappings";
 import { Log } from "../../utils/decorators/logger";
 import { EventManager } from "../../utils/events";
@@ -16,7 +16,7 @@ export class ConfigService extends EventManager<{ update: (config: HubConfigExpo
 	private static log = getLogger.service(ConfigService);
 	private services: {
 		queues: { builds: QueueBuild; deployments: QueueProduction };
-		jobs: { builds: JobBuild; deployments: JobProduction };
+		jobs: { builds: JobBuild; deployments: JobDeployment };
 		agents: { builds: AgentBuild; deployments: AgentProduction };
 		mapping: Mappings;
 	};
@@ -28,7 +28,7 @@ export class ConfigService extends EventManager<{ update: (config: HubConfigExpo
 		queueBuild: QueueBuild,
 		queueproduction: QueueProduction,
 		jobBuild: JobBuild,
-		jobProduction: JobProduction,
+		jobProduction: JobDeployment,
 		mapping: Mappings
 	) {
 		super();

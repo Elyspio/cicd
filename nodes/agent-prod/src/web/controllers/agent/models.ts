@@ -33,4 +33,7 @@ export class DeployConfigModel {
 export class DeployJobModel extends JobModel implements Omit<Job<DeployConfig>, keyof Timestamp> {
 	@Property(DeployConfigModel)
 	config: DeployConfigModel;
+
+	@Property()
+	public stdout: string | null;
 }

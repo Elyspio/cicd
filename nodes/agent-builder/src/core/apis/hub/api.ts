@@ -1481,10 +1481,7 @@ export const AutomationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async automationAddBuildAgent(
-			buildAgentModelAdd: BuildAgentModelAdd,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+		async automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddBuildAgent(buildAgentModelAdd, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -1494,10 +1491,7 @@ export const AutomationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async automationAddProductionAgent(
-			productionAgentModelAdd: ProductionAgentModelAdd,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+		async automationAddProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.automationAddProductionAgent(productionAgentModelAdd, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -1507,10 +1501,7 @@ export const AutomationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async automationBuilderAgentKeepAlive(
-			inlineObject: InlineObject,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+		async automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.automationBuilderAgentKeepAlive(inlineObject, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -1547,10 +1538,7 @@ export const AutomationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async automationProductionAgentKeepAlive(
-			inlineObject1: InlineObject1,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+		async automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.automationProductionAgentKeepAlive(inlineObject1, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -1785,10 +1773,7 @@ export const DockerControllerApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async dockerControllerGet(
-			preset?: Array<"web-front" | "web-back">,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+		async dockerControllerGet(preset?: Array<"web-front" | "web-back">, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.dockerControllerGet(preset, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -2059,11 +2044,7 @@ export const GithubApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async githubGetBranchesForRepository(
-			username: string,
-			repository: string,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+		async githubGetBranchesForRepository(username: string, repository: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.githubGetBranchesForRepository(username, repository, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -2073,10 +2054,7 @@ export const GithubApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async githubGetDockerRepository(
-			username: string,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RepoWithBranchModel>>> {
+		async githubGetDockerRepository(username: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RepoWithBranchModel>>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.githubGetDockerRepository(username, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -2314,10 +2292,7 @@ export const GithubWebhooksApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async githubWebhooksPush(
-			githubPushWebhook: GithubPushWebhook,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+		async githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.githubWebhooksPush(githubPushWebhook, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},

@@ -16,18 +16,7 @@ import { Configuration } from "./configuration";
 import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {
-	assertParamExists,
-	createRequestFunction,
-	DUMMY_BASE_URL,
-	serializeDataIfNeeded,
-	setApiKeyToObject,
-	setBasicAuthToObject,
-	setBearerAuthToObject,
-	setOAuthToObject,
-	setSearchParams,
-	toPathString,
-} from "./common";
+import { assertParamExists, createRequestFunction, DUMMY_BASE_URL, serializeDataIfNeeded, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString } from "./common";
 // @ts-ignore
 import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
@@ -566,10 +555,7 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async loginInit(
-			postLoginInitRequest?: PostLoginInitRequest,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostLoginModelWithSalt>> {
+		async loginInit(postLoginInitRequest?: PostLoginInitRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostLoginModelWithSalt>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.loginInit(postLoginInitRequest, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -780,12 +766,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getUserInfo: async (
-			kind: "username" | "token",
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options: any = {}
-		): Promise<RequestArgs> => {
+		getUserInfo: async (kind: "username" | "token", authenticationToken?: string, authenticationToken2?: string, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'kind' is not null or undefined
 			assertParamExists("getUserInfo", "kind", kind);
 			const localVarPath = `/api/users/{kind}`.replace(`{${"kind"}}`, encodeURIComponent(String(kind)));
@@ -874,13 +855,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getUserTheme: async (
-			username: string,
-			windowsTheme: "dark" | "light",
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options: any = {}
-		): Promise<RequestArgs> => {
+		getUserTheme: async (username: string, windowsTheme: "dark" | "light", authenticationToken?: string, authenticationToken2?: string, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("getUserTheme", "username", username);
 			// verify required parameter 'windowsTheme' is not null or undefined
@@ -1072,13 +1047,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
 			setUserSettingsModel?: SetUserSettingsModel,
 			options?: any
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.setUserSettings(
-				username,
-				authenticationToken,
-				authenticationToken2,
-				setUserSettingsModel,
-				options
-			);
+			const localVarAxiosArgs = await localVarAxiosParamCreator.setUserSettings(username, authenticationToken, authenticationToken2, setUserSettingsModel, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
@@ -1133,16 +1102,8 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getUserTheme(
-			username: string,
-			windowsTheme: "dark" | "light",
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options?: any
-		): AxiosPromise<FrontThemeReturnModel> {
-			return localVarFp
-				.getUserTheme(username, windowsTheme, authenticationToken, authenticationToken2, options)
-				.then((request) => request(axios, basePath));
+		getUserTheme(username: string, windowsTheme: "dark" | "light", authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<FrontThemeReturnModel> {
+			return localVarFp.getUserTheme(username, windowsTheme, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -1153,16 +1114,8 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		setUserSettings(
-			username: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			setUserSettingsModel?: SetUserSettingsModel,
-			options?: any
-		): AxiosPromise<object> {
-			return localVarFp
-				.setUserSettings(username, authenticationToken, authenticationToken2, setUserSettingsModel, options)
-				.then((request) => request(axios, basePath));
+		setUserSettings(username: string, authenticationToken?: string, authenticationToken2?: string, setUserSettingsModel?: SetUserSettingsModel, options?: any): AxiosPromise<object> {
+			return localVarFp.setUserSettings(username, authenticationToken, authenticationToken2, setUserSettingsModel, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -1245,13 +1198,7 @@ export class UsersApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof UsersApi
 	 */
-	public setUserSettings(
-		username: string,
-		authenticationToken?: string,
-		authenticationToken2?: string,
-		setUserSettingsModel?: SetUserSettingsModel,
-		options?: any
-	) {
+	public setUserSettings(username: string, authenticationToken?: string, authenticationToken2?: string, setUserSettingsModel?: SetUserSettingsModel, options?: any) {
 		return UsersApiFp(this.configuration)
 			.setUserSettings(username, authenticationToken, authenticationToken2, setUserSettingsModel, options)
 			.then((request) => request(this.axios, this.basePath));

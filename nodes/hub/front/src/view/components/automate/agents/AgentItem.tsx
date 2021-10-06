@@ -42,9 +42,7 @@ function StatusChip({ status }: StatusChipProps) {
 export function AgentItem(props: Props) {
 	return (
 		<ListItem className={"AgentItem"}>
-			<ListItemIcon className={"Avatar"}>
-				{props.type === "production" ? <DeployIcon width={48} height={48} /> : <BuildIcon width={48} height={48} />}
-			</ListItemIcon>
+			<ListItemIcon className={"Avatar"}>{props.type === "production" ? <DeployIcon width={48} height={48} /> : <BuildIcon width={48} height={48} />}</ListItemIcon>
 			<Grid container direction={"column"}>
 				<Grid item>
 					<Typography>{props.data.uri}</Typography>

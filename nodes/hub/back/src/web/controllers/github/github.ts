@@ -49,12 +49,7 @@ export class Github {
 	@(Returns(200, Array).Of(FileModel))
 	@Returns(Unauthorized.STATUS, Unauthorized)
 	@Protected()
-	async getDockerfilesForRepository(
-		@PathParams("username") username: string,
-		@PathParams("repository") repo: string,
-		@PathParams("branch") branch: string,
-		@Req() { auth }: Express.Request
-	) {
+	async getDockerfilesForRepository(@PathParams("username") username: string, @PathParams("repository") repo: string, @PathParams("branch") branch: string, @Req() { auth }: Express.Request) {
 		if (username !== auth!.username) throw new Unauthorized(`You (${auth!.username}) are not ${username}`);
 
 		const service = await this.githubService.get(username, auth!.token);

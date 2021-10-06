@@ -12,23 +12,11 @@
  * Do not edit the class manually.
  */
 
-
 import { Configuration } from "./configuration";
 import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {
-	assertParamExists,
-	createRequestFunction,
-	DUMMY_BASE_URL,
-	serializeDataIfNeeded,
-	setApiKeyToObject,
-	setBasicAuthToObject,
-	setBearerAuthToObject,
-	setOAuthToObject,
-	setSearchParams,
-	toPathString,
-} from "./common";
+import { assertParamExists, createRequestFunction, DUMMY_BASE_URL, serializeDataIfNeeded, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString } from "./common";
 // @ts-ignore
 import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
@@ -58,7 +46,7 @@ export interface BuildAgentModelAdd {
  */
 export enum BuildAgentModelAddAbilitiesEnum {
 	Docker = "docker",
-	DockerBuildx = "docker-buildx"
+	DockerBuildx = "docker-buildx",
 }
 
 /**
@@ -100,7 +88,7 @@ export interface BuildAgentModelReturn {
 export enum BuildAgentModelReturnAvailabilityEnum {
 	Free = "free",
 	Running = "running",
-	Down = "down"
+	Down = "down",
 }
 
 /**
@@ -109,7 +97,7 @@ export enum BuildAgentModelReturnAvailabilityEnum {
  */
 export enum BuildAgentModelReturnAbilitiesEnum {
 	Docker = "docker",
-	DockerBuildx = "docker-buildx"
+	DockerBuildx = "docker-buildx",
 }
 
 /**
@@ -198,7 +186,7 @@ export interface DockerConfigModel {
  */
 export enum DockerConfigModelPlatformsEnum {
 	Arm64 = "linux/arm64",
-	Amd64 = "linux/amd64"
+	Amd64 = "linux/amd64",
 }
 
 /**
@@ -492,7 +480,7 @@ export interface ProductionAgentModel {
 export enum ProductionAgentModelAvailabilityEnum {
 	Free = "free",
 	Running = "running",
-	Down = "down"
+	Down = "down",
 }
 
 /**
@@ -501,7 +489,7 @@ export enum ProductionAgentModelAvailabilityEnum {
  */
 export enum ProductionAgentModelAbilitiesEnum {
 	Docker = "docker",
-	DockerCompose = "docker-compose"
+	DockerCompose = "docker-compose",
 }
 
 /**
@@ -536,7 +524,7 @@ export interface ProductionAgentModelAdd {
  */
 export enum ProductionAgentModelAddAbilitiesEnum {
 	Docker = "docker",
-	DockerCompose = "docker-compose"
+	DockerCompose = "docker-compose",
 }
 
 /**
@@ -1195,7 +1183,7 @@ export interface User {
  * AutomationApi - axios parameter creator
  * @export
  */
-export const AutomationApiAxiosParamCreator = function(configuration?: Configuration) {
+export const AutomationApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -1217,7 +1205,6 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
 			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
-
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
@@ -1252,7 +1239,6 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1286,7 +1272,6 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1317,7 +1302,6 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
@@ -1345,7 +1329,6 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
@@ -1372,7 +1355,6 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
 			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
-
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -1404,7 +1386,6 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1424,7 +1405,7 @@ export const AutomationApiAxiosParamCreator = function(configuration?: Configura
  * AutomationApi - functional programming interface
  * @export
  */
-export const AutomationApiFp = function(configuration?: Configuration) {
+export const AutomationApiFp = function (configuration?: Configuration) {
 	const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -1501,7 +1482,7 @@ export const AutomationApiFp = function(configuration?: Configuration) {
  * AutomationApi - factory interface
  * @export
  */
-export const AutomationApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AutomationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = AutomationApiFp(configuration);
 	return {
 		/**
@@ -1582,7 +1563,9 @@ export class AutomationApi extends BaseAPI {
 	 * @memberof AutomationApi
 	 */
 	public automationAddBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any) {
-		return AutomationApiFp(this.configuration).automationAddBuildAgent(buildAgentModelAdd, options).then((request) => request(this.axios, this.basePath));
+		return AutomationApiFp(this.configuration)
+			.automationAddBuildAgent(buildAgentModelAdd, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -1593,7 +1576,9 @@ export class AutomationApi extends BaseAPI {
 	 * @memberof AutomationApi
 	 */
 	public automationAddProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any) {
-		return AutomationApiFp(this.configuration).automationAddProductionAgent(productionAgentModelAdd, options).then((request) => request(this.axios, this.basePath));
+		return AutomationApiFp(this.configuration)
+			.automationAddProductionAgent(productionAgentModelAdd, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -1604,7 +1589,9 @@ export class AutomationApi extends BaseAPI {
 	 * @memberof AutomationApi
 	 */
 	public automationBuilderAgentKeepAlive(inlineObject: InlineObject, options?: any) {
-		return AutomationApiFp(this.configuration).automationBuilderAgentKeepAlive(inlineObject, options).then((request) => request(this.axios, this.basePath));
+		return AutomationApiFp(this.configuration)
+			.automationBuilderAgentKeepAlive(inlineObject, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -1614,7 +1601,9 @@ export class AutomationApi extends BaseAPI {
 	 * @memberof AutomationApi
 	 */
 	public automationGetBuilderAgent(options?: any) {
-		return AutomationApiFp(this.configuration).automationGetBuilderAgent(options).then((request) => request(this.axios, this.basePath));
+		return AutomationApiFp(this.configuration)
+			.automationGetBuilderAgent(options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -1624,7 +1613,9 @@ export class AutomationApi extends BaseAPI {
 	 * @memberof AutomationApi
 	 */
 	public automationGetProductionAgent(options?: any) {
-		return AutomationApiFp(this.configuration).automationGetProductionAgent(options).then((request) => request(this.axios, this.basePath));
+		return AutomationApiFp(this.configuration)
+			.automationGetProductionAgent(options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -1634,7 +1625,9 @@ export class AutomationApi extends BaseAPI {
 	 * @memberof AutomationApi
 	 */
 	public automationGetProductionApps(options?: any) {
-		return AutomationApiFp(this.configuration).automationGetProductionApps(options).then((request) => request(this.axios, this.basePath));
+		return AutomationApiFp(this.configuration)
+			.automationGetProductionApps(options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -1645,16 +1638,17 @@ export class AutomationApi extends BaseAPI {
 	 * @memberof AutomationApi
 	 */
 	public automationProductionAgentKeepAlive(inlineObject1: InlineObject1, options?: any) {
-		return AutomationApiFp(this.configuration).automationProductionAgentKeepAlive(inlineObject1, options).then((request) => request(this.axios, this.basePath));
+		return AutomationApiFp(this.configuration)
+			.automationProductionAgentKeepAlive(inlineObject1, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
 
 /**
  * DockerControllerApi - axios parameter creator
  * @export
  */
-export const DockerControllerApiAxiosParamCreator = function(configuration?: Configuration) {
+export const DockerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -1679,7 +1673,6 @@ export const DockerControllerApiAxiosParamCreator = function(configuration?: Con
 				localVarQueryParameter["preset"] = preset;
 			}
 
-
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
@@ -1696,7 +1689,7 @@ export const DockerControllerApiAxiosParamCreator = function(configuration?: Con
  * DockerControllerApi - functional programming interface
  * @export
  */
-export const DockerControllerApiFp = function(configuration?: Configuration) {
+export const DockerControllerApiFp = function (configuration?: Configuration) {
 	const localVarAxiosParamCreator = DockerControllerApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -1716,7 +1709,7 @@ export const DockerControllerApiFp = function(configuration?: Configuration) {
  * DockerControllerApi - factory interface
  * @export
  */
-export const DockerControllerApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const DockerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = DockerControllerApiFp(configuration);
 	return {
 		/**
@@ -1746,16 +1739,17 @@ export class DockerControllerApi extends BaseAPI {
 	 * @memberof DockerControllerApi
 	 */
 	public dockerControllerGet(preset?: Array<"web-front" | "web-back">, options?: any) {
-		return DockerControllerApiFp(this.configuration).dockerControllerGet(preset, options).then((request) => request(this.axios, this.basePath));
+		return DockerControllerApiFp(this.configuration)
+			.dockerControllerGet(preset, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
 
 /**
  * GithubApi - axios parameter creator
  * @export
  */
-export const GithubApiAxiosParamCreator = function(configuration?: Configuration) {
+export const GithubApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -1783,7 +1777,6 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
@@ -1802,8 +1795,7 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
 		githubGetDockerRepository: async (username: string, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("githubGetDockerRepository", "username", username);
-			const localVarPath = `/api/github/users/{username}/repositories/dockerfiles`
-				.replace(`{${"username"}}`, encodeURIComponent(String(username)));
+			const localVarPath = `/api/github/users/{username}/repositories/dockerfiles`.replace(`{${"username"}}`, encodeURIComponent(String(username)));
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -1814,7 +1806,6 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
 			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
-
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -1855,7 +1846,6 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
@@ -1874,8 +1864,7 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
 		githubGetRepositories: async (username: string, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("githubGetRepositories", "username", username);
-			const localVarPath = `/api/github/users/{username}`
-				.replace(`{${"username"}}`, encodeURIComponent(String(username)));
+			const localVarPath = `/api/github/users/{username}`.replace(`{${"username"}}`, encodeURIComponent(String(username)));
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -1886,7 +1875,6 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
 			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
-
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -1915,7 +1903,6 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
 			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
@@ -1932,7 +1919,7 @@ export const GithubApiAxiosParamCreator = function(configuration?: Configuration
  * GithubApi - functional programming interface
  * @export
  */
-export const GithubApiFp = function(configuration?: Configuration) {
+export const GithubApiFp = function (configuration?: Configuration) {
 	const localVarAxiosParamCreator = GithubApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -1964,7 +1951,12 @@ export const GithubApiFp = function(configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async githubGetDockerfilesForRepository(username: string, repository: string, branch: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FileModel>>> {
+		async githubGetDockerfilesForRepository(
+			username: string,
+			repository: string,
+			branch: string,
+			options?: any
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FileModel>>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.githubGetDockerfilesForRepository(username, repository, branch, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -1994,7 +1986,7 @@ export const GithubApiFp = function(configuration?: Configuration) {
  * GithubApi - factory interface
  * @export
  */
-export const GithubApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const GithubApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = GithubApiFp(configuration);
 	return {
 		/**
@@ -2063,7 +2055,9 @@ export class GithubApi extends BaseAPI {
 	 * @memberof GithubApi
 	 */
 	public githubGetBranchesForRepository(username: string, repository: string, options?: any) {
-		return GithubApiFp(this.configuration).githubGetBranchesForRepository(username, repository, options).then((request) => request(this.axios, this.basePath));
+		return GithubApiFp(this.configuration)
+			.githubGetBranchesForRepository(username, repository, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -2074,7 +2068,9 @@ export class GithubApi extends BaseAPI {
 	 * @memberof GithubApi
 	 */
 	public githubGetDockerRepository(username: string, options?: any) {
-		return GithubApiFp(this.configuration).githubGetDockerRepository(username, options).then((request) => request(this.axios, this.basePath));
+		return GithubApiFp(this.configuration)
+			.githubGetDockerRepository(username, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -2087,7 +2083,9 @@ export class GithubApi extends BaseAPI {
 	 * @memberof GithubApi
 	 */
 	public githubGetDockerfilesForRepository(username: string, repository: string, branch: string, options?: any) {
-		return GithubApiFp(this.configuration).githubGetDockerfilesForRepository(username, repository, branch, options).then((request) => request(this.axios, this.basePath));
+		return GithubApiFp(this.configuration)
+			.githubGetDockerfilesForRepository(username, repository, branch, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -2098,7 +2096,9 @@ export class GithubApi extends BaseAPI {
 	 * @memberof GithubApi
 	 */
 	public githubGetRepositories(username: string, options?: any) {
-		return GithubApiFp(this.configuration).githubGetRepositories(username, options).then((request) => request(this.axios, this.basePath));
+		return GithubApiFp(this.configuration)
+			.githubGetRepositories(username, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -2108,16 +2108,17 @@ export class GithubApi extends BaseAPI {
 	 * @memberof GithubApi
 	 */
 	public githubGetUsernameFromCookies(options?: any) {
-		return GithubApiFp(this.configuration).githubGetUsernameFromCookies(options).then((request) => request(this.axios, this.basePath));
+		return GithubApiFp(this.configuration)
+			.githubGetUsernameFromCookies(options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
 
 /**
  * GithubWebhooksApi - axios parameter creator
  * @export
  */
-export const GithubWebhooksApiAxiosParamCreator = function(configuration?: Configuration) {
+export const GithubWebhooksApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -2140,7 +2141,6 @@ export const GithubWebhooksApiAxiosParamCreator = function(configuration?: Confi
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -2160,7 +2160,7 @@ export const GithubWebhooksApiAxiosParamCreator = function(configuration?: Confi
  * GithubWebhooksApi - functional programming interface
  * @export
  */
-export const GithubWebhooksApiFp = function(configuration?: Configuration) {
+export const GithubWebhooksApiFp = function (configuration?: Configuration) {
 	const localVarAxiosParamCreator = GithubWebhooksApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -2180,7 +2180,7 @@ export const GithubWebhooksApiFp = function(configuration?: Configuration) {
  * GithubWebhooksApi - factory interface
  * @export
  */
-export const GithubWebhooksApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const GithubWebhooksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = GithubWebhooksApiFp(configuration);
 	return {
 		/**
@@ -2210,16 +2210,17 @@ export class GithubWebhooksApi extends BaseAPI {
 	 * @memberof GithubWebhooksApi
 	 */
 	public githubWebhooksPush(githubPushWebhook: GithubPushWebhook, options?: any) {
-		return GithubWebhooksApiFp(this.configuration).githubWebhooksPush(githubPushWebhook, options).then((request) => request(this.axios, this.basePath));
+		return GithubWebhooksApiFp(this.configuration)
+			.githubWebhooksPush(githubPushWebhook, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
 
 /**
  * OperationApi - axios parameter creator
  * @export
  */
-export const OperationApiAxiosParamCreator = function(configuration?: Configuration) {
+export const OperationApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -2241,7 +2242,6 @@ export const OperationApiAxiosParamCreator = function(configuration?: Configurat
 			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
-
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
@@ -2276,7 +2276,6 @@ export const OperationApiAxiosParamCreator = function(configuration?: Configurat
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -2310,7 +2309,6 @@ export const OperationApiAxiosParamCreator = function(configuration?: Configurat
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -2330,7 +2328,7 @@ export const OperationApiAxiosParamCreator = function(configuration?: Configurat
  * OperationApi - functional programming interface
  * @export
  */
-export const OperationApiFp = function(configuration?: Configuration) {
+export const OperationApiFp = function (configuration?: Configuration) {
 	const localVarAxiosParamCreator = OperationApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -2370,7 +2368,7 @@ export const OperationApiFp = function(configuration?: Configuration) {
  * OperationApi - factory interface
  * @export
  */
-export const OperationApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const OperationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = OperationApiFp(configuration);
 	return {
 		/**
@@ -2418,7 +2416,9 @@ export class OperationApi extends BaseAPI {
 	 * @memberof OperationApi
 	 */
 	public operationDeploy(deployConfigModel: DeployConfigModel, options?: any) {
-		return OperationApiFp(this.configuration).operationDeploy(deployConfigModel, options).then((request) => request(this.axios, this.basePath));
+		return OperationApiFp(this.configuration)
+			.operationDeploy(deployConfigModel, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -2429,7 +2429,9 @@ export class OperationApi extends BaseAPI {
 	 * @memberof OperationApi
 	 */
 	public operationRegister(inlineObject2: InlineObject2, options?: any) {
-		return OperationApiFp(this.configuration).operationRegister(inlineObject2, options).then((request) => request(this.axios, this.basePath));
+		return OperationApiFp(this.configuration)
+			.operationRegister(inlineObject2, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
@@ -2440,8 +2442,8 @@ export class OperationApi extends BaseAPI {
 	 * @memberof OperationApi
 	 */
 	public operationStart(buildConfigModel: BuildConfigModel, options?: any) {
-		return OperationApiFp(this.configuration).operationStart(buildConfigModel, options).then((request) => request(this.axios, this.basePath));
+		return OperationApiFp(this.configuration)
+			.operationStart(buildConfigModel, options)
+			.then((request) => request(this.axios, this.basePath));
 	}
 }
-
-

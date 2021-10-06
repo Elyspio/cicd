@@ -23,7 +23,7 @@ export class GitService {
 		} catch (e) {}
 
 		await git.clone(remote, localPath, ["-b", branch]);
-		hudSocket.emit("jobs-stdout", id, `Repository ${remote} cloned at ${localPath}`);
+		hudSocket.emit("jobs-stdout", "build", id, `Repository ${remote} cloned at ${localPath}`);
 		return localPath;
 	}
 }

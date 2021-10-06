@@ -199,10 +199,7 @@ export const BuildAgentApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async buildAgentBuild(
-			buildConfigModel: BuildConfigModel,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+		async buildAgentBuild(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.buildAgentBuild(buildConfigModel, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},

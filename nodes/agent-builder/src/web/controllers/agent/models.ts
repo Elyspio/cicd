@@ -84,4 +84,7 @@ class GithubDockerModel implements BuildConfig {
 export class BuildConfigModel extends JobModel implements Omit<Job<BuildConfig>, keyof Timestamp> {
 	@Property(GithubDockerModel)
 	config: GithubDockerModel;
+
+	@Property()
+	public stdout: string | null;
 }

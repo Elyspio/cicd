@@ -20,6 +20,8 @@ class Job implements Omit<IJob, "config"> {
 	public id: number;
 	@Column({ nullable: true })
 	public startedAt: Date | null;
+	@Column({ nullable: true })
+	public stdout: string | null;
 }
 
 type A = IBuildConfig["github"];

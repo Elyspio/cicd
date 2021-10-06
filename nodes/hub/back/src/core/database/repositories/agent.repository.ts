@@ -1,4 +1,4 @@
-import { AfterRoutesInit, BeforeListen, OnReady, Service } from "@tsed/common";
+import { AfterRoutesInit, BeforeListen, Service } from "@tsed/common";
 import { TypeORMService } from "@tsed/typeorm";
 import { MongoRepository } from "typeorm";
 import { getLogger } from "../../utils/logger";
@@ -34,10 +34,7 @@ export class AgentRepository implements AfterRoutesInit, BeforeListen {
 	async add<T extends keyof Omit<AgentsEntity, "_id">>(type: T, data: Omit<AgentsEntity[T][number], "availability" | "lastUptime">) {
 		const all = (await this.get())!;
 		if (type === "deployments") {
-			all.deployments = [
-				...all.deployments.filter((agent) => agent.uri !== data.uri),
-				{ ...(data as DeployAgent), lastUptime: new Date(), availability: "free" },
-			];
+			all.deployments = [...all.deployments.filter((agent) => agent.uri !== data.uri), { ...(data as DeployAgent), lastUptime: new Date(), availability: "free" }];
 		}
 		if (type === "builds") {
 			all.builds = [...all.builds.filter((agent) => agent.uri !== data.uri), { ...(data as BuildAgent), lastUptime: new Date(), availability: "free" }];

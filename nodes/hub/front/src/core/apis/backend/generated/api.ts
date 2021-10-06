@@ -16,18 +16,7 @@ import { Configuration } from "./configuration";
 import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {
-	assertParamExists,
-	createRequestFunction,
-	DUMMY_BASE_URL,
-	serializeDataIfNeeded,
-	setApiKeyToObject,
-	setBasicAuthToObject,
-	setBearerAuthToObject,
-	setOAuthToObject,
-	setSearchParams,
-	toPathString,
-} from "./common";
+import { assertParamExists, createRequestFunction, DUMMY_BASE_URL, serializeDataIfNeeded, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString } from "./common";
 // @ts-ignore
 import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
@@ -548,6 +537,12 @@ export interface JobBuildModel {
 	 * @memberof JobBuildModel
 	 */
 	config: BuildConfigModel;
+	/**
+	 *
+	 * @type {object}
+	 * @memberof JobBuildModel
+	 */
+	stdout?: object;
 }
 
 /**
@@ -586,6 +581,12 @@ export interface JobDeployModel {
 	 * @memberof JobDeployModel
 	 */
 	config: DeployConfigModel;
+	/**
+	 *
+	 * @type {object}
+	 * @memberof JobDeployModel
+	 */
+	stdout?: object;
 }
 
 /**
@@ -1661,10 +1662,7 @@ export const AutomationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async addProductionAgent(
-			productionAgentModelAdd: ProductionAgentModelAdd,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+		async addProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.addProductionAgent(productionAgentModelAdd, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
@@ -1936,13 +1934,7 @@ export const GithubApiAxiosParamCreator = function (configuration?: Configuratio
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getBranchesForRepository: async (
-			username: string,
-			repository: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options: any = {}
-		): Promise<RequestArgs> => {
+		getBranchesForRepository: async (username: string, repository: string, authenticationToken?: string, authenticationToken2?: string, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("getBranchesForRepository", "username", username);
 			// verify required parameter 'repository' is not null or undefined
@@ -2124,13 +2116,7 @@ export const GithubApiFp = function (configuration?: Configuration) {
 			authenticationToken2?: string,
 			options?: any
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.getBranchesForRepository(
-				username,
-				repository,
-				authenticationToken,
-				authenticationToken2,
-				options
-			);
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getBranchesForRepository(username, repository, authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
@@ -2168,14 +2154,7 @@ export const GithubApiFp = function (configuration?: Configuration) {
 			authenticationToken2?: string,
 			options?: any
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FileModel>>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.getDockerfilesForRepository(
-				username,
-				repository,
-				branch,
-				authenticationToken,
-				authenticationToken2,
-				options
-			);
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getDockerfilesForRepository(username, repository, branch, authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 		/**
@@ -2214,16 +2193,8 @@ export const GithubApiFactory = function (configuration?: Configuration, basePat
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getBranchesForRepository(
-			username: string,
-			repository: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options?: any
-		): AxiosPromise<Array<string>> {
-			return localVarFp
-				.getBranchesForRepository(username, repository, authenticationToken, authenticationToken2, options)
-				.then((request) => request(axios, basePath));
+		getBranchesForRepository(username: string, repository: string, authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<Array<string>> {
+			return localVarFp.getBranchesForRepository(username, repository, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -2233,12 +2204,7 @@ export const GithubApiFactory = function (configuration?: Configuration, basePat
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getDockerRepository(
-			username: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options?: any
-		): AxiosPromise<Array<RepoWithBranchModel>> {
+		getDockerRepository(username: string, authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<Array<RepoWithBranchModel>> {
 			return localVarFp.getDockerRepository(username, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 		/**
@@ -2251,17 +2217,8 @@ export const GithubApiFactory = function (configuration?: Configuration, basePat
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getDockerfilesForRepository(
-			username: string,
-			repository: string,
-			branch: string,
-			authenticationToken?: string,
-			authenticationToken2?: string,
-			options?: any
-		): AxiosPromise<Array<FileModel>> {
-			return localVarFp
-				.getDockerfilesForRepository(username, repository, branch, authenticationToken, authenticationToken2, options)
-				.then((request) => request(axios, basePath));
+		getDockerfilesForRepository(username: string, repository: string, branch: string, authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<Array<FileModel>> {
+			return localVarFp.getDockerfilesForRepository(username, repository, branch, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
@@ -2326,14 +2283,7 @@ export class GithubApi extends BaseAPI {
 	 * @throws {RequiredError}
 	 * @memberof GithubApi
 	 */
-	public getDockerfilesForRepository(
-		username: string,
-		repository: string,
-		branch: string,
-		authenticationToken?: string,
-		authenticationToken2?: string,
-		options?: any
-	) {
+	public getDockerfilesForRepository(username: string, repository: string, branch: string, authenticationToken?: string, authenticationToken2?: string, options?: any) {
 		return GithubApiFp(this.configuration)
 			.getDockerfilesForRepository(username, repository, branch, authenticationToken, authenticationToken2, options)
 			.then((request) => request(this.axios, this.basePath));

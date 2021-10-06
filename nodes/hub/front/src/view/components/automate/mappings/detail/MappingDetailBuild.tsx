@@ -40,13 +40,7 @@ export function MappingDisplayBuild({ data }: MappingDisplaySourceProps) {
 							</Select>
 						</FormControl>
 
-						<TextField
-							className={"FormControl"}
-							id={`mapping-create-image-dockerfile-input-${index}`}
-							label="Working directory"
-							value={dockerfile.wd}
-							inputProps={{ readOnly: true }}
-						/>
+						<TextField className={"FormControl"} id={`mapping-create-image-dockerfile-input-${index}`} label="Working directory" value={dockerfile.wd} inputProps={{ readOnly: true }} />
 
 						<TextField
 							className={"FormControl"}

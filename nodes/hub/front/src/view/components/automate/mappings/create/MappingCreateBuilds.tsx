@@ -34,15 +34,7 @@ function MappingCreateBuilds() {
 				<InputLabel id={`mapping-create-image-type-label`} color={"primary"}>
 					Type
 				</InputLabel>
-				<Select
-					color={"primary"}
-					labelId={`mapping-create-image-type-label`}
-					id={`mapping-create-image-type-input`}
-					value={value}
-					label={"Type"}
-					onChange={set}
-					required
-				>
+				<Select color={"primary"} labelId={`mapping-create-image-type-label`} id={`mapping-create-image-type-input`} value={value} label={"Type"} onChange={set} required>
 					<MenuItem key={"DockerFiles"} value={"dockerfiles"}>
 						DockerFiles
 					</MenuItem>

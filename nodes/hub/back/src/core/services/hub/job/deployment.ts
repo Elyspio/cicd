@@ -6,7 +6,7 @@ import { JobIdentifier } from "./types";
 type DeployJob = Job<DeployConfig>;
 
 @Service()
-export class JobProduction {
+export class JobDeployment {
 	private repositories: { jobs: JobRepository };
 
 	constructor(jobs: JobRepository) {
@@ -29,5 +29,9 @@ export class JobProduction {
 
 	public list(): Promise<DeployJob[]> {
 		return this.repositories.jobs.list("deployments");
+	}
+
+	public addStdout(id: JobIdentifier<DeployJob>, stdout: string) {
+		return this.repositories.jobs.addStdout("deployments", id, stdout);
 	}
 }

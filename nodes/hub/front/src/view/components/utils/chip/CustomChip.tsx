@@ -51,15 +51,7 @@ export function CustomChip({ onClick, icon, label, title, color, className, font
 			  };
 
 	return (
-		<StyledGrid
-			container
-			onClick={onClick}
-			title={title}
-			className={`Chip ${className ?? ""} ${classes.chip}`}
-			wrap={"nowrap"}
-			item={item}
-			style={{ ...style, fontWeight: fontWeight }}
-		>
+		<StyledGrid container onClick={onClick} title={title} className={`Chip ${className ?? ""} ${classes.chip}`} wrap={"nowrap"} item={item} style={{ ...style, fontWeight: fontWeight }}>
 			<Grid item xs={1}>
 				{icon}
 			</Grid>

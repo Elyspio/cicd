@@ -9,25 +9,18 @@ import { AgentProduction } from "./agent/production";
 import { QueueBuild } from "./queue/build";
 import { JobBuild } from "./job/build";
 import { QueueProduction } from "./queue/deployment";
-import { JobProduction } from "./job/deployment";
+import { JobDeployment } from "./job/deployment";
 
 @Service()
 export class AutomateService {
 	private static log = getLogger.service(AutomateService);
 	private services: {
 		queues: { builds: QueueBuild; deployments: QueueProduction };
-		jobs: { builds: JobBuild; deployments: JobProduction };
+		jobs: { builds: JobBuild; deployments: JobDeployment };
 		agents: { builds: AgentBuild; deployments: AgentProduction };
 	};
 
-	constructor(
-		agentBuild: AgentBuild,
-		agentProduction: AgentProduction,
-		queueBuild: QueueBuild,
-		queueproduction: QueueProduction,
-		jobBuild: JobBuild,
-		jobProduction: JobProduction
-	) {
+	constructor(agentBuild: AgentBuild, agentProduction: AgentProduction, queueBuild: QueueBuild, queueproduction: QueueProduction, jobBuild: JobBuild, jobProduction: JobDeployment) {
 		this.services = {
 			agents: {
 				builds: agentBuild,

@@ -29,10 +29,7 @@ function MappingCreateDeployment() {
 		})();
 	}, [services.automate]);
 
-	const sortDeployments = React.useCallback(
-		(a: typeof deployments[number], b: typeof deployments[number]) => a.agent?.uri.localeCompare(b.agent?.uri ?? "") ?? -1,
-		[]
-	);
+	const sortDeployments = React.useCallback((a: typeof deployments[number], b: typeof deployments[number]) => a.agent?.uri.localeCompare(b.agent?.uri ?? "") ?? -1, []);
 
 	const addDeployment = React.useCallback(() => {
 		setDeployments([...deepClone(deployments), {}].sort(sortDeployments));

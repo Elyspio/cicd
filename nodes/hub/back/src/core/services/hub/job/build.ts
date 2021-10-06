@@ -30,4 +30,8 @@ export class JobBuild {
 	public list(): Promise<BuildJob[]> {
 		return this.repositories.jobs.list("builds");
 	}
+
+	public addStdout(id: JobIdentifier<BuildJob>, stdout: string) {
+		return this.repositories.jobs.addStdout("builds", id, stdout);
+	}
 }

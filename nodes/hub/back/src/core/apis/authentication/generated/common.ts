@@ -74,8 +74,7 @@ export const setBearerAuthToObject = async function (object: any, configuration?
  */
 export const setOAuthToObject = async function (object: any, name: string, scopes: string[], configuration?: Configuration) {
 	if (configuration && configuration.accessToken) {
-		const localVarAccessTokenValue =
-			typeof configuration.accessToken === "function" ? await configuration.accessToken(name, scopes) : await configuration.accessToken;
+		const localVarAccessTokenValue = typeof configuration.accessToken === "function" ? await configuration.accessToken(name, scopes) : await configuration.accessToken;
 		object["Authorization"] = "Bearer " + localVarAccessTokenValue;
 	}
 };
@@ -100,8 +99,7 @@ export const setSearchParams = function (url: URL, ...objects: any[]) {
  */
 export const serializeDataIfNeeded = function (value: any, requestOptions: any, configuration?: Configuration) {
 	const nonString = typeof value !== "string";
-	const needsSerialization =
-		nonString && configuration && configuration.isJsonMime ? configuration.isJsonMime(requestOptions.headers["Content-Type"]) : nonString;
+	const needsSerialization = nonString && configuration && configuration.isJsonMime ? configuration.isJsonMime(requestOptions.headers["Content-Type"]) : nonString;
 	return needsSerialization ? JSON.stringify(value !== undefined ? value : {}) : value || "";
 };
 

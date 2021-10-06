@@ -141,6 +141,9 @@ class JobBuildModel {
 	@Property("T")
 	@Required()
 	config: BuildConfigModel;
+
+	@Property()
+	stdout: string | null;
 }
 
 class JobDeployModel {
@@ -161,6 +164,9 @@ class JobDeployModel {
 	@Property("T")
 	@Required()
 	config: DeployConfigModel;
+
+	@Property()
+	stdout: string | null;
 }
 
 class JobsModel {

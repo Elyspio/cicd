@@ -18,7 +18,12 @@ type OwnProps = {
 type Props = ReduxTypes & OwnProps;
 
 export function JobDeployDetail({ job }: Props) {
-	return <div className={"JobBuildDetail"}>{job?.id}</div>;
+	return (
+		<div className={"JobBuildDetail"}>
+			{job?.id}
+			<pre>{job?.stdout}</pre>
+		</div>
+	);
 }
 
 export default connector(JobDeployDetail);

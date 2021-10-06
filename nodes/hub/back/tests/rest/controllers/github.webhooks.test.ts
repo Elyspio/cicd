@@ -11,7 +11,7 @@ describe("Rest", () => {
 	describe("POST /core/github/webhook/push", () => {
 		it("Push Webhook", async () => {
 			const data: GithubPushWebhook = {
-				ref: "refs/heads/master",
+				ref: "refs/heads/test-unit",
 				before: "aa912d52b1d66aa3010e9afda6c6459a18caa72d",
 				after: "9f50882ddc9aee62e161513ff43f503223980526",
 				created: false,
@@ -146,7 +146,7 @@ describe("Rest", () => {
 					site_admin: false,
 				},
 			};
-			const ret = await new Apis.GithubWebhooksApi(undefined, "http://localhost:" + port).githubWebhooksPush(data);
+			const ret = await new Apis.GithubWebhooksApi(undefined, `http://localhost:${port}`).githubWebhooksPush(data);
 			expect(ret.status).toEqual(204);
 		}, 60000);
 	});

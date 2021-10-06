@@ -1,4 +1,4 @@
-import { AfterRoutesInit, BeforeListen, OnReady, Service } from "@tsed/common";
+import { AfterRoutesInit, BeforeListen, Service } from "@tsed/common";
 import { TypeORMService } from "@tsed/typeorm";
 import { MongoRepository } from "typeorm";
 import { QueuesEntity } from "../entities/queues.entity";
@@ -37,7 +37,7 @@ export class QueueRepository implements AfterRoutesInit, BeforeListen {
 	}
 
 	@Log(QueueRepository.log)
-	async enqueue<T extends keyof Omit<QueuesEntity, "_id">>(type: T, data: Omit<QueuesEntity[T][number], "createdAt" | "finishedAt" | "startedAt">) {
+	async enqueue<T extends keyof Omit<QueuesEntity, "_id">>(type: T, data: Omit<QueuesEntity[T][number], "createdAt" | "finishedAt" | "startedAt" | "stdout">) {
 		const all = (await this.get())!;
 		if (type === "deployments") {
 			all.deployments.push({
@@ -46,6 +46,7 @@ export class QueueRepository implements AfterRoutesInit, BeforeListen {
 				createdAt: new Date(),
 				finishedAt: null,
 				startedAt: null,
+				stdout: null,
 			});
 		}
 		if (type === "builds") {
@@ -55,6 +56,7 @@ export class QueueRepository implements AfterRoutesInit, BeforeListen {
 				createdAt: new Date(),
 				finishedAt: null,
 				startedAt: null,
+				stdout: null,
 			});
 		}
 		await this.repo.connection.save(all);

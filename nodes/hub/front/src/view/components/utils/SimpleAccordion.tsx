@@ -17,9 +17,7 @@ const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters
 	},
 }));
 
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-	<MuiAccordionSummary expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />} {...props} />
-))(({ theme }) => ({
+const AccordionSummary = styled((props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />} {...props} />)(({ theme }) => ({
 	height: 60,
 	width: "100%",
 	backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",

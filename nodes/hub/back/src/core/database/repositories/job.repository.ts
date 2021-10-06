@@ -1,4 +1,4 @@
-import { AfterRoutesInit, BeforeListen, OnReady, Service } from "@tsed/common";
+import { AfterRoutesInit, BeforeListen, Service } from "@tsed/common";
 import { TypeORMService } from "@tsed/typeorm";
 import { MongoRepository } from "typeorm";
 import { JobsEntity } from "../entities/jobs.entity";
@@ -75,5 +75,14 @@ export class JobRepository implements AfterRoutesInit, BeforeListen {
 	async list<T extends keyof Omit<JobsEntity, "_id">>(type: T) {
 		const all = (await this.get())!;
 		return all[type];
+	}
+
+	async addStdout<T extends keyof Omit<JobsEntity, "_id">>(type: T, id: JobsEntity[T][number]["id"], stdout: string) {
+		const all = (await this.get())!;
+		const index = all[type].findIndex((e) => e.id === id);
+		if (index === -1) throw new Error(`JobRepository-update: could not find job in ${type} with id=${id}`);
+		if (all[type][index].stdout === null) all[type][index].stdout = stdout;
+		else all[type][index].stdout += stdout;
+		await this.repo.connection.save(all);
 	}
 }

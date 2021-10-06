@@ -15,13 +15,7 @@ export class EngineService {
 	private automate: AutomateService;
 	private queues: { deployments: QueueProduction; builds: QueueBuild };
 
-	constructor(
-		agentBuilder: AgentBuild,
-		agentProduction: AgentProduction,
-		queueBuildService: QueueBuild,
-		queueDeployService: QueueProduction,
-		automateService: AutomateService
-	) {
+	constructor(agentBuilder: AgentBuild, agentProduction: AgentProduction, queueBuildService: QueueBuild, queueDeployService: QueueProduction, automateService: AutomateService) {
 		this.agents = {
 			builds: agentBuilder,
 			deployments: agentProduction,

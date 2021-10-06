@@ -311,10 +311,7 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async authenticationLoginInit(
-			body?: PostLoginInitRequest,
-			options?: any
-		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostLoginModelWithSalt>> {
+		async authenticationLoginInit(body?: PostLoginInitRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostLoginModelWithSalt>> {
 			const localVarAxiosArgs = await AuthenticationApiAxiosParamCreator(configuration).authenticationLoginInit(body, options);
 			return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
 				const axiosRequestArgs = {

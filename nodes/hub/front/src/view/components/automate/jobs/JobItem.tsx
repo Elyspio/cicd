@@ -40,10 +40,7 @@ function BuildLine({ data }: LineProps<JobBuildModel>) {
 		return r.slice("https://github.com/".length, r.length - 4);
 	}, [data.config.github.remote]);
 
-	const dockerfiles = React.useMemo(
-		() => data.config.dockerfiles?.files.map((x) => `${x.image}:${x.tag ?? "latest"}`).join(" "),
-		[data.config.dockerfiles?.files]
-	);
+	const dockerfiles = React.useMemo(() => data.config.dockerfiles?.files.map((x) => `${x.image}:${x.tag ?? "latest"}`).join(" "), [data.config.dockerfiles?.files]);
 
 	const dispatch = useAppDispatch();
 	const onClick = React.useCallback(() => dispatch(push(routes.getBuildPath(data.id))), [dispatch, data.id]);
@@ -70,12 +67,7 @@ function DeployLine({ data }: LineProps<JobDeployModel>) {
 					<CustomChip item title={data.config.uri} icon={<DockerIcon height={size} width={size} />} label={data.config.uri} />
 				</Grid>
 				<Grid item container xs={12}>
-					<CustomChip
-						item
-						title={data.config.docker?.compose?.path}
-						icon={<DockerComposeIcon height={size} width={size} />}
-						label={data.config.docker?.compose?.path}
-					/>
+					<CustomChip item title={data.config.docker?.compose?.path} icon={<DockerComposeIcon height={size} width={size} />} label={data.config.docker?.compose?.path} />
 				</Grid>
 			</Grid>
 		</Box>
@@ -117,14 +109,7 @@ export function JobItem(props: JobItemProps) {
 		<Box className={"JobItem"}>
 			<Paper elevation={2} className={classes.root}>
 				<AppBar position={"static"} color={"default"}>
-					<Tabs
-						value={value}
-						onChange={handleChange}
-						variant="fullWidth"
-						indicatorColor="primary"
-						textColor="primary"
-						aria-label="icon label tabs example"
-					>
+					<Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary" textColor="primary" aria-label="icon label tabs example">
 						<Tab label={label} title={"hide"} disabled={value === 0} />
 						<Tab label="BUILD" onClick={() => props.data.build && dispatch(push(routes.getBuildPath(props.data.build.id)))} />
 						<Tab label="DEPLOY" onClick={() => props.data.deploy && dispatch(push(routes.getDeployPath(props.data.deploy.id)))} />

@@ -26,9 +26,7 @@ export class DockerService {
 				const dockerfilePath = path.join(folder, df.path);
 				return new Promise<string>((resolve, reject) => {
 					const dockerFileDir = path.resolve(path.join(folder, df.wd));
-					const completedCommand = `${command.join(
-						" "
-					)} -f ${dockerfilePath} ${dockerFileDir} -t ${username.toLowerCase()}/${df.image.toLowerCase()}:${
+					const completedCommand = `${command.join(" ")} -f ${dockerfilePath} ${dockerFileDir} -t ${username.toLowerCase()}/${df.image.toLowerCase()}:${
 						df.tag?.toLowerCase() ?? "latest"
 					} --push`;
 					DockerService.log.info(`BuilderAgentService.build.${buildNumber}`, {
@@ -74,7 +72,7 @@ export class DockerService {
 		process.stderr.on("data", (data) => {
 			DockerService.log.info(`id=${id} stderr: ${data}`);
 			str += data.toString();
-			hudSocket.emit("jobs-stdout", id, data.toString());
+			hudSocket.emit("jobs-stdout", "build", id, data.toString());
 		});
 
 		process.on("close", (code) => {
