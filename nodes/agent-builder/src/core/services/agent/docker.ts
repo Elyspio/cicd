@@ -55,7 +55,7 @@ export class DockerService {
 		const command = "docker";
 		const args = ["buildx", "bake", "--push"];
 
-		const process = spawn(command, args, { cwd: path.basename(bakePath) });
+		const process = spawn(command, args, { cwd: path.dirname(bakePath) });
 
 		return new Promise<string>((resolve, reject) => {
 			this.handleProcess(process, id, `${command} ${args.join(" ")}`, {
