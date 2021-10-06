@@ -7,7 +7,6 @@ services:
         volumes:
             - ./front/conf.js:/front/build/conf.js
         environment:
-            GITHUB_TOKEN: ${GITHUB_TOKEN}
             AUTHENTICATION_SERVER_URI: "http://authentication-server:4000"
             DB_USERNAME: "cicd"
             DB_PASSWORD: "6514dza!dazkp_"
