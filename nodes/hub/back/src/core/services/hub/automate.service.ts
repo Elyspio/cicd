@@ -5,7 +5,7 @@ import { Log } from "../../utils/decorators/logger";
 import { getLogger } from "../../utils/logger";
 import { Service } from "@tsed/common";
 import { AgentBuild } from "./agent/builder";
-import { AgentProduction } from "./agent/production";
+import { AgentDeployment } from "./agent/production";
 import { QueueBuild } from "./queue/build";
 import { JobBuild } from "./job/build";
 import { QueueProduction } from "./queue/deployment";
@@ -17,10 +17,10 @@ export class AutomateService {
 	private services: {
 		queues: { builds: QueueBuild; deployments: QueueProduction };
 		jobs: { builds: JobBuild; deployments: JobDeployment };
-		agents: { builds: AgentBuild; deployments: AgentProduction };
+		agents: { builds: AgentBuild; deployments: AgentDeployment };
 	};
 
-	constructor(agentBuild: AgentBuild, agentProduction: AgentProduction, queueBuild: QueueBuild, queueproduction: QueueProduction, jobBuild: JobBuild, jobProduction: JobDeployment) {
+	constructor(agentBuild: AgentBuild, agentProduction: AgentDeployment, queueBuild: QueueBuild, queueproduction: QueueProduction, jobBuild: JobBuild, jobProduction: JobDeployment) {
 		this.services = {
 			agents: {
 				builds: agentBuild,

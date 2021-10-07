@@ -1,6 +1,6 @@
 import { Description, Enum, Property, Required } from "@tsed/schema";
 import { BakeBuild, BuildConfig, DeployConfig, HubConfigExport, Mapping } from "../../../core/services/hub/types";
-import { BuildAgentModelReturn, ProductionAgentModel } from "../automate/models";
+import { BuildAgentModelReturn, ProductionAgentModel } from "../operation/models";
 
 class DockerFileConfigModel {
 	@Description("Path to Dockerfile file")

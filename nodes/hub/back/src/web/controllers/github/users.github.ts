@@ -7,8 +7,8 @@ import { Protected } from "../../middleware/protected";
 import { Unauthorized } from "@tsed/exceptions";
 
 @Controller("/github")
-@Name("Github")
-export class Github {
+@Name("Github.Users")
+export class UsersGithubController {
 	public constructor(private readonly githubService: GithubService) {}
 
 	@Get("/users/:username")

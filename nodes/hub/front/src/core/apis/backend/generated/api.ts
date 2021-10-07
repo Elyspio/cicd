@@ -16,38 +16,20 @@ import { Configuration } from "./configuration";
 import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { assertParamExists, createRequestFunction, DUMMY_BASE_URL, serializeDataIfNeeded, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString } from "./common";
+import {
+	assertParamExists,
+	createRequestFunction,
+	DUMMY_BASE_URL,
+	serializeDataIfNeeded,
+	setApiKeyToObject,
+	setBasicAuthToObject,
+	setBearerAuthToObject,
+	setOAuthToObject,
+	setSearchParams,
+	toPathString,
+} from "./common";
 // @ts-ignore
 import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
-
-/**
- *
- * @export
- * @interface BuildAgentModelAdd
- */
-export interface BuildAgentModelAdd {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof BuildAgentModelAdd
-	 */
-	uri: string;
-	/**
-	 *
-	 * @type {Array<string>}
-	 * @memberof BuildAgentModelAdd
-	 */
-	abilities: Array<BuildAgentModelAddAbilitiesEnum>;
-}
-
-/**
- * @export
- * @enum {string}
- */
-export enum BuildAgentModelAddAbilitiesEnum {
-	Docker = "docker",
-	DockerBuildx = "docker-buildx",
-}
 
 /**
  *
@@ -681,32 +663,6 @@ export enum ProductionAgentModelAvailabilityEnum {
 	Free = "free",
 	Running = "running",
 	Down = "down",
-}
-
-/**
- *
- * @export
- * @interface ProductionAgentModelAdd
- */
-export interface ProductionAgentModelAdd {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof ProductionAgentModelAdd
-	 */
-	uri: string;
-	/**
-	 *
-	 * @type {Array<ProductionAgentModelAddAbilities>}
-	 * @memberof ProductionAgentModelAdd
-	 */
-	abilities: Array<ProductionAgentModelAddAbilities>;
-	/**
-	 *
-	 * @type {FoldersModel}
-	 * @memberof ProductionAgentModelAdd
-	 */
-	folders: FoldersModel;
 }
 
 /**
@@ -1484,84 +1440,18 @@ export interface User {
 }
 
 /**
- * AutomationApi - axios parameter creator
+ * AgentsApi - axios parameter creator
  * @export
  */
-export const AutomationApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AgentsApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
-		/**
-		 *
-		 * @param {BuildAgentModelAdd} buildAgentModelAdd
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		addBuildAgent: async (buildAgentModelAdd: BuildAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
-			// verify required parameter 'buildAgentModelAdd' is not null or undefined
-			assertParamExists("addBuildAgent", "buildAgentModelAdd", buildAgentModelAdd);
-			const localVarPath = `/api/automate/agent/build`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			localVarHeaderParameter["Content-Type"] = "application/json";
-
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-			localVarRequestOptions.data = serializeDataIfNeeded(buildAgentModelAdd, localVarRequestOptions, configuration);
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
-		/**
-		 *
-		 * @param {ProductionAgentModelAdd} productionAgentModelAdd
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		addProductionAgent: async (productionAgentModelAdd: ProductionAgentModelAdd, options: any = {}): Promise<RequestArgs> => {
-			// verify required parameter 'productionAgentModelAdd' is not null or undefined
-			assertParamExists("addProductionAgent", "productionAgentModelAdd", productionAgentModelAdd);
-			const localVarPath = `/api/automate/agent/production`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			localVarHeaderParameter["Content-Type"] = "application/json";
-
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-			localVarRequestOptions.data = serializeDataIfNeeded(productionAgentModelAdd, localVarRequestOptions, configuration);
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
 		getBuilderAgent: async (options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/api/automate/agent/build`;
+			const localVarPath = `/api/operations/agents/agent/build`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -1588,7 +1478,7 @@ export const AutomationApiAxiosParamCreator = function (configuration?: Configur
 		 * @throws {RequiredError}
 		 */
 		getProductionAgent: async (options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/api/automate/agent/production`;
+			const localVarPath = `/api/operations/agents/agent/production`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -1615,7 +1505,7 @@ export const AutomationApiAxiosParamCreator = function (configuration?: Configur
 		 * @throws {RequiredError}
 		 */
 		getProductionApps: async (options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/api/automate/agent/production/node`;
+			const localVarPath = `/api/operations/agents/agent/production/node`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -1640,32 +1530,12 @@ export const AutomationApiAxiosParamCreator = function (configuration?: Configur
 };
 
 /**
- * AutomationApi - functional programming interface
+ * AgentsApi - functional programming interface
  * @export
  */
-export const AutomationApiFp = function (configuration?: Configuration) {
-	const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration);
+export const AgentsApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = AgentsApiAxiosParamCreator(configuration);
 	return {
-		/**
-		 *
-		 * @param {BuildAgentModelAdd} buildAgentModelAdd
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async addBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.addBuildAgent(buildAgentModelAdd, options);
-			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-		},
-		/**
-		 *
-		 * @param {ProductionAgentModelAdd} productionAgentModelAdd
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async addProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.addProductionAgent(productionAgentModelAdd, options);
-			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
@@ -1697,30 +1567,12 @@ export const AutomationApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * AutomationApi - factory interface
+ * AgentsApi - factory interface
  * @export
  */
-export const AutomationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-	const localVarFp = AutomationApiFp(configuration);
+export const AgentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+	const localVarFp = AgentsApiFp(configuration);
 	return {
-		/**
-		 *
-		 * @param {BuildAgentModelAdd} buildAgentModelAdd
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		addBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any): AxiosPromise<void> {
-			return localVarFp.addBuildAgent(buildAgentModelAdd, options).then((request) => request(axios, basePath));
-		},
-		/**
-		 *
-		 * @param {ProductionAgentModelAdd} productionAgentModelAdd
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		addProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any): AxiosPromise<void> {
-			return localVarFp.addProductionAgent(productionAgentModelAdd, options).then((request) => request(axios, basePath));
-		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
@@ -1749,46 +1601,20 @@ export const AutomationApiFactory = function (configuration?: Configuration, bas
 };
 
 /**
- * AutomationApi - object-oriented interface
+ * AgentsApi - object-oriented interface
  * @export
- * @class AutomationApi
+ * @class AgentsApi
  * @extends {BaseAPI}
  */
-export class AutomationApi extends BaseAPI {
-	/**
-	 *
-	 * @param {BuildAgentModelAdd} buildAgentModelAdd
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof AutomationApi
-	 */
-	public addBuildAgent(buildAgentModelAdd: BuildAgentModelAdd, options?: any) {
-		return AutomationApiFp(this.configuration)
-			.addBuildAgent(buildAgentModelAdd, options)
-			.then((request) => request(this.axios, this.basePath));
-	}
-
-	/**
-	 *
-	 * @param {ProductionAgentModelAdd} productionAgentModelAdd
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof AutomationApi
-	 */
-	public addProductionAgent(productionAgentModelAdd: ProductionAgentModelAdd, options?: any) {
-		return AutomationApiFp(this.configuration)
-			.addProductionAgent(productionAgentModelAdd, options)
-			.then((request) => request(this.axios, this.basePath));
-	}
-
+export class AgentsApi extends BaseAPI {
 	/**
 	 *
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
-	 * @memberof AutomationApi
+	 * @memberof AgentsApi
 	 */
 	public getBuilderAgent(options?: any) {
-		return AutomationApiFp(this.configuration)
+		return AgentsApiFp(this.configuration)
 			.getBuilderAgent(options)
 			.then((request) => request(this.axios, this.basePath));
 	}
@@ -1797,10 +1623,10 @@ export class AutomationApi extends BaseAPI {
 	 *
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
-	 * @memberof AutomationApi
+	 * @memberof AgentsApi
 	 */
 	public getProductionAgent(options?: any) {
-		return AutomationApiFp(this.configuration)
+		return AgentsApiFp(this.configuration)
 			.getProductionAgent(options)
 			.then((request) => request(this.axios, this.basePath));
 	}
@@ -1809,11 +1635,234 @@ export class AutomationApi extends BaseAPI {
 	 *
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
-	 * @memberof AutomationApi
+	 * @memberof AgentsApi
 	 */
 	public getProductionApps(options?: any) {
-		return AutomationApiFp(this.configuration)
+		return AgentsApiFp(this.configuration)
 			.getProductionApps(options)
+			.then((request) => request(this.axios, this.basePath));
+	}
+}
+
+/**
+ * AutomateApi - axios parameter creator
+ * @export
+ */
+export const AutomateApiAxiosParamCreator = function (configuration?: Configuration) {
+	return {
+		/**
+		 *
+		 * @param {DeployConfigModel} deployConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		deploy: async (deployConfigModel: DeployConfigModel, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'deployConfigModel' is not null or undefined
+			assertParamExists("deploy", "deployConfigModel", deployConfigModel);
+			const localVarPath = `/api/automate/deployment`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			localVarHeaderParameter["Content-Type"] = "application/json";
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(deployConfigModel, localVarRequestOptions, configuration);
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		getConfig: async (options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/api/automate/config`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+		/**
+		 *
+		 * @param {BuildConfigModel} buildConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		start: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'buildConfigModel' is not null or undefined
+			assertParamExists("start", "buildConfigModel", buildConfigModel);
+			const localVarPath = `/api/automate/build`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			localVarHeaderParameter["Content-Type"] = "application/json";
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration);
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	};
+};
+
+/**
+ * AutomateApi - functional programming interface
+ * @export
+ */
+export const AutomateApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = AutomateApiAxiosParamCreator(configuration);
+	return {
+		/**
+		 *
+		 * @param {DeployConfigModel} deployConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async deploy(deployConfigModel: DeployConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.deploy(deployConfigModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async getConfig(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HubConfig>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getConfig(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {BuildConfigModel} buildConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async start(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.start(buildConfigModel, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	};
+};
+
+/**
+ * AutomateApi - factory interface
+ * @export
+ */
+export const AutomateApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+	const localVarFp = AutomateApiFp(configuration);
+	return {
+		/**
+		 *
+		 * @param {DeployConfigModel} deployConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		deploy(deployConfigModel: DeployConfigModel, options?: any): AxiosPromise<void> {
+			return localVarFp.deploy(deployConfigModel, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		getConfig(options?: any): AxiosPromise<HubConfig> {
+			return localVarFp.getConfig(options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {BuildConfigModel} buildConfigModel
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		start(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<void> {
+			return localVarFp.start(buildConfigModel, options).then((request) => request(axios, basePath));
+		},
+	};
+};
+
+/**
+ * AutomateApi - object-oriented interface
+ * @export
+ * @class AutomateApi
+ * @extends {BaseAPI}
+ */
+export class AutomateApi extends BaseAPI {
+	/**
+	 *
+	 * @param {DeployConfigModel} deployConfigModel
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomateApi
+	 */
+	public deploy(deployConfigModel: DeployConfigModel, options?: any) {
+		return AutomateApiFp(this.configuration)
+			.deploy(deployConfigModel, options)
+			.then((request) => request(this.axios, this.basePath));
+	}
+
+	/**
+	 *
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomateApi
+	 */
+	public getConfig(options?: any) {
+		return AutomateApiFp(this.configuration)
+			.getConfig(options)
+			.then((request) => request(this.axios, this.basePath));
+	}
+
+	/**
+	 *
+	 * @param {BuildConfigModel} buildConfigModel
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AutomateApi
+	 */
+	public start(buildConfigModel: BuildConfigModel, options?: any) {
+		return AutomateApiFp(this.configuration)
+			.start(buildConfigModel, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 }
@@ -2408,21 +2457,156 @@ export class GithubWebhooksApi extends BaseAPI {
 }
 
 /**
- * OperationApi - axios parameter creator
+ * OperationJobsApi - axios parameter creator
  * @export
  */
-export const OperationApiAxiosParamCreator = function (configuration?: Configuration) {
+export const OperationJobsApiAxiosParamCreator = function (configuration?: Configuration) {
 	return {
+		/**
+		 *
+		 * @param {'build' | 'deployment'} type
+		 * @param {number} id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		_delete: async (type: "build" | "deployment", id: number, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'type' is not null or undefined
+			assertParamExists("_delete", "type", type);
+			// verify required parameter 'id' is not null or undefined
+			assertParamExists("_delete", "id", id);
+			const localVarPath = `/api/operations/jobs/{type}/{id}`.replace(`{${"type"}}`, encodeURIComponent(String(type))).replace(`{${"id"}}`, encodeURIComponent(String(id)));
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
+	};
+};
+
+/**
+ * OperationJobsApi - functional programming interface
+ * @export
+ */
+export const OperationJobsApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = OperationJobsApiAxiosParamCreator(configuration);
+	return {
+		/**
+		 *
+		 * @param {'build' | 'deployment'} type
+		 * @param {number} id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async _delete(type: "build" | "deployment", id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator._delete(type, id, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	};
+};
+
+/**
+ * OperationJobsApi - factory interface
+ * @export
+ */
+export const OperationJobsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+	const localVarFp = OperationJobsApiFp(configuration);
+	return {
+		/**
+		 *
+		 * @param {'build' | 'deployment'} type
+		 * @param {number} id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		_delete(type: "build" | "deployment", id: number, options?: any): AxiosPromise<void> {
+			return localVarFp._delete(type, id, options).then((request) => request(axios, basePath));
+		},
+	};
+};
+
+/**
+ * OperationJobsApi - object-oriented interface
+ * @export
+ * @class OperationJobsApi
+ * @extends {BaseAPI}
+ */
+export class OperationJobsApi extends BaseAPI {
+	/**
+	 *
+	 * @param {'build' | 'deployment'} type
+	 * @param {number} id
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof OperationJobsApi
+	 */
+	public _delete(type: "build" | "deployment", id: number, options?: any) {
+		return OperationJobsApiFp(this.configuration)
+			._delete(type, id, options)
+			.then((request) => request(this.axios, this.basePath));
+	}
+}
+
+/**
+ * OperationMappingsApi - axios parameter creator
+ * @export
+ */
+export const OperationMappingsApiAxiosParamCreator = function (configuration?: Configuration) {
+	return {
+		/**
+		 *
+		 * @param {number} id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		_delete: async (id: number, options: any = {}): Promise<RequestArgs> => {
+			// verify required parameter 'id' is not null or undefined
+			assertParamExists("_delete", "id", id);
+			const localVarPath = `/api/operations/mappings/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
+			};
+		},
 		/**
 		 *
 		 * @param {InlineObject} inlineObject
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		addMapping: async (inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
+		add: async (inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
 			// verify required parameter 'inlineObject' is not null or undefined
-			assertParamExists("addMapping", "inlineObject", inlineObject);
-			const localVarPath = `/api/automate/operation/mappings`;
+			assertParamExists("add", "inlineObject", inlineObject);
+			const localVarPath = `/api/operations/mappings`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -2448,74 +2632,11 @@ export const OperationApiAxiosParamCreator = function (configuration?: Configura
 		},
 		/**
 		 *
-		 * @param {number} id
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		deleteMappings: async (id: number, options: any = {}): Promise<RequestArgs> => {
-			// verify required parameter 'id' is not null or undefined
-			assertParamExists("deleteMappings", "id", id);
-			const localVarPath = `/api/automate/operation/mappings/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
-		/**
-		 *
-		 * @param {DeployConfigModel} deployConfigModel
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		deploy: async (deployConfigModel: DeployConfigModel, options: any = {}): Promise<RequestArgs> => {
-			// verify required parameter 'deployConfigModel' is not null or undefined
-			assertParamExists("deploy", "deployConfigModel", deployConfigModel);
-			const localVarPath = `/api/automate/operation/deployment`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			localVarHeaderParameter["Content-Type"] = "application/json";
-
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-			localVarRequestOptions.data = serializeDataIfNeeded(deployConfigModel, localVarRequestOptions, configuration);
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
-		/**
-		 *
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		getConfig: async (options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/api/automate/operation/config`;
+		get: async (options: any = {}): Promise<RequestArgs> => {
+			const localVarPath = `/api/operations/mappings`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -2536,254 +2657,114 @@ export const OperationApiAxiosParamCreator = function (configuration?: Configura
 				options: localVarRequestOptions,
 			};
 		},
-		/**
-		 *
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		getMappings: async (options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/api/automate/operation/mappings`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
-		/**
-		 *
-		 * @param {BuildConfigModel} buildConfigModel
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		start: async (buildConfigModel: BuildConfigModel, options: any = {}): Promise<RequestArgs> => {
-			// verify required parameter 'buildConfigModel' is not null or undefined
-			assertParamExists("start", "buildConfigModel", buildConfigModel);
-			const localVarPath = `/api/automate/operation/build`;
-			// use dummy base URL string because the URL constructor only accepts absolute URLs.
-			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-			let baseOptions;
-			if (configuration) {
-				baseOptions = configuration.baseOptions;
-			}
-
-			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-			const localVarHeaderParameter = {} as any;
-			const localVarQueryParameter = {} as any;
-
-			localVarHeaderParameter["Content-Type"] = "application/json";
-
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-			localVarRequestOptions.data = serializeDataIfNeeded(buildConfigModel, localVarRequestOptions, configuration);
-
-			return {
-				url: toPathString(localVarUrlObj),
-				options: localVarRequestOptions,
-			};
-		},
 	};
 };
 
 /**
- * OperationApi - functional programming interface
+ * OperationMappingsApi - functional programming interface
  * @export
  */
-export const OperationApiFp = function (configuration?: Configuration) {
-	const localVarAxiosParamCreator = OperationApiAxiosParamCreator(configuration);
+export const OperationMappingsApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator = OperationMappingsApiAxiosParamCreator(configuration);
 	return {
-		/**
-		 *
-		 * @param {InlineObject} inlineObject
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async addMapping(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.addMapping(inlineObject, options);
-			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-		},
 		/**
 		 *
 		 * @param {number} id
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async deleteMappings(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMappings(id, options);
+		async _delete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator._delete(id, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
-		/**
-		 *
-		 * @param {DeployConfigModel} deployConfigModel
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async deploy(deployConfigModel: DeployConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.deploy(deployConfigModel, options);
-			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-		},
-		/**
-		 *
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async getConfig(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HubConfig>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.getConfig(options);
-			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-		},
-		/**
-		 *
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async getMappings(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MappingModel>>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.getMappings(options);
-			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-		},
-		/**
-		 *
-		 * @param {BuildConfigModel} buildConfigModel
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		async start(buildConfigModel: BuildConfigModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.start(buildConfigModel, options);
-			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-		},
-	};
-};
-
-/**
- * OperationApi - factory interface
- * @export
- */
-export const OperationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-	const localVarFp = OperationApiFp(configuration);
-	return {
 		/**
 		 *
 		 * @param {InlineObject} inlineObject
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		addMapping(inlineObject: InlineObject, options?: any): AxiosPromise<void> {
-			return localVarFp.addMapping(inlineObject, options).then((request) => request(axios, basePath));
+		async add(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.add(inlineObject, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
+		/**
+		 *
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async get(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MappingModel>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.get(options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+	};
+};
+
+/**
+ * OperationMappingsApi - factory interface
+ * @export
+ */
+export const OperationMappingsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+	const localVarFp = OperationMappingsApiFp(configuration);
+	return {
 		/**
 		 *
 		 * @param {number} id
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		deleteMappings(id: number, options?: any): AxiosPromise<void> {
-			return localVarFp.deleteMappings(id, options).then((request) => request(axios, basePath));
+		_delete(id: number, options?: any): AxiosPromise<void> {
+			return localVarFp._delete(id, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
-		 * @param {DeployConfigModel} deployConfigModel
+		 * @param {InlineObject} inlineObject
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		deploy(deployConfigModel: DeployConfigModel, options?: any): AxiosPromise<void> {
-			return localVarFp.deploy(deployConfigModel, options).then((request) => request(axios, basePath));
-		},
-		/**
-		 *
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		getConfig(options?: any): AxiosPromise<HubConfig> {
-			return localVarFp.getConfig(options).then((request) => request(axios, basePath));
+		add(inlineObject: InlineObject, options?: any): AxiosPromise<void> {
+			return localVarFp.add(inlineObject, options).then((request) => request(axios, basePath));
 		},
 		/**
 		 *
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		getMappings(options?: any): AxiosPromise<Array<MappingModel>> {
-			return localVarFp.getMappings(options).then((request) => request(axios, basePath));
-		},
-		/**
-		 *
-		 * @param {BuildConfigModel} buildConfigModel
-		 * @param {*} [options] Override http request option.
-		 * @throws {RequiredError}
-		 */
-		start(buildConfigModel: BuildConfigModel, options?: any): AxiosPromise<void> {
-			return localVarFp.start(buildConfigModel, options).then((request) => request(axios, basePath));
+		get(options?: any): AxiosPromise<Array<MappingModel>> {
+			return localVarFp.get(options).then((request) => request(axios, basePath));
 		},
 	};
 };
 
 /**
- * OperationApi - object-oriented interface
+ * OperationMappingsApi - object-oriented interface
  * @export
- * @class OperationApi
+ * @class OperationMappingsApi
  * @extends {BaseAPI}
  */
-export class OperationApi extends BaseAPI {
-	/**
-	 *
-	 * @param {InlineObject} inlineObject
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof OperationApi
-	 */
-	public addMapping(inlineObject: InlineObject, options?: any) {
-		return OperationApiFp(this.configuration)
-			.addMapping(inlineObject, options)
-			.then((request) => request(this.axios, this.basePath));
-	}
-
+export class OperationMappingsApi extends BaseAPI {
 	/**
 	 *
 	 * @param {number} id
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
-	 * @memberof OperationApi
+	 * @memberof OperationMappingsApi
 	 */
-	public deleteMappings(id: number, options?: any) {
-		return OperationApiFp(this.configuration)
-			.deleteMappings(id, options)
+	public _delete(id: number, options?: any) {
+		return OperationMappingsApiFp(this.configuration)
+			._delete(id, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 
 	/**
 	 *
-	 * @param {DeployConfigModel} deployConfigModel
+	 * @param {InlineObject} inlineObject
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
-	 * @memberof OperationApi
+	 * @memberof OperationMappingsApi
 	 */
-	public deploy(deployConfigModel: DeployConfigModel, options?: any) {
-		return OperationApiFp(this.configuration)
-			.deploy(deployConfigModel, options)
-			.then((request) => request(this.axios, this.basePath));
-	}
-
-	/**
-	 *
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof OperationApi
-	 */
-	public getConfig(options?: any) {
-		return OperationApiFp(this.configuration)
-			.getConfig(options)
+	public add(inlineObject: InlineObject, options?: any) {
+		return OperationMappingsApiFp(this.configuration)
+			.add(inlineObject, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 
@@ -2791,24 +2772,11 @@ export class OperationApi extends BaseAPI {
 	 *
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
-	 * @memberof OperationApi
+	 * @memberof OperationMappingsApi
 	 */
-	public getMappings(options?: any) {
-		return OperationApiFp(this.configuration)
-			.getMappings(options)
-			.then((request) => request(this.axios, this.basePath));
-	}
-
-	/**
-	 *
-	 * @param {BuildConfigModel} buildConfigModel
-	 * @param {*} [options] Override http request option.
-	 * @throws {RequiredError}
-	 * @memberof OperationApi
-	 */
-	public start(buildConfigModel: BuildConfigModel, options?: any) {
-		return OperationApiFp(this.configuration)
-			.start(buildConfigModel, options)
+	public get(options?: any) {
+		return OperationMappingsApiFp(this.configuration)
+			.get(options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 }

@@ -35,7 +35,7 @@ describe("Rest", () => {
 		// await platform.listen();
 	});
 
-	describe("POST /core/automate/operation/deployment", () => {
+	describe("POST /core/operation/automate/deployment", () => {
 		it("No Content", async () => {
 			const data: Apis.DeployConfigModel = deployParam;
 			const ret = await new Apis.OperationApi(undefined, "http://localhost:" + port).operationDeploy(data);
@@ -43,7 +43,7 @@ describe("Rest", () => {
 		});
 	});
 
-	describe("POST /core/automate/operation/build", () => {
+	describe("POST /core/operation/automate/build", () => {
 		it("No Content", async () => {
 			const data: Apis.BuildConfigModel = buildParam;
 			const ret = await new Apis.OperationApi(undefined, "http://localhost:" + port).operationStart(data);
@@ -51,7 +51,7 @@ describe("Rest", () => {
 		});
 	});
 
-	describe("POST /core/automate/operation/register", () => {
+	describe("POST /core/operation/automate/register", () => {
 		it("Success", async () => {
 			const data: Apis.InlineObject2 = {
 				build: buildParam,

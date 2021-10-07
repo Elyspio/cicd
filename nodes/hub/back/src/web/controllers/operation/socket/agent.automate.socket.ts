@@ -5,7 +5,7 @@ import { FrontAutomateSocket } from "./front.automate.socket";
 import { AgentSubscribe, BuildAgentModelAdd, ProductionAgentModelAdd } from "../models";
 import { getLogger } from "../../../../core/utils/logger";
 import { AgentBuild } from "../../../../core/services/hub/agent/builder";
-import { AgentProduction } from "../../../../core/services/hub/agent/production";
+import { AgentDeployment } from "../../../../core/services/hub/agent/production";
 import { JobBuild } from "../../../../core/services/hub/job/build";
 import { JobDeployment } from "../../../../core/services/hub/job/deployment";
 
@@ -14,9 +14,9 @@ export class AgentAutomateSocket {
 	private static logger = getLogger.controller(AgentAutomateSocket);
 	@Nsp nsp: SocketIO.Namespace;
 	private clients = new Map<Socket, { config: AgentSubscribe; type: "production" | "build" }>();
-	private services: { jobs: { deployments: JobDeployment; builds: JobBuild }; agents: { deployments: AgentProduction; builds: AgentBuild } };
+	private services: { jobs: { deployments: JobDeployment; builds: JobBuild }; agents: { deployments: AgentDeployment; builds: AgentBuild } };
 
-	constructor(@IO private io: SocketIO.Server, private frontSocket: FrontAutomateSocket, agentBuild: AgentBuild, agentProduction: AgentProduction, jobBuild: JobBuild, jobDeploy: JobDeployment) {
+	constructor(@IO private io: SocketIO.Server, private frontSocket: FrontAutomateSocket, agentBuild: AgentBuild, agentProduction: AgentDeployment, jobBuild: JobBuild, jobDeploy: JobDeployment) {
 		this.services = {
 			agents: {
 				builds: agentBuild,

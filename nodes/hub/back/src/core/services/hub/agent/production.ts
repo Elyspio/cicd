@@ -4,12 +4,12 @@ import { OnReady, Service } from "@tsed/common";
 import { AgentRepository } from "../../../database/repositories/agent.repository";
 import { QueueRepository } from "../../../database/repositories/queue.repository";
 import { AgentBase } from "./base";
-import { ProductionApplications } from "../../../../web/controllers/automate/models";
+import { ProductionApplications } from "../../../../web/controllers/operation/models";
 import { AutomateApi } from "../../../apis/agent-prod";
 import { JobRepository } from "../../../database/repositories/job.repository";
 
 @Service()
-export class AgentProduction extends AgentBase implements OnReady {
+export class AgentDeployment extends AgentBase implements OnReady {
 	private repositories: { agent: AgentRepository; queue: QueueRepository; job: JobRepository };
 	private id: number;
 
@@ -47,7 +47,7 @@ export class AgentProduction extends AgentBase implements OnReady {
 	}
 
 	public async askDeploy(config: DeployConfig) {
-		const id = this.id++;
+		const id = ++this.id;
 		await this.repositories.queue.enqueue("deployments", { id, config });
 		return id;
 	}

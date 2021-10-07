@@ -9,7 +9,7 @@ export class AutomateService {
 	@inject(DiKeysApi.cicd) private client!: CicdApi;
 
 	async getProductionApps() {
-		return this.client.automation.getProductionApps().then((x) => x.data);
+		return this.client.agents.getProductionApps().then((x) => x.data);
 	}
 
 	@ToastOn({
@@ -24,7 +24,7 @@ export class AutomateService {
 		},
 		deploy: { agentUri: string; dockerComposeFile: string }
 	) {
-		await this.client.operation.addMapping({
+		await this.client.operation.mappings.add({
 			build: {
 				github: {
 					branch: params.github.branch,

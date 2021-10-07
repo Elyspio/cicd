@@ -3,7 +3,7 @@ import { Log } from "../../utils/decorators/logger";
 import { getLogger } from "../../utils/logger";
 
 import { AgentBuild } from "./agent/builder";
-import { AgentProduction } from "./agent/production";
+import { AgentDeployment } from "./agent/production";
 import { QueueBuild } from "./queue/build";
 import { QueueProduction } from "./queue/deployment";
 import { AutomateService } from "./automate.service";
@@ -11,11 +11,11 @@ import { AutomateService } from "./automate.service";
 @Service()
 export class EngineService {
 	private static log = getLogger.service(EngineService);
-	private agents: { deployments: AgentProduction; builds: AgentBuild };
+	private agents: { deployments: AgentDeployment; builds: AgentBuild };
 	private automate: AutomateService;
 	private queues: { deployments: QueueProduction; builds: QueueBuild };
 
-	constructor(agentBuilder: AgentBuild, agentProduction: AgentProduction, queueBuildService: QueueBuild, queueDeployService: QueueProduction, automateService: AutomateService) {
+	constructor(agentBuilder: AgentBuild, agentProduction: AgentDeployment, queueBuildService: QueueBuild, queueDeployService: QueueProduction, automateService: AutomateService) {
 		this.agents = {
 			builds: agentBuilder,
 			deployments: agentProduction,

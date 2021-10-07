@@ -36,10 +36,12 @@ export class Mappings implements MappingMethods, OnReady {
 
 	@Log(Mappings.log)
 	async add(mapping: Omit<Mapping, "id">) {
+		const id = ++this.mappingNextId;
 		await this.repositories.mappings.add({
 			...mapping,
-			id: this.mappingNextId++,
+			id,
 		});
+		return id;
 	}
 
 	@Log(Mappings.log)
