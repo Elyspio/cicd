@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import "./MappingDisplay.scss";
 import { MappingDisplaySource } from "./MappingDisplaySource";
 import { MappingDisplayDeployment } from "./MappingDisplayDeployment";
@@ -8,6 +8,10 @@ import { AutomationState } from "../../../../store/module/automation/automation"
 import { useAppSelector } from "../../../../store";
 import { login } from "../../../../store/module/authentication/authentication.action";
 import { useDispatch } from "react-redux";
+import { Clear, PlayArrow } from "@mui/icons-material";
+import { useInjection } from "inversify-react";
+import { AutomateService } from "../../../../../core/services/cicd/automate.cicd.service";
+import { DiKeysService } from "../../../../../core/di/di.keys.service";
 
 type MappingDisplayProps = {
 	id: AutomationState["mappings"][number]["id"];
@@ -19,9 +23,19 @@ export function MappingDisplay({ id }: MappingDisplayProps) {
 		logged: s.authentication.logged,
 	}));
 
+	const services = {
+		automate: useInjection<AutomateService>(DiKeysService.core.automate),
+	};
+
 	const dispatch = useDispatch();
 
 	const log = useCallback(() => dispatch(login()), [dispatch]);
+
+	const run = useCallback(() => {
+		return services.automate.runMapping(id);
+	}, [services.automate, id]);
+
+	const deleteMapping = React.useCallback(() => services.automate.deleteMapping(id), [id, services.automate]);
 
 	return (
 		<div className="MappingDisplay">
@@ -35,6 +49,20 @@ export function MappingDisplay({ id }: MappingDisplayProps) {
 							</Typography>
 						</Typography>
 					</Box>
+
+					<Grid className="actions" container justifyItems={"center"} alignItems={"center"} spacing={2}>
+						<Grid item>
+							<IconButton onClick={run}>
+								<PlayArrow />
+							</IconButton>
+						</Grid>
+						<Grid item>
+							<IconButton onClick={deleteMapping}>
+								<Clear />
+							</IconButton>
+						</Grid>
+					</Grid>
+
 					<MappingDisplaySource data={data.build.github} />
 					<MappingDisplayBuild data={data.build.dockerfiles} />
 					<MappingDisplayDeployment data={data.deploy} />

@@ -13,6 +13,11 @@ import { useAppDispatch } from "../../../store";
 import { push } from "connected-react-router";
 import { routes } from "../Automate";
 import { JobBuildModel, JobDeployModel } from "../../../../core/apis/backend/generated";
+import { ContextMenu, ContextMenuItems } from "../../utils/ContextMenu";
+import { Delete } from "@mui/icons-material";
+import { useInjection } from "inversify-react";
+import { AutomateService } from "../../../../core/services/cicd/automate.cicd.service";
+import { DiKeysService } from "../../../../core/di/di.keys.service";
 
 const PREFIX = "JobItem";
 
@@ -105,23 +110,69 @@ export function JobItem(props: JobItemProps) {
 		);
 	}, [props.data]);
 
+	const services = {
+		automate: useInjection<AutomateService>(DiKeysService.core.automate),
+	};
+
+	const contextMenuItems: ContextMenuItems = React.useMemo(() => {
+		const arr: ContextMenuItems = [];
+
+		if (props.data.build) {
+			arr.push({
+				onClick: () => props.data.build && services.automate.deleteJob("build", props.data.build.id),
+				label: (
+					<Grid container alignItems={"center"} spacing={2}>
+						<Grid item>
+							<Delete />
+						</Grid>
+						<Grid item>
+							<Typography>Delete Build</Typography>
+						</Grid>
+					</Grid>
+				),
+				autoClose: true,
+			});
+		}
+
+		if (props.data.deploy) {
+			arr.push({
+				onClick: () => props.data.deploy && services.automate.deleteJob("deployment", props.data.deploy.id),
+				label: (
+					<Grid container alignItems={"center"} spacing={2}>
+						<Grid item>
+							<Delete />
+						</Grid>
+						<Grid item>
+							<Typography>Delete Deploy</Typography>
+						</Grid>
+					</Grid>
+				),
+				autoClose: true,
+			});
+		}
+
+		return arr;
+	}, [services.automate, props.data]);
+
 	return (
 		<Box className={"JobItem"}>
-			<Paper elevation={2} className={classes.root}>
-				<AppBar position={"static"} color={"default"}>
-					<Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary" textColor="primary" aria-label="icon label tabs example">
-						<Tab label={label} title={"hide"} disabled={value === 0} />
-						<Tab label="BUILD" onClick={() => props.data.build && dispatch(push(routes.getBuildPath(props.data.build.id)))} />
-						<Tab label="DEPLOY" onClick={() => props.data.deploy && dispatch(push(routes.getDeployPath(props.data.deploy.id)))} />
-					</Tabs>
-				</AppBar>
-				<TabPanel value={value} index={1}>
-					{props.data.build ? <BuildLine data={props.data.build} /> : <Typography>No build information</Typography>}
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					{props.data.deploy ? <DeployLine data={props.data.deploy} /> : <Typography>No deploy information</Typography>}
-				</TabPanel>
-			</Paper>
+			<ContextMenu items={contextMenuItems}>
+				<Paper elevation={2} className={classes.root}>
+					<AppBar position={"static"} color={"default"}>
+						<Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary" textColor="primary" aria-label="icon label tabs example">
+							<Tab label={label} title={"hide"} disabled={value === 0} />
+							<Tab label="BUILD" onClick={() => props.data.build && dispatch(push(routes.getBuildPath(props.data.build.id)))} />
+							<Tab label="DEPLOY" onClick={() => props.data.deploy && dispatch(push(routes.getDeployPath(props.data.deploy.id)))} />
+						</Tabs>
+					</AppBar>
+					<TabPanel value={value} index={1}>
+						{props.data.build ? <BuildLine data={props.data.build} /> : <Typography>No build information</Typography>}
+					</TabPanel>
+					<TabPanel value={value} index={2}>
+						{props.data.deploy ? <DeployLine data={props.data.deploy} /> : <Typography>No deploy information</Typography>}
+					</TabPanel>
+				</Paper>
+			</ContextMenu>
 		</Box>
 	);
 }

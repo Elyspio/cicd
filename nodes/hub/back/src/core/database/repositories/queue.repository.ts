@@ -37,7 +37,7 @@ export class QueueRepository implements AfterRoutesInit, BeforeListen {
 	}
 
 	@Log(QueueRepository.log)
-	async enqueue<T extends keyof Omit<QueuesEntity, "_id">>(type: T, data: Omit<QueuesEntity[T][number], "createdAt" | "finishedAt" | "startedAt" | "stdout">) {
+	async enqueue<T extends keyof Omit<QueuesEntity, "_id">>(type: T, data: Omit<QueuesEntity[T][number], "createdAt" | "finishedAt" | "startedAt" | "stdout" | "error">) {
 		const all = (await this.get())!;
 		if (type === "deployments") {
 			all.deployments.push({
@@ -47,6 +47,7 @@ export class QueueRepository implements AfterRoutesInit, BeforeListen {
 				finishedAt: null,
 				startedAt: null,
 				stdout: null,
+				error: null,
 			});
 		}
 		if (type === "builds") {
@@ -57,6 +58,7 @@ export class QueueRepository implements AfterRoutesInit, BeforeListen {
 				finishedAt: null,
 				startedAt: null,
 				stdout: null,
+				error: null,
 			});
 		}
 		await this.repo.connection.save(all);

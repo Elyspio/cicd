@@ -11,6 +11,8 @@ import { ConnectedRouter } from "connected-react-router";
 import "./config/window.d.ts";
 import { Provider as DiProvider } from "inversify-react";
 import { container } from "./core/di";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 declare module "@mui/styles/defaultTheme" {
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -31,6 +33,7 @@ class Wrapper extends Component<ReduxTypes> {
 				<StyledEngineProvider injectFirst>
 					<ThemeProvider theme={theme}>
 						<Application />
+						<ToastContainer />
 					</ThemeProvider>
 				</StyledEngineProvider>
 			</DiProvider>

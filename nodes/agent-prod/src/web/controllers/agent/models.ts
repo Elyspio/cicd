@@ -5,6 +5,12 @@ class JobModel {
 	@Required()
 	@Description("Job id")
 	id: number;
+
+	@Property()
+	public stdout: string | null;
+
+	@Property()
+	public error: string | null;
 }
 
 export class DockerComposeField {
@@ -33,7 +39,4 @@ export class DeployConfigModel {
 export class DeployJobModel extends JobModel implements Omit<Job<DeployConfig>, keyof Timestamp> {
 	@Property(DeployConfigModel)
 	config: DeployConfigModel;
-
-	@Property()
-	public stdout: string | null;
 }

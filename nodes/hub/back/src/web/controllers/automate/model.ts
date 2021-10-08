@@ -144,6 +144,9 @@ class JobBuildModel {
 
 	@Property()
 	stdout: string | null;
+
+	@Property()
+	error: string | null;
 }
 
 class JobDeployModel {
@@ -167,6 +170,9 @@ class JobDeployModel {
 
 	@Property()
 	stdout: string | null;
+
+	@Property()
+	error: string | null;
 }
 
 class JobsModel {

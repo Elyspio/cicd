@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, ListItem, ListItemText } from "@mui/material";
+import { Box, Grid, ListItem, ListItemText } from "@mui/material";
 import "./Mapping.scss";
 import { ReactComponent as GithubIcon } from "../icons/github.svg";
 import { ReactComponent as GitBranchIcon } from "../icons/git-branch.svg";
@@ -35,6 +35,9 @@ export function Mapping({ data: { build, deploy, id } }: Props) {
 					}
 				/>
 			</ListItem>
+			<Grid className="actions" container>
+				<Grid item></Grid>
+			</Grid>
 		</Box>
 	);
 }

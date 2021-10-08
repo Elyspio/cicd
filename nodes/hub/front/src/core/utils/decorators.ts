@@ -3,7 +3,7 @@ import { getArgsStr } from "./functions";
 
 type ToastOnTypes = "error" | "success" | "pending";
 
-type ToastOnParam = { [key in ToastOnTypes]?: string };
+type ToastOnParam = { [key in ToastOnTypes]?: string | ((...val: any[]) => string) };
 
 export function ToastOn(on: ToastOnParam, config?: { concatArgs?: boolean | string[] }) {
 	return function (target: any, prop: string, descriptor?: PropertyDescriptor) {
@@ -16,7 +16,7 @@ export function ToastOn(on: ToastOnParam, config?: { concatArgs?: boolean | stri
 				// Return value is stored into a variable instead of being passed to the execution stack
 				function handleError(err: Error) {
 					if (on.error) {
-						let msg = `${on.error}`;
+						let msg = typeof on.error === "function" ? on.error(args) : on.error;
 
 						if (process.env.NODE_ENV === "development") {
 							msg += `: ${prop}`;
@@ -32,7 +32,7 @@ export function ToastOn(on: ToastOnParam, config?: { concatArgs?: boolean | stri
 
 				function handleSuccess() {
 					if (on.success) {
-						let msg = `${on.success}`;
+						let msg = typeof on.success === "function" ? on.success(args) : on.success;
 						if (process.env.NODE_ENV === "development") {
 							msg += `: ${prop}`;
 							if (config?.concatArgs && args.length > 0) {

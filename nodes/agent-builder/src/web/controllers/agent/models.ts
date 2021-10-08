@@ -5,6 +5,12 @@ class JobModel {
 	@Required()
 	@Description("Job id")
 	id: number;
+
+	@Property()
+	public stdout: string | null;
+
+	@Property()
+	public error: string | null;
 }
 
 class DockerFileConfigModel {
@@ -84,7 +90,4 @@ class GithubDockerModel implements BuildConfig {
 export class BuildConfigModel extends JobModel implements Omit<Job<BuildConfig>, keyof Timestamp> {
 	@Property(GithubDockerModel)
 	config: GithubDockerModel;
-
-	@Property()
-	public stdout: string | null;
 }

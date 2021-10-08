@@ -15,7 +15,7 @@ export class AuthenticationService {
 	private authenticationApi!: AuthenticationApi;
 
 	public openLoginPage() {
-		return openPage(window.config.endpoints.authentication.api);
+		return openPage(`${window.config.endpoints.authentication.api}/login`);
 	}
 
 	public getUsername() {

@@ -62,14 +62,19 @@ export class AutomateService {
 			  }
 			: undefined;
 
-		const {} = await new BuildAgentApi(undefined, agent.uri).build({
-			config: {
-				...job.config,
-				dockerfiles,
-				bake: job.config.bake,
-			},
-			id: job.id,
-		});
+		try {
+			const { data: stdout } = await new BuildAgentApi(undefined, agent.uri).build({
+				config: {
+					...job.config,
+					dockerfiles,
+					bake: job.config.bake,
+				},
+				id: job.id,
+			});
+			job.stdout = stdout.join("");
+		} catch (e) {
+			job.error = (e as Error).toString();
+		}
 
 		job.finishedAt = new Date();
 		this.services.agents.builds.finishJob(job.id);

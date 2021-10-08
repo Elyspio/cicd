@@ -1,19 +1,26 @@
 import { injectable } from "inversify";
-import { AgentsApi, DockerControllerApi, GithubApi, OperationApi, OperationJobsApi, OperationMappingsApi } from "./generated";
+import { AutomateApi, DockerApi, GithubUsersApi, OperationAgentsApi, OperationJobsApi, OperationMappingsApi } from "./generated";
 import axios from "axios";
+import { BaseAPI } from "./generated/base";
 
 const instance = axios.create({
 	withCredentials: true,
 });
 
+export type Newable<T> = { new (...args: ConstructorParameters<typeof BaseAPI>): T };
+
+function createApi<T extends BaseAPI>(cls: Newable<T>): T {
+	return new cls(undefined, window.config.endpoints.core.api, instance);
+}
+
 @injectable()
 export class CicdApi {
-	public readonly agents = new AgentsApi(undefined, window.config.endpoints.core.api, instance);
-	public readonly docker = new DockerControllerApi(undefined, window.config.endpoints.core.api, instance);
-	public readonly github = new GithubApi(undefined, window.config.endpoints.core.api, instance);
+	public readonly agents = createApi(OperationAgentsApi);
+	public readonly docker = createApi(DockerApi);
+	public readonly github = createApi(GithubUsersApi);
+	public readonly automate = createApi(AutomateApi);
 	public readonly operation = {
-		core: new OperationApi(undefined, window.config.endpoints.core.api, instance),
-		mappings: new OperationMappingsApi(undefined, window.config.endpoints.core.api, instance),
-		jobs: new OperationJobsApi(undefined, window.config.endpoints.core.api, instance),
+		mappings: createApi(OperationMappingsApi),
+		jobs: createApi(OperationJobsApi),
 	};
 }

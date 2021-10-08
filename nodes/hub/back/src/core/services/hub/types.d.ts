@@ -68,7 +68,7 @@ export type Timestamp = {
 };
 export type WithId<T> = T & { id: number };
 //export type Job<T extends Config> = ConfigWithId<T> & Timestamp
-export type Job<T extends Config = {}> = WithId<Timestamp> & { config: T; stdout: string | null };
+export type Job<T extends Config = {}> = WithId<Timestamp> & { config: T; stdout: string | null; error: string | null };
 
 type Mapping = {
 	build: BuildConfig;
@@ -82,7 +82,7 @@ export interface HubConfig {
 		deployments: DeployAgent[];
 		builds: BuildAgent[];
 	};
-	// Lists of jobs that will get processed once a agent is available
+	// Lists of jobs that will get processed once an agent is available
 	queues: {
 		builds: Queue<Job<BuildConfig>>;
 		deployments: Queue<Job<DeployConfig>>;
@@ -92,7 +92,7 @@ export interface HubConfig {
 		builds: Job<BuildConfig>[];
 		deployments: Job<DeployConfig>[];
 	};
-	// Mapping between a build (Github + docker image build) and a deployment
+	// Mapping between a build (GitHub + docker image build) and a deployment
 	mappings: Mapping[];
 }
 
