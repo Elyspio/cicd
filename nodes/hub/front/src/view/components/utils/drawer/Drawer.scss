@@ -6,6 +6,17 @@ $header-size: 4rem;
 	main {
 		display: flex;
 		height: 100%;
+
+		> .content {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			* > {
+				height: 100%;
+			}
+		}
 	}
 
 	.drawer-btn {
@@ -17,16 +28,7 @@ $header-size: 4rem;
 		user-select: none;
 	}
 
-	.content {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 
-		* > {
-			height: 100%;
-		}
-	}
 }
 
 .Drawer-hoc {

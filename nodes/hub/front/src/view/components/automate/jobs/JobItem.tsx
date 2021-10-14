@@ -117,33 +117,19 @@ export function JobItem(props: JobItemProps) {
 	const contextMenuItems: ContextMenuItems = React.useMemo(() => {
 		const arr: ContextMenuItems = [];
 
-		if (props.data.build) {
+		if (props.data.build || props.data.deploy) {
 			arr.push({
-				onClick: () => props.data.build && services.automate.deleteJob("build", props.data.build.id),
+				onClick: () => {
+					props.data.build && services.automate.deleteJob("build", props.data.build.id);
+					props.data.deploy && services.automate.deleteJob("deployment", props.data.deploy.id);
+				},
 				label: (
 					<Grid container alignItems={"center"} spacing={2}>
 						<Grid item>
 							<Delete />
 						</Grid>
 						<Grid item>
-							<Typography>Delete Build</Typography>
-						</Grid>
-					</Grid>
-				),
-				autoClose: true,
-			});
-		}
-
-		if (props.data.deploy) {
-			arr.push({
-				onClick: () => props.data.deploy && services.automate.deleteJob("deployment", props.data.deploy.id),
-				label: (
-					<Grid container alignItems={"center"} spacing={2}>
-						<Grid item>
-							<Delete />
-						</Grid>
-						<Grid item>
-							<Typography>Delete Deploy</Typography>
+							<Typography>Delete Job</Typography>
 						</Grid>
 					</Grid>
 				),

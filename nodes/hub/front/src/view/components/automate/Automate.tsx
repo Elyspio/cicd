@@ -5,8 +5,8 @@ import Agents from "./agents/Agents";
 import { styled } from "@mui/material/styles";
 import Jobs from "./jobs/Jobs";
 import { Route, Switch } from "react-router";
-import JobBuildDetail from "./jobs/detail/JobBuildDetail";
-import JobDeployDetail from "./jobs/detail/JobDeployDetail";
+import { JobBuildDetail } from "./jobs/detail/build.detail.job";
+import { DeployDetailJob } from "./jobs/detail/deploy.detail.job";
 import MappingAccordion from "./mappings/MappingAccordion";
 import { MappingCreate } from "./mappings/create/MappingCreate";
 import { MappingDisplay } from "./mappings/detail/MappingDisplay";
@@ -79,7 +79,7 @@ export function Automate() {
 							match: {
 								params: { id },
 							},
-						}) => id && <JobDeployDetail id={Number.parseInt(id)} />}
+						}) => id && <DeployDetailJob id={Number.parseInt(id)} />}
 					/>
 					<Route exact path={"/mapping/add"} render={() => <MappingCreate />} />
 					<Route

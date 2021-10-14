@@ -1,0 +1,32 @@
+.JobDetail {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	box-sizing: border-box;
+
+	.header {
+		height: 20% !important;
+	}
+
+	.stdout {
+		height: 100%;
+		margin: 1rem;
+		display: flex;
+		flex-direction: column;
+
+		.content {
+			flex: 1 1 auto;
+			overflow-y: auto;
+			height: 0; /* == min-height: 100px*/
+		}
+
+	}
+
+	pre {
+		margin: 0;
+		font-size: medium;
+		text-wrap: avoid;
+	}
+
+
+}

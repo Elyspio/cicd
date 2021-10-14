@@ -5,7 +5,7 @@ import "./index.scss";
 import { connect, ConnectedProps, Provider } from "react-redux";
 import { history, store, StoreState } from "./view/store";
 import Application from "./view/components/Application";
-import { StyledEngineProvider, Theme, ThemeProvider } from "@mui/material";
+import { CssBaseline, StyledEngineProvider, Theme, ThemeProvider } from "@mui/material";
 import { themes } from "./config/theme";
 import { ConnectedRouter } from "connected-react-router";
 import "./config/window.d.ts";
@@ -34,6 +34,7 @@ class Wrapper extends Component<ReduxTypes> {
 					<ThemeProvider theme={theme}>
 						<Application />
 						<ToastContainer />
+						<CssBaseline />
 					</ThemeProvider>
 				</StyledEngineProvider>
 			</DiProvider>
