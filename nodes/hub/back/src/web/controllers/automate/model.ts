@@ -123,7 +123,7 @@ class HubAgentConfig {
 	builds: BuildAgentModelReturn[];
 }
 
-class JobBuildModel {
+class JobModel {
 	@Property()
 	@Required()
 	createdAt: Date;
@@ -138,41 +138,23 @@ class JobBuildModel {
 	@Required()
 	id: number;
 
-	@Property("T")
-	@Required()
-	config: BuildConfigModel;
-
-	@Property()
+	@Property(String)
 	stdout: string | null;
 
-	@Property()
+	@Property(String)
 	error: string | null;
 }
 
-class JobDeployModel {
-	@Property()
+class JobBuildModel extends JobModel {
+	@Property(BuildConfigModel)
 	@Required()
-	createdAt: Date;
+	config: BuildConfigModel;
+}
 
-	@Property()
-	startedAt: Date;
-
-	@Property()
-	finishedAt: Date;
-
-	@Property()
-	@Required()
-	id: number;
-
-	@Property("T")
+class JobDeployModel extends JobModel {
+	@Property(DeployConfigModel)
 	@Required()
 	config: DeployConfigModel;
-
-	@Property()
-	stdout: string | null;
-
-	@Property()
-	error: string | null;
 }
 
 class JobsModel {

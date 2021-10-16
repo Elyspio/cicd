@@ -27,7 +27,7 @@ export class BuilderAgentService {
 		if (!abilities.includes(BuildAgentModelAddAbilitiesEnum.DockerBuildx)) throw new Error("This build is not able to use docker buildx");
 
 		const folder = await Services.git.initFolder(config);
-		let strs;
+		let strs: string[];
 
 		if (config.config.dockerfiles && config.config.bake) throw new Error("Properties bake and dockerfiles must not be used together");
 

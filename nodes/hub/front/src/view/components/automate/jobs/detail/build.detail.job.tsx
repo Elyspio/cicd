@@ -3,6 +3,7 @@ import "./JobDetail.scss";
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { JobNotFound } from "./common.detail.job";
+import { AutoScroll } from "../../../utils/AutoScroll";
 
 type Props = {
 	id: number;
@@ -18,18 +19,30 @@ export function JobBuildDetail({ id }: Props) {
 			<Grid container justifyContent={"center"} alignItems={"center"}>
 				<Grid item>
 					<Typography variant={"h4"} my={2} fontWeight={"bold"}>
-						Job Build Detail
+						Build Detail
 					</Typography>
 				</Grid>
 			</Grid>
+
+			{job.error && (
+				<Grid item className="error" my={2}>
+					<Typography variant={"overline"} fontWeight={"bold"}>
+						Error
+					</Typography>
+
+					<Box sx={{ bgcolor: "background.default", height: "100%", color: "error.main" }} className={"content"}>
+						<pre>{job.error}</pre>
+					</Box>
+				</Grid>
+			)}
 
 			<div className="stdout">
 				<Typography variant={"overline"} fontWeight={"bold"}>
 					Stdout
 				</Typography>
-				<Box sx={{ bgcolor: "background.default", height: "100%" }} className={"content"}>
+				<AutoScroll sx={{ bgcolor: "background.default", height: "100%" }} className={"content"} length={job?.stdout?.length ?? 0} to={"bottom"}>
 					<pre>{job?.stdout}</pre>
-				</Box>
+				</AutoScroll>
 			</div>
 		</div>
 	);

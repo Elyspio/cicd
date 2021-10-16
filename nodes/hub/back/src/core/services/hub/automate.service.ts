@@ -73,7 +73,10 @@ export class AutomateService {
 			});
 			job.stdout = stdout.join("");
 		} catch (e) {
-			job.error = (e as Error).toString();
+			const err = e as Error;
+			const error = err.message + "\n" + err.stack;
+			job.error = error;
+			AutomateService.log.error(error);
 		}
 
 		job.finishedAt = new Date();
@@ -86,7 +89,15 @@ export class AutomateService {
 		job.startedAt = new Date();
 		await this.services.jobs.deployments.add(job);
 		if (job.config.docker != undefined) {
-			await new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(job as DeployJobModel);
+			try {
+				const { data: stdout } = await new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(job as DeployJobModel);
+				job.stdout = stdout.join("");
+			} catch (e) {
+				const err = e as Error;
+				const error = err.message + "\n" + err.stack;
+				job.error = error;
+				AutomateService.log.error(error);
+			}
 			this.services.agents.deployments.finishJob(job.id);
 		}
 

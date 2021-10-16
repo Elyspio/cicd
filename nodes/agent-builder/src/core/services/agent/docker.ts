@@ -60,7 +60,7 @@ export class DockerService {
 				reject,
 				resolve,
 			});
-		});
+		}).then((str) => [str]);
 	}
 
 	private handleProcess(process: ChildProcessWithoutNullStreams, id: number, completedCommand: string, { reject, resolve }: ResolveRejectProcess) {

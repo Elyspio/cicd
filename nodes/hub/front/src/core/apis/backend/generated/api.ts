@@ -504,22 +504,22 @@ export interface JobBuildModel {
 	id: number;
 	/**
 	 *
+	 * @type {string}
+	 * @memberof JobBuildModel
+	 */
+	stdout?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof JobBuildModel
+	 */
+	error?: string;
+	/**
+	 *
 	 * @type {BuildConfigModel}
 	 * @memberof JobBuildModel
 	 */
 	config: BuildConfigModel;
-	/**
-	 *
-	 * @type {object}
-	 * @memberof JobBuildModel
-	 */
-	stdout?: object;
-	/**
-	 *
-	 * @type {object}
-	 * @memberof JobBuildModel
-	 */
-	error?: object;
 }
 
 /**
@@ -554,22 +554,22 @@ export interface JobDeployModel {
 	id: number;
 	/**
 	 *
+	 * @type {string}
+	 * @memberof JobDeployModel
+	 */
+	stdout?: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof JobDeployModel
+	 */
+	error?: string;
+	/**
+	 *
 	 * @type {DeployConfigModel}
 	 * @memberof JobDeployModel
 	 */
 	config: DeployConfigModel;
-	/**
-	 *
-	 * @type {object}
-	 * @memberof JobDeployModel
-	 */
-	stdout?: object;
-	/**
-	 *
-	 * @type {object}
-	 * @memberof JobDeployModel
-	 */
-	error?: object;
 }
 
 /**

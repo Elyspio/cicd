@@ -108,7 +108,7 @@ export function JobItem(props: JobItemProps) {
 				<Grid item>{date.toLocaleTimeString()}</Grid>
 			</Grid>
 		);
-	}, [props.data]);
+	}, [props.data.build]);
 
 	const services = {
 		automate: useInjection<AutomateService>(DiKeysService.core.automate),
@@ -140,15 +140,39 @@ export function JobItem(props: JobItemProps) {
 		return arr;
 	}, [services.automate, props.data]);
 
+	const tabsColor: { build?: string; deploy?: string } = React.useMemo(() => {
+		let build = undefined;
+		if (props.data.build?.error) build = "error";
+		if (props.data.build && !props.data.build.error && props.data.build.finishedAt) build = "success";
+
+		let deploy = undefined;
+		if (props.data.deploy?.error) deploy = "error";
+		if (props.data.deploy && !props.data.deploy.error && props.data.deploy.finishedAt) deploy = "success";
+		return {
+			build,
+			deploy,
+		};
+	}, [props.data]);
+
 	return (
 		<Box className={"JobItem"}>
 			<ContextMenu items={contextMenuItems}>
 				<Paper elevation={2} className={classes.root}>
 					<AppBar position={"static"} color={"default"}>
-						<Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary" textColor="primary" aria-label="icon label tabs example">
+						<Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="secondary" textColor="inherit" aria-label="icon label tabs example">
 							<Tab label={label} title={"hide"} disabled={value === 0} />
-							<Tab label="BUILD" onClick={() => props.data.build && dispatch(push(routes.getBuildPath(props.data.build.id)))} />
-							<Tab label="DEPLOY" onClick={() => props.data.deploy && dispatch(push(routes.getDeployPath(props.data.deploy.id)))} />
+							<Tab
+								className={tabsColor.build}
+								// sx={{}}
+								label="BUILD"
+								onClick={() => props.data.build && dispatch(push(routes.getBuildPath(props.data.build.id)))}
+							/>
+							<Tab
+								className={tabsColor.deploy}
+								// sx={{ color: tabsColor.deploy + " !important" }}
+								label="DEPLOY"
+								onClick={() => props.data.deploy && dispatch(push(routes.getDeployPath(props.data.deploy.id)))}
+							/>
 						</Tabs>
 					</AppBar>
 					<TabPanel value={value} index={1}>
