@@ -37,7 +37,8 @@ services:
             HUD_SOCKET_URL: hub:4000
             HUD_SOCKET_NAMESPACE: ws/agent/jobs
             OWN_PROTOCOL: http
-        scale: 10
+        deploy:
+            replicas: 4
         networks:
             cicd:
 
@@ -65,6 +66,4 @@ services:
 networks:
     cicd:
     external:
-        external: true
     authentication:
-        external: true

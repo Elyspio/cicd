@@ -2,7 +2,7 @@ version: "3.5"
 services:
     test:
         image: elyspio/cicd:test-unit
-        restart: unless-stopped
+        restart: "no"
         volumes:
             - ./conf.json:/back/conf.json
         environment:
