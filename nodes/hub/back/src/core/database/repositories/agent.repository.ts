@@ -20,6 +20,17 @@ export class AgentRepository implements AfterRoutesInit, BeforeListen {
 		};
 	}
 
+	async $beforeListen() {
+		const all = await this.get();
+		if (all === null) {
+			await this.create({ builds: [], deployments: [] });
+		} else {
+			all.builds = [];
+			all.deployments = [];
+			await this.repo.connection.save(all);
+		}
+	}
+
 	@Log(AgentRepository.log)
 	async create(user: Omit<AgentsEntity, "_id">): Promise<AgentsEntity> {
 		return this.repo.connection.save(user);
@@ -46,7 +57,7 @@ export class AgentRepository implements AfterRoutesInit, BeforeListen {
 	async update<T extends keyof Omit<AgentsEntity, "_id">>(type: T, data: Partial<AgentsEntity[T][number]> & Pick<AgentsEntity[T][number], "uri">) {
 		const all = (await this.get())!;
 		const index = all[type].findIndex((e) => e.uri === data.uri);
-		if (index === -1) throw new Error(`JobRepository-update: could not find job in ${type} with uri=${data.uri}`);
+		if (index === -1) throw new Error(`AgentRepository-update: could not find agent in with uri=${data.uri} and type=${type}`);
 		all[type][index] = { ...all[type][index], ...data };
 		await this.repo.connection.save(all);
 		return all[type][index];
@@ -56,7 +67,7 @@ export class AgentRepository implements AfterRoutesInit, BeforeListen {
 	async delete<T extends keyof Omit<AgentsEntity, "_id">>(type: T, uri: AgentsEntity[T][number]["uri"]) {
 		const all = (await this.get())!;
 		const index = all[type].findIndex((e) => e.uri === uri);
-		if (index === -1) throw new Error(`JobRepository-update: could not find job in ${type} with uri=${uri}`);
+		if (index === -1) throw new Error(`AgentRepository-delete: could not find agent in with uri=${uri} and type=${type}`);
 		all[type].splice(index, 1);
 		await this.repo.connection.save(all);
 	}
@@ -64,16 +75,5 @@ export class AgentRepository implements AfterRoutesInit, BeforeListen {
 	async list<T extends keyof Omit<AgentsEntity, "_id">>(type: T) {
 		const all = (await this.get())!;
 		return all[type];
-	}
-
-	async $beforeListen() {
-		const all = await this.get();
-		if (all === null) {
-			await this.create({ builds: [], deployments: [] });
-		} else {
-			all.builds = [];
-			all.deployments = [];
-			await this.repo.connection.save(all);
-		}
 	}
 }

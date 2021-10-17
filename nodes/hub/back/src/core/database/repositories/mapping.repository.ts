@@ -4,11 +4,13 @@ import { MongoRepository } from "typeorm";
 import { getLogger } from "../../utils/logger";
 import { Log } from "../../utils/decorators/logger";
 import { MappingEntity } from "../entities/mappings.entity";
+import { Mutex } from "async-mutex";
 
 @Service()
 export class MappingRepository implements AfterRoutesInit {
 	private static log = getLogger.repository(MappingRepository);
 	private repo!: { connection: MongoRepository<MappingEntity> };
+	private lock = new Mutex();
 
 	constructor(private typeORMService: TypeORMService) {}
 
@@ -21,7 +23,7 @@ export class MappingRepository implements AfterRoutesInit {
 
 	@Log(MappingRepository.log)
 	async add(user: Omit<MappingEntity, "_id">): Promise<MappingEntity> {
-		return this.repo.connection.save(user);
+		return this.lock.runExclusive(() => this.repo.connection.save(user));
 	}
 
 	async get(id: MappingEntity["id"]): Promise<MappingEntity | null> {
@@ -35,14 +37,16 @@ export class MappingRepository implements AfterRoutesInit {
 
 	@Log(MappingRepository.log)
 	async update<T extends keyof Omit<MappingEntity, "_id">>(data: Partial<MappingEntity> & Pick<MappingEntity, "id">) {
-		const mapping = await this.get(data.id);
-		if (!mapping) throw new Error(`MappingRepository-update: could not find mapping with id=${data.id}`);
-		await this.repo.connection.update({ id: data.id }, data);
+		await this.lock.runExclusive(async () => {
+			const mapping = await this.get(data.id);
+			if (!mapping) throw new Error(`MappingRepository-update: could not find mapping with id=${data.id}`);
+			await this.repo.connection.update({ id: data.id }, data);
+		});
 	}
 
 	@Log(MappingRepository.log)
 	async delete<T extends keyof Omit<MappingEntity, "_id">>(id: MappingEntity["id"]) {
-		await this.repo.connection.deleteOne({ id });
+		return this.lock.runExclusive(() => this.repo.connection.deleteOne({ id }));
 	}
 
 	async list<T extends keyof Omit<MappingEntity, "_id">>() {
