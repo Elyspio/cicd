@@ -6,6 +6,7 @@ import { getLogger } from "../../utils/logger";
 import { Log } from "../../utils/decorators/logger";
 import { BuildConfig, DeployConfig } from "../entities/common/entities";
 import { Mutex } from "async-mutex";
+import { JobStd } from "../../services/hub/job/types";
 
 @Service()
 export class JobRepository implements AfterRoutesInit, BeforeListen {
@@ -70,6 +71,7 @@ export class JobRepository implements AfterRoutesInit, BeforeListen {
 		});
 	}
 
+	@Log(JobRepository.log)
 	async delete<T extends keyof Omit<JobsEntity, "_id">>(type: T, id: JobsEntity[T][number]["id"]) {
 		await this.lock.runExclusive(async () => {
 			const all = (await this.get())!;
@@ -85,13 +87,14 @@ export class JobRepository implements AfterRoutesInit, BeforeListen {
 		return all[type];
 	}
 
-	async addStdout<T extends keyof Omit<JobsEntity, "_id">>(type: T, id: JobsEntity[T][number]["id"], stdout: string) {
+	@Log(JobRepository.log)
+	async addStd<T extends keyof Omit<JobsEntity, "_id">>(type: T, std: JobStd, id: JobsEntity[T][number]["id"], str: string) {
 		await this.lock.runExclusive(async () => {
 			const all = (await this.get())!;
 			const index = all[type].findIndex((e) => e.id === id);
 			if (index === -1) throw new Error(`JobRepository-update: could not find job in ${type} with id=${id}`);
-			if (all[type][index].stdout === null) all[type][index].stdout = stdout;
-			else all[type][index].stdout += stdout;
+			if (all[type][index][std] === null) all[type][index][std] = str;
+			else all[type][index][std] += str;
 			await this.repo.connection.save(all);
 		});
 	}

@@ -17,6 +17,11 @@ RUN cd /back && npm run build
 # Running
 FROM node:16-alpine
 
+RUN apk --no-cache add curl bash
+
+RUN curl -L https://github.com/docker/compose/releases/download/v2.0.1/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
+RUN chmod +x /usr/bin/docker-compose
+
 RUN mkdir back
 
 COPY --from=builder-back /back/package*.json /back

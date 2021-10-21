@@ -15,12 +15,11 @@ export class DockerComposeService {
 				return;
 			}
 
-			const folder = docker.compose.path;
-
+			const folder = path.dirname(docker.compose.path);
 			const completedCommand = `${await this.getDockerComposeCommand()} pull`;
 			$log.info("DockerComposeService.pull", { completedCommand, folder });
-			exec(completedCommand, { cwd: path.dirname(folder) }, (error, stdout, stderr) => {
-				$log.info("DockerComposeService.pull", {
+			exec(completedCommand, { cwd: folder }, (error, stdout, stderr) => {
+				$log.info("DockerComposeService.pulled", {
 					completedCommand,
 					folder,
 					error,
@@ -43,7 +42,7 @@ export class DockerComposeService {
 
 			const completedCommand = `${await this.getDockerComposeCommand()} up --remove-orphans ${daemon ? "-d" : ""}`;
 			exec(completedCommand, { cwd: path.dirname(folder) }, (error, stdout, stderr) => {
-				$log.info("DockerComposeService.up", {
+				$log.info("DockerComposeService.uped", {
 					completedCommand,
 					folder,
 					error,

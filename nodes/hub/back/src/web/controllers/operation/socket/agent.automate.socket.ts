@@ -49,9 +49,9 @@ export class AgentAutomateSocket {
 		$log.info("front-jobs-stdout", taskId, stdout);
 		this.frontSocket.nsp.emit("front-jobs-stdout", stdout);
 
-		let func = type === "build" ? this.services.jobs.builds.addStdout : this.services.jobs.deployments.addStdout;
+		let func = type === "build" ? this.services.jobs.builds.addStd : this.services.jobs.deployments.addStd;
 		func = func.bind("build" ? this.services.jobs.builds : this.services.jobs.deployments);
-		await func(taskId, stdout);
+		await func(taskId, "stdout", stdout);
 	}
 
 	@Input("agent-connection")

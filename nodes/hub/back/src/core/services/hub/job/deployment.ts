@@ -1,7 +1,7 @@
 import { DeployConfig, Job } from "../types";
 import { Service } from "@tsed/common";
 import { JobRepository } from "../../../database/repositories/job.repository";
-import { JobIdentifier } from "./types";
+import { JobIdentifier, JobStd } from "./types";
 
 type DeployJob = Job<DeployConfig>;
 
@@ -31,7 +31,7 @@ export class JobDeployment {
 		return this.repositories.jobs.list("deployments");
 	}
 
-	public addStdout(id: JobIdentifier<DeployJob>, stdout: string) {
-		return this.repositories.jobs.addStdout("deployments", id, stdout);
+	public addStd(id: JobIdentifier<DeployJob>, std: JobStd, stdout: string) {
+		return this.repositories.jobs.addStd("builds", std, id, stdout);
 	}
 }

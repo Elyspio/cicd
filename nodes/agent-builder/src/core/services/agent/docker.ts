@@ -25,12 +25,11 @@ export class DockerService {
 			files.map((df) => {
 				const dockerfilePath = path.join(folder, df.path);
 				return new Promise<string>((resolve, reject) => {
-					const dockerFileDir = path.resolve(path.join(folder, df.wd));
-					const completedCommand = `${command.join(" ")} -f ${dockerfilePath} ${dockerFileDir} -t ${username.toLowerCase()}/${df.image.toLowerCase()}:${
-						df.tag?.toLowerCase() ?? "latest"
-					} --push`;
+					const dockerFileDir = path.join(folder, df.wd);
+					const completedCommand = `${command.join(" ")} -f ${dockerfilePath}  -t ${username.toLowerCase()}/${df.image.toLowerCase()}:${df.tag?.toLowerCase() ?? "latest"} --push .`;
 					DockerService.log.info(`BuilderAgentService.build.${buildNumber}`, {
 						completedCommand,
+						dockerFileDir,
 						df,
 					});
 					const splited = completedCommand.split(" ").filter((x) => x.length > 0);

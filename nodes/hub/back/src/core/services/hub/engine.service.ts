@@ -39,8 +39,11 @@ export class EngineService {
 				const job = await this.queues.builds.dequeue();
 				if (job) {
 					await this.agents.builds.update(agent.uri, { availability: "running" });
-					await this.automate.build(agent, job);
-					await this.agents.builds.update(agent.uri, { availability: "free" });
+					try {
+						await this.automate.build(agent, job);
+					} finally {
+						await this.agents.builds.update(agent.uri, { availability: "free" });
+					}
 				}
 				// });
 			}
@@ -55,8 +58,11 @@ export class EngineService {
 				const job = await this.queues.deployments.dequeue();
 				if (job) {
 					await this.agents.deployments.update(agent.uri, { availability: "running" });
-					await this.automate.deploy(agent, job);
-					await this.agents.deployments.update(agent.uri, { availability: "free" });
+					try {
+						await this.automate.deploy(agent, job);
+					} finally {
+						await this.agents.deployments.update(agent.uri, { availability: "free" });
+					}
 				}
 			}
 		}, 1000);

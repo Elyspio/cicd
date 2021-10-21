@@ -75,8 +75,9 @@ export class AutomateService {
 		} catch (e) {
 			const err = e as Error;
 			const error = err.message + "\n" + err.stack;
-			job.error = error;
+			await this.services.jobs.builds.addStd(job.id, "error", error);
 			AutomateService.log.error(error);
+			throw e;
 		}
 
 		job.finishedAt = new Date();
@@ -95,8 +96,9 @@ export class AutomateService {
 			} catch (e) {
 				const err = e as Error;
 				const error = err.message + "\n" + err.stack;
-				job.error = error;
+				await this.services.jobs.deployments.addStd(job.id, "error", error);
 				AutomateService.log.error(error);
+				throw e;
 			}
 			this.services.agents.deployments.finishJob(job.id);
 		}
