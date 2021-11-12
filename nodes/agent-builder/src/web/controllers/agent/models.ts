@@ -11,6 +11,9 @@ class JobModel {
 
 	@Property()
 	public error: string | null;
+
+	@Property(String)
+	public token: string;
 }
 
 class DockerFileConfigModel {

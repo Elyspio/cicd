@@ -13,21 +13,10 @@
  */
 
 import { Configuration } from "./configuration";
-import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
+import globalAxios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {
-	assertParamExists,
-	createRequestFunction,
-	DUMMY_BASE_URL,
-	serializeDataIfNeeded,
-	setApiKeyToObject,
-	setBasicAuthToObject,
-	setBearerAuthToObject,
-	setOAuthToObject,
-	setSearchParams,
-	toPathString,
-} from "./common";
+import { assertParamExists, createRequestFunction, DUMMY_BASE_URL, serializeDataIfNeeded, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString } from "./common";
 // @ts-ignore
 import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
@@ -66,6 +55,28 @@ export interface ExecException {
 /**
  *
  * @export
+ * @interface GenericError
+ */
+export interface GenericError {
+	/**
+	 * The error name
+	 * @type {string}
+	 * @memberof GenericError
+	 */
+	name: string;
+	/**
+	 * An error message
+	 * @type {string}
+	 * @memberof GenericError
+	 */
+	message: string;
+
+	[key: string]: object | any;
+}
+
+/**
+ *
+ * @export
  * @interface InlineObject
  */
 export interface InlineObject {
@@ -74,13 +85,53 @@ export interface InlineObject {
 	 * @type {string}
 	 * @memberof InlineObject
 	 */
-	command?: string;
+	"authentication-token"?: string;
+}
+
+/**
+ *
+ * @export
+ * @interface RunFromAppRequest
+ */
+export interface RunFromAppRequest {
 	/**
 	 *
 	 * @type {string}
-	 * @memberof InlineObject
+	 * @memberof RunFromAppRequest
 	 */
-	cwd?: string;
+	cwd: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof RunFromAppRequest
+	 */
+	command: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof RunFromAppRequest
+	 */
+	token: string;
+}
+
+/**
+ *
+ * @export
+ * @interface RunRequest
+ */
+export interface RunRequest {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof RunRequest
+	 */
+	cwd: string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof RunRequest
+	 */
+	command: string;
 }
 
 /**
@@ -124,33 +175,39 @@ export interface RunResponse {
 /**
  *
  * @export
- * @interface UnauthorizedModel
+ * @interface Unauthorized
  */
-export interface UnauthorizedModel {
+export interface Unauthorized {
 	/**
-	 *
-	 * @type {Array<string>}
-	 * @memberof UnauthorizedModel
-	 */
-	errors?: Array<string>;
-	/**
-	 *
+	 * The error name
 	 * @type {string}
-	 * @memberof UnauthorizedModel
+	 * @memberof Unauthorized
 	 */
-	message?: string;
+	name: string;
 	/**
-	 *
+	 * An error message
 	 * @type {string}
-	 * @memberof UnauthorizedModel
+	 * @memberof Unauthorized
 	 */
-	name?: string;
+	message: string;
 	/**
-	 *
+	 * The status code of the exception
 	 * @type {number}
-	 * @memberof UnauthorizedModel
+	 * @memberof Unauthorized
 	 */
-	status?: number;
+	status: number;
+	/**
+	 * A list of related errors
+	 * @type {Array<GenericError>}
+	 * @memberof Unauthorized
+	 */
+	errors?: Array<GenericError>;
+	/**
+	 * The stack trace (only in development mode)
+	 * @type {string}
+	 * @memberof Unauthorized
+	 */
+	stack?: string;
 }
 
 /**
@@ -161,12 +218,16 @@ export const RunnerApiAxiosParamCreator = function (configuration?: Configuratio
 	return {
 		/**
 		 *
-		 * @param {InlineObject} [inlineObject]
+		 * @param {InlineObject} inlineObject
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		runnerRun: async (inlineObject?: InlineObject, options: any = {}): Promise<RequestArgs> => {
-			const localVarPath = `/core/run`;
+		run: async (inlineObject: InlineObject, authenticationToken?: string, authenticationToken2?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+			// verify required parameter 'inlineObject' is not null or undefined
+			assertParamExists("run", "inlineObject", inlineObject);
+			const localVarPath = `/api/run`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
 			let baseOptions;
@@ -174,24 +235,53 @@ export const RunnerApiAxiosParamCreator = function (configuration?: Configuratio
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+			const localVarHeaderParameter = {} as any;
+			const localVarQueryParameter = {} as any;
+
+			if (authenticationToken !== undefined && authenticationToken !== null) {
+				localVarHeaderParameter["authentication-token"] = String(authenticationToken);
+			}
+
+			localVarHeaderParameter["Content-Type"] = "application/json";
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter);
+			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration);
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions,
 			};
+		},
+		/**
+		 *
+		 * @param {RunFromAppRequest} runFromAppRequest
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		runFromApp: async (runFromAppRequest: RunFromAppRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+			// verify required parameter 'runFromAppRequest' is not null or undefined
+			assertParamExists("runFromApp", "runFromAppRequest", runFromAppRequest);
+			const localVarPath = `/api/run/app`;
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+			let baseOptions;
+			if (configuration) {
+				baseOptions = configuration.baseOptions;
+			}
+
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			setSearchParams(localVarUrlObj, localVarQueryParameter);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
-			localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration);
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+			localVarRequestOptions.data = serializeDataIfNeeded(runFromAppRequest, localVarRequestOptions, configuration);
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -210,12 +300,29 @@ export const RunnerApiFp = function (configuration?: Configuration) {
 	return {
 		/**
 		 *
-		 * @param {InlineObject} [inlineObject]
+		 * @param {InlineObject} inlineObject
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async runnerRun(inlineObject?: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunResponse>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.runnerRun(inlineObject, options);
+		async run(
+			inlineObject: InlineObject,
+			authenticationToken?: string,
+			authenticationToken2?: string,
+			options?: AxiosRequestConfig
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunResponse>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.run(inlineObject, authenticationToken, authenticationToken2, options);
+			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+		},
+		/**
+		 *
+		 * @param {RunFromAppRequest} runFromAppRequest
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async runFromApp(runFromAppRequest: RunFromAppRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunResponse>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.runFromApp(runFromAppRequest, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
@@ -230,12 +337,23 @@ export const RunnerApiFactory = function (configuration?: Configuration, basePat
 	return {
 		/**
 		 *
-		 * @param {InlineObject} [inlineObject]
+		 * @param {InlineObject} inlineObject
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		runnerRun(inlineObject?: InlineObject, options?: any): AxiosPromise<RunResponse> {
-			return localVarFp.runnerRun(inlineObject, options).then((request) => request(axios, basePath));
+		run(inlineObject: InlineObject, authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<RunResponse> {
+			return localVarFp.run(inlineObject, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
+		},
+		/**
+		 *
+		 * @param {RunFromAppRequest} runFromAppRequest
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		runFromApp(runFromAppRequest: RunFromAppRequest, options?: any): AxiosPromise<RunResponse> {
+			return localVarFp.runFromApp(runFromAppRequest, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -249,14 +367,29 @@ export const RunnerApiFactory = function (configuration?: Configuration, basePat
 export class RunnerApi extends BaseAPI {
 	/**
 	 *
-	 * @param {InlineObject} [inlineObject]
+	 * @param {InlineObject} inlineObject
+	 * @param {string} [authenticationToken]
+	 * @param {string} [authenticationToken2]
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
 	 * @memberof RunnerApi
 	 */
-	public runnerRun(inlineObject?: InlineObject, options?: any) {
+	public run(inlineObject: InlineObject, authenticationToken?: string, authenticationToken2?: string, options?: AxiosRequestConfig) {
 		return RunnerApiFp(this.configuration)
-			.runnerRun(inlineObject, options)
+			.run(inlineObject, authenticationToken, authenticationToken2, options)
+			.then((request) => request(this.axios, this.basePath));
+	}
+
+	/**
+	 *
+	 * @param {RunFromAppRequest} runFromAppRequest
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof RunnerApi
+	 */
+	public runFromApp(runFromAppRequest: RunFromAppRequest, options?: AxiosRequestConfig) {
+		return RunnerApiFp(this.configuration)
+			.runFromApp(runFromAppRequest, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 }

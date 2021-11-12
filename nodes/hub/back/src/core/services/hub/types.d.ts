@@ -68,7 +68,7 @@ export type Timestamp = {
 };
 export type WithId<T> = T & { id: number };
 //export type Job<T extends Config> = ConfigWithId<T> & Timestamp
-export type Job<T extends Config = {}> = WithId<Timestamp> & { config: T; stdout: string | null; error: string | null };
+export type Job<T extends Config = {}> = WithId<Timestamp> & { config: T; stdout: string | null; error: string | null; token: string };
 
 type Mapping = {
 	build: BuildConfig;

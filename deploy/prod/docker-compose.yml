@@ -8,10 +8,11 @@ services:
             - ./front/conf.js:/front/build/conf.js
         environment:
             AUTHENTICATION_SERVER_URI: "http://authentication-server:4000"
-            DB_USERNAME: "cicd"
-            DB_PASSWORD: "6514dza!dazkp_"
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
             DB_PORT: 27017
             DB_HOST: "hub-db"
+
         container_name: cicd-hub
         labels:
             - "traefik.enable=true"
@@ -31,8 +32,8 @@ services:
         image: mongo:latest
         restart: always
         environment:
-            MONGO_INITDB_ROOT_USERNAME: cicd
-            MONGO_INITDB_ROOT_PASSWORD: "6514dza!dazkp_"
+            MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+            MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
         volumes:
             - ./hub-db/data:/data/db
         networks:
@@ -72,12 +73,17 @@ services:
             HUD_SOCKET_URL: hub:4000
             HUD_SOCKET_NAMESPACE: ws/agent/jobs
             OWN_PROTOCOL: http
+            USE_EXTERNAL_RUNNER: true
+            RUNNER_SERVER_URL: runner-server
         networks:
             cicd:
+            runner:
 
 networks:
     cicd:
     external:
         external: true
     authentication:
+        external: true
+    runner:
         external: true

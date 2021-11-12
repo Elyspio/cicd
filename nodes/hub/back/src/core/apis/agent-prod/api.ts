@@ -13,21 +13,10 @@
  */
 
 import { Configuration } from "./configuration";
-import globalAxios, { AxiosInstance, AxiosPromise } from "axios";
+import globalAxios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {
-	assertParamExists,
-	createRequestFunction,
-	DUMMY_BASE_URL,
-	serializeDataIfNeeded,
-	setApiKeyToObject,
-	setBasicAuthToObject,
-	setBearerAuthToObject,
-	setOAuthToObject,
-	setSearchParams,
-	toPathString,
-} from "./common";
+import { assertParamExists, createRequestFunction, DUMMY_BASE_URL, serializeDataIfNeeded, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString } from "./common";
 // @ts-ignore
 import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "./base";
 
@@ -65,6 +54,18 @@ export interface DeployJobModel {
 	id: number;
 	/**
 	 *
+	 * @type {string}
+	 * @memberof DeployJobModel
+	 */
+	stdout: string | null;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof DeployJobModel
+	 */
+	error: string | null;
+	/**
+	 *
 	 * @type {DeployConfigModel}
 	 * @memberof DeployJobModel
 	 */
@@ -100,6 +101,66 @@ export interface DockerField {
 }
 
 /**
+ *
+ * @export
+ * @interface GenericError
+ */
+export interface GenericError {
+	/**
+	 * The error name
+	 * @type {string}
+	 * @memberof GenericError
+	 */
+	name: string;
+	/**
+	 * An error message
+	 * @type {string}
+	 * @memberof GenericError
+	 */
+	message: string;
+
+	[key: string]: object | any;
+}
+
+/**
+ *
+ * @export
+ * @interface Unauthorized
+ */
+export interface Unauthorized {
+	/**
+	 * The error name
+	 * @type {string}
+	 * @memberof Unauthorized
+	 */
+	name: string;
+	/**
+	 * An error message
+	 * @type {string}
+	 * @memberof Unauthorized
+	 */
+	message: string;
+	/**
+	 * The status code of the exception
+	 * @type {number}
+	 * @memberof Unauthorized
+	 */
+	status: number;
+	/**
+	 * A list of related errors
+	 * @type {Array<GenericError>}
+	 * @memberof Unauthorized
+	 */
+	errors?: Array<GenericError>;
+	/**
+	 * The stack trace (only in development mode)
+	 * @type {string}
+	 * @memberof Unauthorized
+	 */
+	stack?: string;
+}
+
+/**
  * AutomateApi - axios parameter creator
  * @export
  */
@@ -107,10 +168,12 @@ export const AutomateApiAxiosParamCreator = function (configuration?: Configurat
 	return {
 		/**
 		 * Fetch the list of docker-compose.yml files
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		automateGetApps: async (options: any = {}): Promise<RequestArgs> => {
+		getApps: async (authenticationToken?: string, authenticationToken2?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
 			const localVarPath = `/api/automate/node`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -119,21 +182,17 @@ export const AutomateApiAxiosParamCreator = function (configuration?: Configurat
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "GET",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			if (authenticationToken !== undefined && authenticationToken !== null) {
+				localVarHeaderParameter["authentication-token"] = String(authenticationToken);
+			}
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
 			return {
 				url: toPathString(localVarUrlObj),
@@ -152,11 +211,13 @@ export const AutomateApiFp = function (configuration?: Configuration) {
 	return {
 		/**
 		 * Fetch the list of docker-compose.yml files
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async automateGetApps(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.automateGetApps(options);
+		async getApps(authenticationToken?: string, authenticationToken2?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.getApps(authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
@@ -171,11 +232,13 @@ export const AutomateApiFactory = function (configuration?: Configuration, baseP
 	return {
 		/**
 		 * Fetch the list of docker-compose.yml files
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		automateGetApps(options?: any): AxiosPromise<Array<string>> {
-			return localVarFp.automateGetApps(options).then((request) => request(axios, basePath));
+		getApps(authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<Array<string>> {
+			return localVarFp.getApps(authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -189,13 +252,15 @@ export const AutomateApiFactory = function (configuration?: Configuration, baseP
 export class AutomateApi extends BaseAPI {
 	/**
 	 * Fetch the list of docker-compose.yml files
+	 * @param {string} [authenticationToken]
+	 * @param {string} [authenticationToken2]
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
 	 * @memberof AutomateApi
 	 */
-	public automateGetApps(options?: any) {
+	public getApps(authenticationToken?: string, authenticationToken2?: string, options?: AxiosRequestConfig) {
 		return AutomateApiFp(this.configuration)
-			.automateGetApps(options)
+			.getApps(authenticationToken, authenticationToken2, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 }
@@ -209,12 +274,14 @@ export const ProductionAgentApiAxiosParamCreator = function (configuration?: Con
 		/**
 		 * Deploy a project following a configuration
 		 * @param {DeployJobModel} deployJobModel
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		productionAgentBuild: async (deployJobModel: DeployJobModel, options: any = {}): Promise<RequestArgs> => {
+		build: async (deployJobModel: DeployJobModel, authenticationToken?: string, authenticationToken2?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
 			// verify required parameter 'deployJobModel' is not null or undefined
-			assertParamExists("productionAgentBuild", "deployJobModel", deployJobModel);
+			assertParamExists("build", "deployJobModel", deployJobModel);
 			const localVarPath = `/api/production-agent/deploy`;
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -223,23 +290,19 @@ export const ProductionAgentApiAxiosParamCreator = function (configuration?: Con
 				baseOptions = configuration.baseOptions;
 			}
 
-			const localVarRequestOptions = {
-				method: "POST",
-				...baseOptions,
-				...options,
-			};
+			const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
 			const localVarHeaderParameter = {} as any;
 			const localVarQueryParameter = {} as any;
 
+			if (authenticationToken !== undefined && authenticationToken !== null) {
+				localVarHeaderParameter["authentication-token"] = String(authenticationToken);
+			}
+
 			localVarHeaderParameter["Content-Type"] = "application/json";
 
-			setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+			setSearchParams(localVarUrlObj, localVarQueryParameter);
 			let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-			localVarRequestOptions.headers = {
-				...localVarHeaderParameter,
-				...headersFromBaseOptions,
-				...options.headers,
-			};
+			localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 			localVarRequestOptions.data = serializeDataIfNeeded(deployJobModel, localVarRequestOptions, configuration);
 
 			return {
@@ -260,11 +323,18 @@ export const ProductionAgentApiFp = function (configuration?: Configuration) {
 		/**
 		 * Deploy a project following a configuration
 		 * @param {DeployJobModel} deployJobModel
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		async productionAgentBuild(deployJobModel: DeployJobModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-			const localVarAxiosArgs = await localVarAxiosParamCreator.productionAgentBuild(deployJobModel, options);
+		async build(
+			deployJobModel: DeployJobModel,
+			authenticationToken?: string,
+			authenticationToken2?: string,
+			options?: AxiosRequestConfig
+		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+			const localVarAxiosArgs = await localVarAxiosParamCreator.build(deployJobModel, authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
 		},
 	};
@@ -280,11 +350,13 @@ export const ProductionAgentApiFactory = function (configuration?: Configuration
 		/**
 		 * Deploy a project following a configuration
 		 * @param {DeployJobModel} deployJobModel
+		 * @param {string} [authenticationToken]
+		 * @param {string} [authenticationToken2]
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		productionAgentBuild(deployJobModel: DeployJobModel, options?: any): AxiosPromise<Array<string>> {
-			return localVarFp.productionAgentBuild(deployJobModel, options).then((request) => request(axios, basePath));
+		build(deployJobModel: DeployJobModel, authenticationToken?: string, authenticationToken2?: string, options?: any): AxiosPromise<Array<string>> {
+			return localVarFp.build(deployJobModel, authenticationToken, authenticationToken2, options).then((request) => request(axios, basePath));
 		},
 	};
 };
@@ -299,13 +371,15 @@ export class ProductionAgentApi extends BaseAPI {
 	/**
 	 * Deploy a project following a configuration
 	 * @param {DeployJobModel} deployJobModel
+	 * @param {string} [authenticationToken]
+	 * @param {string} [authenticationToken2]
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
 	 * @memberof ProductionAgentApi
 	 */
-	public productionAgentBuild(deployJobModel: DeployJobModel, options?: any) {
+	public build(deployJobModel: DeployJobModel, authenticationToken?: string, authenticationToken2?: string, options?: AxiosRequestConfig) {
 		return ProductionAgentApiFp(this.configuration)
-			.productionAgentBuild(deployJobModel, options)
+			.build(deployJobModel, authenticationToken, authenticationToken2, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 }

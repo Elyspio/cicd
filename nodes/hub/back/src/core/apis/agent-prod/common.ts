@@ -14,7 +14,7 @@
 
 import { Configuration } from "./configuration";
 import { RequestArgs, RequiredError } from "./base";
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
 
 /**
  *
@@ -50,10 +50,7 @@ export const setApiKeyToObject = async function (object: any, keyParamName: stri
  */
 export const setBasicAuthToObject = function (object: any, configuration?: Configuration) {
 	if (configuration && (configuration.username || configuration.password)) {
-		object["auth"] = {
-			username: configuration.username,
-			password: configuration.password,
-		};
+		object["auth"] = { username: configuration.username, password: configuration.password };
 	}
 };
 
@@ -87,7 +84,14 @@ export const setSearchParams = function (url: URL, ...objects: any[]) {
 	const searchParams = new URLSearchParams(url.search);
 	for (const object of objects) {
 		for (const key in object) {
-			searchParams.set(key, object[key]);
+			if (Array.isArray(object[key])) {
+				searchParams.delete(key);
+				for (const item of object[key]) {
+					searchParams.append(key, item);
+				}
+			} else {
+				searchParams.set(key, object[key]);
+			}
 		}
 	}
 	url.search = searchParams.toString();
@@ -116,11 +120,8 @@ export const toPathString = function (url: URL) {
  * @export
  */
 export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxios: AxiosInstance, BASE_PATH: string, configuration?: Configuration) {
-	return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-		const axiosRequestArgs = {
-			...axiosArgs.options,
-			url: (configuration?.basePath || basePath) + axiosArgs.url,
-		};
-		return axios.request(axiosRequestArgs);
+	return <T = unknown, R = AxiosResponse<T>>(axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+		const axiosRequestArgs = { ...axiosArgs.options, url: (configuration?.basePath || basePath) + axiosArgs.url };
+		return axios.request<T, R>(axiosRequestArgs);
 	};
 };

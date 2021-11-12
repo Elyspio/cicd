@@ -21,7 +21,6 @@ export class FrontAutomateSocket {
 
 	@Input("jobs-stdout")
 	async onAgentStdout(@Args(0) taskId: number, @Args(1) stdout: string, @Socket socket: Socket) {
-		$log.info("front-jobs-stdout", taskId, stdout);
 		this.nsp.emit("front-jobs-stdout", stdout);
 	}
 

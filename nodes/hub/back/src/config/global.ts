@@ -1,4 +1,4 @@
 export const globalConf = {
-	exposeEnvironmentVariables: false,
-	appName: "CiCd:hub",
+	appName: "Cicd:Hub",
+	appPermanantToken: process.env.APP_PERMANENT_TOKEN as string,
 };

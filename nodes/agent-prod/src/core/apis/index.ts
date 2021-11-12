@@ -1,12 +1,13 @@
 import { AutomationApi } from "./hub";
-import { AuthenticationApi } from "./authentication";
 import { $log } from "@tsed/common";
+import { RunnerApi } from "./runner";
 
 export const hudServerUrl = process.env.HUD_SERVER_URL ?? "http://localhost:4000";
-$log.info("hub server url " + hudServerUrl);
+export const runnerUrl = process.env.RUNNER_SERVER_URL ?? "http://localhost:4002";
+$log.info(`apis urls `, { hudServerUrl, runnerUrl });
 export const Apis = {
 	hub: {
 		automation: new AutomationApi(undefined, hudServerUrl),
 	},
-	authentication: new AuthenticationApi(undefined, "https://elyspio.fr/authentication"),
+	runner: new RunnerApi(undefined, runnerUrl),
 };

@@ -1,4 +1,4 @@
-import { Description, Property, Required } from "@tsed/schema";
+import { Description, Nullable, Property, Required } from "@tsed/schema";
 import { DeployConfig, Job, Timestamp } from "../../../../../hub/back/src/core/services/hub/types";
 
 class JobModel {
@@ -6,11 +6,16 @@ class JobModel {
 	@Description("Job id")
 	id: number;
 
-	@Property()
+	@Nullable(String)
+	@Required()
 	public stdout: string | null;
 
-	@Property()
+	@Nullable(String)
+	@Required()
 	public error: string | null;
+
+	@Property()
+	public token: string;
 }
 
 export class DockerComposeField {

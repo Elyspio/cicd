@@ -143,6 +143,10 @@ class JobModel {
 
 	@Property(String)
 	error: string | null;
+
+	@Property(String)
+	@Description("Application token")
+	token: string;
 }
 
 class JobBuildModel extends JobModel {

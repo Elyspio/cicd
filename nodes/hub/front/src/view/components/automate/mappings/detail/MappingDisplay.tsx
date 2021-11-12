@@ -4,7 +4,6 @@ import "./MappingDisplay.scss";
 import { MappingDisplaySource } from "./MappingDisplaySource";
 import { MappingDisplayDeployment } from "./MappingDisplayDeployment";
 import { MappingDisplayBuild } from "./MappingDetailBuild";
-import { AutomationState } from "../../../../store/module/automation/automation";
 import { useAppSelector } from "../../../../store";
 import { login } from "../../../../store/module/authentication/authentication.action";
 import { useDispatch } from "react-redux";
@@ -12,9 +11,10 @@ import { Clear, PlayArrow } from "@mui/icons-material";
 import { useInjection } from "inversify-react";
 import { AutomateService } from "../../../../../core/services/cicd/automate.cicd.service";
 import { DiKeysService } from "../../../../../core/di/di.keys.service";
+import { MappingModel } from "../../../../../core/apis/backend/generated";
 
 type MappingDisplayProps = {
-	id: AutomationState["mappings"][number]["id"];
+	id: MappingModel["id"];
 };
 
 export function MappingDisplay({ id }: MappingDisplayProps) {
@@ -71,7 +71,7 @@ export function MappingDisplay({ id }: MappingDisplayProps) {
 				<>
 					<Grid container className={"no-logged"} justifyContent={"center"} alignItems={"center"} direction={"column"} spacing={4}>
 						<Grid item>
-							<Typography>You must be logged to see your mappings</Typography>
+							<Typography>You must be logged to manage mappings</Typography>
 						</Grid>
 						<Grid item>
 							<Button size={"large"} color={"primary"} variant={"outlined"} onClick={log}>

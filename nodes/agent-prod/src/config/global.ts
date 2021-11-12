@@ -1,4 +1,5 @@
 export const globalConf = {
 	exposeEnvironmentVariables: false,
-	appName: "Ci-Cd:agent-deploy",
+	appName: "Cicd:AgentDeploy",
+	hubAppName: "Cicd:Hub",
 };

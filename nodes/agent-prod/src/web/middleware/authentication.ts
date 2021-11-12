@@ -1,44 +1,56 @@
-import { $log, IMiddleware, Middleware, QueryParams, Req } from "@tsed/common";
-import { Property, Returns } from "@tsed/schema";
+import { BodyParams, IMiddleware, Middleware, QueryParams, Req } from "@tsed/common";
 import { Unauthorized } from "@tsed/exceptions";
-import { Services } from "../../core/services";
-import { authorization_cookie_token } from "../../config/authentication";
 import { Request } from "express";
-
-export class UnauthorizedModel {
-	@Property()
-	url: string;
-
-	@Property()
-	message: string;
-}
+import { authorization_cookie_token, authorization_header_token } from "../../config/authentication";
+import { getLogger } from "../../core/utils/logger";
+import { AuthenticationService } from "../../core/services/authentication.service";
+import { Inject } from "@tsed/di";
 
 @Middleware()
-export class RequireLogin implements IMiddleware {
-	@(Returns(401).Of(UnauthorizedModel))
-	public async use(@Req() { header, cookies }: Request, @QueryParams("token") token: string) {
-		$log.info("New request checking IGNORE_AUTH value", process.env.IGNORE_AUTH);
+export class RequireAppLogin implements IMiddleware {
+	private static log = getLogger.middleware(RequireAppLogin);
 
-		if (!process.env.IGNORE_AUTH) {
-			try {
-				const cookieAuth = cookies[authorization_cookie_token];
-				const headerToken = header(authorization_cookie_token);
+	@Inject()
+	authenticationService!: AuthenticationService;
 
-				$log.info("RequireLogin", {
-					cookies: cookies.authorization_cookie_token,
+	public async use(@Req() req: Request, @QueryParams("token") token?: string, @BodyParams("token") tokenBody?: string) {
+		const exception = new Unauthorized("You must be logged to access to this resource see https://elyspio.fr/authentication/");
+
+		// Sanitize token param
+		if (token === "") token = undefined;
+
+		try {
+			const cookieAuth = req.cookies[authorization_cookie_token];
+			const headerToken = req.headers[authorization_header_token];
+
+			RequireAppLogin.log.info("RequireAppLogin", {
+				cookieAuth,
+				headerToken,
+				uriToken: token,
+			});
+
+			token = token ?? cookieAuth;
+			token = token ?? tokenBody;
+			token = token ?? (headerToken as string);
+
+			if (await this.authenticationService.isAppAuthenticated(token)) {
+				req.auth = {
 					token,
-					header: headerToken,
-				});
+				};
+				return true;
+			} else throw exception;
+		} catch (e) {
+			throw exception;
+		}
+	}
+}
 
-				token = token ?? cookieAuth;
-				token = token ?? headerToken;
-
-				if (await Services.authentication.isAuthenticated(token)) {
-					return true;
-				} else throw "";
-			} catch (e) {
-				throw new Unauthorized("You must be logged to access to this resource see https://elyspio.fr/authentication");
-			}
+declare global {
+	namespace Express {
+		interface Request {
+			auth?: {
+				token: string;
+			};
 		}
 	}
 }

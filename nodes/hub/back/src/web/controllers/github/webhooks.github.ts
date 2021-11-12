@@ -4,7 +4,7 @@ import { GithubPushWebhook } from "./models";
 import { AgentBuild } from "../../../core/services/hub/agent/builder";
 import { AgentDeployment } from "../../../core/services/hub/agent/production";
 import { Mappings } from "../../../core/services/hub/mapping/mappings";
-import { MappingsOperationController } from "../operation/mappings.operation";
+import { globalConf } from "../../../config/global";
 
 @Controller("/github/webhook")
 @Name("Github.Webhooks")
@@ -15,19 +15,11 @@ export class GithubWebhooks {
 		deployments: AgentDeployment;
 	};
 
-	private controllers: {
-		mappingOperation: MappingsOperationController;
-	};
-
-	constructor(agentBuild: AgentBuild, agentProduction: AgentDeployment, mapping: Mappings, mappingOperationCtrl: MappingsOperationController) {
+	constructor(agentBuild: AgentBuild, agentProduction: AgentDeployment, mapping: Mappings) {
 		this.services = {
 			builds: agentBuild,
 			deployments: agentProduction,
 			mappings: mapping,
-		};
-
-		this.controllers = {
-			mappingOperation: mappingOperationCtrl,
 		};
 	}
 
@@ -39,7 +31,10 @@ export class GithubWebhooks {
 			const mappings = await this.services.mappings.list();
 			const push = mappings.find(({ build }) => build.github.remote.includes(event.repository.url) && build.github.branch === branch);
 			if (push) {
-				await this.controllers.mappingOperation.run(push.id);
+				const idBuild = await this.services.builds.askBuild(push.build, globalConf.appPermanantToken);
+				await this.services.builds.waitForJob(idBuild);
+				const idProd = await this.services.deployments.askDeploy(push.deploy, globalConf.appPermanantToken);
+				await this.services.deployments.waitForJob(idProd);
 			}
 		}
 	}

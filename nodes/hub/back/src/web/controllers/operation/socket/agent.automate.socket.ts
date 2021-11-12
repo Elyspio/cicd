@@ -46,7 +46,6 @@ export class AgentAutomateSocket {
 
 	@Input("jobs-stdout")
 	async onTaskStdout(@Args(1) taskId: any, @Args(0, String) type: "build" | "deployment", @Args(2) stdout: string, @Socket socket: Socket) {
-		$log.info("front-jobs-stdout", taskId, stdout);
 		this.frontSocket.nsp.emit("front-jobs-stdout", stdout);
 
 		let func = type === "build" ? this.services.jobs.builds.addStd : this.services.jobs.deployments.addStd;

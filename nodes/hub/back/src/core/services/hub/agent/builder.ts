@@ -44,9 +44,9 @@ export class AgentBuild extends AgentBase implements OnReady {
 		return this.repositories.agent.list("builds");
 	}
 
-	public async askBuild(config: BuildConfig) {
+	public async askBuild(config: BuildConfig, appToken: string) {
 		const id = ++this.id;
-		await this.repositories.queue.enqueue("builds", { id, config });
+		await this.repositories.queue.enqueue("builds", { id, config, token: appToken });
 		return id;
 	}
 

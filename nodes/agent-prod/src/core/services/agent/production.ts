@@ -15,11 +15,11 @@ export class ProductionAgentService {
 	/**
 	 * Deploy a docker-compose configuration
 	 */
-	async deploy({ config }: DeployJobModel) {
+	async deploy({ config }: DeployJobModel, token: string) {
 		const strs: string[] = [];
 		if (config?.docker?.compose?.path) {
-			strs.push(await Services.docker.compose.pull(config));
-			strs.push(await Services.docker.compose.up(config));
+			strs.push(await Services.docker.compose.pull(config, token));
+			strs.push(await Services.docker.compose.up(config, token));
 		}
 		return strs;
 	}

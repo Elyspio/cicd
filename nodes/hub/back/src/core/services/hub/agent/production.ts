@@ -46,9 +46,9 @@ export class AgentDeployment extends AgentBase implements OnReady {
 		return this.repositories.agent.list("deployments");
 	}
 
-	public async askDeploy(config: DeployConfig) {
+	public async askDeploy(config: DeployConfig, appToken: string) {
 		const id = ++this.id;
-		await this.repositories.queue.enqueue("deployments", { id, config });
+		await this.repositories.queue.enqueue("deployments", { id, config, token: appToken });
 		return id;
 	}
 
@@ -56,11 +56,11 @@ export class AgentDeployment extends AgentBase implements OnReady {
 		return (await this.list()).find((a) => a.uri === uri);
 	}
 
-	public async getApps(): Promise<ProductionApplications[]> {
+	public async getApps(token: string): Promise<ProductionApplications[]> {
 		const agents = await this.list();
 		return await Promise.all(
 			agents.map((agent) =>
-				new AutomateApi(undefined, agent.uri).automateGetApps().then((x) => ({
+				new AutomateApi(undefined, agent.uri).getApps(token).then((x) => ({
 					apps: x.data,
 					agent,
 				}))

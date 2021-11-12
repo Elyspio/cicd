@@ -91,7 +91,7 @@ export class AutomateService {
 		await this.services.jobs.deployments.add(job);
 		if (job.config.docker != undefined) {
 			try {
-				const { data: stdout } = await new ProductionAgentApi(undefined, agent.uri).productionAgentBuild(job as DeployJobModel);
+				const { data: stdout } = await new ProductionAgentApi(undefined, agent.uri).build(job as DeployJobModel);
 				job.stdout = stdout.join("");
 			} catch (e) {
 				const err = e as Error;
