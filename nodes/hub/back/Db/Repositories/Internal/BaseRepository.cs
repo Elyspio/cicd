@@ -6,7 +6,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
-namespace Cicd.Hub.Api.Db.Repositories.Internal
+namespace Cicd.Hub.Db.Repositories.Internal
 {
 	public abstract class BaseRepository<T>
 	{

@@ -1,20 +1,5 @@
 import { Description, Enum, Property, Required } from "@tsed/schema";
-import { BakeBuild, BuildConfig, Dockerfiles, Job, Timestamp } from "../../../../../hub/back/src/core/services/hub/types";
-
-class JobModel {
-	@Required()
-	@Description("Job id")
-	id: number;
-
-	@Property()
-	public stdout: string | null;
-
-	@Property()
-	public error: string | null;
-
-	@Property(String)
-	public token: string;
-}
+import { BakeBuild, BuildConfig, Dockerfiles } from "../../../../../hub/back_node/src/core/services/hub/types";
 
 class DockerFileConfigModel {
 	@Description("Path to Dockerfile file")
@@ -90,7 +75,23 @@ class GithubDockerModel implements BuildConfig {
 	dockerfiles?: DockerfilesConfigModel;
 }
 
-export class BuildConfigModel extends JobModel implements Omit<Job<BuildConfig>, keyof Timestamp> {
+export class BuildConfigModel {
 	@Property(GithubDockerModel)
 	config: GithubDockerModel;
+
+	@Property()
+	id: string;
+}
+
+export class BuildResult {
+
+	@Property()
+	@Required()
+	stdout: string;
+	@Property()
+	@Required()
+	stderr: string;
+	@Property(Number)
+	@Required()
+	status: number
 }

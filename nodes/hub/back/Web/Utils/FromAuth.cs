@@ -1,6 +1,6 @@
-﻿namespace Cicd.Hub.Api.Web.Utils
+﻿namespace Cicd.Hub.Web.Utils
 {
-	public class AuthUtility
+	public class AuthHelper
 	{
 		public static readonly string UsernameField = "auth_username";
 

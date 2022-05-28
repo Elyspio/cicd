@@ -1,7 +1,7 @@
 import * as path from "path";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 import { hudSocket } from "./socket";
-import { BuildConfigModel } from "../../../web/controllers/agent/models";
+import { BuildConfigModel, BuildResult } from "../../../web/controllers/agent/models";
 import { getLogger } from "../../utils/logger";
 import { Log } from "../../utils/decorators/logger";
 
@@ -24,7 +24,7 @@ export class DockerService {
 		return await Promise.all(
 			files.map((df) => {
 				const dockerfilePath = path.join(folder, df.path);
-				return new Promise<string>((resolve, reject) => {
+				return new Promise<BuildResult>((resolve, reject) => {
 					const dockerFileDir = path.join(folder, df.wd);
 					const completedCommand = `${command.join(" ")} -f ${dockerfilePath}  -t ${username.toLowerCase()}/${df.image.toLowerCase()}:${df.tag?.toLowerCase() ?? "latest"} --push .`;
 					DockerService.log.info(`BuilderAgentService.build.${buildNumber}`, {
@@ -36,12 +36,9 @@ export class DockerService {
 					const process = spawn(splited[0], splited.slice(1), {
 						cwd: dockerFileDir,
 					});
-					this.handleProcess(process, id, completedCommand, {
-						reject,
-						resolve,
-					});
+					this.handleProcess(process, id, completedCommand, resolve);
 				});
-			})
+			}),
 		);
 	}
 
@@ -54,35 +51,30 @@ export class DockerService {
 
 		const process = spawn(command, args, { cwd: path.dirname(bakePath) });
 
-		return new Promise<string>((resolve, reject) => {
-			this.handleProcess(process, id, `${command} ${args.join(" ")}`, {
-				reject,
-				resolve,
-			});
+		return new Promise<BuildResult>((resolve) => {
+			this.handleProcess(process, id, `${command} ${args.join(" ")}`, resolve);
 		}).then((str) => [str]);
 	}
 
-	private handleProcess(process: ChildProcessWithoutNullStreams, id: number, completedCommand: string, { reject, resolve }: ResolveRejectProcess) {
-		let str = "";
+	private handleProcess(process: ChildProcessWithoutNullStreams, id: string, completedCommand: string, resolve: (std: BuildResult) => void) {
+		const std: BuildResult = { stderr: "", status: 0, stdout: "" };
 		process.stdout.on("data", (data) => {
+			std.stdout += data.toString();
 			DockerService.log.info(`id=${id} stdout: ${data}`);
 		});
 
 		process.stderr.on("data", (data) => {
 			DockerService.log.info(`id=${id} stderr: ${data}`);
-			str += data.toString();
+			std.stderr += data.toString();
 			hudSocket.emit("jobs-stdout", "build", id, data.toString());
 		});
 
 		process.on("close", (code) => {
 			DockerService.log.info(`Command: "${completedCommand}" exited with code ${code}`);
-			if (code !== 0) reject(str);
-			else resolve(str);
+			std.status = code!;
+			resolve(std);
 		});
 
-		process.on("error", (err) => {
-			if (err) reject({ err, stderr: str });
-		});
 	}
 }
 

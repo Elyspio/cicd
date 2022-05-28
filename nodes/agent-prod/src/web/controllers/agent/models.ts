@@ -1,5 +1,5 @@
 import { Description, Nullable, Property, Required } from "@tsed/schema";
-import { DeployConfig, Job, Timestamp } from "../../../../../hub/back/src/core/services/hub/types";
+import { DeployConfig, Job, Timestamp } from "../../../../../hub/back_node/src/core/services/hub/types";
 
 class JobModel {
 	@Required()
@@ -41,7 +41,25 @@ export class DeployConfigModel {
 	uri: string;
 }
 
-export class DeployJobModel extends JobModel implements Omit<Job<DeployConfig>, keyof Timestamp> {
+export class DeployJobModel {
 	@Property(DeployConfigModel)
 	config: DeployConfigModel;
+
+	@Required()
+	@Description("Job id")
+	id: string;
+}
+
+
+export class BuildResult {
+
+	@Property()
+	@Required()
+	stdout: string;
+	@Property()
+	@Required()
+	stderr: string;
+	@Property(Number)
+	@Required()
+	status: number
 }

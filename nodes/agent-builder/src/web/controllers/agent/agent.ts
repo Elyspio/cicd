@@ -1,6 +1,6 @@
 import { BodyParams, Controller, Post } from "@tsed/common";
 import { Description, Name, Required, Returns } from "@tsed/schema";
-import { BuildConfigModel } from "./models";
+import { BuildConfigModel, BuildResult } from "./models";
 import { Services } from "../../../core/services";
 
 @Controller("/build-agent")
@@ -8,7 +8,7 @@ import { Services } from "../../../core/services";
 export class AutomationController {
 	@Post("/build")
 	@Description("Build and push a project following a configuration")
-	@(Returns(200, Array).Of(String))
+	@(Returns(200, Array).Of(BuildResult))
 	async build(@Required() @BodyParams(BuildConfigModel) conf: BuildConfigModel) {
 		return Services.agent.build(conf);
 	}

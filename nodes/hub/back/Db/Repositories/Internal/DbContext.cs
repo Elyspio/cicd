@@ -1,9 +1,9 @@
 ﻿using Cicd.Hub.Abstractions.Helpers;
-using Cicd.Hub.Api.Db.Configs;
+using Cicd.Hub.Db.Configs;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace Cicd.Hub.Api.Db.Repositories.Internal
+namespace Cicd.Hub.Db.Repositories.Internal
 {
 	public class MongoContext
 	{

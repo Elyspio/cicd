@@ -9,27 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0"/>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
-    <PackageReference Include="Octokit" Version="0.51.0"/>
-    <PackageReference Include="Polly" Version="7.2.3"/>
-    <PackageReference Include="Scrutor" Version="4.1.0"/>
-    <PackageReference Include="Serilog" Version="2.11.0"/>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0"/>
-    <PackageReference Include="System.Net.Http" Version="4.3.4"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Octokit" Version="0.51.0" />
+    <PackageReference Include="Polly" Version="7.2.3" />
+    <PackageReference Include="Scrutor" Version="4.1.0" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Abstractions\Cicd.Hub.Abstractions.csproj"/>
+    <ProjectReference Include="..\Abstractions\Cicd.Hub.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <WCFMetadata Include="Connected Services"/>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Github\"/>
+    <Folder Include="Github\" />
   </ItemGroup>
 
 </Project>

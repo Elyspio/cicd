@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace Cicd.Hub.Api.Web.Utils
+namespace Cicd.Hub.Web.Utils
 {
 	public class ControllerDocumentationConvention : IControllerModelConvention
 	{

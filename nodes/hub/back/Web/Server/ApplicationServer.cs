@@ -1,4 +1,4 @@
-﻿namespace Cicd.Hub.Api.Web.Server
+﻿namespace Cicd.Hub.Web.Server
 {
 	public static class ApplicationServer
 	{

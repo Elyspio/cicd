@@ -1,11 +1,11 @@
 ﻿using Cicd.Hub.Abstractions.Interfaces.Services;
-using Cicd.Hub.Api.Web.Utils;
+using Cicd.Hub.Web.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Cicd.Hub.Api.Web.Filters
+namespace Cicd.Hub.Web.Filters
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 	public class RequireAuthAttribute : ActionFilterAttribute
@@ -42,8 +42,8 @@ namespace Cicd.Hub.Api.Web.Filters
 			}
 
 			var username = await authenticationService.GetUsername(token);
-			context.HttpContext.Request.Headers[AuthUtility.UsernameField] = username;
-			context.HttpContext.Request.Headers[AuthUtility.TokenField] = token;
+			context.HttpContext.Request.Headers[AuthHelper.UsernameField] = username;
+			context.HttpContext.Request.Headers[AuthHelper.TokenField] = token;
 			await next();
 		}
 

@@ -1,4 +1,4 @@
-﻿namespace Cicd.Hub.Api.Db.Configs
+﻿namespace Cicd.Hub.Db.Configs
 {
 	public class DbConfig
 	{

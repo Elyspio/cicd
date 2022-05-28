@@ -6,24 +6,27 @@
   },
   "servers": [
     {
-      "url": "https://elyspio.fr/authentication",
-      "description": "production"
+      "url": "http://localhost:4001",
+      "description": "development"
     }
   ],
   "paths": {
-    "/api/authentication/app/{app}": {
+    "/api/authentication/apps/{app}/permanent": {
       "post": {
         "tags": [
           "AuthenticationApp"
         ],
-        "operationId": "createAppToken",
+        "operationId": "createPermanentAppToken",
         "parameters": [
           {
             "name": "app",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "CICD"
+              ]
             }
           },
           {
@@ -57,9 +60,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -67,91 +70,17 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "AuthenticationApp"
-        ],
-        "operationId": "deleteAppToken",
-        "parameters": [
-          {
-            "name": "app",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authentication-token",
-            "in": "header",
-            "description": "Authorization in header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authentication-token",
-            "in": "cookie",
-            "description": "Authorization in cookie",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "token"
-                ],
-                "properties": {
-                  "token": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "You are not logged",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "You are missing a required role",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
+      }
+    },
+    "/api/authentication/apps/{app}": {
       "get": {
         "tags": [
           "AuthenticationApp"
@@ -163,7 +92,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "CICD"
+              ]
             }
           },
           {
@@ -200,9 +132,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -210,29 +142,30 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
           }
         }
-      }
-    },
-    "/api/authentication/app/{app}/permanent": {
-      "post": {
+      },
+      "delete": {
         "tags": [
           "AuthenticationApp"
         ],
-        "operationId": "createPermanentAppToken",
+        "operationId": "deleteTokens",
         "parameters": [
           {
             "name": "app",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "CICD"
+              ]
             }
           },
           {
@@ -253,22 +186,15 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -276,9 +202,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -286,7 +212,7 @@
         }
       }
     },
-    "/api/authentication/app/{app}/valid": {
+    "/api/authentication/apps/{app}/valid": {
       "get": {
         "tags": [
           "AuthenticationApp"
@@ -298,7 +224,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "CICD"
+              ]
             }
           }
         ],
@@ -525,9 +454,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -535,9 +464,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -592,9 +521,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -602,9 +531,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -658,9 +587,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -668,9 +597,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -725,9 +654,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -735,9 +664,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -801,9 +730,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -811,9 +740,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -865,9 +794,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -875,9 +804,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -943,9 +872,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -953,9 +882,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -1034,9 +963,9 @@
           "401": {
             "description": "You are not logged",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -1044,9 +973,9 @@
           "403": {
             "description": "You are missing a required role",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -1143,6 +1072,45 @@
             "type": "string",
             "description": "An error message",
             "minLength": 1
+          }
+        }
+      },
+      "Forbidden": {
+        "type": "object",
+        "required": [
+          "name",
+          "message",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The error name",
+            "default": "FORBIDDEN",
+            "minLength": 1,
+            "example": "FORBIDDEN"
+          },
+          "message": {
+            "type": "string",
+            "description": "An error message",
+            "minLength": 1
+          },
+          "status": {
+            "type": "number",
+            "description": "The status code of the exception",
+            "default": 403,
+            "example": 403
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of related errors",
+            "items": {
+              "$ref": "#/components/schemas/GenericError"
+            }
+          },
+          "stack": {
+            "type": "string",
+            "description": "The stack trace (only in development mode)"
           }
         }
       },

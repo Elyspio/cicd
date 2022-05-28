@@ -1,6 +1,4 @@
 ﻿namespace Cicd.Hub.Adapters.Github
 {
-	public class GithubClient
-	{
-	}
+	public class GithubClient { }
 }

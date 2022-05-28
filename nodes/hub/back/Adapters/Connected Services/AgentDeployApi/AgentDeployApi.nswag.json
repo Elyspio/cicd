@@ -1,0 +1,260 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Api documentation",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/deploy": {
+      "post": {
+        "tags": [
+          "DeployAgent"
+        ],
+        "description": "Deploy a project following a configuration",
+        "operationId": "deploy",
+        "parameters": [
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeployJobModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildResult"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/automate/node": {
+      "get": {
+        "tags": [
+          "Automate"
+        ],
+        "description": "Fetch the list of docker-compose.yml files",
+        "operationId": "getApps",
+        "parameters": [
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Unauthorized": {
+        "type": "object",
+        "required": [
+          "name",
+          "message",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The error name",
+            "default": "UNAUTHORIZED",
+            "minLength": 1,
+            "example": "UNAUTHORIZED"
+          },
+          "message": {
+            "type": "string",
+            "description": "An error message",
+            "minLength": 1
+          },
+          "status": {
+            "type": "number",
+            "description": "The status code of the exception",
+            "default": 401,
+            "example": 401
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of related errors",
+            "items": {
+              "$ref": "#/components/schemas/GenericError"
+            }
+          },
+          "stack": {
+            "type": "string",
+            "description": "The stack trace (only in development mode)"
+          }
+        }
+      },
+      "GenericError": {
+        "type": "object",
+        "required": [
+          "name",
+          "message"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The error name",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "description": "An error message",
+            "minLength": 1
+          }
+        }
+      },
+      "BuildResult": {
+        "type": "object",
+        "required": [
+          "stdout",
+          "stderr",
+          "status"
+        ],
+        "properties": {
+          "stdout": {
+            "type": "string",
+            "minLength": 1
+          },
+          "stderr": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "number"
+          }
+        }
+      },
+      "DeployJobModel": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "config": {
+            "$ref": "#/components/schemas/DeployConfigModel"
+          },
+          "id": {
+            "type": "string",
+            "description": "Job id",
+            "minLength": 1
+          }
+        }
+      },
+      "DeployConfigModel": {
+        "type": "object",
+        "required": [
+          "docker",
+          "uri"
+        ],
+        "properties": {
+          "docker": {
+            "$ref": "#/components/schemas/DockerField"
+          },
+          "uri": {
+            "type": "string",
+            "description": "URI of the production agent",
+            "minLength": 1
+          }
+        }
+      },
+      "DockerField": {
+        "type": "object",
+        "properties": {
+          "compose": {
+            "$ref": "#/components/schemas/DockerComposeField"
+          }
+        }
+      },
+      "DockerComposeField": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path where the docker-compose.yml file is"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "DeployAgent"
+    },
+    {
+      "name": "Automate"
+    }
+  ]
+}

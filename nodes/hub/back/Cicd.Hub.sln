@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Abstractions", "Ab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Adapters", "Adapters\Cicd.Hub.Adapters.csproj", "{FB92BB0B-2A3F-4A6D-8547-7993BF9DA5D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Api.Core", "Core\Cicd.Hub.Api.Core.csproj", "{388A04AE-1081-445B-8DDC-B837AA5D0F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Core", "Core\Cicd.Hub.Core.csproj", "{388A04AE-1081-445B-8DDC-B837AA5D0F3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Api.Db", "Db\Cicd.Hub.Api.Db.csproj", "{658D04DC-7D4E-46E2-9F49-4000CFD77C79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Db", "Db\Cicd.Hub.Db.csproj", "{658D04DC-7D4E-46E2-9F49-4000CFD77C79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Api.Web", "Web\Cicd.Hub.Api.Web.csproj", "{0FF2058F-F09A-41DE-A77C-EAB037F2742D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cicd.Hub.Web", "Web\Cicd.Hub.Web.csproj", "{0FF2058F-F09A-41DE-A77C-EAB037F2742D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,197 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Api documentation",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/build-agent/build": {
+      "post": {
+        "tags": [
+          "BuildAgent"
+        ],
+        "description": "Build and push a project following a configuration",
+        "operationId": "build",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildConfigModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BuildResult": {
+        "type": "object",
+        "required": [
+          "stdout",
+          "stderr",
+          "status"
+        ],
+        "properties": {
+          "stdout": {
+            "type": "string",
+            "minLength": 1
+          },
+          "stderr": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "number"
+          }
+        }
+      },
+      "BuildConfigModel": {
+        "type": "object",
+        "properties": {
+          "config": {
+            "$ref": "#/components/schemas/GithubDockerModel"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "GithubDockerModel": {
+        "type": "object",
+        "required": [
+          "github"
+        ],
+        "properties": {
+          "github": {
+            "$ref": "#/components/schemas/GithubConfigModel"
+          },
+          "bake": {
+            "$ref": "#/components/schemas/DockerBakeModel"
+          },
+          "dockerfiles": {
+            "$ref": "#/components/schemas/DockerfilesConfigModel"
+          }
+        }
+      },
+      "GithubConfigModel": {
+        "type": "object",
+        "required": [
+          "remote",
+          "branch"
+        ],
+        "properties": {
+          "remote": {
+            "type": "string",
+            "description": "Url of the repo",
+            "minLength": 1
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch on the repo",
+            "minLength": 1
+          },
+          "commit": {
+            "type": "string",
+            "description": "Commit Sha"
+          }
+        }
+      },
+      "DockerBakeModel": {
+        "type": "object",
+        "required": [
+          "bakeFilePath"
+        ],
+        "properties": {
+          "bakeFilePath": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "DockerfilesConfigModel": {
+        "type": "object",
+        "required": [
+          "files",
+          "platforms",
+          "username"
+        ],
+        "properties": {
+          "files": {
+            "type": "array",
+            "description": "Dockerfiles to build",
+            "items": {
+              "$ref": "#/components/schemas/DockerFileConfigModel"
+            }
+          },
+          "platforms": {
+            "type": "array",
+            "description": "Platforms available for the future image",
+            "items": {
+              "type": "string",
+              "enum": [
+                "linux/arm64",
+                "linux/amd64"
+              ]
+            }
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "DockerFileConfigModel": {
+        "type": "object",
+        "required": [
+          "path",
+          "wd",
+          "image"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to Dockerfile file",
+            "minLength": 1
+          },
+          "wd": {
+            "type": "string",
+            "description": "Working directory from origin",
+            "minLength": 1
+          },
+          "image": {
+            "type": "string",
+            "description": "Name for the image",
+            "minLength": 1
+          },
+          "tag": {
+            "type": "string",
+            "description": "Tag for the image"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "BuildAgent"
+    }
+  ]
+}

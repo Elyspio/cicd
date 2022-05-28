@@ -4,5 +4,7 @@
 	{
 		Task<bool> IsLogged(string token);
 		Task<string> GetUsername(string token);
+
+		Task<string> GetPermanentToken(string token);
 	}
 }
