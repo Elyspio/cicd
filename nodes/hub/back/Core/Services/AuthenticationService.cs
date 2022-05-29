@@ -7,13 +7,15 @@ namespace Cicd.Hub.Core.Services
 	{
 		private readonly IAuthenticationClient authenticationApi;
 		private readonly IAuthenticationAppClient authenticationAppApi;
+		private readonly ICredentialsUsersClient credentialsUsersClient;
 		private readonly IUsersClient usersApi;
 
-		public AuthenticationService(IAuthenticationClient authenticationApi, IUsersClient usersApi, IAuthenticationAppClient authenticationAppApi)
+		public AuthenticationService(IAuthenticationClient authenticationApi, IUsersClient usersApi, IAuthenticationAppClient authenticationAppApi, ICredentialsUsersClient credentialsUsersClient)
 		{
 			this.authenticationApi = authenticationApi;
 			this.usersApi = usersApi;
 			this.authenticationAppApi = authenticationAppApi;
+			this.credentialsUsersClient = credentialsUsersClient;
 		}
 
 		public async Task<bool> IsLogged(string token)
@@ -29,6 +31,17 @@ namespace Cicd.Hub.Core.Services
 		public async Task<string> GetPermanentToken(string token)
 		{
 			return await authenticationAppApi.CreatePermanentAppTokenAsync(App.CICD, token);
+		}
+
+		public async Task<(string Username, string Token)> GetGithubToken(string token)
+		{
+			var username = await GetUsername(token);
+			var credentials = await credentialsUsersClient.Get3Async(username, token);
+
+			if (credentials.Github == null) throw new Exception($"The user {username} doesn't have setup its github credentials");
+
+			return (credentials.Github.User, credentials.Github.Token);
+
 		}
 	}
 }

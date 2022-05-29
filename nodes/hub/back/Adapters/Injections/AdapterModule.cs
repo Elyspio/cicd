@@ -16,6 +16,7 @@ namespace Cicd.Hub.Adapters.Injections
 			services.AddHttpClient<IUsersClient, UsersClient>(client => { client.BaseAddress = new Uri(conf.Authentication); });
 			services.AddHttpClient<IAuthenticationClient, AuthenticationClient>(client => { client.BaseAddress = new Uri(conf.Authentication); });
 			services.AddHttpClient<IAuthenticationAppClient, AuthenticationAppClient>(client => { client.BaseAddress = new Uri(conf.Authentication); });
+			services.AddHttpClient<ICredentialsUsersClient, CredentialsUsersClient>(client => { client.BaseAddress = new Uri(conf.Authentication); });
 		}
 	}
 }
