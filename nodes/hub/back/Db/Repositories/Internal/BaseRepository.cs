@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
@@ -19,13 +18,6 @@ namespace Cicd.Hub.Db.Repositories.Internal
 			context = new MongoContext(configuration);
 			CollectionName = typeof(T).Name[..^"Entity".Length];
 			this.logger = logger;
-			var pack = new ConventionPack
-			{
-				new EnumRepresentationConvention(BsonType.String)
-			};
-
-			ConventionRegistry.Register("EnumStringConvention", pack, t => true);
-			BsonSerializer.RegisterSerializationProvider(new EnumAsStringSerializationProvider());
 		}
 
 		protected IMongoCollection<T> EntityCollection => context.MongoDatabase.GetCollection<T>(CollectionName);

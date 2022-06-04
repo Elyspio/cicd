@@ -2,8 +2,8 @@
 
 namespace Cicd.Hub.Abstractions.Transports.Agents
 {
-	public class AgentBuild : BaseAgent
+	public class AgentBuild : AgentBase
 	{
-		public List<BuildAbility> Abilities { get; set; }
+		public List<BuildAbility> Abilities { get; set; } = null!;
 	}
 }

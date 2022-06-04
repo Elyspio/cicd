@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Cicd.Hub.Abstractions.Models
 {
-	public class MappingEntity : Mapping
+	public class MappingEntity : MappingRaw
 	{
 		[BsonId]
 		[BsonRepresentation(BsonType.ObjectId)]

@@ -4,14 +4,16 @@
 	{
 		Task<bool> IsLogged(string token);
 		Task<string> GetUsername(string token);
+
 		/// <summary>
-		/// Create a permanent app token for this app
+		///     Create a permanent app token for this app
 		/// </summary>
 		/// <param name="token"></param>
 		/// <returns></returns>
 		Task<string> GetPermanentToken(string token);
 
-		Task<(string Username, string Token)> GetGithubToken(string token);
+		Task DeletePermanentToken(string token);
 
+		Task<(string Username, string Token)> GetGithubToken(string token);
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Cicd.Hub.Abstractions.Extensions;
+﻿using Cicd.Hub.Abstractions.Common.Extensions;
+using Cicd.Hub.Abstractions.Interfaces.Repositories;
 using Cicd.Hub.Abstractions.Models;
 using Cicd.Hub.Abstractions.Transports;
 using Cicd.Hub.Abstractions.Transports.Jobs.Build;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace Cicd.Hub.Abstractions.Interfaces.Repositories
+namespace Cicd.Hub.Db.Repositories
 {
 	internal class MappingRepository : BaseRepository<MappingEntity>, IMappingRepository
 	{

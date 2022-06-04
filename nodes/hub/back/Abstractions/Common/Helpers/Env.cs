@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Cicd.Hub.Abstractions.Helpers
+namespace Cicd.Hub.Abstractions.Common.Helpers
 {
 	public class Env
 	{

@@ -1,6 +1,6 @@
 ﻿namespace Cicd.Hub.Abstractions.Transports.Agents.Deploy
 {
-	public class AgentDeploy : BaseAgent
+	public class AgentDeploy : AgentBase
 	{
 		public DeployAgentFolders Folders { get; set; }
 

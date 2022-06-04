@@ -1,15 +1,13 @@
 ﻿using System.Runtime;
-using Cicd.Hub.Abstractions.Extensions;
+using Cicd.Hub.Abstractions.Common.Extensions;
 using Cicd.Hub.Abstractions.Interfaces.Repositories;
 using Cicd.Hub.Abstractions.Models.Agents;
+using Cicd.Hub.Abstractions.Models.Agents.Deploy;
 using Cicd.Hub.Abstractions.Transports.Agents;
 using Cicd.Hub.Abstractions.Transports.Agents.Deploy;
 using Cicd.Hub.Db.Repositories.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -27,14 +25,6 @@ namespace Cicd.Hub.Db.Repositories
 
 			buildCollection = context.MongoDatabase.GetCollection<AgentBuildEntity>("Agents");
 			deployCollection = context.MongoDatabase.GetCollection<AgentDeployEntity>("Agents");
-
-			var pack = new ConventionPack
-			{
-				new EnumRepresentationConvention(BsonType.String)
-			};
-
-			ConventionRegistry.Register("EnumStringConvention", pack, t => true);
-			BsonSerializer.RegisterSerializationProvider(new EnumAsStringSerializationProvider());
 		}
 
 
@@ -91,7 +81,7 @@ namespace Cicd.Hub.Db.Repositories
 			return entity;
 		}
 
-		public async Task Delete<T>(string url) where T : BaseAgent
+		public async Task Delete<T>(string url) where T : AgentBaseEntity
 		{
 			if (typeof(T) == typeof(AgentDeployEntity))
 				await deployCollection.DeleteOneAsync(a => a.Url == url);
@@ -100,7 +90,7 @@ namespace Cicd.Hub.Db.Repositories
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}
 
-		public async Task<List<T>> GetAll<T>() where T : BaseAgent
+		public async Task<List<T>> GetAll<T>() where T : AgentBaseEntity
 		{
 			if (typeof(T) == typeof(AgentDeployEntity)) return await deployCollection.AsQueryable().ToListAsync() as List<T>;
 			if (typeof(T) == typeof(AgentBuildEntity)) return await buildCollection.AsQueryable().ToListAsync() as List<T>;
@@ -108,7 +98,7 @@ namespace Cicd.Hub.Db.Repositories
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}
 
-		public async Task<T> GetByUrl<T>(string url) where T : BaseAgent
+		public async Task<T> GetByUrl<T>(string url) where T : AgentBaseEntity
 		{
 			if (typeof(T) == typeof(AgentDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Url == url) as T;
 
@@ -117,11 +107,11 @@ namespace Cicd.Hub.Db.Repositories
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}
 
-		public async Task<T> GetById<T>(Guid id) where T : BaseAgent
+		public async Task<T> GetById<T>(Guid id) where T : AgentBaseEntity
 		{
-			if (typeof(T) == typeof(AgentDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id == id.AsObjectId()) as T;
+			if (typeof(T) == typeof(AgentDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
 
-			if (typeof(T) == typeof(AgentBuildEntity)) return await buildCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id == id.AsObjectId()) as T;
+			if (typeof(T) == typeof(AgentBuildEntity)) return await buildCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
 
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}

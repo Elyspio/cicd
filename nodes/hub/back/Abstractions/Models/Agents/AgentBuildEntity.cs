@@ -1,13 +1,9 @@
-﻿using Cicd.Hub.Abstractions.Transports.Agents;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using Cicd.Hub.Abstractions.Enums.Agents;
 
 namespace Cicd.Hub.Abstractions.Models.Agents
 {
-	public class AgentBuildEntity : AgentBuild
+	public sealed class AgentBuildEntity : AgentBaseEntity
 	{
-		[BsonId]
-		[BsonRepresentation(BsonType.ObjectId)]
-		public ObjectId Id { get; init; }
+		public List<BuildAbility> Abilities { get; set; } = null!;
 	}
 }

@@ -4,8 +4,11 @@ using Cicd.Hub.Abstractions.Transports.Jobs.Deploy;
 
 namespace Cicd.Hub.Abstractions.Transports
 {
-	public class Mapping: MappingRaw
+	public class MappingRaw
 	{
-		[Required] public Guid Id { get; set; }
+		[Required] public BuildConfig Build { get; set; }
+
+		[Required] public DeployConfig Deploy { get; set; }
+
 	}
 }

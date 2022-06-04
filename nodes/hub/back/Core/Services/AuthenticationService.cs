@@ -33,6 +33,11 @@ namespace Cicd.Hub.Core.Services
 			return await authenticationAppApi.CreatePermanentAppTokenAsync(App.CICD, token);
 		}
 
+		public async Task DeletePermanentToken(string token)
+		{
+			await authenticationAppApi.DeleteTokensAsync(App3.CICD, token);
+		}
+
 		public async Task<(string Username, string Token)> GetGithubToken(string token)
 		{
 			var username = await GetUsername(token);
@@ -41,7 +46,6 @@ namespace Cicd.Hub.Core.Services
 			if (credentials.Github == null) throw new Exception($"The user {username} doesn't have setup its github credentials");
 
 			return (credentials.Github.User, credentials.Github.Token);
-
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Cicd.Hub.Abstractions.Transports.Agents
 {
-	public class BaseAgent
+	public class AgentRaw
 	{
 		public AgentAvailability Availability { get; set; }
 		public DateTime LastUpTime { get; set; }

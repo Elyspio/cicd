@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Assemblers\" />
     <Folder Include="Filters\" />
+    <Folder Include="Models\Requests\" />
   </ItemGroup>
 
 </Project>

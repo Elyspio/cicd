@@ -1,6 +1,6 @@
 ﻿using Cicd.Hub.Abstractions.Interfaces.Assemblers;
 
-namespace Cicd.Hub.Abstractions.Assemblers
+namespace Cicd.Hub.Abstractions.Common.Assemblers
 {
 	public abstract class BaseAssembler<TA, TB> : IAssembler<TA, TB>
 	{

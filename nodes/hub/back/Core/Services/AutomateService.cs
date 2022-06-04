@@ -1,4 +1,4 @@
-﻿using Cicd.Hub.Abstractions.Extensions;
+﻿using Cicd.Hub.Abstractions.Common.Extensions;
 using Cicd.Hub.Abstractions.Interfaces.Repositories;
 using Cicd.Hub.Abstractions.Interfaces.Services;
 using Cicd.Hub.Abstractions.Transports.Agents;
@@ -19,6 +19,8 @@ namespace Cicd.Hub.Core.Services
 		private readonly BuildBakeAssembler buildBakeAssembler = new();
 		private readonly DeployConfigAssembler deployConfigAssembler = new();
 		private readonly GithubConfigAssembler githubConfigAssembler = new();
+		private readonly JobAssembler.Build jobBuildAssembler = new();
+		private readonly JobAssembler.Deploy jobDeployAssembler = new();
 		private readonly IJobRepository jobRepository;
 		private readonly ILogger<AutomateService> logger;
 
@@ -31,16 +33,18 @@ namespace Cicd.Hub.Core.Services
 		}
 
 
-		public async Task AskBuild(BuildConfig config, string userToken)
+		public async Task<JobBuild> AskBuild(BuildConfig config, string userToken)
 		{
 			var appToken = await authenticationService.GetPermanentToken(userToken);
-			await jobRepository.Add(config, appToken);
+			var entity = await jobRepository.Add(config, appToken);
+			return jobBuildAssembler.Convert(entity);
 		}
 
-		public async Task AskDeploy(DeployConfig config, string userToken)
+		public async Task<JobDeploy> AskDeploy(DeployConfig config, string userToken)
 		{
 			var appToken = await authenticationService.GetPermanentToken(userToken);
-			await jobRepository.Add(config, appToken);
+			var entity = await jobRepository.Add(config, appToken);
+			return jobDeployAssembler.Convert(entity);
 		}
 
 		public async Task Build(AgentBuild agent, JobBuild job)
@@ -89,7 +93,7 @@ namespace Cicd.Hub.Core.Services
 
 			var stdout = "";
 			var stderr = "";
-			stds.ForEach(((std, i) => {
+			stds.ForEach((std, i) => {
 					var currentDockerFile = dockerfiles?.Files.ToList()[i];
 					if (currentDockerFile != null)
 					{
@@ -100,7 +104,7 @@ namespace Cicd.Hub.Core.Services
 
 					stdout += std.Stdout;
 					stderr += std.Stderr;
-				})
+				}
 			);
 			job.Stderr = stderr;
 			job.Stdout = stdout;
@@ -124,14 +128,14 @@ namespace Cicd.Hub.Core.Services
 
 			var stdout = "";
 			var stderr = "";
-			stds.ForEach(((std, i) => {
+			stds.ForEach((std, i) => {
 					var currentDockerFile = job.Config.Docker.Compose.Path;
 					var header = $"### {currentDockerFile} ###\n";
 					stdout += header;
 					stderr += header;
 					stdout += std.Stdout;
 					stderr += std.Stderr;
-				})
+				}
 			);
 			job.Stderr = stderr;
 			job.Stdout = stdout;

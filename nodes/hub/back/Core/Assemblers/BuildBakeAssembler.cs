@@ -1,4 +1,4 @@
-﻿using Cicd.Hub.Abstractions.Assemblers;
+﻿using Cicd.Hub.Abstractions.Common.Assemblers;
 using Cicd.Hub.Abstractions.Transports.Jobs.Build;
 using Cicd.Hub.Adapters.AgentBuildApi;
 

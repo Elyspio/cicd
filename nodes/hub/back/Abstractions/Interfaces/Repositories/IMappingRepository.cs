@@ -11,6 +11,6 @@ namespace Cicd.Hub.Abstractions.Interfaces.Repositories
 		Task<MappingEntity> Update(Mapping mapping);
 		Task Delete(Guid id);
 		Task<List<MappingEntity>> GetAll();
-		Task<MappingEntity> GetById(Guid id);
+		Task<MappingEntity?> GetById(Guid id);
 	}
 }

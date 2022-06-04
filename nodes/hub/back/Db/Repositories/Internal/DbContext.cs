@@ -1,12 +1,27 @@
-﻿using Cicd.Hub.Abstractions.Helpers;
+﻿using Cicd.Hub.Abstractions.Common.Helpers;
 using Cicd.Hub.Db.Configs;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
 namespace Cicd.Hub.Db.Repositories.Internal
 {
 	public class MongoContext
 	{
+		static MongoContext()
+		{
+			var pack = new ConventionPack
+			{
+				new EnumRepresentationConvention(BsonType.String)
+			};
+			ConventionRegistry.Register("EnumStringConvention", pack, t => true);
+			BsonSerializer.RegisterSerializationProvider(new EnumAsStringSerializationProvider());
+			BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Unspecified));
+		}
+
 		public MongoContext(IConfiguration configuration)
 		{
 			var conf = new DbConfig();

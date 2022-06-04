@@ -5,7 +5,7 @@ using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Cicd.Hub.Abstractions.Helpers
+namespace Cicd.Hub.Abstractions.Common.Helpers
 {
 	public class CallerEnricher : ILogEventEnricher
 	{

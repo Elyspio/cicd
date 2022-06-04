@@ -1,4 +1,4 @@
-﻿namespace Cicd.Hub.Abstractions.Extensions
+﻿namespace Cicd.Hub.Abstractions.Common.Extensions
 {
 	public static class ListExtension
 	{

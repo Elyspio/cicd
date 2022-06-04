@@ -1,13 +1,9 @@
 ﻿using Cicd.Hub.Abstractions.Transports.Jobs.Build;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Cicd.Hub.Abstractions.Models.Jobs
 {
-	public class JobBuildEntity : JobBuild
+	public class JobBuildEntity : JobBaseEntity
 	{
-		[BsonId]
-		[BsonRepresentation(BsonType.ObjectId)]
-		public new ObjectId Id { get; init; }
+		public BuildConfig Config { get; set; } = null!;
 	}
 }

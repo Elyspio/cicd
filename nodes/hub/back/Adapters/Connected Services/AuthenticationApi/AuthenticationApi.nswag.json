@@ -150,7 +150,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/authentication/apps/{app}/{token}": {
       "delete": {
         "tags": [
           "AuthenticationApp"
@@ -166,6 +168,14 @@
               "enum": [
                 "CICD"
               ]
+            }
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           },
           {

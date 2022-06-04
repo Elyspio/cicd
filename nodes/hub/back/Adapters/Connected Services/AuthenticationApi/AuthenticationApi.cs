@@ -40,7 +40,7 @@ namespace Example.Api.Adapters.AuthenticationApi
         /// <param name="authentication_tokenCookie">Authorization in cookie</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteTokensAsync(App3 app, string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task DeleteTokensAsync(App3 app, string token, string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
@@ -272,14 +272,18 @@ namespace Example.Api.Adapters.AuthenticationApi
         /// <param name="authentication_tokenCookie">Authorization in cookie</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task DeleteTokensAsync(App3 app, string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task DeleteTokensAsync(App3 app, string token, string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (app == null)
                 throw new System.ArgumentNullException("app");
     
+            if (token == null)
+                throw new System.ArgumentNullException("token");
+    
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append("api/authentication/apps/{app}");
+            urlBuilder_.Append("api/authentication/apps/{app}/{token}");
             urlBuilder_.Replace("{app}", System.Uri.EscapeDataString(ConvertToString(app, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Replace("{token}", System.Uri.EscapeDataString(ConvertToString(token, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
             var disposeClient_ = false;

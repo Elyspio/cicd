@@ -5,7 +5,7 @@ namespace Cicd.Hub.Abstractions.Interfaces.Services
 	public interface IGithubService
 	{
 		/// <summary>
-		/// Get all github repos for this user
+		///     Get all github repos for this user
 		/// </summary>
 		/// <param name="userToken"></param>
 		/// <returns></returns>

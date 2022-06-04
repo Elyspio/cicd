@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json.Serialization;
-using Cicd.Hub.Abstractions.Helpers;
+using Cicd.Hub.Abstractions.Common.Helpers;
 using Cicd.Hub.Abstractions.Interfaces.Injections;
 using Cicd.Hub.Adapters.Injections;
 using Cicd.Hub.Core.Injections;

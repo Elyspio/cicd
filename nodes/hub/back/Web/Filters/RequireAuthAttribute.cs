@@ -78,19 +78,6 @@ namespace Cicd.Hub.Web.Filters
 					}
 				);
 
-				operation.Parameters.Add(new OpenApiParameter
-					{
-						Name = AuthenticationTokenField,
-						In = ParameterLocation.Cookie,
-						Required = false,
-						AllowEmptyValue = true,
-						Description = "Authentication Token",
-						Schema = new OpenApiSchema
-						{
-							Type = "string"
-						}
-					}
-				);
 
 				operation.Responses.Add("401", new OpenApiResponse {Description = "Unauthorized"});
 				operation.Responses.Add("403", new OpenApiResponse {Description = "Forbidden"});

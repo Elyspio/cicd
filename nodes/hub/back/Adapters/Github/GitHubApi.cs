@@ -1,7 +1,5 @@
-﻿using System.IO.IsolatedStorage;
-using Cicd.Hub.Abstractions.Transports.Github;
+﻿using Cicd.Hub.Abstractions.Transports.Github;
 using Octokit;
-using System.Linq;
 
 namespace Cicd.Hub.Adapters.Github
 {
@@ -35,7 +33,7 @@ namespace Cicd.Hub.Adapters.Github
 		{
 			var obj = new GitHubRepository
 			{
-				Name = repository.Name,
+				Name = repository.Name
 			};
 
 
@@ -45,9 +43,7 @@ namespace Cicd.Hub.Adapters.Github
 
 			var branchDetails = (await Task.WhenAll(branches.Select(branch => GetBranchDetail(repository, branch)).ToArray())).ToList();
 
-			branchDetails.ForEach(detail => {
-				obj.Branches[detail.Name] = detail;
-			});
+			branchDetails.ForEach(detail => { obj.Branches[detail.Name] = detail; });
 
 			return obj;
 		}
