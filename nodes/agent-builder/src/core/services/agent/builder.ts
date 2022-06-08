@@ -13,7 +13,7 @@ export class BuilderAgentService {
 
 	async getConfig() {
 		const conf = await Services.storage.read<BuildAgentModelAdd>(files.conf);
-		conf.uri = `${process.env.OWN_PROTOCOL}://${getIp()}:${process.env.HTTP_PORT}`;
+		conf.url = `${process.env.OWN_PROTOCOL}://${getIp()}:${process.env.HTTP_PORT}`;
 		return conf;
 	}
 

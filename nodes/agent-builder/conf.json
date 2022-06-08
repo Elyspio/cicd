@@ -1,6 +1,6 @@
 {
 	"abilities": [
-		"docker",
-		"docker-buildx"
+		"Docker",
+		"DockerBuildx"
 	]
 }

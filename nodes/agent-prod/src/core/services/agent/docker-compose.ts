@@ -5,9 +5,10 @@ import { Services } from "../index";
 import { ProductionAgentModelAddAbilitiesTypeEnum } from "../../apis/hub";
 import { Apis } from "../../apis";
 import * as os from "os";
+import { hudSocket } from "./socket";
 
 export class DockerComposeService {
-	async pull({ docker }: DeployConfigModel, token: string) {
+	async pull(id: string, { docker, }: DeployConfigModel, token: string) {
 		return new Promise<string>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet");
@@ -18,11 +19,12 @@ export class DockerComposeService {
 			const completedCommand = `${await this.getDockerComposeCommand()} pull`;
 			$log.info("DockerComposeService.pull", { completedCommand, folder });
 			const stderr = await Apis.runner.runFromApp({ token, command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
+			await hudSocket.invoke("job-std", "id", "Out", stderr);
 			resolve(stderr);
 		});
 	}
 
-	async up({ docker }: DeployConfigModel, token: string, daemon = true) {
+	async up(id: string, { docker }: DeployConfigModel, token: string, daemon = true) {
 		return new Promise<string>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet");
@@ -31,6 +33,7 @@ export class DockerComposeService {
 			const folder = path.dirname(docker.compose.path);
 			const completedCommand = `${await this.getDockerComposeCommand()} up --remove-orphans ${daemon ? "-d" : ""}`;
 			const stderr = await Apis.runner.runFromApp({ token, command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
+			await hudSocket.invoke("job-std", "id", "Out", stderr);
 			resolve(stderr);
 		});
 	}

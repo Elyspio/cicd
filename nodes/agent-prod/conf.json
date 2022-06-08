@@ -1,13 +1,13 @@
 {
 	"abilities": [
 		{
-			"type": "docker-compose",
+			"type": "DockerCompose",
 			"dockerCompose": {
 				"isDockerComposeIntegratedToCli": true
 			}
 		},
 		{
-			"type": "docker"
+			"type": "Docker"
 		}
 	],
 	"folders": {

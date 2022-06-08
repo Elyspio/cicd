@@ -494,7 +494,7 @@ export interface ProductionAgentModelAdd {
 	 * @type {string}
 	 * @memberof ProductionAgentModelAdd
 	 */
-	uri: string;
+	url: string;
 	/**
 	 *
 	 * @type {Array<ProductionAgentModelAddAbilities>}

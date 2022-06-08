@@ -31,7 +31,7 @@ export interface BuildAgentModelAdd {
 	 * @type {string}
 	 * @memberof BuildAgentModelAdd
 	 */
-	uri: string;
+	url: string;
 	/**
 	 *
 	 * @type {Array<string>}

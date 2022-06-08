@@ -1,40 +1,40 @@
-import io from "socket.io-client";
+import * as signalr from "@microsoft/signalr";
 import { Services } from "../index";
 import { $log } from "@tsed/common";
 import { getLogger } from "../../utils/logger";
 
 const log = getLogger("WebSocket");
+const hostname = process.env.HUD_SOCKET_URL ?? "http://localhost:4000/ws/agents";
 
-function clearUrl(url: string): string {
-	return url.replaceAll("//", "/");
+async function onConnection(connection: signalr.HubConnection) {
+	const conf = await Services.agent.getConfig();
+	log.info(`connected to ${hostname}`, conf);
+	await connection.invoke("agent-connection/build", { Url: conf.url, Abilities: conf.abilities });
 }
 
+
 export const createSocket = () => {
-	const hostname = clearUrl(process.env.HUD_SOCKET_URL ?? "localhost:4000");
-	const namespace = clearUrl(process.env.HUD_SOCKET_NAMESPACE ?? "ws/agent/jobs");
-	let path = clearUrl(process.env.HUD_SOCKET_PATH ?? "/");
 
-	path = clearUrl(path + "/" + namespace);
+	const connection = new signalr.HubConnectionBuilder()
+		.withUrl(hostname)
+		.configureLogging(signalr.LogLevel.Warning)
+		.withAutomaticReconnect({
+			nextRetryDelayInMilliseconds(retryContext): number | null {
+				return 1000;
+			},
+		})
+		.build();
 
-	const socket = io(`http://${clearUrl(hostname + "/" + namespace)}`, {
-		transports: ["websocket"],
-		path,
-		autoConnect: true,
-		hostname,
-	});
 
-	$log.debug("Create Socket", { namespace, hostname });
+	$log.debug("Create Socket", { hostname });
 
-	socket.on("connect", async () => {
-		const conf = await Services.agent.getConfig();
-		log.info(`connected to ${hostname}`);
-		socket.emit("agent-connection", "build", conf);
-	});
-	socket.on("connect_error", (err) => {
+	connection.start().then(() => onConnection(connection)).catch(err => {
 		log.error(`error on websocket for ${hostname}: ${err.message}`);
 	});
 
-	return socket;
+	connection.onreconnected(() => onConnection(connection));
+
+	return connection;
 };
 
 export const hudSocket = createSocket();

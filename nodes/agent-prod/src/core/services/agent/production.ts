@@ -8,18 +8,18 @@ import getIp = Helper.getIp;
 export class ProductionAgentService {
 	async getConfig() {
 		const conf = await Services.storage.read<ProductionAgentModelAdd>(files.conf);
-		conf.uri = `${process.env.OWN_PROTOCOL}://${getIp()}:${process.env.HTTP_PORT}`;
+		conf.url = `${process.env.OWN_PROTOCOL}://${getIp()}:${process.env.HTTP_PORT}`;
 		return conf;
 	}
 
 	/**
 	 * Deploy a docker-compose configuration
 	 */
-	async deploy({ config }: DeployJobModel, token: string) {
+	async deploy({ config, id }: DeployJobModel, token: string) {
 		const strs: string[] = [];
 		if (config?.docker?.compose?.path) {
-			strs.push(await Services.docker.compose.pull(config, token));
-			strs.push(await Services.docker.compose.up(config, token));
+			strs.push(await Services.docker.compose.pull(id, config, token));
+			strs.push(await Services.docker.compose.up(id, config, token));
 		}
 		return strs;
 	}

@@ -66,7 +66,7 @@ export class DockerService {
 		process.stderr.on("data", (data) => {
 			DockerService.log.info(`id=${id} stderr: ${data}`);
 			std.stderr += data.toString();
-			hudSocket.emit("jobs-stdout", "build", id, data.toString());
+			hudSocket.invoke("job-std", id, "build", data.toString());
 		});
 
 		process.on("close", (code) => {
