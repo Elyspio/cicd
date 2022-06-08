@@ -12,7 +12,7 @@
 	],
 	"folders": {
 		"apps": [
-			"P:\\own\\desktop\\cross-platform\\automatize-github-docker\\nodes\\agent-prod\\deployed"
+			"P:\\own\\desktop\\cross-platform\\cicd\\nodes\\agent-prod\\deployed"
 		]
 	}
 }

@@ -8,18 +8,18 @@ import { AgentItem } from "./AgentItem";
 export function Agents(props: ReduxTypes) {
 	const agents = React.useMemo(() => {
 		return {
-			builds: [...(props.agents?.builds ?? [])].sort((a, b) => a.uri.localeCompare(b.uri)),
-			deployments: [...(props.agents?.deployments ?? [])].sort((a, b) => a.uri.localeCompare(b.uri)),
+			builds: [...(props.agents?.builds ?? [])].sort((a, b) => a.url.localeCompare(b.url)),
+			deployments: [...(props.agents?.deploys ?? [])].sort((a, b) => a.url.localeCompare(b.url)),
 		};
-	}, [props.agents?.builds, props.agents?.deployments]);
+	}, [props.agents?.builds, props.agents?.deploys]);
 
 	return (
 		<List className={"Agents"}>
 			{agents.builds.map((agent, index) => (
-				<AgentItem key={`b-${agent.uri}-${index}`} data={agent} type={"builder"} />
+				<AgentItem key={`b-${agent.url}-${index}`} data={agent} type={"builder"} />
 			))}
 			{agents.deployments.map((agent, index) => (
-				<AgentItem key={`p-${agent.uri}-${index}`} data={agent} type={"production"} />
+				<AgentItem key={`p-${agent.url}-${index}`} data={agent} type={"production"} />
 			))}
 		</List>
 	);

@@ -11,7 +11,7 @@ using Cicd.Hub.Adapters.AgentDeployApi;
 using Cicd.Hub.Core.Assemblers;
 using Microsoft.Extensions.Logging;
 
-namespace Cicd.Hub.Core.Services
+namespace Cicd.Hub.Core.Services.Hub
 {
 	public class AgentService : IAgentService
 	{
@@ -19,11 +19,12 @@ namespace Cicd.Hub.Core.Services
 		private readonly AgentAssembler.Deploy agentDeployAssembler = new();
 		private readonly IAgentRepository agentRepository;
 		private readonly ILogger<AgentService> logger;
-
-		public AgentService(IAgentRepository agentRepository, ILogger<AgentService> logger)
+		private readonly IAuthenticationService authenticationService;
+		public AgentService(IAgentRepository agentRepository, ILogger<AgentService> logger, IAuthenticationService authenticationService)
 		{
 			this.agentRepository = agentRepository;
 			this.logger = logger;
+			this.authenticationService = authenticationService;
 		}
 
 		public async Task<List<ProductionApps>> GetProductionApps(string token)

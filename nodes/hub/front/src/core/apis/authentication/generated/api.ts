@@ -327,7 +327,7 @@ export enum UserSettingsModelThemeEnum {
  * AuthenticationApi - axios parameter creator
  * @export
  */
-export const AuthenticationApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AuthenticationApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 * Return all logged users (Not available in production)
@@ -527,7 +527,7 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
  * AuthenticationApi - functional programming interface
  * @export
  */
-export const AuthenticationApiFp = function (configuration?: Configuration) {
+export const AuthenticationApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = AuthenticationApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -586,7 +586,7 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
  * AuthenticationApi - factory interface
  * @export
  */
-export const AuthenticationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AuthenticationApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = AuthenticationApiFp(configuration);
 	return {
 		/**
@@ -712,7 +712,7 @@ export class AuthenticationApi extends BaseAPI {
  * UsersApi - axios parameter creator
  * @export
  */
-export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
+export const UsersApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -911,7 +911,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 			authenticationToken?: string,
 			authenticationToken2?: string,
 			setUserSettingsModel?: SetUserSettingsModel,
-			options: any = {}
+			options: any = {},
 		): Promise<RequestArgs> => {
 			// verify required parameter 'username' is not null or undefined
 			assertParamExists("setUserSettings", "username", username);
@@ -958,7 +958,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
  * UsersApi - functional programming interface
  * @export
  */
-export const UsersApiFp = function (configuration?: Configuration) {
+export const UsersApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -973,7 +973,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
 			username: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any
+			options?: any,
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialsModel>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.getUserCredentials(username, authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -990,7 +990,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
 			kind: "username" | "token",
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any
+			options?: any,
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.getUserInfo(kind, authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1007,7 +1007,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
 			username: string,
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any
+			options?: any,
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserSettingsModel>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.getUserSettings(username, authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1026,7 +1026,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
 			windowsTheme: "dark" | "light",
 			authenticationToken?: string,
 			authenticationToken2?: string,
-			options?: any
+			options?: any,
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FrontThemeReturnModel>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.getUserTheme(username, windowsTheme, authenticationToken, authenticationToken2, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1045,7 +1045,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
 			authenticationToken?: string,
 			authenticationToken2?: string,
 			setUserSettingsModel?: SetUserSettingsModel,
-			options?: any
+			options?: any,
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.setUserSettings(username, authenticationToken, authenticationToken2, setUserSettingsModel, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1057,7 +1057,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
  * UsersApi - factory interface
  * @export
  */
-export const UsersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const UsersApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = UsersApiFp(configuration);
 	return {
 		/**

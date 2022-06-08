@@ -42,14 +42,14 @@ function Application() {
 			createDrawerAction("Logout", {
 				icon: <Logout fill={"currentColor"} />,
 				onClick: login,
-			})
+			}),
 		);
 	} else {
 		actions.push(
 			createDrawerAction("Login", {
 				icon: <Login fill={"currentColor"} />,
 				onClick: login,
-			})
+			}),
 		);
 	}
 

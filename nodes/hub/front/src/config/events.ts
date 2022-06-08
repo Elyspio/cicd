@@ -3,6 +3,6 @@ export const events = {
 		new: "JOB_NEW",
 	},
 	config: {
-		update: "CONFIG_UPDATE",
+		update: "config-updated",
 	},
 };

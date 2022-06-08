@@ -24,13 +24,13 @@ export function ContextMenu({ children, items }: ContextMenuProps) {
 		setContextMenu(
 			contextMenu === null
 				? {
-						mouseX: event.clientX - 2,
-						mouseY: event.clientY - 4,
-				  }
+					mouseX: event.clientX - 2,
+					mouseY: event.clientY - 4,
+				}
 				: // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
-				  // Other native context menus might behave different.
-				  // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
-				  null
+			      // Other native context menus might behave different.
+			      // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+				null,
 		);
 	};
 
@@ -55,7 +55,7 @@ export function ContextMenu({ children, items }: ContextMenuProps) {
 				anchorPosition={contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined}
 			>
 				{items.map((item) => (
-					<MenuItem onClick={getOnClick(item)}>{item.label}</MenuItem>
+					<MenuItem key={item.label?.toString()} onClick={getOnClick(item)}>{item.label}</MenuItem>
 				))}
 			</Menu>
 		</div>

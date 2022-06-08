@@ -102,9 +102,9 @@ namespace Cicd.Hub.Db.Repositories
 
 		public async Task<T?> GetById<T>(Guid id) where T : AgentBaseEntity
 		{
-			if (typeof(T) == typeof(AgentDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
+			if (typeof(T) == typeof(AgentDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id == id.AsObjectId()) as T;
 
-			if (typeof(T) == typeof(AgentBuildEntity)) return await buildCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
+			if (typeof(T) == typeof(AgentBuildEntity)) return await buildCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id == id.AsObjectId()) as T;
 
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}

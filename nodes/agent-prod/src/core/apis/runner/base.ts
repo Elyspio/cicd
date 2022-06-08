@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
+
 import { Configuration } from "./configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import globalAxios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
 
-export const BASE_PATH = "http://localhost:4000".replace(/\/+$/, "");
+export const BASE_PATH = "http://localhost".replace(/\/+$/, "");
 
 /**
  *

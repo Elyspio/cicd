@@ -7,16 +7,16 @@ import { ReactComponent as DockerIcon } from "../../icons/docker.svg";
 import { useInjection } from "inversify-react";
 import { DiKeysService } from "../../../../../core/di/di.keys.service";
 import { AutomateService } from "../../../../../core/services/cicd/automate.cicd.service";
-import { ProductionApplications } from "../../../../../core/apis/backend/generated";
+import { ProductionApps } from "../../../../../core/apis/backend/generated";
 import { Deployment } from "../../../../store/module/automation/types";
 import { setSelectedDeploy } from "../../../../store/module/mapping/mapping.reducer";
 
 function MappingCreateDeployment() {
-	const [apps, setApps] = React.useState<ProductionApplications[]>([]);
+	const [apps, setApps] = React.useState<ProductionApps[]>([]);
 
 	const [deployments, setDeployments] = React.useState<Partial<Deployment>[]>([]);
 
-	const agents = useAppSelector((s) => s.automation.config?.agents.deployments ?? []);
+	const agents = useAppSelector((s) => s.automation.config?.agents.deploys ?? []);
 
 	const services = {
 		automate: useInjection<AutomateService>(DiKeysService.core.automate),
@@ -29,7 +29,7 @@ function MappingCreateDeployment() {
 		})();
 	}, [services.automate]);
 
-	const sortDeployments = React.useCallback((a: typeof deployments[number], b: typeof deployments[number]) => a.agent?.uri.localeCompare(b.agent?.uri ?? "") ?? -1, []);
+	const sortDeployments = React.useCallback((a: typeof deployments[number], b: typeof deployments[number]) => a.agent?.url.localeCompare(b.agent?.url ?? "") ?? -1, []);
 
 	const addDeployment = React.useCallback(() => {
 		setDeployments([...deepClone(deployments), {}].sort(sortDeployments));
@@ -37,14 +37,14 @@ function MappingCreateDeployment() {
 
 	const onAgentSelection = React.useCallback(
 		(e, index) => {
-			const uri = e.target.value;
+			const url = e.target.value;
 			const dep = deployments[index];
-			dep.agent = agents.find((app) => app.uri === uri)!;
+			dep.agent = agents.find((app) => app.url === url)!;
 			const deps = [...deployments];
 			deps.splice(index, 1);
 			setDeployments([...deps, dep]);
 		},
-		[agents, deployments]
+		[agents, deployments],
 	);
 
 	const onDockerComposeSelection = React.useCallback(
@@ -52,7 +52,7 @@ function MappingCreateDeployment() {
 			const path = e.target.value;
 			const dep = deployments[index];
 			dep.config = {
-				uri: dep.agent!.uri,
+				url: dep.agent!.url,
 				docker: {
 					compose: {
 						path,
@@ -62,7 +62,7 @@ function MappingCreateDeployment() {
 			deployments[index] = dep;
 			setDeployments([...deployments].sort(sortDeployments));
 		},
-		[deployments, sortDeployments]
+		[deployments, sortDeployments],
 	);
 
 	const dispatch = useAppDispatch();
@@ -72,9 +72,9 @@ function MappingCreateDeployment() {
 		if (config) {
 			dispatch(
 				setSelectedDeploy({
-					uri: config?.uri,
+					url: config?.url,
 					dockerfilePath: config?.docker?.compose?.path,
-				})
+				}),
 			);
 		}
 	}, [deployments, dispatch]);
@@ -91,13 +91,13 @@ function MappingCreateDeployment() {
 					</IconButton>
 				</Typography>
 				{deployments.map((dep, index) => (
-					<div>
+					<div key={index}>
 						<FormControl className={"FormControl"}>
 							<InputLabel id={`mapping-create-image-platform-label-${index}`}>Agent</InputLabel>
 							<Select
 								labelId={`mapping-create-deployment-agent-label-${index}`}
 								id={`mapping-create-deployment-agent-input-${index}`}
-								value={dep.agent?.uri ?? ""}
+								value={dep.agent?.url ?? ""}
 								label={"Agent"}
 								onChange={(e) => onAgentSelection(e, index)}
 								renderValue={(value) => (
@@ -108,8 +108,8 @@ function MappingCreateDeployment() {
 								required
 							>
 								{apps.map((app) => (
-									<MenuItem value={app.agent.uri} key={app.agent.uri}>
-										{app.agent.uri}
+									<MenuItem value={app.agent.url} key={app.agent.url}>
+										{app.agent.url}
 									</MenuItem>
 								))}
 							</Select>
@@ -127,7 +127,7 @@ function MappingCreateDeployment() {
 									required
 								>
 									{apps
-										.find((app) => dep.agent?.uri === app.agent.uri)
+										.find((app) => dep.agent?.url === app.agent.url)
 										?.apps.map((app) => (
 											<MenuItem value={app} key={app}>
 												{app}

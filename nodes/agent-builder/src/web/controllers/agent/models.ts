@@ -93,5 +93,5 @@ export class BuildResult {
 	stderr: string;
 	@Property(Number)
 	@Required()
-	status: number
+	status: number;
 }

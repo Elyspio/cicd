@@ -19,5 +19,7 @@ namespace Cicd.Hub.Abstractions.Interfaces.Services
 		Task AddStd(Guid id, StdType type, string std);
 
 		Task<List<T>> GetPending<T>() where T : JobBase;
+
+		void SetJobCompleted(Guid id);
 	}
 }

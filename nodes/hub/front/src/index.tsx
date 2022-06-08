@@ -16,7 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 declare module "@mui/styles/defaultTheme" {
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface
-	interface DefaultTheme extends Theme {}
+	interface DefaultTheme extends Theme {
+	}
 }
 
 const mapStateToProps = (state: StoreState) => ({ theme: state.theme.current });
@@ -52,7 +53,7 @@ ReactDOM.render(
 			<ConnectedWrapper />
 		</ConnectedRouter>
 	</Provider>,
-	document.getElementById("root")
+	document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

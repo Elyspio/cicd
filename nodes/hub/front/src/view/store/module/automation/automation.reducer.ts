@@ -5,8 +5,24 @@ import { createSocket } from "../../../../core/services/cicd/cicd.socket";
 import { HubConfig } from "../../../../core/apis/backend/generated";
 
 const initialState: {
-	config?: HubConfig;
-} = {};
+	config: HubConfig;
+} = {
+	config: {
+		agents: {
+			builds: [],
+			deploys: [],
+		},
+		jobs: {
+			builds: [],
+			deploys: [],
+		},
+		queues: {
+			builds: [],
+			deploys: [],
+		},
+		mappings: [],
+	},
+};
 
 export type AutomationState = typeof initialState;
 

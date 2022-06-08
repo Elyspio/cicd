@@ -11,10 +11,10 @@ import { Clear, PlayArrow } from "@mui/icons-material";
 import { useInjection } from "inversify-react";
 import { AutomateService } from "../../../../../core/services/cicd/automate.cicd.service";
 import { DiKeysService } from "../../../../../core/di/di.keys.service";
-import { MappingModel } from "../../../../../core/apis/backend/generated";
+import { Mapping } from "../../../../../core/apis/backend/generated";
 
 type MappingDisplayProps = {
-	id: MappingModel["id"];
+	id: Mapping["id"];
 };
 
 export function MappingDisplay({ id }: MappingDisplayProps) {
@@ -64,7 +64,7 @@ export function MappingDisplay({ id }: MappingDisplayProps) {
 					</Grid>
 
 					<MappingDisplaySource data={data.build.github} />
-					<MappingDisplayBuild data={data.build.dockerfiles} />
+					<MappingDisplayBuild data={data.build.dockerfile} />
 					<MappingDisplayDeployment data={data.deploy} />
 				</>
 			) : (

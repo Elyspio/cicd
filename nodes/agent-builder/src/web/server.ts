@@ -10,7 +10,8 @@ export class Server {
 	@Configuration()
 	settings: Configuration;
 
-	constructor(private app: PlatformApplication) {}
+	constructor(private app: PlatformApplication) {
+	}
 
 	$beforeRoutesInit() {
 		this.app.use(...middlewares);

@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { themeReducer } from "./module/theme/theme.reducer";
-import { automationReducer } from "./module/automation/automation";
+import { automationReducer } from "./module/automation/automation.reducer";
 import { createBrowserHistory } from "history";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";

@@ -44,11 +44,11 @@ export function CustomChip({ onClick, icon, label, title, color, className, font
 	const style: CSSProperties =
 		theme === "light"
 			? {
-					backgroundColor: color,
-			  }
+				backgroundColor: color,
+			}
 			: {
-					color: color,
-			  };
+				color: color,
+			};
 
 	return (
 		<StyledGrid container onClick={onClick} title={title} className={`Chip ${className ?? ""} ${classes.chip}`} wrap={"nowrap"} item={item} style={{ ...style, fontWeight: fontWeight }}>

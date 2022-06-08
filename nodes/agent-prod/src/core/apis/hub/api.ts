@@ -1208,7 +1208,7 @@ export interface User {
  * AutomationApi - axios parameter creator
  * @export
  */
-export const AutomationApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AutomationApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -1486,7 +1486,7 @@ export const AutomationApiAxiosParamCreator = function (configuration?: Configur
  * AutomationApi - functional programming interface
  * @export
  */
-export const AutomationApiFp = function (configuration?: Configuration) {
+export const AutomationApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = AutomationApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -1563,7 +1563,7 @@ export const AutomationApiFp = function (configuration?: Configuration) {
  * AutomationApi - factory interface
  * @export
  */
-export const AutomationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AutomationApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = AutomationApiFp(configuration);
 	return {
 		/**
@@ -1729,7 +1729,7 @@ export class AutomationApi extends BaseAPI {
  * DockerControllerApi - axios parameter creator
  * @export
  */
-export const DockerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const DockerControllerApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -1778,7 +1778,7 @@ export const DockerControllerApiAxiosParamCreator = function (configuration?: Co
  * DockerControllerApi - functional programming interface
  * @export
  */
-export const DockerControllerApiFp = function (configuration?: Configuration) {
+export const DockerControllerApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = DockerControllerApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -1798,7 +1798,7 @@ export const DockerControllerApiFp = function (configuration?: Configuration) {
  * DockerControllerApi - factory interface
  * @export
  */
-export const DockerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const DockerControllerApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = DockerControllerApiFp(configuration);
 	return {
 		/**
@@ -1838,7 +1838,7 @@ export class DockerControllerApi extends BaseAPI {
  * GithubApi - axios parameter creator
  * @export
  */
-export const GithubApiAxiosParamCreator = function (configuration?: Configuration) {
+export const GithubApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -2048,7 +2048,7 @@ export const GithubApiAxiosParamCreator = function (configuration?: Configuratio
  * GithubApi - functional programming interface
  * @export
  */
-export const GithubApiFp = function (configuration?: Configuration) {
+export const GithubApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = GithubApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -2084,7 +2084,7 @@ export const GithubApiFp = function (configuration?: Configuration) {
 			username: string,
 			repository: string,
 			branch: string,
-			options?: any
+			options?: any,
 		): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FileModel>>> {
 			const localVarAxiosArgs = await localVarAxiosParamCreator.githubGetDockerfilesForRepository(username, repository, branch, options);
 			return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2115,7 +2115,7 @@ export const GithubApiFp = function (configuration?: Configuration) {
  * GithubApi - factory interface
  * @export
  */
-export const GithubApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const GithubApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = GithubApiFp(configuration);
 	return {
 		/**
@@ -2247,7 +2247,7 @@ export class GithubApi extends BaseAPI {
  * GithubWebhooksApi - axios parameter creator
  * @export
  */
-export const GithubWebhooksApiAxiosParamCreator = function (configuration?: Configuration) {
+export const GithubWebhooksApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -2297,7 +2297,7 @@ export const GithubWebhooksApiAxiosParamCreator = function (configuration?: Conf
  * GithubWebhooksApi - functional programming interface
  * @export
  */
-export const GithubWebhooksApiFp = function (configuration?: Configuration) {
+export const GithubWebhooksApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = GithubWebhooksApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -2317,7 +2317,7 @@ export const GithubWebhooksApiFp = function (configuration?: Configuration) {
  * GithubWebhooksApi - factory interface
  * @export
  */
-export const GithubWebhooksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const GithubWebhooksApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = GithubWebhooksApiFp(configuration);
 	return {
 		/**
@@ -2357,7 +2357,7 @@ export class GithubWebhooksApi extends BaseAPI {
  * OperationApi - axios parameter creator
  * @export
  */
-export const OperationApiAxiosParamCreator = function (configuration?: Configuration) {
+export const OperationApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -2489,7 +2489,7 @@ export const OperationApiAxiosParamCreator = function (configuration?: Configura
  * OperationApi - functional programming interface
  * @export
  */
-export const OperationApiFp = function (configuration?: Configuration) {
+export const OperationApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = OperationApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -2529,7 +2529,7 @@ export const OperationApiFp = function (configuration?: Configuration) {
  * OperationApi - factory interface
  * @export
  */
-export const OperationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const OperationApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = OperationApiFp(configuration);
 	return {
 		/**

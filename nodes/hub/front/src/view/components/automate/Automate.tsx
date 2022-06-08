@@ -67,29 +67,29 @@ export function Automate() {
 						exact
 						path="/job/build/:id"
 						render={({
-							match: {
-								params: { id },
-							},
-						}) => id && <JobBuildDetail id={Number.parseInt(id)} />}
+							         match: {
+								         params: { id },
+							         },
+						         }) => id && <JobBuildDetail id={id} />}
 					/>
 					<Route
 						exact
 						path="/job/deploy/:id"
 						render={({
-							match: {
-								params: { id },
-							},
-						}) => id && <DeployDetailJob id={Number.parseInt(id)} />}
+							         match: {
+								         params: { id },
+							         },
+						         }) => id && <DeployDetailJob id={id} />}
 					/>
 					<Route exact path={"/mapping/add"} render={() => <MappingCreate />} />
 					<Route
 						exact
 						path="/mapping/:id"
 						render={({
-							match: {
-								params: { id },
-							},
-						}) => id && <MappingDisplay id={Number.parseInt(id)} />}
+							         match: {
+								         params: { id },
+							         },
+						         }) => id && <MappingDisplay id={id} />}
 					/>
 					<Route
 						render={() => (
@@ -107,7 +107,7 @@ export function Automate() {
 }
 
 export const routes = {
-	getBuildPath: (id: number) => `/job/build/${id}`,
-	getDeployPath: (id: number) => `/job/deploy/${id}`,
-	getMappingPath: (id: number) => `/mapping/${id}`,
+	getBuildPath: (id: string) => `/job/build/${id}`,
+	getDeployPath: (id: string) => `/job/deploy/${id}`,
+	getMappingPath: (id: string) => `/mapping/${id}`,
 };

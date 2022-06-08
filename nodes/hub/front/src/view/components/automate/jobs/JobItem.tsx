@@ -12,12 +12,11 @@ import { styled } from "@mui/material/styles";
 import { useAppDispatch } from "../../../store";
 import { push } from "connected-react-router";
 import { routes } from "../Automate";
-import { JobBuildModel, JobDeployModel } from "../../../../core/apis/backend/generated";
+import { JobBuild, JobDeploy } from "../../../../core/apis/backend/generated";
 import { ContextMenu, ContextMenuItems } from "../../utils/ContextMenu";
 import { Delete } from "@mui/icons-material";
-import { useInjection } from "inversify-react";
-import { AutomateService } from "../../../../core/services/cicd/automate.cicd.service";
-import { DiKeysService } from "../../../../core/di/di.keys.service";
+import { deleteJob } from "../../../store/module/automation/automation.action";
+import { useDispatch } from "react-redux";
 
 const PREFIX = "JobItem";
 
@@ -39,13 +38,13 @@ type LineProps<Job> = {
 
 const size = 12;
 
-function BuildLine({ data }: LineProps<JobBuildModel>) {
+function BuildLine({ data }: LineProps<JobBuild>) {
 	const remote = React.useMemo(() => {
 		const r = data.config.github.remote;
 		return r.slice("https://github.com/".length, r.length - 4);
 	}, [data.config.github.remote]);
 
-	const dockerfiles = React.useMemo(() => data.config.dockerfiles?.files.map((x) => `${x.image}:${x.tag ?? "latest"}`).join(" "), [data.config.dockerfiles?.files]);
+	const dockerfiles = React.useMemo(() => data.config.dockerfile?.files.map((x) => `${x.image}:${x.tag ?? "latest"}`).join(" "), [data.config.dockerfile?.files]);
 
 	const dispatch = useAppDispatch();
 	const onClick = React.useCallback(() => dispatch(push(routes.getBuildPath(data.id))), [dispatch, data.id]);
@@ -64,12 +63,12 @@ function BuildLine({ data }: LineProps<JobBuildModel>) {
 	);
 }
 
-function DeployLine({ data }: LineProps<JobDeployModel>) {
+function DeployLine({ data }: LineProps<JobDeploy>) {
 	return (
 		<Box className={"Line"}>
 			<Grid container>
 				<Grid container item xs={12}>
-					<CustomChip item title={data.config.uri} icon={<DockerIcon height={size} width={size} />} label={data.config.uri} />
+					<CustomChip item title={data.config.url} icon={<DockerIcon height={size} width={size} />} label={data.config.url} />
 				</Grid>
 				<Grid item container xs={12}>
 					<CustomChip item title={data.config.docker?.compose?.path} icon={<DockerComposeIcon height={size} width={size} />} label={data.config.docker?.compose?.path} />
@@ -83,8 +82,8 @@ function DeployLine({ data }: LineProps<JobDeployModel>) {
 
 export type JobItemProps = {
 	data: {
-		build?: JobBuildModel;
-		deploy?: JobDeployModel;
+		build?: JobBuild;
+		deploy?: JobDeploy;
 	};
 };
 
@@ -97,7 +96,7 @@ export function JobItem(props: JobItemProps) {
 		setValue(newValue);
 	};
 
-	const dispatch = useAppDispatch();
+	const dispatch = useDispatch();
 
 	const label = React.useMemo(() => {
 		if (!props.data.build) return "";
@@ -110,9 +109,6 @@ export function JobItem(props: JobItemProps) {
 		);
 	}, [props.data.build]);
 
-	const services = {
-		automate: useInjection<AutomateService>(DiKeysService.core.automate),
-	};
 
 	const contextMenuItems: ContextMenuItems = React.useMemo(() => {
 		const arr: ContextMenuItems = [];
@@ -120,8 +116,8 @@ export function JobItem(props: JobItemProps) {
 		if (props.data.build || props.data.deploy) {
 			arr.push({
 				onClick: () => {
-					props.data.build && services.automate.deleteJob("build", props.data.build.id);
-					props.data.deploy && services.automate.deleteJob("deployment", props.data.deploy.id);
+					props.data.build && dispatch(deleteJob(props.data.build.id));
+					props.data.deploy && dispatch(deleteJob(props.data.deploy.id));
 				},
 				label: (
 					<Grid container alignItems={"center"} spacing={2}>
@@ -138,16 +134,16 @@ export function JobItem(props: JobItemProps) {
 		}
 
 		return arr;
-	}, [services.automate, props.data]);
+	}, [dispatch, props.data]);
 
 	const tabsColor: { build?: string; deploy?: string } = React.useMemo(() => {
 		let build = undefined;
-		if (props.data.build?.error) build = "error";
-		if (props.data.build && !props.data.build.error && props.data.build.finishedAt) build = "success";
+		if (props.data.build?.stderr) build = "error";
+		if (props.data.build && !props.data.build.stderr && props.data.build.finishedAt) build = "success";
 
 		let deploy = undefined;
-		if (props.data.deploy?.error) deploy = "error";
-		if (props.data.deploy && !props.data.deploy.error && props.data.deploy.finishedAt) deploy = "success";
+		if (props.data.deploy?.stderr) deploy = "error";
+		if (props.data.deploy && !props.data.deploy.stderr && props.data.deploy.finishedAt) deploy = "success";
 		return {
 			build,
 			deploy,

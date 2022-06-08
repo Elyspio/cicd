@@ -31,10 +31,10 @@ namespace Cicd.Hub.Core.Services.Hub
 
 		public async Task<Mapping> Add(BuildConfig build, DeployConfig deploy)
 		{
-			logger.Enter($"{LogHelper.Get(build.Github.Remote)} {LogHelper.Get(build.Github.Branch)} {deploy.Uri}");
+			logger.Enter($"{LogHelper.Get(build.Github.Remote)} {LogHelper.Get(build.Github.Branch)} {deploy.Url}");
 			var entity = await mappingRepository.Add(build, deploy);
 			var data = mappingAssembler.Convert(entity)!;
-			logger.Exit($"{LogHelper.Get(build.Github.Remote)} {LogHelper.Get(build.Github.Branch)} {deploy.Uri}");
+			logger.Exit($"{LogHelper.Get(build.Github.Remote)} {LogHelper.Get(build.Github.Branch)} {deploy.Url}");
 			return data;
 		}
 

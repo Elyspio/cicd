@@ -4,11 +4,12 @@ import { deepClone } from "../../../../../core/utils/data";
 import { DockerfilesParams } from "../../../../store/module/automation/types";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import { useDispatch } from "react-redux";
-import { DockerBakeModel, DockerConfigModelPlatformsEnum } from "../../../../../core/apis/backend/generated";
 import { setBake, setDockerfiles, setSelectedType } from "../../../../store/module/mapping/mapping.reducer";
 import { ReactComponent as DockerIcon } from "../../icons/docker.svg";
 import { iconSize } from "../../../../../config/icons";
 import * as path from "path";
+import { BuildBakeConfig } from "../../../../../core/apis/backend/generated";
+import { BuildPlatform } from "../../../../../config/cicd";
 
 function MappingCreateBuilds() {
 	const type = useAppSelector((s) => s.mapping.selected.build.type);
@@ -23,7 +24,7 @@ function MappingCreateBuilds() {
 			setValue(val);
 			dispatch(setSelectedType(val));
 		},
-		[dispatch]
+		[dispatch],
 	);
 
 	return (
@@ -53,11 +54,12 @@ function MappingCreateBuilds() {
 }
 
 function MappingCreateBuildBake() {
-	const bake = useAppSelector((s) => {
+	const bakefiles = useAppSelector((s) => {
 		if (s.mapping.selected.source.repo && s.mapping.selected.source.branch) {
 			const repo = s.mapping.repositories[s.mapping.selected.source.repo];
-			return repo[s.mapping.selected.source.branch]?.bake;
+			return repo.branches[s.mapping.selected.source.branch]?.bakeFiles ?? [];
 		}
+		return [];
 	});
 	const dispatch = useAppDispatch();
 
@@ -66,15 +68,15 @@ function MappingCreateBuildBake() {
 			dispatch(setBake(data));
 			setConf(data);
 		},
-		[dispatch]
+		[dispatch],
 	);
 
-	const [conf, setConf] = React.useState<DockerBakeModel>({
-		bakeFilePath: bake ?? "/",
+	const [conf, setConf] = React.useState<BuildBakeConfig>({
+		bakeFilePath: bakefiles[0] ?? "/",
 	});
 	React.useEffect(() => {
-		bake && setConfig({ bakeFilePath: bake });
-	}, [bake, setConfig]);
+		bakefiles && setConfig({ bakeFilePath: bakefiles[0] });
+	}, [bakefiles, setConfig]);
 
 	return (
 		<Box className="MappingCreateBuildBake">
@@ -103,12 +105,12 @@ function MappingCreateBuildDockerfiles() {
 
 	const dockerfiles: string[] = useAppSelector((s) => {
 		if (repo && s.mapping.selected.source.branch) {
-			return s.mapping.repositories[repo][s.mapping.selected.source.branch].dockerfiles;
+			return s.mapping.repositories[repo].branches[s.mapping.selected.source.branch].dockerfiles;
 		}
 		return [];
 	});
 
-	const platforms = React.useMemo(() => [DockerConfigModelPlatformsEnum.Arm64, DockerConfigModelPlatformsEnum.Amd64], []);
+	const platforms = React.useMemo(() => [BuildPlatform.LinuxAmd64, BuildPlatform.LinuxArm64, BuildPlatform.LinuxArmV7, BuildPlatform.LinuxArmV6], []);
 
 	React.useEffect(() => {
 		setConf(
@@ -132,7 +134,7 @@ function MappingCreateBuildDockerfiles() {
 						use: false,
 					},
 				};
-			})
+			}),
 		);
 	}, [dockerfiles, repo, platforms]);
 
@@ -161,9 +163,9 @@ function MappingCreateBuildDockerfiles() {
 		syncChanges(clone);
 	}
 
-	function updatePlatform(event: SelectChangeEvent<DockerConfigModelPlatformsEnum[]>, index: number) {
+	function updatePlatform(event: SelectChangeEvent<BuildPlatform[]>, index: number) {
 		const clone = deepClone(conf);
-		clone[index].platforms = event.target.value as DockerConfigModelPlatformsEnum[];
+		clone[index].platforms = event.target.value as BuildPlatform[];
 		syncChanges(clone);
 	}
 

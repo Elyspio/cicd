@@ -4,15 +4,15 @@ import { StoreState, useAppSelector } from "../../../store";
 import { ReactComponent as BuildIcon } from "../icons/buildJob.svg";
 import { ReactComponent as DeployIcon } from "../icons/deploymentJob.svg";
 import "./AgentItem.scss";
-import { BuildAgentModelReturn, ProductionAgentModel } from "../../../../core/apis/backend/generated";
+import { AgentBuild, AgentDeploy } from "../../../../core/apis/backend/generated";
 
 type Props = {
-	data: BuildAgentModelReturn | ProductionAgentModel;
+	data: AgentBuild | AgentDeploy;
 	type: "builder" | "production";
 };
 
 type StatusChipProps = {
-	status: (BuildAgentModelReturn | ProductionAgentModel)["availability"];
+	status: (AgentBuild | AgentDeploy)["availability"];
 };
 
 function StatusChip({ status }: StatusChipProps) {
@@ -21,10 +21,10 @@ function StatusChip({ status }: StatusChipProps) {
 		theme: state.theme.current,
 	}));
 
-	const texts: { [key in typeof status]: { label: string; color: string } } = {
-		down: { label: "Down", color: palette.error[theme] },
-		free: { label: "Available", color: palette.success[theme] },
-		running: { label: "Working", color: palette.primary[theme] },
+	const texts: { [key in StatusChipProps["status"]]: { label: string; color: string } } = {
+		"Down": { label: "Down", color: palette.error[theme] },
+		"Free": { label: "Available", color: palette.success[theme] },
+		"Running": { label: "Working", color: palette.primary[theme] },
 	};
 
 	return (
@@ -45,7 +45,7 @@ export function AgentItem(props: Props) {
 			<ListItemIcon className={"Avatar"}>{props.type === "production" ? <DeployIcon width={48} height={48} /> : <BuildIcon width={48} height={48} />}</ListItemIcon>
 			<Grid container direction={"column"}>
 				<Grid item>
-					<Typography>{props.data.uri}</Typography>
+					<Typography>{props.data.url}</Typography>
 				</Grid>
 
 				<Grid container alignItems={"center"} spacing={2}>

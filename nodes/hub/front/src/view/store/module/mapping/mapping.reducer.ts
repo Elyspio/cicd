@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DockerfilesParams } from "../automation/types";
 import { initMappingData, setDockerFileForRepo } from "./mapping.action";
-import { DockerBakeModel, RepoWithBranchModel } from "../../../../core/apis/backend/generated";
+import { BuildBakeConfig, GitHubRepository } from "../../../../core/apis/backend/generated";
 
 export type MappingState = {
-	repositories: Record<RepoWithBranchModel["repo"], Record<RepoWithBranchModel["branch"], Omit<RepoWithBranchModel, "branch" | "repo">>>;
+	repositories: Record<GitHubRepository["name"], GitHubRepository>;
 	selected: {
 		source: {
 			repo?: string;
@@ -12,11 +12,11 @@ export type MappingState = {
 		};
 		build: {
 			dockerfiles: DockerfilesParams;
-			bake?: DockerBakeModel;
+			bake?: BuildBakeConfig;
 			type: "bake" | "dockerfiles";
 		};
 		deploy: {
-			uri?: string;
+			url?: string;
 			dockerfilePath?: string;
 		};
 	};
@@ -60,15 +60,9 @@ const slice = createSlice({
 	name: "Mapping",
 	extraReducers: (builder) => {
 		builder.addCase(setDockerFileForRepo, (state, { payload }) => {
-			if (state.repositories[payload.repo] === undefined) {
-				state.repositories[payload.repo] = {};
+			if (state.repositories[payload.name] === undefined) {
+				state.repositories[payload.name] = payload;
 			}
-
-			state.repositories[payload.repo][payload.branch] = {
-				nodes: payload.nodes,
-				dockerfiles: payload.dockerfiles,
-				bake: payload.bake,
-			};
 		});
 
 		builder.addCase(initMappingData.pending, (state) => {

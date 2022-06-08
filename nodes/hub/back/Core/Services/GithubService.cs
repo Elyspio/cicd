@@ -1,4 +1,5 @@
-﻿using Cicd.Hub.Abstractions.Common.Helpers;
+﻿using Cicd.Hub.Abstractions.Common.Extensions;
+using Cicd.Hub.Abstractions.Common.Helpers;
 using Cicd.Hub.Abstractions.Interfaces.Services;
 using Cicd.Hub.Abstractions.Transports.Github;
 using Cicd.Hub.Adapters.Github;
@@ -27,7 +28,11 @@ namespace Cicd.Hub.Core.Services
 			var api = await GetApi(realUsername, userToken);
 
 			var repos = await api.ListRepos(githubUsername);
-			logger.Exit(LogHelper.Get(userToken));
+
+			// Only return with at least one dockerfiles else we can't build it
+			repos = repos.Where(repo => { return repo.Branches.Values.Any(branch => branch.Dockerfiles.Any()); }).ToList();
+
+			logger.Exit($"{LogHelper.Get(userToken)} {LogHelper.Get(repos.Count)}");
 			return repos;
 		}
 

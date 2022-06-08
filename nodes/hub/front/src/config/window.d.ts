@@ -8,10 +8,7 @@ export type Config = {
 	endpoints: {
 		core: {
 			api: string;
-			socket: {
-				namespace: string;
-				hostname: string;
-			};
+			socket: string;
 		};
 		authentication: {
 			api: string;

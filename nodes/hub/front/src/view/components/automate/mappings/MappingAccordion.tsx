@@ -22,7 +22,7 @@ const useStyles = makeStyles(() =>
 			display: "flex",
 			alignItems: "center",
 		},
-	})
+	}),
 );
 
 const Header = (props: { onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any }) => {

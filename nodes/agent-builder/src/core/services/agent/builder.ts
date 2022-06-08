@@ -1,4 +1,4 @@
-import { BuildAgentModelAdd, BuildAgentModelAddAbilitiesEnum } from "../../apis/hub";
+import { AgentBuild, BuildAbility } from "../../apis/hub";
 import { Services } from "../index";
 import { files } from "../storage";
 import { promises } from "fs";
@@ -12,7 +12,7 @@ export class BuilderAgentService {
 	private buildNum = 1;
 
 	async getConfig() {
-		const conf = await Services.storage.read<BuildAgentModelAdd>(files.conf);
+		const conf = await Services.storage.read<Pick<AgentBuild, "abilities" | "url">>(files.conf);
 		conf.url = `${process.env.OWN_PROTOCOL}://${getIp()}:${process.env.HTTP_PORT}`;
 		return conf;
 	}
@@ -24,7 +24,7 @@ export class BuilderAgentService {
 	async build(config: BuildConfigModel): Promise<BuildResult[]> {
 		const { abilities } = await this.getConfig();
 
-		if (!abilities.includes(BuildAgentModelAddAbilitiesEnum.DockerBuildx)) throw new Error("This build is not able to use docker buildx");
+		if (!abilities.includes(BuildAbility.DockerBuildx)) throw new Error("This build is not able to use docker buildx");
 
 		const folder = await Services.git.initFolder(config);
 		let stds: BuildResult[];
@@ -39,7 +39,8 @@ export class BuilderAgentService {
 
 		try {
 			await rm(folder, { recursive: true, force: true });
-		} catch (e) {}
+		} catch (e) {
+		}
 		return stds;
 	}
 }

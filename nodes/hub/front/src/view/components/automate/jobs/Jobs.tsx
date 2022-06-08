@@ -2,33 +2,24 @@ import React from "react";
 import List from "@mui/material/List";
 import { useAppSelector } from "../../../store";
 import { JobItem } from "./JobItem";
-import { HubConfig, JobBuildModel, JobDeployModel } from "../../../../core/apis/backend/generated";
+import { HubConfig, JobBuild, JobDeploy } from "../../../../core/apis/backend/generated";
 
-type Queues = HubConfig["queues"];
 type JobsAlias = HubConfig["jobs"];
 
 type WithStatus<T> = T & { status: "waiting" | "done" | "working" };
 
 export function Jobs() {
 	const { jobs, queues } = useAppSelector((state) => ({
-		queues: state.automation.config?.queues ?? {
-			builds: Array<Queues["builds"][number]>(),
-			deployments: Array<Queues["deployments"][number]>(),
-		},
-		jobs: state.automation.config?.jobs ?? {
-			builds: Array<JobsAlias["builds"][number]>(),
-			deployments: Array<JobsAlias["deployments"][number]>(),
-		},
+		queues: state.automation.config.queues,
+		jobs: state.automation.config.jobs,
 	}));
 
 	const data = React.useMemo(() => {
-		const ret = new Map<
-			JobsAlias["builds"][number]["id"],
+		const ret = new Map<JobsAlias["builds"][number]["id"],
 			{
-				build?: WithStatus<JobBuildModel>;
-				deploy?: WithStatus<JobDeployModel>;
-			}
-		>();
+				build?: WithStatus<JobBuild>;
+				deploy?: WithStatus<JobDeploy>;
+			}>();
 
 		jobs.builds.forEach((job) => {
 			if (!ret.has(job.id)) {
@@ -56,7 +47,7 @@ export function Jobs() {
 			});
 		});
 
-		jobs.deployments.forEach((job) => {
+		jobs.deploys.forEach((job) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}
@@ -69,7 +60,7 @@ export function Jobs() {
 			});
 		});
 
-		queues.deployments.forEach((job) => {
+		queues.deploys.forEach((job) => {
 			if (!ret.has(job.id)) {
 				ret.set(job.id, {});
 			}

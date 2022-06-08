@@ -14,5 +14,5 @@ middlewares.push(
 	bodyParser.json(),
 	bodyParser.urlencoded({
 		extended: true,
-	})
+	}),
 );

@@ -34,14 +34,14 @@ namespace Cicd.Hub.Db.Repositories
 		{
 			var updater = Builders<MappingEntity>.Update.Set(m => m.Deploy, mapping.Deploy).Set(m => m.Build, mapping.Build);
 
-			var entity = await EntityCollection.FindOneAndUpdateAsync(m => m.Id.AsGuid() == mapping.Id, updater);
+			var entity = await EntityCollection.FindOneAndUpdateAsync(m => m.Id == mapping.Id.AsObjectId(), updater);
 
 			return entity;
 		}
 
 		public async Task Delete(Guid id)
 		{
-			await EntityCollection.DeleteOneAsync(m => m.Id.AsGuid() == id);
+			await EntityCollection.DeleteOneAsync(m => m.Id == id.AsObjectId());
 		}
 
 		public async Task<List<MappingEntity>> GetAll()
@@ -52,7 +52,7 @@ namespace Cicd.Hub.Db.Repositories
 
 		public async Task<MappingEntity> GetById(Guid id)
 		{
-			return await EntityCollection.AsQueryable().FirstOrDefaultAsync(m => m.Id.AsGuid() == id);
+			return await EntityCollection.AsQueryable().FirstOrDefaultAsync(m => m.Id == id.AsObjectId());
 		}
 	}
 }

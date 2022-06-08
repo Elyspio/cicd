@@ -8,7 +8,7 @@ import * as os from "os";
 import { hudSocket } from "./socket";
 
 export class DockerComposeService {
-	async pull(id: string, { docker, }: DeployConfigModel, token: string) {
+	async pull(id: string, { docker }: DeployConfigModel, token: string) {
 		return new Promise<string>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet");
@@ -18,7 +18,7 @@ export class DockerComposeService {
 			const folder = path.dirname(docker.compose.path);
 			const completedCommand = `${await this.getDockerComposeCommand()} pull`;
 			$log.info("DockerComposeService.pull", { completedCommand, folder });
-			const stderr = await Apis.runner.runFromApp({ token, command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
+			const stderr = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
 			await hudSocket.invoke("job-std", "id", "Out", stderr);
 			resolve(stderr);
 		});
@@ -32,7 +32,7 @@ export class DockerComposeService {
 			}
 			const folder = path.dirname(docker.compose.path);
 			const completedCommand = `${await this.getDockerComposeCommand()} up --remove-orphans ${daemon ? "-d" : ""}`;
-			const stderr = await Apis.runner.runFromApp({ token, command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
+			const stderr = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
 			await hudSocket.invoke("job-std", "id", "Out", stderr);
 			resolve(stderr);
 		});
@@ -47,7 +47,7 @@ export class DockerComposeService {
 
 			const folder = docker.compose.path;
 			const completedCommand = `${await this.getDockerComposeCommand()} down`;
-			const stderr = await Apis.runner.runFromApp({ token, command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
+			const stderr = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
 			resolve(stderr);
 		});
 	}
@@ -65,7 +65,7 @@ export class DockerComposeService {
 			command = `find ${folders.join(" ")} -name docker-compose.yml`;
 		}
 
-		const { stdout } = await Apis.runner.runFromApp({ token, cwd: "/", command }).then((x) => x.data);
+		const { stdout } = await Apis.runner.run({ cwd: "/", command }, token).then((x) => x.data);
 		return stdout
 			.split("\n")
 			.map((s) => s.trim())

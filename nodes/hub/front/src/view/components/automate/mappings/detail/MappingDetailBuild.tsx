@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { ReactComponent as DockerIcon } from "../../icons/docker.svg";
-import { MappingModel } from "../../../../../core/apis/backend/generated";
+import { Mapping } from "../../../../../core/apis/backend/generated";
 
 type MappingDisplaySourceProps = {
-	data: MappingModel["build"]["dockerfiles"];
+	data: Mapping["build"]["dockerfile"];
 };
 
 const size = 16;
@@ -40,7 +40,7 @@ export function MappingDisplayBuild({ data }: MappingDisplaySourceProps) {
 							</Select>
 						</FormControl>
 
-						<TextField className={"FormControl"} id={`mapping-create-image-dockerfile-input-${index}`} label="Working directory" value={dockerfile.wd} inputProps={{ readOnly: true }} />
+						<TextField className={"FormControl"} id={`mapping-create-image-dockerfile-input-${index}`} label="Working directory" value={dockerfile.workingDirectory} inputProps={{ readOnly: true }} />
 
 						<TextField
 							className={"FormControl"}

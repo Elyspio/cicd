@@ -1,4 +1,4 @@
-import { AutomationApi } from "./hub";
+import { AutomateApi } from "./hub";
 import { AuthenticationApi } from "./authentication";
 import { Helper } from "../utils/helper";
 
@@ -7,7 +7,7 @@ export const authenticationServerUrl = Helper.removeTrallingSlash(process.env.AU
 
 export const Apis = {
 	hub: {
-		automation: new AutomationApi(undefined, hudServerUrl),
+		automation: new AutomateApi(undefined, hudServerUrl),
 	},
 	authentication: new AuthenticationApi(undefined, authenticationServerUrl),
 };

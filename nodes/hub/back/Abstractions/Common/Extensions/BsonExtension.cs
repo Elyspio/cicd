@@ -1,4 +1,6 @@
-﻿using MongoDB.Bson;
+﻿using System.Runtime.CompilerServices;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Conventions;
 
 namespace Cicd.Hub.Abstractions.Common.Extensions
 {
@@ -20,5 +22,7 @@ namespace Cicd.Hub.Abstractions.Common.Extensions
 			var oid = new ObjectId(bytes);
 			return oid;
 		}
+
+		
 	}
 }

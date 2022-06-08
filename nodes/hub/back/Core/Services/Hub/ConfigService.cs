@@ -46,10 +46,14 @@ namespace Cicd.Hub.Core.Services.Hub
 			var jobsBuild = jobService.GetAll<JobBuild>();
 			var jobsDeploy = jobService.GetAll<JobDeploy>();
 
+
+			var queuesBuild = jobService.GetPending<JobBuild>();
+			var queuesDeploy = jobService.GetPending<JobDeploy>();
+
 			var mappings = mappingService.GetAll();
 
 
-			await Task.WhenAll(agentsBuild, agentsDeploy, jobsBuild, jobsDeploy, mappings);
+			await Task.WhenAll(agentsBuild, agentsDeploy, jobsBuild, jobsDeploy, queuesBuild, queuesDeploy, mappings);
 
 			logger.Exit();
 
@@ -57,6 +61,7 @@ namespace Cicd.Hub.Core.Services.Hub
 			{
 				Agents = new HubConfigAgents {Builds = agentsBuild.Result, Deploys = agentsDeploy.Result},
 				Jobs = new HubConfigJobs {Builds = jobsBuild.Result, Deploys = jobsDeploy.Result},
+				Queues = new HubConfigJobs {Builds = queuesBuild.Result, Deploys = queuesDeploy.Result},
 				Mappings = mappings.Result
 			};
 		}

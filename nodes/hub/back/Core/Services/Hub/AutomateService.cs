@@ -23,13 +23,15 @@ namespace Cicd.Hub.Core.Services.Hub
 		private readonly JobAssembler.Build jobBuildAssembler = new();
 		private readonly JobAssembler.Deploy jobDeployAssembler = new();
 		private readonly IJobRepository jobRepository;
+		private readonly IJobService jobService;
 		private readonly ILogger<AutomateService> logger;
 
-		public AutomateService(ILogger<AutomateService> logger, IJobRepository jobRepository, IAuthenticationService authenticationService, IDatabaseWatcher databaseWatcher)
+		public AutomateService(ILogger<AutomateService> logger, IJobRepository jobRepository, IAuthenticationService authenticationService, IDatabaseWatcher databaseWatcher, IJobService jobService)
 		{
 			this.logger = logger;
 			this.jobRepository = jobRepository;
 			this.authenticationService = authenticationService;
+			this.jobService = jobService;
 			databaseWatcher.WatchChanges();
 		}
 
@@ -38,19 +40,17 @@ namespace Cicd.Hub.Core.Services.Hub
 		{
 			logger.Enter($"{config.Github.Remote} {config.Github.Branch}");
 			var appToken = await authenticationService.GetPermanentToken(userToken);
-			var entity = await jobRepository.Add(config, appToken);
-			var data = jobBuildAssembler.Convert(entity);
+			var data = await jobService.Add(config, appToken);
 			logger.Exit($"{config.Github.Remote} {config.Github.Branch}");
 			return data;
 		}
 
 		public async Task<JobDeploy> AskDeploy(DeployConfig config, string userToken)
 		{
-			logger.Enter($"{config.Uri} {config.Docker.Compose.Path}");
+			logger.Enter($"{config.Url} {config.Docker.Compose.Path}");
 			var appToken = await authenticationService.GetPermanentToken(userToken);
-			var entity = await jobRepository.Add(config, appToken);
-			var data = jobDeployAssembler.Convert(entity);
-			logger.Exit($"{config.Uri} {config.Docker.Compose.Path}");
+			var data = await jobService.Add(config, appToken);
+			logger.Exit($"{config.Url} {config.Docker.Compose.Path}");
 			return data;
 		}
 
@@ -59,7 +59,7 @@ namespace Cicd.Hub.Core.Services.Hub
 			logger.Enter($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 			var platforms = new List<Platforms>();
 			foreach (var value in Enum.GetValues<Platforms>())
-				job.Config.Dockerfile?.Plateforms.ForEach(platform => {
+				job.Config.Dockerfile?.Platforms.ForEach(platform => {
 						if (value.ToString() == platform) platforms.Add(value);
 					}
 				);
@@ -117,6 +117,9 @@ namespace Cicd.Hub.Core.Services.Hub
 			job.Stderr = stderr;
 			job.Stdout = stdout;
 			await jobRepository.Update(job);
+
+			jobService.SetJobCompleted(job.Id);
+			
 			logger.Exit($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 		}
 
@@ -150,6 +153,9 @@ namespace Cicd.Hub.Core.Services.Hub
 			job.Stderr = stderr;
 			job.Stdout = stdout;
 			await jobRepository.Update(job);
+			
+			jobService.SetJobCompleted(job.Id);
+			
 			logger.Exit($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 		}
 	}

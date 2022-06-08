@@ -4,13 +4,14 @@ import "./JobDetail.scss";
 import { Box, Grid, Typography } from "@mui/material";
 import { JobNotFound } from "./common.detail.job";
 import { AutoScroll } from "../../../utils/AutoScroll";
+import { JobDeploy } from "../../../../../core/apis/backend/generated";
 
 type Props = {
-	id: number;
+	id: JobDeploy["id"];
 };
 
 export function DeployDetailJob({ id }: Props) {
-	const job = useAppSelector((state) => state.automation.config?.jobs.deployments.find((b) => b.id === id));
+	const job = useAppSelector((state) => state.automation.config?.jobs.deploys.find((b) => b.id === id));
 
 	if (!job) return <JobNotFound id={id} type={"deploy"} />;
 
@@ -24,14 +25,14 @@ export function DeployDetailJob({ id }: Props) {
 				</Grid>
 			</Grid>
 
-			{job.error && (
+			{job.stderr && (
 				<Grid item className="error" my={2}>
 					<Typography variant={"overline"} fontWeight={"bold"}>
 						Error
 					</Typography>
 
 					<Box sx={{ bgcolor: "background.default", height: "100%", color: "error.main" }} className={"content"}>
-						<pre>{job.error}</pre>
+						<pre>{job.stderr}</pre>
 					</Box>
 				</Grid>
 			)}

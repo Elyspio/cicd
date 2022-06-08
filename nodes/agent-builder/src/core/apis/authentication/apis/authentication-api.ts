@@ -22,7 +22,7 @@ import { PostLoginInitRequest, PostLoginModel, PostLoginModelWithSalt, PostLogin
  * AuthenticationApi - axios parameter creator
  * @export
  */
-export const AuthenticationApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AuthenticationApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -256,7 +256,7 @@ export const AuthenticationApiAxiosParamCreator = function (configuration?: Conf
  * AuthenticationApi - functional programming interface
  * @export
  */
-export const AuthenticationApiFp = function (configuration?: Configuration) {
+export const AuthenticationApiFp = function(configuration?: Configuration) {
 	return {
 		/**
 		 *
@@ -344,7 +344,7 @@ export const AuthenticationApiFp = function (configuration?: Configuration) {
  * AuthenticationApi - factory interface
  * @export
  */
-export const AuthenticationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AuthenticationApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	return {
 		/**
 		 *

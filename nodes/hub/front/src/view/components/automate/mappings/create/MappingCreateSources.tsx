@@ -38,7 +38,7 @@ function MappingCreateSources() {
 
 	React.useEffect(() => {
 		if (repository) {
-			const branches = Object.keys(storeData[repository]);
+			const branches = Object.keys(storeData[repository].branches);
 			setBranches(branches);
 			setBranch(branches[0]);
 			dispatch(setSelectedRepo(repository));

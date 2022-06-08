@@ -17,7 +17,7 @@ namespace Cicd.Hub.Web.Controllers
 			this.githubService = githubService;
 		}
 
-		[HttpGet("users/connected/nodes")]
+		[HttpGet("users/connected/repos")]
 		[SwaggerResponse(200, Type = typeof(List<GitHubRepository>))]
 		[RequireAuth]
 		public async Task<IActionResult> GetRepos()

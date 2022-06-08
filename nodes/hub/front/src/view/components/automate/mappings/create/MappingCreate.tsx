@@ -15,10 +15,10 @@ export function MappingCreate() {
 		logged: s.authentication.logged,
 		valid: Boolean(
 			s.mapping.selected.deploy?.dockerfilePath &&
-				s.mapping.selected.deploy?.uri &&
-				(s.mapping.selected.build?.dockerfiles || s.mapping.selected.build?.bake) &&
-				s.mapping.selected.source?.repo &&
-				s.mapping.selected.source?.branch
+			s.mapping.selected.deploy?.url &&
+			(s.mapping.selected.build?.dockerfiles || s.mapping.selected.build?.bake) &&
+			s.mapping.selected.source?.repo &&
+			s.mapping.selected.source?.branch,
 		),
 	}));
 

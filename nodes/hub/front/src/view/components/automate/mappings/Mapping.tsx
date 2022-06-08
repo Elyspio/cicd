@@ -30,7 +30,7 @@ export function Mapping({ data: { build, deploy, id } }: Props) {
 						<div className={"info"}>
 							<CustomChip icon={<GithubIcon height={size} width={size} />} label={remote} title={remote} />
 							<CustomChip icon={<GitBranchIcon height={size} width={size} />} label={build.github.branch} title={build.github.branch} />
-							<CustomChip icon={<DockerIcon height={size} width={size} />} title={deploy.uri} label={deploy.uri} />
+							<CustomChip icon={<DockerIcon height={size} width={size} />} title={deploy.url} label={deploy.url} />
 						</div>
 					}
 				/>

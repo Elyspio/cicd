@@ -1,15 +1,26 @@
-import io from "socket.io-client";
+import * as signalr from "@microsoft/signalr";
+
 
 export const createSocket = () => {
-	let { namespace, hostname } = window.config.endpoints.core.socket;
-	const path = clearUrl(`${process.env.NODE_ENV === "production" ? "/cicd/" : "/"}${namespace}`);
-	return io(clearUrl(`${hostname}/${namespace}`), {
-		transports: ["websocket"],
-		path,
-		autoConnect: true,
-	});
-};
 
-function clearUrl(url: string): string {
-	return url.replace(/\/\//g, "/");
-}
+	let hostname = window.config.endpoints.core.socket;
+	const connection = new signalr.HubConnectionBuilder()
+		.withUrl(hostname)
+		.configureLogging(signalr.LogLevel.Warning)
+		.withAutomaticReconnect({
+			nextRetryDelayInMilliseconds(retryContext): number | null {
+				return 1000;
+			},
+		})
+		.build();
+
+
+	console.debug("Create Socket", { hostname });
+
+	connection.start().catch(err => {
+		console.error(`error on websocket for ${hostname}: ${err.message}`);
+	});
+
+
+	return connection;
+};

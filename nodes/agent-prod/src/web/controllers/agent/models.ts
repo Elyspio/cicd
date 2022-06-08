@@ -1,5 +1,4 @@
 import { Description, Nullable, Property, Required } from "@tsed/schema";
-import { DeployConfig, Job, Timestamp } from "../../../../../hub/back_node/src/core/services/hub/types";
 
 class JobModel {
 	@Required()
@@ -61,5 +60,5 @@ export class BuildResult {
 	stderr: string;
 	@Property(Number)
 	@Required()
-	status: number
+	status: number;
 }

@@ -5,7 +5,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { push } from "connected-react-router";
 
 type Props = {
-	id: number;
+	id: string;
 	type: "build" | "deploy";
 };
 

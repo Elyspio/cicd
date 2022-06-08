@@ -41,12 +41,12 @@ export function getLogger(name: LoggerName, type?: "Middleware" | "Service" | "C
 
 	const log = new Logger(`${type ? `${type} - ` : ""}${name}`);
 	log.appenders
-		.set("console", {
-			type: "console",
-		})
-		.set("std-log", {
-			type: "graylog",
-		});
+	   .set("console", {
+		   type: "console",
+	   })
+	   .set("std-log", {
+		   type: "graylog",
+	   });
 
 	return log;
 }

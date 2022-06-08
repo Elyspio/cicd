@@ -10,20 +10,21 @@ const buildFolder = process.env.BUILD_FOLDER ?? path.resolve(__dirname, "..", ".
 
 export class GitService {
 	async initFolder({
-		config: {
-			github: { remote, branch },
-		},
-		id,
-	}: BuildConfigModel) {
+		                 config: {
+			                 github: { remote, branch },
+		                 },
+		                 id,
+	                 }: BuildConfigModel) {
 		const localPath = path.resolve(buildFolder, remote.slice(remote.lastIndexOf("/") + 1, remote.indexOf(".git")));
 
 		try {
 			await stat(localPath);
 			await rm(localPath, { recursive: true, force: true });
-		} catch (e) {}
+		} catch (e) {
+		}
 
 		await git.clone(remote, localPath, ["-b", branch]);
-		await hudSocket.invoke("job-std",  id, "build",`Repository ${remote} cloned at ${localPath}`);
+		await hudSocket.invoke("job-std", id, "build", `Repository ${remote} cloned at ${localPath}`);
 		return localPath;
 	}
 }

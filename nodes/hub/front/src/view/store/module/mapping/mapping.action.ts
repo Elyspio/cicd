@@ -4,14 +4,14 @@ import { GithubService } from "../../../../core/services/cicd/github.cicd.servic
 import { DiKeysService } from "../../../../core/di/di.keys.service";
 import { AuthenticationEvents, AuthenticationService } from "../../../../core/services/authentication.service";
 import store, { StoreState } from "../../index";
-import { DockerConfigModel, RepoWithBranchModel } from "../../../../core/apis/backend/generated";
+import { BuildDockerfileConfig, GitHubRepository } from "../../../../core/apis/backend/generated";
 import { AutomateService } from "../../../../core/services/cicd/automate.cicd.service";
 
 const githubService = container.get<GithubService>(DiKeysService.core.github);
 const authenticationService = container.get<AuthenticationService>(DiKeysService.authentication);
 const automateService = container.get<AutomateService>(DiKeysService.core.automate);
 
-export const setDockerFileForRepo = createAction<RepoWithBranchModel>("mapping/setDockerFileForRepo");
+export const setDockerFileForRepo = createAction<GitHubRepository>("mapping/setDockerFileForRepo");
 
 export const initMappingData = createAsyncThunk("mapping/init", async (_, thunkAPI) => {
 	const username = await authenticationService.getUsername();
@@ -21,7 +21,7 @@ export const initMappingData = createAsyncThunk("mapping/init", async (_, thunkA
 	await Promise.all(
 		repos.map(async (repo) => {
 			await thunkAPI.dispatch(setDockerFileForRepo(repo));
-		})
+		}),
 	);
 });
 
@@ -33,23 +33,23 @@ export const createMapping = createAsyncThunk("mapping/create", async (_, { getS
 	} = getState() as StoreState;
 
 	const username = await authenticationService.getUsername();
-	let dockerfiles: DockerConfigModel | undefined = undefined;
+	let dockerfiles: BuildDockerfileConfig | undefined = undefined;
 	if (build.type === "dockerfiles") {
 		dockerfiles = {
 			username,
 			files: build.dockerfiles
-				.filter((df) => df.dockerfile.use)
-				.map((df) => ({
-					wd: df.dockerfile.wd,
-					tag: df.dockerfile.tag,
-					path: df.dockerfile.path,
-					image: df.dockerfile.image,
-				})),
+			            .filter((df) => df.dockerfile.use)
+			            .map((df) => ({
+				            workingDirectory: df.dockerfile.wd,
+				            tag: df.dockerfile.tag,
+				            path: df.dockerfile.path,
+				            image: df.dockerfile.image,
+			            })),
 			platforms: build.dockerfiles[0].platforms,
 		};
 	}
 
-	if ([source.branch, source.repo, deploy.dockerfilePath, deploy.uri].some((x) => x === undefined)) {
+	if ([source.branch, source.repo, deploy.dockerfilePath, deploy.url].some((x) => x === undefined)) {
 		throw new Error("error createMapping: missing parameters");
 	}
 
@@ -65,9 +65,9 @@ export const createMapping = createAsyncThunk("mapping/create", async (_, { getS
 			},
 		},
 		{
-			agentUri: deploy.uri!,
+			agentUri: deploy.url!,
 			dockerComposeFile: deploy.dockerfilePath!,
-		}
+		},
 	);
 });
 

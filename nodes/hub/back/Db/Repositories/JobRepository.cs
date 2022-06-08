@@ -33,7 +33,7 @@ namespace Cicd.Hub.Db.Repositories
 			var entity = new JobBuildEntity
 			{
 				Config = config,
-				CreatedAt = new DateTime(),
+				CreatedAt = DateTime.Now,
 				Token = token
 			};
 
@@ -47,7 +47,7 @@ namespace Cicd.Hub.Db.Repositories
 			var entity = new JobDeployEntity
 			{
 				Config = config,
-				CreatedAt = new DateTime(),
+				CreatedAt = DateTime.Now,
 				Token = token
 			};
 
@@ -64,7 +64,7 @@ namespace Cicd.Hub.Db.Repositories
 				.Set(a => a.Stderr, job.Stderr)
 				.Set(a => a.Stdout, job.Stdout);
 
-			var entity = await buildCollection.FindOneAndUpdateAsync(a => a.Id.AsGuid() == job.Id, updater);
+			var entity = await buildCollection.FindOneAndUpdateAsync(a => a.Id == job.Id.AsObjectId(), updater);
 
 			return entity;
 		}
@@ -77,7 +77,7 @@ namespace Cicd.Hub.Db.Repositories
 				.Set(a => a.Stderr, job.Stderr)
 				.Set(a => a.Stdout, job.Stdout);
 
-			var entity = await deployCollection.FindOneAndUpdateAsync(a => a.Id.AsGuid() == job.Id, updater);
+			var entity = await deployCollection.FindOneAndUpdateAsync(a => a.Id == job.Id.AsObjectId(), updater);
 
 			return entity;
 		}
@@ -85,7 +85,7 @@ namespace Cicd.Hub.Db.Repositories
 
 		public async Task Delete(Guid id)
 		{
-			await Task.WhenAll(deployCollection.DeleteOneAsync(a => a.Id.AsGuid() == id), buildCollection.DeleteOneAsync(a => a.Id.AsGuid() == id));
+			await Task.WhenAll(deployCollection.DeleteOneAsync(a => a.Id == id.AsObjectId()), buildCollection.DeleteOneAsync(a => a.Id.AsGuid() == id));
 		}
 
 		public async Task<List<T>> GetAll<T>() where T : JobBaseEntity
@@ -99,9 +99,9 @@ namespace Cicd.Hub.Db.Repositories
 
 		public async Task<T?> GetById<T>(Guid id) where T : JobBaseEntity
 		{
-			if (typeof(T) == typeof(JobDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
+			if (typeof(T) == typeof(JobDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id == id.AsObjectId()) as T;
 
-			if (typeof(T) == typeof(JobBuildEntity)) return await buildCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
+			if (typeof(T) == typeof(JobBuildEntity)) return await buildCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id == id.AsObjectId()) as T;
 
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}

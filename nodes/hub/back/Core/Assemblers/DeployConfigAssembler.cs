@@ -17,7 +17,7 @@ namespace Cicd.Hub.Core.Assemblers
 						Path = obj.Docker.Compose?.Path!
 					}
 				},
-				Uri = obj.Uri
+				Url = obj.Uri
 			};
 		}
 
@@ -32,7 +32,7 @@ namespace Cicd.Hub.Core.Assemblers
 						Path = obj.Docker.Compose?.Path!
 					}
 				},
-				Uri = obj.Uri
+				Uri = obj.Url
 			};
 		}
 	}

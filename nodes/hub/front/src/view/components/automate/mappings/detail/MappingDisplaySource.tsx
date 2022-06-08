@@ -2,10 +2,10 @@ import React from "react";
 import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { ReactComponent as GithubIcon } from "../../icons/github.svg";
 import { ReactComponent as GitBranchIcon } from "../../icons/git-branch.svg";
-import { MappingModel } from "../../../../../core/apis/backend/generated";
+import { Mapping } from "../../../../../core/apis/backend/generated";
 
 type MappingDisplaySourceProps = {
-	data: MappingModel["build"]["github"];
+	data: Mapping["build"]["github"];
 };
 
 const size = 16;

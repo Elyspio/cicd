@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { DiKeysApi } from "../../di/di.keys.api";
 import { CicdApi } from "../../apis/backend";
-import { DockerConfigModel, MappingModel, OperationJobsApi } from "../../apis/backend/generated";
+import { BuildDockerfileConfig, JobBuild, JobDeploy, Mapping, OperationJobsApi } from "../../apis/backend/generated";
 import { ToastOn } from "../../utils/decorators";
 
 @injectable()
@@ -20,9 +20,9 @@ export class AutomateService {
 	async createMapping(
 		params: {
 			github: { repo: string; branch: string };
-			build: { dockerfiles?: DockerConfigModel; bake?: string };
+			build: { dockerfiles?: BuildDockerfileConfig; bake?: string };
 		},
-		deploy: { agentUri: string; dockerComposeFile: string }
+		deploy: { agentUri: string; dockerComposeFile: string },
 	) {
 		await this.client.operation.mappings.add({
 			build: {
@@ -30,18 +30,18 @@ export class AutomateService {
 					branch: params.github.branch,
 					remote: params.github.repo,
 				},
-				dockerfiles: params.build.dockerfiles,
+				dockerfile: params.build.dockerfiles,
 				bake: params.build.bake
 					? {
-							bakeFilePath: params.build.bake,
-					  }
+						bakeFilePath: params.build.bake,
+					}
 					: undefined,
 			},
 			deploy: {
 				docker: {
 					compose: { path: deploy.dockerComposeFile },
 				},
-				uri: deploy.agentUri,
+				url: deploy.agentUri,
 			},
 		});
 	}
@@ -51,7 +51,7 @@ export class AutomateService {
 		pending: (id) => `Starting a job for mapping with id=${id}`,
 		error: (id) => `Error in job for mapping with id=${id} `,
 	})
-	async runMapping(id: MappingModel["id"]) {
+	async runMapping(id: Mapping["id"]) {
 		await this.client.operation.mappings.run(id);
 	}
 
@@ -59,7 +59,7 @@ export class AutomateService {
 		success: (id) => `job with id=${id} has been deleted`,
 		error: (id) => `Could not delete job with id=${id} `,
 	})
-	async deleteMapping(id: MappingModel["id"]) {
+	async deleteMapping(id: Mapping["id"]) {
 		await this.client.operation.mappings._delete(id);
 	}
 
@@ -67,10 +67,12 @@ export class AutomateService {
 		success: (type, id) => `job with id=${id} type=${type} has been deleted`,
 		error: (type, id) => `Could not delete job with id=${id} type=${type}`,
 	})
-	async deleteJob(type: JobType, id: MappingModel["id"]) {
-		await this.client.operation.jobs._delete(type, id);
+	async deleteJob(id: Mapping["id"]) {
+		await this.client.operation.jobs._delete(id);
 	}
 }
 
 declare const v: OperationJobsApi;
 export type JobType = Parameters<typeof v._delete>[0];
+
+export type JobId = JobDeploy["id"] & JobBuild["id"];

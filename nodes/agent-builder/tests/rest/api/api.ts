@@ -137,7 +137,7 @@ export interface GithubConfigModel {
  * BuildAgentApi - axios parameter creator
  * @export
  */
-export const BuildAgentApiAxiosParamCreator = function (configuration?: Configuration) {
+export const BuildAgentApiAxiosParamCreator = function(configuration?: Configuration) {
 	return {
 		/**
 		 * Build and push a project following a configuration
@@ -179,7 +179,7 @@ export const BuildAgentApiAxiosParamCreator = function (configuration?: Configur
  * BuildAgentApi - functional programming interface
  * @export
  */
-export const BuildAgentApiFp = function (configuration?: Configuration) {
+export const BuildAgentApiFp = function(configuration?: Configuration) {
 	const localVarAxiosParamCreator = BuildAgentApiAxiosParamCreator(configuration);
 	return {
 		/**
@@ -199,7 +199,7 @@ export const BuildAgentApiFp = function (configuration?: Configuration) {
  * BuildAgentApi - factory interface
  * @export
  */
-export const BuildAgentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const BuildAgentApiFactory = function(configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
 	const localVarFp = BuildAgentApiFp(configuration);
 	return {
 		/**

@@ -33,15 +33,17 @@ namespace Cicd.Hub.Core.Services.Hub
 		{
 			logger.Enter($"build {LogHelper.Get(config.Github.Branch)} {LogHelper.Get(token)}");
 			var data = jobBuildAssembler.Convert(await jobRepository.Add(config, token));
+			endedJobs[data.Id] = false;
 			logger.Exit($"build {LogHelper.Get(config.Github.Branch)} {LogHelper.Get(token)}");
 			return data;
 		}
 
 		public async Task<JobDeploy> Add(DeployConfig config, string token)
 		{
-			logger.Enter($"deploy {LogHelper.Get(config.Uri)} {LogHelper.Get(token)}");
+			logger.Enter($"deploy {LogHelper.Get(config.Url)} {LogHelper.Get(token)}");
 			var data = jobDeployAssembler.Convert(await jobRepository.Add(config, token));
-			logger.Exit($"deploy {LogHelper.Get(config.Uri)} {LogHelper.Get(token)}");
+			endedJobs[data.Id] = false;
+			logger.Exit($"deploy {LogHelper.Get(config.Url)} {LogHelper.Get(token)}");
 			return data;
 		}
 
@@ -147,7 +149,10 @@ namespace Cicd.Hub.Core.Services.Hub
 		public async Task WaitForJob(Guid id)
 		{
 			logger.Enter($"{LogHelper.Get(id)}");
-			while (endedJobs[id] != true) await Task.Delay(100);
+			while (endedJobs[id] != true)
+			{
+				await Task.Delay(100);
+			}
 			logger.Exit($"{LogHelper.Get(id)}");
 		}
 
@@ -167,6 +172,13 @@ namespace Cicd.Hub.Core.Services.Hub
 			var jobsDeploy = await jobRepository.GetAll<JobDeployEntity>();
 			foreach (var job in jobsDeploy) endedJobs[job.Id.AsGuid()] = job.FinishedAt != null;
 			logger.Exit();
+		}
+
+		public void SetJobCompleted(Guid id)
+		{
+			logger.Enter($"{LogHelper.Get(id)}");
+			endedJobs[id] = true;
+			logger.Exit($"{LogHelper.Get(id)}");
 		}
 	}
 }
