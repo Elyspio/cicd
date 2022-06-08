@@ -1,7 +1,9 @@
 ﻿using Cicd.Hub.Abstractions.Interfaces.Services;
-using Cicd.Hub.Web.Filters;
-using Cicd.Hub.Web.Utils;
+using Cicd.Hub.Abstractions.Transports.Github;
+using Cicd.Hub.Web.Server.Utils;
+using Cicd.Hub.Web.Server.Utils.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Cicd.Hub.Web.Controllers
 {
@@ -16,6 +18,7 @@ namespace Cicd.Hub.Web.Controllers
 		}
 
 		[HttpGet("users/connected/nodes")]
+		[SwaggerResponse(200, Type = typeof(List<GitHubRepository>))]
 		[RequireAuth]
 		public async Task<IActionResult> GetRepos()
 		{

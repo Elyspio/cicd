@@ -6,6 +6,6 @@ namespace Cicd.Hub.Abstractions.Models.Agents.Deploy
 	{
 		public DeployAgentFolders Folders { get; set; }
 
-		public DeployAbilities Abilities { get; set; }
+		public List<DeployAbility> Abilities { get; set; }
 	}
 }

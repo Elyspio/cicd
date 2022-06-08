@@ -1,8 +1,9 @@
-﻿using Cicd.Hub.Abstractions.Interfaces.Services;
+﻿using System.ComponentModel.DataAnnotations;
+using Cicd.Hub.Abstractions.Interfaces.Services;
 using Cicd.Hub.Abstractions.Transports;
-using Cicd.Hub.Web.Filters;
 using Cicd.Hub.Web.Models.Requests;
-using Cicd.Hub.Web.Utils;
+using Cicd.Hub.Web.Server.Utils;
+using Cicd.Hub.Web.Server.Utils.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -37,7 +38,7 @@ namespace Cicd.Hub.Web.Controllers.Operations
 
 		[HttpPost("")]
 		[SwaggerResponse(201, Type = typeof(Mapping))]
-		public async Task<IActionResult> Add(AddMappingRequest request)
+		public async Task<IActionResult> Add([Required] [FromBody] AddMappingRequest request)
 		{
 			var mapping = await mappingService.Add(request.Build, request.Deploy);
 
@@ -52,7 +53,7 @@ namespace Cicd.Hub.Web.Controllers.Operations
 		}
 
 
-		[HttpPost("{id:guid}")]
+		[HttpPost("{id:guid}/run")]
 		[SwaggerResponse(200)]
 		public async Task<IActionResult> Run(Guid id)
 		{

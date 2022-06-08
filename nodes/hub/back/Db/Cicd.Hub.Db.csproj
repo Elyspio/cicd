@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Library</OutputType>
     <EnablePreviewFeatures>True</EnablePreviewFeatures>
+    <Nullable>enable</Nullable>
 
   </PropertyGroup>
 
@@ -19,6 +20,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Cicd.Hub.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Watchers\" />
   </ItemGroup>
 
 </Project>

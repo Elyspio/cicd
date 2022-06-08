@@ -1,5 +1,6 @@
 ﻿using System.Runtime;
 using Cicd.Hub.Abstractions.Common.Extensions;
+using Cicd.Hub.Abstractions.Enums.Jobs;
 using Cicd.Hub.Abstractions.Interfaces.Repositories;
 using Cicd.Hub.Abstractions.Models.Jobs;
 using Cicd.Hub.Abstractions.Transports.Jobs.Build;
@@ -23,8 +24,8 @@ namespace Cicd.Hub.Db.Repositories
 		{
 			context = new MongoContext(configuration);
 
-			buildCollection = context.MongoDatabase.GetCollection<JobBuildEntity>("Jobs");
-			deployCollection = context.MongoDatabase.GetCollection<JobDeployEntity>("Jobs");
+			buildCollection = context.MongoDatabase.GetCollection<JobBuildEntity>("Jobs.Build");
+			deployCollection = context.MongoDatabase.GetCollection<JobDeployEntity>("Jobs.Deploy");
 		}
 
 		public async Task<JobBuildEntity> Add(BuildConfig config, string token)
@@ -89,18 +90,73 @@ namespace Cicd.Hub.Db.Repositories
 
 		public async Task<List<T>> GetAll<T>() where T : JobBaseEntity
 		{
-			if (typeof(T) == typeof(JobDeployEntity)) return await deployCollection.AsQueryable().ToListAsync() as List<T>;
+			if (typeof(T) == typeof(JobDeployEntity)) return await deployCollection.AsQueryable().ToListAsync() as List<T> ?? new List<T>();
 
-			if (typeof(T) == typeof(JobBuildEntity)) return await buildCollection.AsQueryable().ToListAsync() as List<T>;
+			if (typeof(T) == typeof(JobBuildEntity)) return await buildCollection.AsQueryable().ToListAsync() as List<T> ?? new List<T>();
 
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}
 
-		public async Task<T> GetById<T>(Guid id) where T : JobBaseEntity
+		public async Task<T?> GetById<T>(Guid id) where T : JobBaseEntity
 		{
 			if (typeof(T) == typeof(JobDeployEntity)) return await deployCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
 
 			if (typeof(T) == typeof(JobBuildEntity)) return await buildCollection.AsQueryable().FirstOrDefaultAsync(agent => agent.Id.AsGuid() == id) as T;
+
+			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
+		}
+
+		public async Task AddStdout(Guid id, StdType type, string message)
+		{
+			var updater = type switch
+			{
+				StdType.Out => Builders<JobBaseEntity>.Update.Set(job => job.Stdout, message),
+				StdType.Error => Builders<JobBaseEntity>.Update.Set(job => job.Stderr, message),
+				_ => null
+			};
+
+			var buildEntity = await GetById<JobBuildEntity>(id);
+			if (buildEntity != null)
+			{
+				switch (type)
+				{
+					case StdType.Out:
+						buildEntity.Stdout += message;
+						break;
+					case StdType.Error:
+						buildEntity.Stderr += message;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException(nameof(type), type, null);
+				}
+
+				await buildCollection.ReplaceOneAsync(job => job.Id.AsGuid() == id, buildEntity);
+			}
+
+			var deployEntity = await GetById<JobDeployEntity>(id);
+			if (deployEntity != null)
+			{
+				switch (type)
+				{
+					case StdType.Out:
+						deployEntity.Stdout += message;
+						break;
+					case StdType.Error:
+						deployEntity.Stderr += message;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException(nameof(type), type, null);
+				}
+
+				await deployCollection.ReplaceOneAsync(job => job.Id.AsGuid() == id, deployEntity);
+			}
+		}
+
+		public async Task<List<T>> GetPendingJobs<T>() where T : JobBaseEntity
+		{
+			if (typeof(T) == typeof(JobDeployEntity)) return await deployCollection.AsQueryable().Where(job => job.StartedAt == null).ToListAsync() as List<T> ?? new List<T>();
+
+			if (typeof(T) == typeof(JobBuildEntity)) return await buildCollection.AsQueryable().Where(job => job.StartedAt == null).ToListAsync() as List<T> ?? new List<T>();
 
 			throw new AmbiguousImplementationException($"The type {typeof(T)} is unknown");
 		}

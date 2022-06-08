@@ -1,11 +1,14 @@
-﻿using Cicd.Hub.Abstractions.Enums.Agents;
+﻿using System.ComponentModel.DataAnnotations;
+using Cicd.Hub.Abstractions.Enums.Agents;
 
 namespace Cicd.Hub.Abstractions.Transports.Agents
 {
 	public class AgentRaw
 	{
-		public AgentAvailability Availability { get; set; }
-		public DateTime LastUpTime { get; set; }
-		public string Url { get; set; }
+		[Required] public AgentAvailability Availability { get; set; }
+
+		[Required] public DateTime LastUpTime { get; set; }
+
+		[Required] public string Url { get; set; }
 	}
 }

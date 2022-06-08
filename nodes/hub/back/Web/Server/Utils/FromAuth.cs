@@ -1,4 +1,4 @@
-﻿namespace Cicd.Hub.Web.Utils
+﻿namespace Cicd.Hub.Web.Server.Utils
 {
 	public class AuthHelper
 	{

@@ -1,6 +1,8 @@
 ﻿using Cicd.Hub.Abstractions.Common.Extensions;
+using Cicd.Hub.Abstractions.Common.Helpers;
 using Cicd.Hub.Abstractions.Interfaces.Repositories;
 using Cicd.Hub.Abstractions.Interfaces.Services;
+using Cicd.Hub.Abstractions.Interfaces.Watchers;
 using Cicd.Hub.Abstractions.Transports.Agents;
 using Cicd.Hub.Abstractions.Transports.Agents.Deploy;
 using Cicd.Hub.Abstractions.Transports.Jobs.Build;
@@ -10,11 +12,10 @@ using Cicd.Hub.Adapters.AgentDeployApi;
 using Cicd.Hub.Core.Assemblers;
 using Microsoft.Extensions.Logging;
 
-namespace Cicd.Hub.Core.Services
+namespace Cicd.Hub.Core.Services.Hub
 {
 	public class AutomateService : IAutomateService
 	{
-		private readonly IAgentRepository agentRepository;
 		private readonly IAuthenticationService authenticationService;
 		private readonly BuildBakeAssembler buildBakeAssembler = new();
 		private readonly DeployConfigAssembler deployConfigAssembler = new();
@@ -24,31 +25,38 @@ namespace Cicd.Hub.Core.Services
 		private readonly IJobRepository jobRepository;
 		private readonly ILogger<AutomateService> logger;
 
-		public AutomateService(ILogger<AutomateService> logger, IAgentRepository agentRepository, IJobRepository jobRepository, IAuthenticationService authenticationService)
+		public AutomateService(ILogger<AutomateService> logger, IJobRepository jobRepository, IAuthenticationService authenticationService, IDatabaseWatcher databaseWatcher)
 		{
-			this.agentRepository = agentRepository;
 			this.logger = logger;
 			this.jobRepository = jobRepository;
 			this.authenticationService = authenticationService;
+			databaseWatcher.WatchChanges();
 		}
 
 
 		public async Task<JobBuild> AskBuild(BuildConfig config, string userToken)
 		{
+			logger.Enter($"{config.Github.Remote} {config.Github.Branch}");
 			var appToken = await authenticationService.GetPermanentToken(userToken);
 			var entity = await jobRepository.Add(config, appToken);
-			return jobBuildAssembler.Convert(entity);
+			var data = jobBuildAssembler.Convert(entity);
+			logger.Exit($"{config.Github.Remote} {config.Github.Branch}");
+			return data;
 		}
 
 		public async Task<JobDeploy> AskDeploy(DeployConfig config, string userToken)
 		{
+			logger.Enter($"{config.Uri} {config.Docker.Compose.Path}");
 			var appToken = await authenticationService.GetPermanentToken(userToken);
 			var entity = await jobRepository.Add(config, appToken);
-			return jobDeployAssembler.Convert(entity);
+			var data = jobDeployAssembler.Convert(entity);
+			logger.Exit($"{config.Uri} {config.Docker.Compose.Path}");
+			return data;
 		}
 
 		public async Task Build(AgentBuild agent, JobBuild job)
 		{
+			logger.Enter($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 			var platforms = new List<Platforms>();
 			foreach (var value in Enum.GetValues<Platforms>())
 				job.Config.Dockerfile?.Plateforms.ForEach(platform => {
@@ -109,10 +117,12 @@ namespace Cicd.Hub.Core.Services
 			job.Stderr = stderr;
 			job.Stdout = stdout;
 			await jobRepository.Update(job);
+			logger.Exit($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 		}
 
 		public async Task Deploy(AgentDeploy agent, JobDeploy job)
 		{
+			logger.Enter($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 			job.StartedAt = DateTime.Now;
 			await jobRepository.Update(job);
 			using var client = new HttpClient();
@@ -140,6 +150,7 @@ namespace Cicd.Hub.Core.Services
 			job.Stderr = stderr;
 			job.Stdout = stdout;
 			await jobRepository.Update(job);
+			logger.Exit($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 		}
 	}
 }

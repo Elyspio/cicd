@@ -9,6 +9,5 @@ namespace Cicd.Hub.Abstractions.Transports
 		[Required] public BuildConfig Build { get; set; }
 
 		[Required] public DeployConfig Deploy { get; set; }
-
 	}
 }

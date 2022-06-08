@@ -1,7 +1,9 @@
-﻿namespace Cicd.Hub.Abstractions.Transports.Agents
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Cicd.Hub.Abstractions.Transports.Agents
 {
 	public class AgentBase : AgentRaw
 	{
-		public Guid Id { get; set; }
+		[Required] public Guid Id { get; set; }
 	}
 }

@@ -5,15 +5,13 @@ using Cicd.Hub.Abstractions.Interfaces.Injections;
 using Cicd.Hub.Adapters.Injections;
 using Cicd.Hub.Core.Injections;
 using Cicd.Hub.Db.Injections;
-using Cicd.Hub.Web.Filters;
-using Cicd.Hub.Web.Utils;
+using Cicd.Hub.Web.Server.Utils;
+using Cicd.Hub.Web.Server.Utils.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Logging.Console;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
-using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Cicd.Hub.Web.Server
 {
@@ -25,6 +23,8 @@ namespace Cicd.Hub.Web.Server
 		public ServerBuilder(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
+
+
 			builder.WebHost.ConfigureKestrel((_, options) => {
 					options.Listen(IPAddress.Any, 4000, listenOptions => {
 							// Use HTTP/3
@@ -54,12 +54,23 @@ namespace Cicd.Hub.Web.Server
 			builder.Services.AddModule<DatabaseModule>(builder.Configuration);
 
 
+			builder.Services.AddSignalR(options => { options.EnableDetailedErrors = true; })
+				.AddJsonProtocol(options => {
+						options.PayloadSerializerOptions.IncludeFields = true;
+						options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+					}
+				);
+			;
+
 			// Setup Logging
-			builder.Host.UseSerilog((_, lc) => lc
-				.Enrich.FromLogContext()
-				.Enrich.With(new CallerEnricher())
-				.WriteTo.Console(LogEventLevel.Debug, "[{Timestamp:HH:mm:ss} {Level}{Caller}] {Message:lj}{NewLine}{Exception}", theme: AnsiConsoleTheme.Code)
-			);
+			builder.Logging.ClearProviders()
+				.AddSimpleConsole(options => {
+						options.SingleLine = true;
+						options.ColorBehavior = LoggerColorBehavior.Enabled;
+						options.TimestampFormat = "HH:mm:ss ";
+					}
+				);
+
 
 			// Convert Enum to String 
 			builder.Services.AddControllers(o => {

@@ -1,11 +1,10 @@
 ﻿using Cicd.Hub.Abstractions.Interfaces.Services;
-using Cicd.Hub.Web.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Cicd.Hub.Web.Filters
+namespace Cicd.Hub.Web.Server.Utils.Filters
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 	public class RequireAuthAttribute : ActionFilterAttribute

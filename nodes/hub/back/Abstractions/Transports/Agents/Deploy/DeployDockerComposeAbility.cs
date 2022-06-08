@@ -1,7 +1,9 @@
-﻿namespace Cicd.Hub.Abstractions.Transports.Agents.Deploy
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Cicd.Hub.Abstractions.Transports.Agents.Deploy
 {
 	public class DeployDockerComposeAbility
 	{
-		public bool IntegratedToCLi { get; set; }
+		[Required] public bool IntegratedToCLi { get; set; }
 	}
 }

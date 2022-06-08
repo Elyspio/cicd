@@ -8,6 +8,6 @@ namespace Cicd.Hub.Abstractions.Models
 	{
 		[BsonId]
 		[BsonRepresentation(BsonType.ObjectId)]
-		public new ObjectId Id { get; init; }
+		public ObjectId Id { get; init; }
 	}
 }

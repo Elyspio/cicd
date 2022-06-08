@@ -1,9 +1,10 @@
-﻿using Cicd.Hub.Abstractions.Enums.Agents;
+﻿using System.ComponentModel.DataAnnotations;
+using Cicd.Hub.Abstractions.Enums.Agents;
 
 namespace Cicd.Hub.Abstractions.Transports.Agents
 {
 	public class AgentBuild : AgentBase
 	{
-		public List<BuildAbility> Abilities { get; set; } = null!;
+		[Required] public List<BuildAbility> Abilities { get; set; } = null!;
 	}
 }

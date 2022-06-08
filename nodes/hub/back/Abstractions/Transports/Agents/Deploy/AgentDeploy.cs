@@ -1,9 +1,11 @@
-﻿namespace Cicd.Hub.Abstractions.Transports.Agents.Deploy
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Cicd.Hub.Abstractions.Transports.Agents.Deploy
 {
 	public class AgentDeploy : AgentBase
 	{
-		public DeployAgentFolders Folders { get; set; }
+		[Required] public DeployAgentFolders Folders { get; set; }
 
-		public DeployAbilities Abilities { get; set; }
+		[Required] public List<DeployAbility> Abilities { get; set; }
 	}
 }

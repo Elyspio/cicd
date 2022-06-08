@@ -1,7 +1,9 @@
 ﻿using Cicd.Hub.Abstractions.Interfaces.Services;
 using Cicd.Hub.Abstractions.Models.Agents.Deploy;
-using Cicd.Hub.Web.Filters;
-using Cicd.Hub.Web.Utils;
+using Cicd.Hub.Abstractions.Transports.Agents;
+using Cicd.Hub.Abstractions.Transports.Agents.Deploy;
+using Cicd.Hub.Web.Server.Utils;
+using Cicd.Hub.Web.Server.Utils.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -28,6 +30,23 @@ namespace Cicd.Hub.Web.Controllers.Operations
 		{
 			var apps = await agentService.GetProductionApps(AuthHelper.GetToken(Request));
 			return Ok(apps);
+		}
+
+
+		[HttpGet("build")]
+		[SwaggerResponse(200, Type = typeof(List<AgentBuild>))]
+		public async Task<IActionResult> GetBuildJobs()
+		{
+			var data = await agentService.GetAll<AgentBuild>();
+			return Ok(data);
+		}
+
+		[HttpGet("deploy")]
+		[SwaggerResponse(200, Type = typeof(List<AgentDeploy>))]
+		public async Task<IActionResult> GetDeployJobs()
+		{
+			var data = await agentService.GetAll<AgentDeploy>();
+			return Ok(data);
 		}
 	}
 }

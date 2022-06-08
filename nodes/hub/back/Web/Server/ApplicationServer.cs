@@ -1,4 +1,7 @@
-﻿namespace Cicd.Hub.Web.Server
+﻿using Cicd.Hub.Abstractions.Interfaces.Services;
+using Cicd.Hub.Web.Hubs;
+
+namespace Cicd.Hub.Web.Server
 {
 	public static class ApplicationServer
 	{
@@ -18,6 +21,9 @@
 
 			application.UseAuthentication();
 
+			application.MapHub<FrontHub>("/ws/front");
+			application.MapHub<AgentsHub>("/ws/agents");
+
 			// Start SPA serving
 			if (application.Environment.IsProduction())
 			{
@@ -33,6 +39,10 @@
 
 				application.UseEndpoints(endpoints => { endpoints.MapFallbackToFile("/index.html"); });
 			}
+
+
+			var engine = application.Services.GetService<IEngineService>();
+			engine.Watch();
 
 			return application;
 		}
