@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -33,9 +37,9 @@ namespace Cicd.Hub.Abstractions.Common.Helpers
 			}
 		}
 
-		private bool NeedLogging(MethodBase method)
+		private bool NeedLogging(MemberInfo method)
 		{
-			return method!.DeclaringType!.FullName!.Contains("Backend");
+			return method.Module.FullyQualifiedName.Contains("Cicd.Hub");
 		}
 	}
 
@@ -44,6 +48,35 @@ namespace Cicd.Hub.Abstractions.Common.Helpers
 		public static LoggerConfiguration WithCaller(this LoggerEnrichmentConfiguration enrichmentConfiguration)
 		{
 			return enrichmentConfiguration.With<CallerEnricher>();
+		}
+	}
+
+
+	public static class LogHelper
+	{
+		private static readonly JsonSerializerOptions options = new()
+		{
+			Converters =
+			{
+				new JsonStringEnumConverter()
+			}
+		};
+
+		public static string Get(object value, [CallerArgumentExpression("value")] string name = "")
+		{
+			return $"{name}={JsonSerializer.Serialize(value, options)}";
+		}
+
+
+		public static void Enter<T>(this ILogger<T> logger, string arguments = "", LogLevel level = LogLevel.Debug, [CallerMemberName] string method = "")
+		{
+			logger.Log(level, $"Entering - {method}: {arguments}");
+		}
+
+
+		public static void Exit<T>(this ILogger<T> logger, string arguments = "", LogLevel level = LogLevel.Debug, [CallerMemberName] string method = "")
+		{
+			logger.Log(level, $"Exiting - {method}: {arguments}");
 		}
 	}
 }
