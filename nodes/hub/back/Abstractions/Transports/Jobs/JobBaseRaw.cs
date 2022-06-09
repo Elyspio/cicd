@@ -10,7 +10,7 @@ namespace Cicd.Hub.Abstractions.Transports.Jobs
 		public DateTime? FinishedAt { get; set; }
 		public DateTime? StartedAt { get; set; }
 
-
+		[Required] public Guid Run { get; set; }
 		public string? Stdout { get; set; }
 		public string? Stderr { get; set; }
 		[JsonIgnore] public string Token { get; init; } = null!;

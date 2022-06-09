@@ -9,7 +9,7 @@ namespace Cicd.Hub.Abstractions.Interfaces.Services
 	{
 		Task Build(AgentBuild agent, JobBuild job);
 		Task Deploy(AgentDeploy agent, JobDeploy job);
-		Task<JobBuild> AskBuild(BuildConfig config, string userToken);
-		Task<JobDeploy> AskDeploy(DeployConfig config, string userToken);
+		Task<JobBuild> AskBuild(BuildConfig config, string userToken, Guid run);
+		Task<JobDeploy> AskDeploy(DeployConfig config, string userToken, Guid run);
 	}
 }

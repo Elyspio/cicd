@@ -23,10 +23,10 @@ namespace Cicd.Hub.Web.Hubs
 
 
 		[HubMethodName("job-std")]
-		public async Task OnJobStd(Guid jobId, StdType type, string stdout)
+		public async Task OnJobStd(Guid jobId, StdType type, string std)
 		{
 			logger.Enter($"{LogHelper.Get(jobId)}, {LogHelper.Get(type)}");
-			await jobService.AddStd(jobId, type, stdout);
+			await jobService.AddStd(jobId, type, std);
 			logger.Exit($"{LogHelper.Get(jobId)}, {LogHelper.Get(type)}");
 		}
 

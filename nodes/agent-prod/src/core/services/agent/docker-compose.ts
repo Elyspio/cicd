@@ -1,15 +1,15 @@
 import { $log } from "@tsed/common";
 import * as path from "path";
-import { DeployConfigModel } from "../../../web/controllers/agent/models";
+import { BuildResult, DeployConfigModel } from "../../../web/controllers/agent/models";
 import { Services } from "../index";
-import { ProductionAgentModelAddAbilitiesTypeEnum } from "../../apis/hub";
+import { DeployAbilityType } from "../../apis/hub";
 import { Apis } from "../../apis";
 import * as os from "os";
 import { hudSocket } from "./socket";
 
 export class DockerComposeService {
 	async pull(id: string, { docker }: DeployConfigModel, token: string) {
-		return new Promise<string>(async (resolve, reject) => {
+		return new Promise<BuildResult>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet");
 				return;
@@ -18,28 +18,28 @@ export class DockerComposeService {
 			const folder = path.dirname(docker.compose.path);
 			const completedCommand = `${await this.getDockerComposeCommand()} pull`;
 			$log.info("DockerComposeService.pull", { completedCommand, folder });
-			const stderr = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
-			await hudSocket.invoke("job-std", "id", "Out", stderr);
-			resolve(stderr);
+			const { code, stderr, stdout } = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }, token).then((x) => x.data);
+			await hudSocket.invoke("job-std", id, "Out", stderr);
+			resolve({ stdout: stderr, stderr: "", status: code });
 		});
 	}
 
 	async up(id: string, { docker }: DeployConfigModel, token: string, daemon = true) {
-		return new Promise<string>(async (resolve, reject) => {
+		return new Promise<BuildResult>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet");
 				return;
 			}
 			const folder = path.dirname(docker.compose.path);
 			const completedCommand = `${await this.getDockerComposeCommand()} up --remove-orphans ${daemon ? "-d" : ""}`;
-			const stderr = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
-			await hudSocket.invoke("job-std", "id", "Out", stderr);
-			resolve(stderr);
+			const { stdout, stderr, code } = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }, token).then((x) => x.data);
+			await hudSocket.invoke("job-std", id, "Out", stderr);
+			resolve({ stdout: stderr, stderr: "", status: code });
 		});
 	}
 
 	async down({ docker }: DeployConfigModel, token: string) {
-		return new Promise<string>(async (resolve, reject) => {
+		return new Promise<BuildResult>(async (resolve, reject) => {
 			if (!docker || !docker.compose) {
 				reject("Not implemented yet");
 				return;
@@ -47,8 +47,8 @@ export class DockerComposeService {
 
 			const folder = docker.compose.path;
 			const completedCommand = `${await this.getDockerComposeCommand()} down`;
-			const stderr = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }).then((x) => x.data.stderr);
-			resolve(stderr);
+			const { stdout, stderr, code } = await Apis.runner.runFromApp("CICD", { command: completedCommand, cwd: folder }, token).then((x) => x.data);
+			resolve({ stdout: stderr, stderr: "", status: code });
 		});
 	}
 
@@ -74,10 +74,10 @@ export class DockerComposeService {
 
 	private async getDockerComposeConfig() {
 		const config = await Services.agent.getConfig();
-		return config.abilities.find((ability) => ability.type === ProductionAgentModelAddAbilitiesTypeEnum.DockerCompose)?.dockerCompose!;
+		return config.abilities.find((ability) => ability.type === DeployAbilityType.DockerCompose)?.dockerCompose!;
 	}
 
 	private async getDockerComposeCommand() {
-		return (await this.getDockerComposeConfig()).isDockerComposeIntegratedToCli ? "docker compose" : "docker-compose";
+		return (await this.getDockerComposeConfig()).integratedToCLi ? "docker compose" : "docker-compose";
 	}
 }

@@ -12,6 +12,26 @@
         ],
         "description": "Build and push a project following a configuration",
         "operationId": "build",
+        "parameters": [
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-app",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CICD"
+              ]
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -32,6 +52,16 @@
                   "items": {
                     "$ref": "#/components/schemas/BuildResult"
                   }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
                 }
               }
             }
@@ -60,6 +90,64 @@
           },
           "status": {
             "type": "number"
+          }
+        }
+      },
+      "Unauthorized": {
+        "type": "object",
+        "required": [
+          "name",
+          "message",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The error name",
+            "default": "UNAUTHORIZED",
+            "minLength": 1,
+            "example": "UNAUTHORIZED"
+          },
+          "message": {
+            "type": "string",
+            "description": "An error message",
+            "minLength": 1
+          },
+          "status": {
+            "type": "number",
+            "description": "The status code of the exception",
+            "default": 401,
+            "example": 401
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of related errors",
+            "items": {
+              "$ref": "#/components/schemas/GenericError"
+            }
+          },
+          "stack": {
+            "type": "string",
+            "description": "The stack trace (only in development mode)"
+          }
+        }
+      },
+      "GenericError": {
+        "type": "object",
+        "required": [
+          "name",
+          "message"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The error name",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "description": "An error message",
+            "minLength": 1
           }
         }
       },
@@ -145,11 +233,7 @@
             "type": "array",
             "description": "Platforms available for the future image",
             "items": {
-              "type": "string",
-              "enum": [
-                "linux/arm64",
-                "linux/amd64"
-              ]
+              "type": "string"
             }
           },
           "username": {

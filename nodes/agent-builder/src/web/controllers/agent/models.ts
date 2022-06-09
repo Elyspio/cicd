@@ -30,8 +30,8 @@ export class DockerfilesConfigModel implements Dockerfiles {
 
 	@Description("Platforms available for the future image")
 	@Required()
-	@Enum("linux/arm64", "linux/amd64")
-	platforms: ("linux/arm64" | "linux/amd64")[];
+	@Property(String)
+	platforms: string[];
 
 	@Required()
 	@Property()

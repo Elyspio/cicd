@@ -7,8 +7,8 @@ namespace Cicd.Hub.Abstractions.Interfaces.Repositories
 {
 	public interface IJobRepository
 	{
-		Task<JobBuildEntity> Add(BuildConfig config, string token);
-		Task<JobDeployEntity> Add(DeployConfig config, string token);
+		Task<JobBuildEntity> Add(BuildConfig config, string token, Guid run);
+		Task<JobDeployEntity> Add(DeployConfig config, string token, Guid run);
 		Task<JobBuildEntity> Update(JobBuild job);
 		Task<JobDeployEntity> Update(JobDeploy job);
 		Task Delete(Guid id);

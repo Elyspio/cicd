@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { themeReducer } from "./module/theme/theme.reducer";
 import { automationReducer } from "./module/automation/automation.reducer";
 import { createBrowserHistory } from "history";
@@ -6,6 +6,7 @@ import { connectRouter, routerMiddleware } from "connected-react-router";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { mappingReducer } from "./module/mapping/mapping.reducer";
 import { authenticationReducer } from "./module/authentication/authentication.reducer";
+import { container } from "../../core/di";
 
 export const history = createBrowserHistory({
 	basename: process.env.NODE_ENV === "production" ? "/cicd/" : undefined,
@@ -19,7 +20,6 @@ export function configureCustomStore() {
 		authentication: authenticationReducer,
 	};
 
-	const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
 
 	const rootReducer = combineReducers({
 		...reducers,
@@ -28,9 +28,11 @@ export function configureCustomStore() {
 
 	return configureStore({
 		reducer: rootReducer,
-		middleware,
+		middleware: defaults => [...defaults({ thunk: { extraArgument: { container } } }), routerMiddleware(history)],
 	});
 }
+
+export type ExtraArgument = { container: typeof container };
 
 export const store = configureCustomStore();
 

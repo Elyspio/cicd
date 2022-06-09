@@ -28,13 +28,15 @@ namespace Cicd.Hub.Db.Repositories
 			deployCollection = context.MongoDatabase.GetCollection<JobDeployEntity>("Jobs.Deploy");
 		}
 
-		public async Task<JobBuildEntity> Add(BuildConfig config, string token)
+		public async Task<JobBuildEntity> Add(BuildConfig config, string token, Guid run)
 		{
 			var entity = new JobBuildEntity
 			{
 				Config = config,
 				CreatedAt = DateTime.Now,
-				Token = token
+				Token = token,
+				Run = run
+				
 			};
 
 			await buildCollection.InsertOneAsync(entity);
@@ -42,13 +44,14 @@ namespace Cicd.Hub.Db.Repositories
 			return entity;
 		}
 
-		public async Task<JobDeployEntity> Add(DeployConfig config, string token)
+		public async Task<JobDeployEntity> Add(DeployConfig config, string token, Guid run)
 		{
 			var entity = new JobDeployEntity
 			{
 				Config = config,
 				CreatedAt = DateTime.Now,
-				Token = token
+				Token = token,
+				Run = run
 			};
 
 			await deployCollection.InsertOneAsync(entity);
@@ -85,7 +88,7 @@ namespace Cicd.Hub.Db.Repositories
 
 		public async Task Delete(Guid id)
 		{
-			await Task.WhenAll(deployCollection.DeleteOneAsync(a => a.Id == id.AsObjectId()), buildCollection.DeleteOneAsync(a => a.Id.AsGuid() == id));
+			await Task.WhenAll(deployCollection.DeleteOneAsync(a => a.Id == id.AsObjectId()), buildCollection.DeleteOneAsync(a => a.Id == id.AsObjectId()));
 		}
 
 		public async Task<List<T>> GetAll<T>() where T : JobBaseEntity
@@ -130,7 +133,7 @@ namespace Cicd.Hub.Db.Repositories
 						throw new ArgumentOutOfRangeException(nameof(type), type, null);
 				}
 
-				await buildCollection.ReplaceOneAsync(job => job.Id.AsGuid() == id, buildEntity);
+				await buildCollection.ReplaceOneAsync(job => job.Id == id.AsObjectId(), buildEntity);
 			}
 
 			var deployEntity = await GetById<JobDeployEntity>(id);
@@ -148,7 +151,7 @@ namespace Cicd.Hub.Db.Repositories
 						throw new ArgumentOutOfRangeException(nameof(type), type, null);
 				}
 
-				await deployCollection.ReplaceOneAsync(job => job.Id.AsGuid() == id, deployEntity);
+				await deployCollection.ReplaceOneAsync(job => job.Id == id.AsObjectId(), deployEntity);
 			}
 		}
 

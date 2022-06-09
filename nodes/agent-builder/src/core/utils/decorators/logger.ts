@@ -1,6 +1,4 @@
-import { Logger } from "@tsed/logger";
 import { Helper } from "../helper";
-import * as util from "util";
 
 /**
  *
@@ -10,13 +8,15 @@ import * as util from "util";
  * @constructor
  */
 export const Log =
-	(logger: Logger, logArguments: number[] | boolean = true, level: "debug" | "info" = "info") =>
+	(logArguments: number[] | boolean = true, level: "debug" | "info" = "info") =>
 		(target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
 			let originalMethod = descriptor.value;
 
 			const argsName = Helper.getFunctionArgs(originalMethod);
+			descriptor.value = function (...args: any[]) {
+				// @ts-ignore
+				const logger = this.logger;
 
-			descriptor.value = function(...args: any[]) {
 				let argsStr = "";
 
 				if (logArguments !== false) {
@@ -24,11 +24,11 @@ export const Log =
 						if (logArguments !== true) {
 							if (!logArguments.includes(currentIndex)) return previousValue;
 						}
-						return `${previousValue} ${currentValue}=${util.inspect(args[currentIndex])}`;
+						return `${previousValue} ${currentValue}=${JSON.stringify(args[currentIndex])}`;
 					}, "-");
 				}
 
-				logger[level](`${propertyKey} - Entering ${argsStr}`);
+				logger[level](`${propertyKey} - Entering: ${argsStr}`);
 
 				const now = Date.now();
 				const result = originalMethod.apply(this, args);
@@ -44,7 +44,7 @@ export const Log =
 					});
 					if (typeof promise.catch === "function") {
 						promise.catch((e: Error) => {
-							logger.error(`${propertyKey} - Error ${e}`, { stack: e.stack });
+							logger.error(`${propertyKey} - Error: ${e}`, { stack: e.stack });
 							return e;
 						});
 					}
@@ -56,4 +56,4 @@ export const Log =
 			};
 		};
 
-Log.service = (logger: Logger, logArguments: number[] | boolean = true) => Log(logger, logArguments, "debug");
+Log.service = (logArguments: number[] | boolean = true) => Log(logArguments, "debug");

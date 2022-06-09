@@ -24,7 +24,7 @@ namespace Cicd.Hub.Adapters.AgentDeployApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> DeployAsync(DeployJobModel body, string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> DeployAsync(AuthenticationApp authentication_app, DeployJobModel body, string? authentication_token = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
     
@@ -66,7 +66,7 @@ namespace Cicd.Hub.Adapters.AgentDeployApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> DeployAsync(DeployJobModel body, string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> DeployAsync(AuthenticationApp authentication_app, DeployJobModel body, string? authentication_token = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -80,8 +80,11 @@ namespace Cicd.Hub.Adapters.AgentDeployApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    if (authentication_tokenHeader != null)
-                        request_.Headers.TryAddWithoutValidation("authentication-token", ConvertToString(authentication_tokenHeader, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authentication_app == null)
+                        throw new System.ArgumentNullException("authentication_app");
+                    request_.Headers.TryAddWithoutValidation("authentication-app", ConvertToString(authentication_app, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authentication_token != null)
+                        request_.Headers.TryAddWithoutValidation("authentication-token", ConvertToString(authentication_token, System.Globalization.CultureInfo.InvariantCulture));
                     var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
@@ -257,7 +260,7 @@ namespace Cicd.Hub.Adapters.AgentDeployApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetAppsAsync(string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetAppsAsync(string? authentication_tokenCookie = null, string? authentication_tokenHeader = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
     
@@ -299,7 +302,7 @@ namespace Cicd.Hub.Adapters.AgentDeployApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetAppsAsync(string? authentication_tokenHeader = null, string? authentication_tokenCookie = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<string>> GetAppsAsync(string? authentication_tokenCookie = null, string? authentication_tokenHeader = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/automate/node");
@@ -647,6 +650,14 @@ namespace Cicd.Hub.Adapters.AgentDeployApi
             set { _additionalProperties = value; }
         }
     
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.5.2.0 (Newtonsoft.Json v12.0.0.2)")]
+    public enum AuthenticationApp
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"CICD")]
+        CICD = 0,
     
     }
 

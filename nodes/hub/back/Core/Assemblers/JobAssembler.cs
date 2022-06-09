@@ -14,6 +14,7 @@ namespace Cicd.Hub.Core.Assemblers
 			{
 				return new JobBuildEntity
 				{
+					Run = obj.Run,
 					Config = obj.Config,
 					CreatedAt = obj.CreatedAt,
 					FinishedAt = obj.FinishedAt,
@@ -29,6 +30,7 @@ namespace Cicd.Hub.Core.Assemblers
 			{
 				return new JobBuild
 				{
+					Run = obj.Run,
 					Config = obj.Config,
 					CreatedAt = obj.CreatedAt,
 					FinishedAt = obj.FinishedAt,
@@ -47,6 +49,7 @@ namespace Cicd.Hub.Core.Assemblers
 			{
 				return new JobDeployEntity
 				{
+					Run = obj.Run,
 					Config = obj.Config,
 					CreatedAt = obj.CreatedAt,
 					FinishedAt = obj.FinishedAt,
@@ -62,6 +65,7 @@ namespace Cicd.Hub.Core.Assemblers
 			{
 				return new JobDeploy
 				{
+					Run = obj.Run,
 					Config = obj.Config,
 					CreatedAt = obj.CreatedAt,
 					FinishedAt = obj.FinishedAt,

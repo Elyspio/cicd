@@ -21,10 +21,14 @@
             }
           },
           {
-            "name": "authentication-token",
-            "in": "cookie",
+            "name": "authentication-app",
+            "in": "header",
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "CICD"
+              ]
             }
           }
         ],
@@ -75,14 +79,14 @@
         "parameters": [
           {
             "name": "authentication-token",
-            "in": "header",
+            "in": "cookie",
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "authentication-token",
-            "in": "cookie",
+            "in": "header",
             "schema": {
               "type": "string"
             }

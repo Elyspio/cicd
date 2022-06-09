@@ -1,44 +1,104 @@
-import { $log, IMiddleware, Middleware, QueryParams, Req } from "@tsed/common";
-import { Property, Returns } from "@tsed/schema";
+import { BodyParams, Middleware, MiddlewareMethods, QueryParams, Req } from "@tsed/common";
 import { Unauthorized } from "@tsed/exceptions";
-import { Services } from "../../core/services";
 import { Request } from "express";
-import { authorization_cookie_token } from "../../config/authentication";
+import { authorization_cookie_token, authorization_header_app, authorization_header_token } from "../../config/authentication";
+import { getLogger } from "../../core/utils/logger";
+import { AppEnum, AuthenticationService } from "../../core/services/authentication.service";
+import { Inject } from "@tsed/di";
 
-export class UnauthorizedModel {
-	@Property()
-	url: string;
 
-	@Property()
-	message: string;
+class RequireBase {
+	public static log = getLogger.middleware(RequireBase);
+
+	@Inject()
+	authenticationService!: AuthenticationService;
+
+	private readonly mode: "app" | "user";
+
+
+	constructor(mode: "app" | "user") {
+		this.mode = mode;
+	}
+
+	protected async internal(req: Request, token: string | undefined, tokenBody: string | undefined) {
+		const exception = new Unauthorized("You must be logged to access to this resource see https://elyspio.fr/authentication/");
+
+		// Sanitize token param
+		if (token === "") token = undefined;
+
+		try {
+			const cookieAuth = req.cookies[authorization_cookie_token];
+			const headerToken = req.headers[authorization_header_token];
+
+			const headerApp = req.headers[authorization_header_app] as string;
+
+			RequireBase.log.info("RequireAppLogin", {
+				cookieAuth,
+				headerToken,
+				uriToken: token,
+			});
+
+			token ??= cookieAuth ?? tokenBody ?? headerToken as string;
+
+			if(!token) throw exception;
+
+
+			if (this.mode === "app") {
+				if (await this.authenticationService.isAppAuthenticated(headerApp as AppEnum, token)) {
+					req.auth = {
+						token,
+						app: headerApp,
+					};
+					return true;
+				}
+			}
+			if (this.mode === "user") {
+				if (await this.authenticationService.isAuthenticated(token)) {
+					req.auth = {
+						token,
+					};
+					return true;
+				}
+			}
+
+			throw exception;
+		} catch (e) {
+			throw exception;
+		}
+	}
 }
 
+
 @Middleware()
-export class RequireLogin implements IMiddleware {
-	@(Returns(401).Of(UnauthorizedModel))
-	public async use(@Req() { headers, cookies }: Request, @QueryParams("token") token: string) {
-		$log.info("New request checking IGNORE_AUTH value", process.env.IGNORE_AUTH);
+export class RequireAppLogin extends RequireBase implements MiddlewareMethods {
+	constructor() {
+		super("app");
+	}
 
-		if (!process.env.IGNORE_AUTH) {
-			try {
-				const cookieAuth = cookies[authorization_cookie_token];
-				const headerToken = headers[authorization_cookie_token];
+	public use(@Req() req: Request, @QueryParams("token") token?: string, @BodyParams("token") tokenBody?: string): any {
+		return this.internal(req, token, tokenBody);
+	}
+}
 
-				$log.info("RequireLogin", {
-					cookies: cookies.authorization_cookie_token,
-					token,
-					header: headerToken,
-				});
 
-				token = token ?? cookieAuth;
-				token = token ?? headerToken;
+@Middleware()
+export class RequireLogin extends RequireBase implements MiddlewareMethods {
+	constructor() {
+		super("user");
+	}
 
-				if (await Services.authentication.isAuthenticated(token)) {
-					return true;
-				} else throw "";
-			} catch (e) {
-				throw new Unauthorized("You must be logged to access to this resource see https://elyspio.fr/authentication");
-			}
+	public use(@Req() req: Request, @QueryParams("token") token?: string, @BodyParams("token") tokenBody?: string): any {
+		return this.internal(req, token, tokenBody);
+	}
+}
+
+declare global {
+	namespace Express {
+		interface Request {
+			auth?: {
+				token: string;
+				app?: string;
+			};
 		}
 	}
 }

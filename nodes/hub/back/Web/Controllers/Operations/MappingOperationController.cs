@@ -62,12 +62,14 @@ namespace Cicd.Hub.Web.Controllers.Operations
 
 			var token = AuthHelper.GetToken(Request);
 
-			var build = await automateService.AskBuild(mapping.Build, token);
+			var run = Guid.NewGuid();
+
+			var build = await automateService.AskBuild(mapping.Build, token, run);
 			await jobService.WaitForJob(build.Id);
-			var deploy = await automateService.AskDeploy(mapping.Deploy, token);
+			var deploy = await automateService.AskDeploy(mapping.Deploy, token, run);
 			await jobService.WaitForJob(deploy.Id);
 
-			await Task.WhenAll(authenticationService.DeletePermanentToken(build.Token), authenticationService.DeletePermanentToken(deploy.Token));
+			await Task.WhenAll(authenticationService.DeletePermanentToken(build.Token, token), authenticationService.DeletePermanentToken(deploy.Token, token));
 
 			return NoContent();
 		}

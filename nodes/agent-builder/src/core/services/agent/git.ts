@@ -24,7 +24,7 @@ export class GitService {
 		}
 
 		await git.clone(remote, localPath, ["-b", branch]);
-		await hudSocket.invoke("job-std", id, "build", `Repository ${remote} cloned at ${localPath}`);
+		await hudSocket.invoke("job-std", id, "Out", `Repository ${remote} cloned at ${localPath}`);
 		return localPath;
 	}
 }

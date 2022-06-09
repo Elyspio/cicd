@@ -28,7 +28,7 @@ namespace Cicd.Hub.Core.Services.Hub
 		{
 			var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(10));
 			while (await periodicTimer.WaitForNextTickAsync())
-				// Place function in here.
+			{
 				try
 				{
 					await Task.WhenAll(WatchBuild(), WatchDeploy());
@@ -37,6 +37,7 @@ namespace Cicd.Hub.Core.Services.Hub
 				{
 					Console.WriteLine(e);
 				}
+			}
 		}
 
 		private async Task WatchBuild()
@@ -51,16 +52,34 @@ namespace Cicd.Hub.Core.Services.Hub
 
 
 			if (buildJobs.Any())
+			{
 				foreach (var agent in buildAgents)
+				{
 					if (jobQueue.TryDequeue(out var job))
 					{
 						await agentService.SetAvailability(agent.Id, AgentAvailability.Running);
-						automateService.Build(agent, job).ContinueWith(_ => agentService.SetAvailability(agent.Id, AgentAvailability.Free));
+						_ = automateService.Build(agent, job)
+							.ContinueWith(task => {
+									try
+									{
+										if (task.IsFaulted && task.Exception != null)
+										{
+											throw task.Exception;
+										}
+									}
+									finally
+									{
+										agentService.SetAvailability(agent.Id, AgentAvailability.Free);
+									}
+								}
+							);
 					}
 					else
 					{
 						break;
 					}
+				}
+			}
 		}
 
 
@@ -75,16 +94,35 @@ namespace Cicd.Hub.Core.Services.Hub
 			deployJobs.ForEach(jobQueue.Enqueue);
 
 			if (deployJobs.Any())
+			{
 				foreach (var agent in deployAgents)
+				{
 					if (jobQueue.TryDequeue(out var job))
 					{
 						await agentService.SetAvailability(agent.Id, AgentAvailability.Running);
-						automateService.Deploy(agent, job).ContinueWith(_ => agentService.SetAvailability(agent.Id, AgentAvailability.Free));
+						_ = automateService.Deploy(agent, job)
+							.ContinueWith(task => {
+									try
+									{
+										if (task.IsFaulted && task.Exception != null)
+										{
+											logger.LogError(task.Exception, "Error during deployment job");
+											throw task.Exception;
+										}
+									}
+									finally
+									{
+										agentService.SetAvailability(agent.Id, AgentAvailability.Free);
+									}
+								}
+							);
 					}
 					else
 					{
 						break;
 					}
+				}
+			}
 		}
 	}
 }

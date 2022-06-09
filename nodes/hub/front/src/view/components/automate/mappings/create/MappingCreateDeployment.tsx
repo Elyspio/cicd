@@ -1,33 +1,25 @@
 import React from "react";
 import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../../../../store";
+import { useAppSelector } from "../../../../store";
 import { deepClone } from "../../../../../core/utils/data";
 import { ReactComponent as DockerIcon } from "../../icons/docker.svg";
-import { useInjection } from "inversify-react";
-import { DiKeysService } from "../../../../../core/di/di.keys.service";
-import { AutomateService } from "../../../../../core/services/cicd/automate.cicd.service";
-import { ProductionApps } from "../../../../../core/apis/backend/generated";
 import { Deployment } from "../../../../store/module/automation/types";
 import { setSelectedDeploy } from "../../../../store/module/mapping/mapping.reducer";
+import { getProductionApps } from "../../../../store/module/automation/automation.action";
+import { useDispatch } from "react-redux";
 
 function MappingCreateDeployment() {
-	const [apps, setApps] = React.useState<ProductionApps[]>([]);
 
 	const [deployments, setDeployments] = React.useState<Partial<Deployment>[]>([]);
 
 	const agents = useAppSelector((s) => s.automation.config?.agents.deploys ?? []);
-
-	const services = {
-		automate: useInjection<AutomateService>(DiKeysService.core.automate),
-	};
+	const apps = useAppSelector((s) => s.automation.productionApps ?? []);
+	const dispatch = useDispatch();
 
 	React.useEffect(() => {
-		(async () => {
-			const apps = await services.automate.getProductionApps();
-			setApps(apps);
-		})();
-	}, [services.automate]);
+		dispatch(getProductionApps());
+	}, [dispatch]);
 
 	const sortDeployments = React.useCallback((a: typeof deployments[number], b: typeof deployments[number]) => a.agent?.url.localeCompare(b.agent?.url ?? "") ?? -1, []);
 
@@ -64,8 +56,6 @@ function MappingCreateDeployment() {
 		},
 		[deployments, sortDeployments],
 	);
-
-	const dispatch = useAppDispatch();
 
 	React.useEffect(() => {
 		const config = deployments[0]?.config;

@@ -12,7 +12,7 @@
 		/// <returns></returns>
 		Task<string> GetPermanentToken(string token);
 
-		Task DeletePermanentToken(string token);
+		Task DeletePermanentToken(string appToken, string token);
 
 		Task<(string Username, string Token)> GetGithubToken(string token);
 	}

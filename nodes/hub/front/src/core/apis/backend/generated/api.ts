@@ -545,6 +545,12 @@ export interface JobBuild {
 	 * @type {string}
 	 * @memberof JobBuild
 	 */
+	"run": string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof JobBuild
+	 */
 	"stdout"?: string | null;
 	/**
 	 *
@@ -590,6 +596,12 @@ export interface JobDeploy {
 	 * @memberof JobDeploy
 	 */
 	"startedAt"?: string | null;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof JobDeploy
+	 */
+	"run": string;
 	/**
 	 *
 	 * @type {string}

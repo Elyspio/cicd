@@ -1,42 +1,59 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { container } from "../../../../core/di";
 import { GithubService } from "../../../../core/services/cicd/github.cicd.service";
-import { DiKeysService } from "../../../../core/di/di.keys.service";
 import { AuthenticationEvents, AuthenticationService } from "../../../../core/services/authentication.service";
-import store, { StoreState } from "../../index";
-import { BuildDockerfileConfig, GitHubRepository } from "../../../../core/apis/backend/generated";
+import store, { ExtraArgument, StoreState } from "../../index";
+import { BuildDockerfileConfig, GitHubRepository, Mapping } from "../../../../core/apis/backend/generated";
 import { AutomateService } from "../../../../core/services/cicd/automate.cicd.service";
+import { toast } from "react-toastify";
 
-const githubService = container.get<GithubService>(DiKeysService.core.github);
-const authenticationService = container.get<AuthenticationService>(DiKeysService.authentication);
-const automateService = container.get<AutomateService>(DiKeysService.core.automate);
 
 export const setDockerFileForRepo = createAction<GitHubRepository>("mapping/setDockerFileForRepo");
 
-export const initMappingData = createAsyncThunk("mapping/init", async (_, thunkAPI) => {
+export const initMappingData = createAsyncThunk("mapping/init", async (_, { extra, dispatch }) => {
+	const { container } = extra as ExtraArgument;
+	const githubService = container.get(GithubService);
+	const authenticationService = container.get(AuthenticationService);
+
 	const username = await authenticationService.getUsername();
 
 	const repos = await githubService.getRepositoriesData(username);
 
 	await Promise.all(
 		repos.map(async (repo) => {
-			await thunkAPI.dispatch(setDockerFileForRepo(repo));
+			await dispatch(setDockerFileForRepo(repo));
 		}),
 	);
 });
 
-export const createMapping = createAsyncThunk("mapping/create", async (_, { getState }) => {
+export const createMapping = createAsyncThunk("mapping/create", async (_, { getState, extra }) => {
 	const {
 		mapping: {
 			selected: { source, build, deploy },
 		},
 	} = getState() as StoreState;
 
+	const { container } = extra as ExtraArgument;
+	const authenticationService = container.get(AuthenticationService);
+	const automateService = container.get(AutomateService);
+
 	const username = await authenticationService.getUsername();
+	const credentials = await authenticationService.getCredentials(username);
+
 	let dockerfiles: BuildDockerfileConfig | undefined = undefined;
+
+	if (!credentials.github) {
+		toast.error("Could not create mapping, no github credentials found");
+		throw new Error("No github credentials found");
+	}
+
+	if (!credentials.docker) {
+		toast.error("Could not create mapping, no docker credentials found");
+		throw new Error("No docker credentials found");
+	}
+
 	if (build.type === "dockerfiles") {
 		dockerfiles = {
-			username,
+			username: credentials.docker.username,
 			files: build.dockerfiles
 			            .filter((df) => df.dockerfile.use)
 			            .map((df) => ({
@@ -53,14 +70,14 @@ export const createMapping = createAsyncThunk("mapping/create", async (_, { getS
 		throw new Error("error createMapping: missing parameters");
 	}
 
-	await automateService.createMapping(
+	await toast.promise(automateService.createMapping(
 		{
 			build: {
 				bake: build.type === "bake" ? build.bake?.bakeFilePath : undefined,
 				dockerfiles,
 			},
 			github: {
-				repo: `https://github.com/${username}/${source.repo}.git`,
+				repo: `https://github.com/${credentials.github.user}/${source.repo}.git`,
 				branch: source.branch!,
 			},
 		},
@@ -68,8 +85,35 @@ export const createMapping = createAsyncThunk("mapping/create", async (_, { getS
 			agentUri: deploy.url!,
 			dockerComposeFile: deploy.dockerfilePath!,
 		},
-	);
+	), {
+		error: "Could not create mapping",
+		success: "Mapping created",
+		pending: "Creating mapping",
+	});
 });
+
+
+export const runMapping = createAsyncThunk("mapping/run", async (id: Mapping["id"], { extra }) => {
+	const { container } = extra as ExtraArgument;
+	const mappingService = container.get(AutomateService);
+	await toast.promise(mappingService.runMapping(id), {
+		success: `Mapping ${id} run successfully`,
+		pending: `Running mapping ${id}`,
+		error: `Could not run mapping ${id}`,
+	});
+});
+
+
+export const deleteMapping = createAsyncThunk("mapping/run", async (id: Mapping["id"], { extra }) => {
+	const { container } = extra as ExtraArgument;
+	const mappingService = container.get(AutomateService);
+	await toast.promise(mappingService.deleteMapping(id), {
+		success: `Mapping ${id} deleted successfully`,
+		pending: `Deleting mapping ${id}`,
+		error: `Could not delete mapping ${id}`,
+	});
+});
+
 
 AuthenticationEvents.on("login", () => {
 	store.dispatch(initMappingData() as any);

@@ -13,6 +13,7 @@
 	"dependencies": {
 		"@emotion/react": "^11.4.1",
 		"@emotion/styled": "^11.3.0",
+		"@microsoft/signalr": "^6.0.5",
 		"@mui/icons-material": "^5.0.1",
 		"@mui/lab": "^5.0.0-alpha.48",
 		"@mui/material": "^5.0.1",
@@ -29,8 +30,7 @@
 		"react-router": "^5.2.1",
 		"react-toastify": "^8.0.2",
 		"redux": "4.1.1",
-		"reflect-metadata": "^0.1.13",
-		"@microsoft/signalr": "^6.0.5"
+		"reflect-metadata": "^0.1.13"
 	},
 	"devDependencies": {
 		"@types/react": "^17.0.24",

@@ -1,20 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import store, { StoreState } from "../../index";
+import store, { ExtraArgument, StoreState } from "../../index";
 import { setTheme } from "../theme/theme.action";
 import { toast } from "react-toastify";
-import { container } from "../../../../core/di";
 import { AuthenticationEvents, AuthenticationService } from "../../../../core/services/authentication.service";
 import { LocalStorageService } from "../../../../core/services/localStorage.service";
 import { UserSettingsModelThemeEnum } from "../../../../core/apis/authentication/generated";
 import { DiKeysService } from "../../../../core/di/di.keys.service";
+import { Container } from "inversify";
 
-const authentication = container.get<AuthenticationService>(DiKeysService.authentication);
-const localStorages = {
-	validation: container.get<LocalStorageService>(DiKeysService.localStorage.validation),
-	settings: container.get<LocalStorageService>(DiKeysService.localStorage.settings),
-};
 
-function waitForLogin(page: Window) {
+function waitForLogin(container: Container, page: Window) {
+	const localStorageServiceValidation = container.get<LocalStorageService>(DiKeysService.localStorage.validation);
 	return new Promise<void>(async (resolve) => {
 		let interval: NodeJS.Timer | undefined;
 
@@ -23,9 +19,9 @@ function waitForLogin(page: Window) {
 
 		const func = () => {
 			console.debug("Checking if user is logged from local storage");
-			let isPresent = localStorages.validation.retrieve(undefined) !== undefined;
+			let isPresent = localStorageServiceValidation.retrieve(undefined) !== undefined;
 			if (isPresent) {
-				localStorages.validation.remove();
+				localStorageServiceValidation.remove();
 				clearInter();
 				resolve();
 				return true;
@@ -42,13 +38,17 @@ function waitForLogin(page: Window) {
 	});
 }
 
-export const login = createAsyncThunk("authentication/login", async (_, { getState, dispatch }) => {
+export const login = createAsyncThunk("authentication/login", async (_, { getState, dispatch, extra }) => {
+	const { container } = extra as ExtraArgument;
+	const authentication = container.get(AuthenticationService);
+
+
 	const { logged, username, settings } = (getState() as StoreState).authentication;
 	if (!logged || username === undefined) {
 		const toastId = toast.info("Connecting", { autoClose: false });
 		const page = authentication.openLoginPage();
 		if (page != null) {
-			await waitForLogin(page);
+			await waitForLogin(container, page);
 			page.close();
 			dispatch(getUserInfos());
 			toast.update(toastId, {
@@ -65,7 +65,11 @@ export const login = createAsyncThunk("authentication/login", async (_, { getSta
 	}
 });
 
-export const silentLogin = createAsyncThunk("authentication/silentLogin", async (_, { getState, dispatch }) => {
+export const silentLogin = createAsyncThunk("authentication/silentLogin", async (_, { getState, dispatch, extra }) => {
+	const { container } = extra as ExtraArgument;
+	const authentication = container.get(AuthenticationService);
+
+
 	const { logged, username, settings } = (getState() as StoreState).authentication;
 	if (!logged || username === undefined) {
 		if (await authentication.isLogged()) {
@@ -77,18 +81,24 @@ export const silentLogin = createAsyncThunk("authentication/silentLogin", async 
 	}
 });
 
-export const getUserInfos = createAsyncThunk("authentication/getUserInfos", async () => {
+export const getUserInfos = createAsyncThunk("authentication/getUserInfos", async (_, { extra }) => {
+	const { container } = extra as ExtraArgument;
+	const authentication = container.get(AuthenticationService);
+	const localStoragesSettings = container.get<LocalStorageService>(DiKeysService.localStorage.settings);
 	const username = await authentication.getUsername();
 
 	const [settings] = await Promise.all([authentication.getSettings(username)]);
 
-	localStorages.settings.store(undefined, settings);
+	localStoragesSettings.store(undefined, settings);
 
 	AuthenticationEvents.emit("login", username);
 	return { settings, username };
 });
 
-export const logout = createAsyncThunk("authentication/logout", async () => {
+export const logout = createAsyncThunk("authentication/logout", async (_, { extra }) => {
+	const { container } = extra as ExtraArgument;
+	const authentication = container.get(AuthenticationService);
+
 	await authentication.logout();
 	AuthenticationEvents.emit("logout");
 });

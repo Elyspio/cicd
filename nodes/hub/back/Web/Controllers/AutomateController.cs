@@ -15,6 +15,7 @@ namespace Cicd.Hub.Web.Controllers
 	{
 		private readonly IAutomateService automateService;
 		private readonly IConfigService configService;
+
 		public AutomateController(IAutomateService automateService, IConfigService configService)
 		{
 			this.automateService = automateService;
@@ -25,7 +26,7 @@ namespace Cicd.Hub.Web.Controllers
 		[SwaggerResponse(204)]
 		public async Task<IActionResult> Build([Required] [FromBody] BuildConfig config)
 		{
-			await automateService.AskBuild(config, AuthHelper.GetToken(Request));
+			await automateService.AskBuild(config, AuthHelper.GetToken(Request), Guid.NewGuid());
 			return NoContent();
 		}
 
@@ -33,7 +34,7 @@ namespace Cicd.Hub.Web.Controllers
 		[SwaggerResponse(204)]
 		public async Task<IActionResult> Deploy([Required] [FromBody] DeployConfig config)
 		{
-			await automateService.AskDeploy(config, AuthHelper.GetToken(Request));
+			await automateService.AskDeploy(config, AuthHelper.GetToken(Request), Guid.NewGuid());
 			return NoContent();
 		}
 

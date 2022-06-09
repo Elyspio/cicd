@@ -29,19 +29,19 @@ namespace Cicd.Hub.Core.Services.Hub
 		}
 
 
-		public async Task<JobBuild> Add(BuildConfig config, string token)
+		public async Task<JobBuild> Add(BuildConfig config, string token, Guid run)
 		{
-			logger.Enter($"build {LogHelper.Get(config.Github.Branch)} {LogHelper.Get(token)}");
-			var data = jobBuildAssembler.Convert(await jobRepository.Add(config, token));
+			logger.Enter($"build {LogHelper.Get(config.Github.Branch)} {LogHelper.Get(token)} {LogHelper.Get(run)}");
+			var data = jobBuildAssembler.Convert(await jobRepository.Add(config, token, run));
 			endedJobs[data.Id] = false;
 			logger.Exit($"build {LogHelper.Get(config.Github.Branch)} {LogHelper.Get(token)}");
 			return data;
 		}
 
-		public async Task<JobDeploy> Add(DeployConfig config, string token)
+		public async Task<JobDeploy> Add(DeployConfig config, string token, Guid run)
 		{
 			logger.Enter($"deploy {LogHelper.Get(config.Url)} {LogHelper.Get(token)}");
-			var data = jobDeployAssembler.Convert(await jobRepository.Add(config, token));
+			var data = jobDeployAssembler.Convert(await jobRepository.Add(config, token, run));
 			endedJobs[data.Id] = false;
 			logger.Exit($"deploy {LogHelper.Get(config.Url)} {LogHelper.Get(token)}");
 			return data;

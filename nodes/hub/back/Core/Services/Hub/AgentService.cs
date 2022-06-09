@@ -19,12 +19,10 @@ namespace Cicd.Hub.Core.Services.Hub
 		private readonly AgentAssembler.Deploy agentDeployAssembler = new();
 		private readonly IAgentRepository agentRepository;
 		private readonly ILogger<AgentService> logger;
-		private readonly IAuthenticationService authenticationService;
-		public AgentService(IAgentRepository agentRepository, ILogger<AgentService> logger, IAuthenticationService authenticationService)
+		public AgentService(IAgentRepository agentRepository, ILogger<AgentService> logger)
 		{
 			this.agentRepository = agentRepository;
 			this.logger = logger;
-			this.authenticationService = authenticationService;
 		}
 
 		public async Task<List<ProductionApps>> GetProductionApps(string token)

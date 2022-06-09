@@ -22,11 +22,11 @@ export function Jobs() {
 			}>();
 
 		jobs.builds.forEach((job) => {
-			if (!ret.has(job.id)) {
-				ret.set(job.id, {});
+			if (!ret.has(job.run)) {
+				ret.set(job.run, {});
 			}
-			ret.set(job.id, {
-				...ret.get(job.id),
+			ret.set(job.run, {
+				...ret.get(job.run),
 				build: {
 					...job,
 					status: job.finishedAt ? "done" : "working",
@@ -35,11 +35,11 @@ export function Jobs() {
 		});
 
 		queues.builds.forEach((job) => {
-			if (!ret.has(job.id)) {
-				ret.set(job.id, {});
+			if (!ret.has(job.run)) {
+				ret.set(job.run, {});
 			}
-			ret.set(job.id, {
-				...ret.get(job.id),
+			ret.set(job.run, {
+				...ret.get(job.run),
 				build: {
 					...job,
 					status: "waiting",
@@ -48,11 +48,11 @@ export function Jobs() {
 		});
 
 		jobs.deploys.forEach((job) => {
-			if (!ret.has(job.id)) {
-				ret.set(job.id, {});
+			if (!ret.has(job.run)) {
+				ret.set(job.run, {});
 			}
-			ret.set(job.id, {
-				...ret.get(job.id),
+			ret.set(job.run, {
+				...ret.get(job.run),
 				deploy: {
 					...job,
 					status: job.finishedAt ? "done" : "working",
@@ -61,11 +61,11 @@ export function Jobs() {
 		});
 
 		queues.deploys.forEach((job) => {
-			if (!ret.has(job.id)) {
-				ret.set(job.id, {});
+			if (!ret.has(job.run)) {
+				ret.set(job.run, {});
 			}
-			ret.set(job.id, {
-				...ret.get(job.id),
+			ret.set(job.run, {
+				...ret.get(job.run),
 				deploy: {
 					...job,
 					status: "waiting",

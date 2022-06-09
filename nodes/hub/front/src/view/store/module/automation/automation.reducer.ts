@@ -2,10 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { events } from "../../../../config/events";
 import store from "../../index";
 import { createSocket } from "../../../../core/services/cicd/cicd.socket";
-import { HubConfig } from "../../../../core/apis/backend/generated";
+import { HubConfig, ProductionApps } from "../../../../core/apis/backend/generated";
 
 const initialState: {
 	config: HubConfig;
+	productionApps: ProductionApps[]
 } = {
 	config: {
 		agents: {
@@ -22,6 +23,7 @@ const initialState: {
 		},
 		mappings: [],
 	},
+	productionApps: [],
 };
 
 export type AutomationState = typeof initialState;

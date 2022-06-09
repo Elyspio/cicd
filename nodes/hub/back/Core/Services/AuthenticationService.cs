@@ -33,9 +33,9 @@ namespace Cicd.Hub.Core.Services
 			return await authenticationAppApi.CreatePermanentAppTokenAsync(App.CICD, token);
 		}
 
-		public async Task DeletePermanentToken(string token)
+		public async Task DeletePermanentToken(string appToken, string token)
 		{
-			await authenticationAppApi.DeleteTokensAsync(App3.CICD, token);
+			await authenticationAppApi.DeleteTokensAsync(App3.CICD, appToken, token);
 		}
 
 		public async Task<(string Username, string Token)> GetGithubToken(string token)

@@ -6,9 +6,9 @@ import { getLogger } from "../../utils/logger";
 import { Log } from "../../utils/decorators/logger";
 
 export class DockerService {
-	private static log = getLogger.service(DockerService);
+	private logger = getLogger.service(DockerService);
 
-	@Log(DockerService.log)
+	@Log()
 	async buildDockerfiles(buildNumber: number, { config: { dockerfiles: conf }, id }: BuildConfigModel, folder: string) {
 		const { files, platforms, username } = conf!;
 
@@ -27,7 +27,7 @@ export class DockerService {
 				return new Promise<BuildResult>((resolve, reject) => {
 					const dockerFileDir = path.join(folder, df.wd);
 					const completedCommand = `${command.join(" ")} -f ${dockerfilePath}  -t ${username.toLowerCase()}/${df.image.toLowerCase()}:${df.tag?.toLowerCase() ?? "latest"} --push .`;
-					DockerService.log.info(`BuilderAgentService.build.${buildNumber}`, {
+					this.logger.info(`BuilderAgentService.build.${buildNumber}`, {
 						completedCommand,
 						dockerFileDir,
 						df,
@@ -42,7 +42,7 @@ export class DockerService {
 		);
 	}
 
-	@Log(DockerService.log)
+	@Log()
 	async bake(buildNumber: number, { config: { bake }, id }: BuildConfigModel, folder: string) {
 		const bakePath = path.join(folder, bake!.bakeFilePath);
 
@@ -60,17 +60,17 @@ export class DockerService {
 		const std: BuildResult = { stderr: "", status: 0, stdout: "" };
 		process.stdout.on("data", (data) => {
 			std.stdout += data.toString();
-			DockerService.log.info(`id=${id} stdout: ${data}`);
+			this.logger.info(`id=${id} stdout: ${data}`);
 		});
 
 		process.stderr.on("data", (data) => {
-			DockerService.log.info(`id=${id} stderr: ${data}`);
+			this.logger.info(`id=${id} stderr: ${data}`);
 			std.stderr += data.toString();
-			hudSocket.invoke("job-std", id, "build", data.toString());
+			hudSocket.invoke("job-std", id, "Out", data.toString());
 		});
 
 		process.on("close", (code) => {
-			DockerService.log.info(`Command: "${completedCommand}" exited with code ${code}`);
+			this.logger.info(`Command: "${completedCommand}" exited with code ${code}`);
 			std.status = code!;
 			resolve(std);
 		});

@@ -1,4 +1,4 @@
-import { AutomationApi } from "./hub";
+import { AutomateApi } from "./hub";
 import { $log } from "@tsed/common";
 import { RunnerApi } from "./runner";
 
@@ -7,7 +7,7 @@ export const runnerUrl = process.env.RUNNER_SERVER_URL ?? "http://localhost:5200
 $log.info(`apis urls `, { hudServerUrl, runnerUrl });
 export const Apis = {
 	hub: {
-		automation: new AutomationApi(undefined, hudServerUrl),
+		automation: new AutomateApi(undefined, hudServerUrl),
 	},
 	runner: new RunnerApi(undefined, runnerUrl),
 };

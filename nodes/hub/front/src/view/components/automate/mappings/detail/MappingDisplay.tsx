@@ -4,14 +4,11 @@ import "./MappingDisplay.scss";
 import { MappingDisplaySource } from "./MappingDisplaySource";
 import { MappingDisplayDeployment } from "./MappingDisplayDeployment";
 import { MappingDisplayBuild } from "./MappingDetailBuild";
-import { useAppSelector } from "../../../../store";
+import { useAppDispatch, useAppSelector } from "../../../../store";
 import { login } from "../../../../store/module/authentication/authentication.action";
-import { useDispatch } from "react-redux";
 import { Clear, PlayArrow } from "@mui/icons-material";
-import { useInjection } from "inversify-react";
-import { AutomateService } from "../../../../../core/services/cicd/automate.cicd.service";
-import { DiKeysService } from "../../../../../core/di/di.keys.service";
 import { Mapping } from "../../../../../core/apis/backend/generated";
+import { deleteMapping, runMapping } from "../../../../store/module/mapping/mapping.action";
 
 type MappingDisplayProps = {
 	id: Mapping["id"];
@@ -23,19 +20,16 @@ export function MappingDisplay({ id }: MappingDisplayProps) {
 		logged: s.authentication.logged,
 	}));
 
-	const services = {
-		automate: useInjection<AutomateService>(DiKeysService.core.automate),
-	};
 
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch() as any;
 
-	const log = useCallback(() => dispatch(login()), [dispatch]);
+	const log = useCallback(() => dispatch(login() as any), [dispatch]);
 
 	const run = useCallback(() => {
-		return services.automate.runMapping(id);
-	}, [services.automate, id]);
+		dispatch(runMapping(id));
+	}, [dispatch, id]);
 
-	const deleteMapping = React.useCallback(() => services.automate.deleteMapping(id), [id, services.automate]);
+	const del = React.useCallback(() => dispatch(deleteMapping(id)), [dispatch, id]);
 
 	return (
 		<div className="MappingDisplay">
@@ -57,7 +51,7 @@ export function MappingDisplay({ id }: MappingDisplayProps) {
 							</IconButton>
 						</Grid>
 						<Grid item>
-							<IconButton onClick={deleteMapping}>
+							<IconButton onClick={del}>
 								<Clear />
 							</IconButton>
 						</Grid>

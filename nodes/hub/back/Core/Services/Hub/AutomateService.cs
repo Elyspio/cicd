@@ -11,6 +11,7 @@ using Cicd.Hub.Adapters.AgentBuildApi;
 using Cicd.Hub.Adapters.AgentDeployApi;
 using Cicd.Hub.Core.Assemblers;
 using Microsoft.Extensions.Logging;
+using AuthenticationApp = Cicd.Hub.Adapters.AgentDeployApi.AuthenticationApp;
 
 namespace Cicd.Hub.Core.Services.Hub
 {
@@ -36,20 +37,20 @@ namespace Cicd.Hub.Core.Services.Hub
 		}
 
 
-		public async Task<JobBuild> AskBuild(BuildConfig config, string userToken)
+		public async Task<JobBuild> AskBuild(BuildConfig config, string userToken, Guid run)
 		{
 			logger.Enter($"{config.Github.Remote} {config.Github.Branch}");
 			var appToken = await authenticationService.GetPermanentToken(userToken);
-			var data = await jobService.Add(config, appToken);
+			var data = await jobService.Add(config, appToken, run);
 			logger.Exit($"{config.Github.Remote} {config.Github.Branch}");
 			return data;
 		}
 
-		public async Task<JobDeploy> AskDeploy(DeployConfig config, string userToken)
+		public async Task<JobDeploy> AskDeploy(DeployConfig config, string userToken, Guid run )
 		{
 			logger.Enter($"{config.Url} {config.Docker.Compose.Path}");
 			var appToken = await authenticationService.GetPermanentToken(userToken);
-			var data = await jobService.Add(config, appToken);
+			var data = await jobService.Add(config, appToken, run);
 			logger.Exit($"{config.Url} {config.Docker.Compose.Path}");
 			return data;
 		}
@@ -57,12 +58,6 @@ namespace Cicd.Hub.Core.Services.Hub
 		public async Task Build(AgentBuild agent, JobBuild job)
 		{
 			logger.Enter($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
-			var platforms = new List<Platforms>();
-			foreach (var value in Enum.GetValues<Platforms>())
-				job.Config.Dockerfile?.Platforms.ForEach(platform => {
-						if (value.ToString() == platform) platforms.Add(value);
-					}
-				);
 
 			job.StartedAt = DateTime.Now;
 			await jobRepository.Update(job);
@@ -70,7 +65,7 @@ namespace Cicd.Hub.Core.Services.Hub
 			var dockerfiles = job.Config.Dockerfile != null
 				? new DockerfilesConfigModel
 				{
-					Platforms = platforms,
+					Platforms = job.Config.Dockerfile.Platforms,
 					Files = job.Config.Dockerfile.Files.Select(df => new DockerFileConfigModel
 							{
 								Image = df.Image,
@@ -86,7 +81,7 @@ namespace Cicd.Hub.Core.Services.Hub
 
 			using var client = new HttpClient();
 			var buildApi = new BuildAgentApi(agent.Url, client);
-			var stds = await buildApi.BuildAsync(new BuildConfigModel
+			var stds = await buildApi.BuildAsync(Adapters.AgentBuildApi.AuthenticationApp.CICD, new BuildConfigModel
 				{
 					Config = new()
 					{
@@ -95,7 +90,8 @@ namespace Cicd.Hub.Core.Services.Hub
 						Bake = job.Config.Bake != null ? buildBakeAssembler.Convert(job.Config.Bake) : null
 					},
 					Id = job.Id.ToString()
-				}
+				},
+				job.Token
 			);
 			job.FinishedAt = DateTime.Now;
 
@@ -119,7 +115,7 @@ namespace Cicd.Hub.Core.Services.Hub
 			await jobRepository.Update(job);
 
 			jobService.SetJobCompleted(job.Id);
-			
+
 			logger.Exit($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 		}
 
@@ -131,11 +127,11 @@ namespace Cicd.Hub.Core.Services.Hub
 			using var client = new HttpClient();
 			var api = new DeployAgentApi(agent.Url, client);
 
-			var stds = await api.DeployAsync(new DeployJobModel
+			var stds = await api.DeployAsync(AuthenticationApp.CICD, new DeployJobModel
 				{
 					Config = deployConfigAssembler.Convert(job.Config),
 					Id = job.Id.ToString()
-				}
+				}, job.Token
 			);
 			job.FinishedAt = DateTime.Now;
 
@@ -153,9 +149,9 @@ namespace Cicd.Hub.Core.Services.Hub
 			job.Stderr = stderr;
 			job.Stdout = stdout;
 			await jobRepository.Update(job);
-			
+
 			jobService.SetJobCompleted(job.Id);
-			
+
 			logger.Exit($"{LogHelper.Get(agent.Id)} {LogHelper.Get(job.Id)}");
 		}
 	}

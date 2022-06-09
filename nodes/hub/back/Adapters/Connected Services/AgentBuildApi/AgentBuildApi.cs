@@ -24,7 +24,7 @@ namespace Cicd.Hub.Adapters.AgentBuildApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> BuildAsync(BuildConfigModel body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> BuildAsync(AuthenticationApp authentication_app, BuildConfigModel body, string? authentication_token = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
     
@@ -66,7 +66,7 @@ namespace Cicd.Hub.Adapters.AgentBuildApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> BuildAsync(BuildConfigModel body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BuildResult>> BuildAsync(AuthenticationApp authentication_app, BuildConfigModel body, string? authentication_token = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -80,6 +80,11 @@ namespace Cicd.Hub.Adapters.AgentBuildApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
+                    if (authentication_app == null)
+                        throw new System.ArgumentNullException("authentication_app");
+                    request_.Headers.TryAddWithoutValidation("authentication-app", ConvertToString(authentication_app, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authentication_token != null)
+                        request_.Headers.TryAddWithoutValidation("authentication-token", ConvertToString(authentication_token, System.Globalization.CultureInfo.InvariantCulture));
                     var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
@@ -115,6 +120,16 @@ namespace Cicd.Hub.Adapters.AgentBuildApi
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Unauthorized>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<Unauthorized>("You are not logged", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -266,6 +281,68 @@ namespace Cicd.Hub.Adapters.AgentBuildApi
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.5.2.0 (Newtonsoft.Json v12.0.0.2)")]
+    public partial class Unauthorized 
+    {
+        /// <summary>The error name</summary>
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Name { get; set; } = "UNAUTHORIZED";
+    
+        /// <summary>An error message</summary>
+        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Message { get; set; }= default!;
+    
+        /// <summary>The status code of the exception</summary>
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
+        public double Status { get; set; } = 401D;
+    
+        /// <summary>A list of related errors</summary>
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GenericError>? Errors { get; set; }= default!;
+    
+        /// <summary>The stack trace (only in development mode)</summary>
+        [Newtonsoft.Json.JsonProperty("stack", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Stack { get; set; }= default!;
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.5.2.0 (Newtonsoft.Json v12.0.0.2)")]
+    public partial class GenericError 
+    {
+        /// <summary>The error name</summary>
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Name { get; set; }= default!;
+    
+        /// <summary>An error message</summary>
+        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Message { get; set; }= default!;
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.5.2.0 (Newtonsoft.Json v12.0.0.2)")]
     public partial class BuildConfigModel 
     {
         [Newtonsoft.Json.JsonProperty("config", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -368,9 +445,9 @@ namespace Cicd.Hub.Adapters.AgentBuildApi
         public System.Collections.Generic.ICollection<DockerFileConfigModel> Files { get; set; } = new System.Collections.ObjectModel.Collection<DockerFileConfigModel>();
     
         /// <summary>Platforms available for the future image</summary>
-        [Newtonsoft.Json.JsonProperty("platforms", Required = Newtonsoft.Json.Required.Always, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [Newtonsoft.Json.JsonProperty("platforms", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<Platforms> Platforms { get; set; } = new System.Collections.ObjectModel.Collection<Platforms>();
+        public System.Collections.Generic.ICollection<string> Platforms { get; set; } = new System.Collections.ObjectModel.Collection<string>();
     
         [Newtonsoft.Json.JsonProperty("username", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -423,13 +500,10 @@ namespace Cicd.Hub.Adapters.AgentBuildApi
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.5.2.0 (Newtonsoft.Json v12.0.0.2)")]
-    public enum Platforms
+    public enum AuthenticationApp
     {
-        [System.Runtime.Serialization.EnumMember(Value = @"linux/arm64")]
-        Linux_arm64 = 0,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"linux/amd64")]
-        Linux_amd64 = 1,
+        [System.Runtime.Serialization.EnumMember(Value = @"CICD")]
+        CICD = 0,
     
     }
 

@@ -12,7 +12,7 @@ import "./config/window.d.ts";
 import { Provider as DiProvider } from "inversify-react";
 import { container } from "./core/di";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.min.css";
 
 declare module "@mui/styles/defaultTheme" {
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -48,8 +48,6 @@ const ConnectedWrapper = connector(Wrapper) as any;
 ReactDOM.render(
 	<Provider store={store}>
 		<ConnectedRouter history={history}>
-			{" "}
-			{/* place ConnectedRouter under Provider */}
 			<ConnectedWrapper />
 		</ConnectedRouter>
 	</Provider>,
