@@ -36,8 +36,8 @@ const StyledBox = styled(Box)(() => ({
 	},
 
 	[`& .${classes.right}`]: {
-		width: "100%",
 		margin: 20,
+		width: "100%",
 	},
 }));
 

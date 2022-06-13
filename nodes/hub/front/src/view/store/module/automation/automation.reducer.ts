@@ -3,6 +3,7 @@ import { events } from "../../../../config/events";
 import store from "../../index";
 import { createSocket } from "../../../../core/services/cicd/cicd.socket";
 import { HubConfig, ProductionApps } from "../../../../core/apis/backend/generated";
+import { getProductionApps } from "./automation.action";
 
 const initialState: {
 	config: HubConfig;
@@ -36,10 +37,16 @@ const slice = createSlice({
 		},
 	},
 	name: "Automation",
+	extraReducers: (builder) => {
+		builder.addCase(getProductionApps.fulfilled, (state, action) => {
+			state.productionApps = action.payload;
+		});
+	},
 });
 
 export const { reducer: automationReducer, actions: automationActions } = slice;
 
-createSocket().on(events.config.update, (config) => {
+let hubConnection = createSocket();
+hubConnection.on(events.config.update, (config) => {
 	store.dispatch(automationActions.updateConfig(config));
 });

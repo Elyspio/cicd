@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Box, Grid, Paper, Tab, Typography } from "@mui/material";
+import { AppBar, Box, Grid, Paper, Stack, Tab, Typography } from "@mui/material";
 import "./JobItem.scss";
 import { CustomChip } from "../../utils/chip/CustomChip";
 import { ReactComponent as GithubIcon } from "../icons/github.svg";
@@ -10,7 +10,7 @@ import Tabs from "@mui/material/Tabs";
 import { TabPanel } from "../../utils/tabs/TabPanel";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch } from "../../../store";
-import { push } from "connected-react-router";
+import { push, replace } from "connected-react-router";
 import { routes } from "../Automate";
 import { JobBuild, JobDeploy } from "../../../../core/apis/backend/generated";
 import { ContextMenu, ContextMenuItems } from "../../utils/ContextMenu";
@@ -115,19 +115,16 @@ export function JobItem(props: JobItemProps) {
 
 		if (props.data.build || props.data.deploy) {
 			arr.push({
-				onClick: () => {
-					props.data.build && dispatch(deleteJob(props.data.build.id));
-					props.data.deploy && dispatch(deleteJob(props.data.deploy.id));
+				onClick: async () => {
+					props.data.build && await dispatch(deleteJob(props.data.build.id));
+					props.data.deploy && await dispatch(deleteJob(props.data.deploy.id));
+					await dispatch(replace("/"));
 				},
 				label: (
-					<Grid container alignItems={"center"} spacing={2}>
-						<Grid item>
-							<Delete />
-						</Grid>
-						<Grid item>
-							<Typography>Delete Job</Typography>
-						</Grid>
-					</Grid>
+					<Stack direction={"row"} alignItems={"center"} spacing={2}>
+						<Delete color={"error"} />
+						<Typography>Delete Jobs</Typography>
+					</Stack>
 				),
 				autoClose: true,
 			});

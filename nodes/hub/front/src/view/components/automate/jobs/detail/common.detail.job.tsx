@@ -3,6 +3,7 @@ import "./JobDetail.scss";
 import React from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { push } from "connected-react-router";
+import { AutoScroll } from "../../../utils/AutoScroll";
 
 type Props = {
 	id: string;
@@ -39,3 +40,29 @@ export function JobNotFound({ id, type }: Props) {
 		</Grid>
 	);
 }
+
+type JobStdProps = {
+	title: string,
+	content: string[]
+}
+
+export function JobStd({ content, title }: JobStdProps) {
+
+	const length = React.useMemo(() => content.join("").length, [content]);
+
+	return <div className="JobStd">
+		<Typography variant={"overline"} fontWeight={"bold"}>
+			{title}
+		</Typography>
+		<AutoScroll
+			sx={{ bgcolor: "background.default", height: "100%" }}
+			className={"content"}
+			length={length}
+			to={"bottom"}
+		>
+			{content.map(line => <Typography className={"line"}>{line}</Typography>)}
+		</AutoScroll>
+	</div>;
+}
+
+export const parseStd = (std?: string | null) => (std ?? "").split("\n").filter(s => s.length);

@@ -34,7 +34,7 @@ class Wrapper extends Component<ReduxTypes> {
 				<StyledEngineProvider injectFirst>
 					<ThemeProvider theme={theme}>
 						<Application />
-						<ToastContainer />
+						<ToastContainer theme={this.props.theme === "dark" ? "dark" : "colored"} />
 						<CssBaseline />
 					</ThemeProvider>
 				</StyledEngineProvider>
