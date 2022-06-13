@@ -19,7 +19,7 @@ export const createSocket = () => {
 		.withUrl(hostname)
 		.configureLogging(signalr.LogLevel.Warning)
 		.withAutomaticReconnect({
-			nextRetryDelayInMilliseconds(retryContext): number | null {
+			nextRetryDelayInMilliseconds(retryContext) {
 				return 1000;
 			},
 		})

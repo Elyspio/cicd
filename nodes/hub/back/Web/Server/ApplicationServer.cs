@@ -1,5 +1,8 @@
-﻿using Cicd.Hub.Abstractions.Interfaces.Services;
+﻿using System.Drawing;
+using System.Runtime.InteropServices.ComTypes;
+using Cicd.Hub.Abstractions.Interfaces.Services;
 using Cicd.Hub.Web.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Cicd.Hub.Web.Server
 {
@@ -43,6 +46,15 @@ namespace Cicd.Hub.Web.Server
 
 			var engine = application.Services.GetService<IEngineService>();
 			engine.Watch();
+
+
+			var configService= application.Services.GetService<IConfigService>();
+			var frontHub = application.Services.GetService<IHubContext<FrontHub>>();
+
+			configService.OnUpdate += async (_, _) => {
+				await frontHub.Clients.All.SendAsync(FrontHub.UpdateConfigEvent, await configService.Get());
+			};
+
 
 			return application;
 		}

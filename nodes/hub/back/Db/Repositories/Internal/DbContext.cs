@@ -19,8 +19,9 @@ namespace Cicd.Hub.Db.Repositories.Internal
 			var username = Env.Get("DB_USERNAME", conf.Username);
 			var password = Env.Get("DB_PASSWORD", conf.Password);
 			var database = Env.Get("DB_DATABASE", conf.Database);
-			var port = Env.Get("DB_PORT", conf.Port);
-			var client = new MongoClient($"mongodb://{username}:{password}@{host}:{port}");
+			var port = Env.Get<int>("DB_PORT", conf.Port);
+
+			var client = new MongoClient($"mongodb://{username}:{password}@{host}:{port}??replicaSet=rs0&minPoolSize=20&maxPoolSize=1000&connectTimeoutMS=10000");
 			Console.WriteLine($"Connecting to Database '{database}' on {host}:{port} as {username}");
 			MongoDatabase = client.GetDatabase(database);
 

@@ -79,14 +79,14 @@
         "parameters": [
           {
             "name": "authentication-token",
-            "in": "cookie",
+            "in": "header",
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "authentication-token",
-            "in": "header",
+            "in": "cookie",
             "schema": {
               "type": "string"
             }

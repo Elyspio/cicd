@@ -18,10 +18,31 @@ namespace Cicd.Hub.Db.Watchers
 			context = new MongoContext(configuration);
 		}
 
-		public async Task WatchChanges()
+		public void WatchChanges()
 		{
-			using var cursor = await context.MongoDatabase.WatchAsync(new EmptyPipelineDefinition<ChangeStreamDocument<BsonDocument>>());
-			await cursor.ForEachAsync(change => { configService.Update(); });
+			
+			WatchCollection("Jobs.Build");
+			WatchCollection("Jobs.Deploy");
+			WatchCollection("Mapping");
+			WatchCollection("Agents.Build");
+			WatchCollection("Agents.Deploy");
+				
+		}
+
+
+		private void WatchCollection(string name)
+		{
+			Task.Run(() => {
+					var cursor = context.MongoDatabase.GetCollection<BsonDocument>(name).Watch();
+
+					while (cursor.MoveNext())
+					{
+						if (!cursor.Current.Any()) continue;
+						Console.WriteLine($"{DateTime.Now.ToLongTimeString()} - Received {name} {cursor.Current.Count()} changes from database.");
+						configService.Update();
+					}
+				}
+			);
 		}
 	}
 }

@@ -2,6 +2,6 @@
 {
 	public interface IDatabaseWatcher
 	{
-		public Task WatchChanges();
+		public void WatchChanges();
 	}
 }

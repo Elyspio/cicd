@@ -25,15 +25,13 @@ namespace Cicd.Hub.Core.Services.Hub
 		}
 
 
-		public event EventHandler<HubConfigEventArgs> OnUpdate;
+		public event EventHandler<EventArgs> OnUpdate;
 
 		public async Task Update()
 		{
-			OnUpdate?.Invoke(this, new HubConfigEventArgs
-				{
-					Config = await Get()
-				}
-			);
+			logger.Enter();
+			OnUpdate?.Invoke(this, EventArgs.Empty);
+			logger.Exit();
 		}
 
 		public async Task<HubConfig> Get()

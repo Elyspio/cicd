@@ -1,4 +1,5 @@
-﻿using Cicd.Hub.Abstractions.Common.Extensions;
+﻿using System.ComponentModel.DataAnnotations;
+using Cicd.Hub.Abstractions.Common.Extensions;
 using Cicd.Hub.Abstractions.Common.Helpers;
 using Cicd.Hub.Abstractions.Interfaces.Repositories;
 using Cicd.Hub.Abstractions.Interfaces.Services;
@@ -46,7 +47,7 @@ namespace Cicd.Hub.Core.Services.Hub
 			return data;
 		}
 
-		public async Task<JobDeploy> AskDeploy(DeployConfig config, string userToken, Guid run )
+		public async Task<JobDeploy> AskDeploy(DeployConfig config, string userToken, Guid run)
 		{
 			logger.Enter($"{config.Url} {config.Docker.Compose.Path}");
 			var appToken = await authenticationService.GetPermanentToken(userToken);
@@ -79,6 +80,7 @@ namespace Cicd.Hub.Core.Services.Hub
 				}
 				: null;
 
+
 			using var client = new HttpClient();
 			var buildApi = new BuildAgentApi(agent.Url, client);
 			var stds = await buildApi.BuildAsync(Adapters.AgentBuildApi.AuthenticationApp.CICD, new BuildConfigModel
@@ -90,8 +92,7 @@ namespace Cicd.Hub.Core.Services.Hub
 						Bake = job.Config.Bake != null ? buildBakeAssembler.Convert(job.Config.Bake) : null
 					},
 					Id = job.Id.ToString()
-				},
-				job.Token
+				}, job.Token
 			);
 			job.FinishedAt = DateTime.Now;
 
@@ -99,19 +100,28 @@ namespace Cicd.Hub.Core.Services.Hub
 			var stderr = "";
 			stds.ForEach((std, i) => {
 					var currentDockerFile = dockerfiles?.Files.ToList()[i];
+					var header = "";
 					if (currentDockerFile != null)
 					{
-						var header = $"### {currentDockerFile.Image}:{currentDockerFile.Tag ?? "latest"} at {currentDockerFile.Wd}/{currentDockerFile.Path} ###\n";
-						stdout += header;
-						stderr += header;
+						header = $"### {currentDockerFile.Image}:{currentDockerFile.Tag ?? "latest"} at {currentDockerFile.Wd}{currentDockerFile.Path} ###\n";
 					}
 
-					stdout += std.Stdout;
-					stderr += std.Stderr;
+					if (std.Status == 0)
+					{
+						stdout += header;
+						stdout += std.Stderr;
+					}
+					else
+					{
+						stderr += header;
+						stderr += std.Stderr;
+					}
 				}
 			);
 			job.Stderr = stderr;
 			job.Stdout = stdout;
+
+
 			await jobRepository.Update(job);
 
 			jobService.SetJobCompleted(job.Id);
@@ -140,10 +150,16 @@ namespace Cicd.Hub.Core.Services.Hub
 			stds.ForEach((std, i) => {
 					var currentDockerFile = job.Config.Docker.Compose.Path;
 					var header = $"### {currentDockerFile} ###\n";
-					stdout += header;
-					stderr += header;
-					stdout += std.Stdout;
-					stderr += std.Stderr;
+					if (std.Status == 0)
+					{
+						stdout += header;
+						stdout += std.Stderr;
+					}
+					else
+					{
+						stderr += header;
+						stderr += std.Stderr;
+					}
 				}
 			);
 			job.Stderr = stderr;

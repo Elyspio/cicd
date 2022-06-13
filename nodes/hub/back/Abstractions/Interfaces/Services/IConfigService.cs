@@ -6,7 +6,7 @@ namespace Cicd.Hub.Abstractions.Interfaces.Services
 	{
 		Task Update();
 
-		event EventHandler<HubConfigEventArgs> OnUpdate;
+		event EventHandler<EventArgs> OnUpdate;
 
 		Task<HubConfig> Get();
 	}

@@ -6,22 +6,21 @@ namespace Cicd.Hub.Web.Hubs
 {
 	public class FrontHub : Microsoft.AspNetCore.SignalR.Hub
 	{
+
+		public static string UpdateConfigEvent = "config-updated";
+
 		private readonly IConfigService configService;
 
 		public FrontHub(IConfigService configService)
 		{
 			this.configService = configService;
-			configService.OnUpdate += (s, e) => { UpdateConfig(e.Config); };
 		}
 
-		private async Task UpdateConfig(HubConfig config)
-		{
-			await Clients.All.SendAsync("config-updated", config);
-		}
+
 
 		public override async Task OnConnectedAsync()
 		{
-			await Clients.Caller.SendAsync("config-updated", await configService.Get());
+			await Clients.Caller.SendAsync(UpdateConfigEvent, await configService.Get());
 			await base.OnConnectedAsync();
 		}
 	}
