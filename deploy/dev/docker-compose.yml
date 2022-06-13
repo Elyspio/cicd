@@ -1,13 +1,26 @@
 version: "3"
 services:
-    cicd-db:
-        image: mongo:latest
+    mongo:
+        hostname: mongodb
+        container_name: mongodb
+        build:
+            context: ../build/database
+            dockerfile: db.dockerfile
         restart: always
+        ports:
+            - "6003:27017"
+        volumes:
+            - ./scripts:/docker-entrypoint-initdb.d/
+            - cicd-mongodb:/data/db
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: root
-        volumes:
-            - ./data:/data/db
-        ports:
-            - "6003:27017"
+            MONGO_INITDB_DATABASE: cicd
+        networks:
+            cicd-network:
 
+volumes:
+    cicd-mongodb:
+
+networks:
+    cicd-network:
